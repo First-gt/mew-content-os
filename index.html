@@ -1,0 +1,2886 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEW Content OS - Complete End-to-End User Flow</title>
+  
+  <!-- Google Fonts: Prompt, Inter, Noto Sans Thai -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#EFF4FF',
+              100: '#DCE9FF',
+              200: '#BFDBFE',
+              500: '#0056FF',
+              600: '#0042C8',
+              700: '#1D4ED8',
+              800: '#001550',
+              900: '#0B1C30',
+            },
+            canvas: '#F8FAFC',
+            surface: '#FFFFFF',
+            emerald: {
+              50: '#ECFDF5',
+              100: '#D1FAE5',
+              200: '#A7F3D0',
+              500: '#10B981',
+              600: '#059669',
+              700: '#005C3E',
+              800: '#002113',
+            }
+          },
+          fontFamily: {
+            prompt: ['Prompt', 'sans-serif'],
+            inter: ['Inter', 'sans-serif'],
+            thai: ['Noto Sans Thai', 'Prompt', 'sans-serif'],
+          },
+          borderRadius: {
+            'custom': '16px',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: 'Prompt', 'Noto Sans Thai', 'Inter', sans-serif;
+      color: #0B1C30;
+      background-color: #F8FAFC;
+    }
+    .font-num {
+      font-family: 'Inter', sans-serif;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F1F5F9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900">
+
+  <!-- ==================== TOP NAVIGATION BAR (SHARED HEADER) ==================== -->
+  <header id="app-header" class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 transition-all duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo & Workspace Switcher -->
+      <div class="flex items-center gap-3">
+        <button onclick="switchView('landing')" class="flex items-center gap-2 group text-left focus:outline-none">
+          <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/30 group-hover:bg-blue-700 transition">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-lg text-blue-700 tracking-tight font-inter">MEW Content OS</span>
+              <span class="text-[10px] font-bold bg-blue-100 text-blue-900 px-1.5 py-0.5 rounded-full font-inter">v2.4 PRO</span>
+            </div>
+            <p id="header-subtitle" class="text-xs text-slate-500 font-medium">MEW Collagen Jelly Plus</p>
+          </div>
+        </button>
+
+        <!-- Divider -->
+        <div id="nav-divider" class="hidden sm:block h-5 w-[1px] bg-slate-200 mx-1"></div>
+
+        <!-- Workspace Dropdown / Status Pill -->
+        <div id="nav-workspace-pill" class="hidden md:flex items-center gap-2 bg-blue-50/70 border border-blue-100 px-3 py-1 rounded-full text-xs font-medium text-slate-700">
+          <span class="w-2 h-2 rounded-full bg-purple-600 animate-pulse"></span>
+          <span>Mew Studio Workspace</span>
+        </div>
+      </div>
+
+      <!-- Center Auto-Save Indicator -->
+      <div id="autosave-badge" class="hidden lg:flex items-center gap-2 bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full text-xs font-medium text-emerald-800">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span id="autosave-text">บันทึกอัตโนมัติแล้ว</span>
+        <span class="text-[10px] text-slate-400 font-inter font-semibold">เมื่อสักครู่</span>
+      </div>
+
+      <!-- Right Actions / Navigation Links / User -->
+      <div class="flex items-center gap-3">
+        <!-- Landing View Action Buttons -->
+        <div id="landing-nav-actions" class="flex items-center gap-2">
+          <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-xl transition">
+            เข้าสู่ระบบ
+          </button>
+          <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm shadow-blue-500/20 transition flex items-center gap-1.5">
+            <span>ทดลองใช้งานฟรี</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- App View Navigation Links -->
+        <div id="app-nav-actions" class="hidden flex items-center gap-2">
+          <button onclick="switchView('library')" class="px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition flex items-center gap-1.5">
+            <i data-lucide="folder" class="w-4 h-4 text-slate-500"></i>
+            <span>คลังโปรเจกต์</span>
+          </button>
+          <button onclick="startNewProject()" class="px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition flex items-center gap-1.5">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>สร้างใหม่</span>
+          </button>
+          
+          <div class="h-4 w-[1px] bg-slate-200 mx-1"></div>
+
+          <!-- User Avatar -->
+          <button onclick="toggleUserMenu()" title="โปรไฟล์ผู้ใช้งาน" class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full hover:bg-slate-100 transition focus:outline-none">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-700 to-blue-500 text-white font-bold text-xs flex items-center justify-center shadow-sm">
+              MK
+            </div>
+            <div class="hidden xl:block text-left text-xs">
+              <div class="font-semibold text-slate-800">ฮาฟิส (Mew)</div>
+              <div class="text-[10px] text-blue-600 font-medium font-inter">Creator Pro</div>
+            </div>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+  <main class="flex-1 flex flex-col">
+
+    <!-- ------------------------------------------------------------- -->
+    <!-- VIEW 1: LANDING PAGE (FASTWORK / SAAS HERO STYLE)             -->
+    <!-- ------------------------------------------------------------- -->
+    <div id="view-landing" class="view-panel flex-1">
+      
+      <!-- Hero Section -->
+      <section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
+        <!-- Background Ambient Glow -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-blue-100/60 via-purple-50/40 to-transparent blur-3xl -z-10 pointer-events-none rounded-full"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-6 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
+            <span>🚀 ตัวช่วยผลิตคลิปไวรัลสำหรับธุรกิจและแม่ค้าออนไลน์</span>
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.2] mb-6">
+            เปลี่ยนคลิปไวรัล<br>
+            <span class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              ให้เป็นยอดขายของแบรนด์คุณ
+            </span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 font-normal leading-relaxed mb-8">
+            แกะสูตรคลิปฮิต ผสมข้อมูลสินค้าด้วย AI แล้วแปลงเป็นใบบรีฟมุมกล้องพร้อมถ่ายใน 1 นาที โดยไม่ต้องเดาทางอัลกอริทึมเองอีกต่อไป
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8">
+            <button onclick="openAuthModal('register')" class="w-full sm:w-auto px-8 py-3.5 text-base font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-custom shadow-lg shadow-blue-500/25 transition flex items-center justify-center gap-2 group">
+              <span>ทดลองใช้งานฟรี</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-0.5 transition"></i>
+            </button>
+            <button onclick="demoWorkflowPreview()" class="w-full sm:w-auto px-6 py-3.5 text-base font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 rounded-custom shadow-sm transition flex items-center justify-center gap-2">
+              <i data-lucide="play-circle" class="w-5 h-5 text-blue-600"></i>
+              <span>ดูตัวอย่างระบบ (Interactive Demo)</span>
+            </button>
+          </div>
+
+          <!-- Micro Social Proof -->
+          <div class="flex items-center justify-center gap-3 text-xs text-slate-500">
+            <div class="flex -space-x-2">
+              <span class="inline-block w-7 h-7 rounded-full bg-blue-600 ring-2 ring-white text-white font-bold text-[10px] flex items-center justify-center">A</span>
+              <span class="inline-block w-7 h-7 rounded-full bg-indigo-500 ring-2 ring-white text-white font-bold text-[10px] flex items-center justify-center">B</span>
+              <span class="inline-block w-7 h-7 rounded-full bg-purple-500 ring-2 ring-white text-white font-bold text-[10px] flex items-center justify-center">M</span>
+              <span class="inline-block w-7 h-7 rounded-full bg-emerald-500 ring-2 ring-white text-white font-bold text-[10px] flex items-center justify-center">K</span>
+            </div>
+            <span>มากกว่า <strong class="text-slate-800 font-semibold font-inter">1,240+ แบรนด์</strong> วางใจใช้งานใน TikTok & Reels</span>
+          </div>
+
+        </div>
+
+        <!-- Hero App Showcase Card -->
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+          <div class="relative bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
+            <!-- Mockup Header -->
+            <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-4">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                <span class="ml-2 text-xs font-semibold text-slate-700 truncate">Project: MEW Collagen Jelly Plus (Launch Campaign)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[11px] font-semibold text-emerald-700">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Claim Guard 100% ปลอดภัย
+                </span>
+              </div>
+            </div>
+
+            <!-- Workflow 4-Step Pill Preview Inside Card -->
+            <div class="p-6 bg-slate-50/50 border-b border-slate-100">
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="bg-blue-50 border border-blue-200/60 p-3 rounded-xl flex items-center gap-3">
+                  <span class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center">1</span>
+                  <div class="text-left">
+                    <p class="text-[10px] font-bold text-blue-700 uppercase font-inter">STEP 01</p>
+                    <p class="text-xs font-bold text-slate-900">สมองธุรกิจ</p>
+                  </div>
+                </div>
+                <div class="bg-blue-50 border border-blue-200/60 p-3 rounded-xl flex items-center gap-3">
+                  <span class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center">2</span>
+                  <div class="text-left">
+                    <p class="text-[10px] font-bold text-blue-700 uppercase font-inter">STEP 02</p>
+                    <p class="text-xs font-bold text-slate-900">สแกนไวรัล</p>
+                  </div>
+                </div>
+                <div class="bg-indigo-600 text-white p-3 rounded-xl flex items-center gap-3 shadow-md shadow-indigo-600/20">
+                  <span class="w-7 h-7 rounded-lg bg-white text-indigo-700 font-bold text-xs flex items-center justify-center">3</span>
+                  <div class="text-left">
+                    <p class="text-[10px] font-bold text-indigo-200 uppercase font-inter">STEP 03 (CURRENT)</p>
+                    <p class="text-xs font-bold text-white">สคริปต์รีมิกซ์</p>
+                  </div>
+                </div>
+                <div class="bg-white border border-slate-200 p-3 rounded-xl flex items-center gap-3 opacity-75">
+                  <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-600 font-bold text-xs flex items-center justify-center">4</span>
+                  <div class="text-left">
+                    <p class="text-[10px] font-bold text-slate-500 uppercase font-inter">STEP 04</p>
+                    <p class="text-xs font-bold text-slate-700">ใบบรีฟถ่ายทำ</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bento Preview Body -->
+            <div class="p-6 grid grid-cols-1 md:grid-cols-12 gap-6 bg-white">
+              <!-- Left Reference Video Info -->
+              <div class="md:col-span-5 bg-slate-50 rounded-xl p-4 border border-slate-100 text-left">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-[11px] font-bold uppercase text-slate-500 font-inter">REFERENCE VIRAL VIDEO</span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-inter">Score 98/100</span>
+                </div>
+                <div class="flex gap-3 items-center bg-white p-3 rounded-lg border border-slate-200 mb-3">
+                  <div class="w-14 h-16 rounded-md bg-blue-100 flex items-center justify-center text-blue-700 flex-shrink-0">
+                    <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+                  </div>
+                  <div>
+                    <p class="text-xs font-bold text-slate-800 line-clamp-1">"อย่าเพิ่งซื้อถ้ายังไม่รู้ข้อนี้..."</p>
+                    <p class="text-[11px] text-slate-500 font-inter">2.4M วิว • Retention 78%</p>
+                    <span class="inline-block mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">
+                      Negative Frame + FOMO
+                    </span>
+                  </div>
+                </div>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                  สูตร 4 จังหวะ: <strong>0-3s</strong> ช็อกด้วยคำถาม ➔ <strong>4-15s</strong> ขยี้ปัญหาการชง ➔ <strong>16-28s</strong> เฉลยเจลลี่ฉีกเคี้ยว ➔ <strong>29-34s</strong> ชี้ตะกร้า
+                </p>
+              </div>
+
+              <!-- Right AI Generated Script Result -->
+              <div class="md:col-span-7 bg-white rounded-xl border border-slate-200 p-4 text-left flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-md bg-purple-600 text-white flex items-center justify-center text-xs">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                      </span>
+                      <span class="text-xs font-bold text-slate-900">AI Script Remix ผลลัพธ์พร้อมใช้งาน</span>
+                    </div>
+                    <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                      Claim Guard ผ่าน 100%
+                    </span>
+                  </div>
+
+                  <div class="space-y-2 text-xs">
+                    <div class="p-2.5 rounded-lg bg-blue-50/70 border border-blue-100">
+                      <span class="font-bold text-blue-700 font-inter">🎬 HOOK (0-3s):</span>
+                      <span class="text-slate-800 ml-1">“ใครบอกว่ากินคอลลาเจนต้องเสียเวลาชง ลืมแก้วคาวๆ ไปได้เลย!”</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-purple-50/70 border border-purple-100">
+                      <span class="font-bold text-purple-700 font-inter">📦 BODY (3-22s):</span>
+                      <span class="text-slate-800 ml-1">“ตัวนี้คือ MEW Collagen Jelly Plus รวมเปปไทด์ 10,000 mg ไม่คาว พกง่าย ฉีกเคี้ยวได้ทันที”</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <span class="text-[11px] text-slate-500">ดึงจุดขาย USP จาก Business Brain ตรง 3 จุด</span>
+                  <button onclick="startNewProject()" class="text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 px-3.5 py-1.5 rounded-lg shadow-sm transition">
+                    สร้างใบบรีฟถ่ายทำทันที →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 Colorful Category Cards (Bento Architecture) -->
+      <section class="py-16 bg-white border-t border-slate-200/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3">
+              4 เครื่องมือหลัก รวมครบจบในระบบปฏิบัติการเดียว
+            </h2>
+            <p class="text-sm sm:text-base text-slate-600">
+              ออกแบบตามเวิร์กโฟลว์ของ Creator และธุรกิจยุคใหม่ เพื่อลดเวลาทำงานจาก 5 วัน เหลือเพียง 10 นาที
+            </p>
+          </div>
+
+          <!-- Cards Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Card 1: Business Brain -->
+            <div class="bg-purple-50/80 border border-purple-200/80 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-purple-500/5 transition">
+              <div>
+                <div class="w-12 h-12 rounded-xl bg-white border border-purple-200 shadow-sm flex items-center justify-center text-purple-700 mb-4">
+                  <i data-lucide="brain" class="w-6 h-6"></i>
+                </div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="text-base font-bold text-slate-900">สมองธุรกิจ</h3>
+                  <span class="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-inter">Brain</span>
+                </div>
+                <p class="text-[11px] font-bold text-purple-700 font-inter mb-2 uppercase">BUSINESS BRAIN DNA</p>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  คลังข้อมูลสินค้า รวบรวมจุดขาย USP ข้อห้าม และกลุ่มเป้าหมาย เพื่อป้อนเป็น DNA เฉพาะของแบรนด์ ให้ AI สร้างสคริปต์ได้ตรงตัวตน 100%
+                </p>
+              </div>
+              <div class="mt-6 pt-4 border-t border-purple-200/70 flex items-center justify-between text-xs font-semibold text-purple-800">
+                <span>เก็บข้อมูลได้ไม่จำกัด SKU</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- Card 2: Viral Radar -->
+            <div class="bg-amber-50/80 border border-amber-200/80 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-amber-500/5 transition">
+              <div>
+                <div class="w-12 h-12 rounded-xl bg-white border border-amber-200 shadow-sm flex items-center justify-center text-amber-700 mb-4">
+                  <i data-lucide="scan" class="w-6 h-6"></i>
+                </div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="text-base font-bold text-slate-900">สแกนคลิป</h3>
+                  <span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-inter">Radar</span>
+                </div>
+                <p class="text-[11px] font-bold text-amber-700 font-inter mb-2 uppercase">VIRAL STRUCTURE SCAN</p>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  เช็กคะแนนความปัง ถอดรหัสโครงสร้าง Hook วินาทีทอง 0-3s วิเคราะห์ Retention Rate และเหตุผลที่คลิปนั้นระเบิดยอดวิวบน TikTok & Reels
+                </p>
+              </div>
+              <div class="mt-6 pt-4 border-t border-amber-200/70 flex items-center justify-between text-xs font-semibold text-amber-800">
+                <span>วิเคราะห์ได้ทุก URL ทันที</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- Card 3: Script Remix -->
+            <div class="bg-blue-50/80 border border-blue-200/80 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-blue-500/5 transition">
+              <div>
+                <div class="w-12 h-12 rounded-xl bg-white border border-blue-200 shadow-sm flex items-center justify-center text-blue-700 mb-4">
+                  <i data-lucide="sparkles" class="w-6 h-6"></i>
+                </div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="text-base font-bold text-slate-900">สตูดิโอสคริปต์</h3>
+                  <span class="text-[10px] font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-inter">Remix</span>
+                </div>
+                <p class="text-[11px] font-bold text-blue-700 font-inter mb-2 uppercase">CLAIM GUARD SHIELD</p>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  แต่งบทพูดคลิปขายเนียนๆ พร้อมระบบ Claim Guard ตรวจจับและแทนที่คำเคลมเกินจริงตามกฎหมาย อย. ป้องกันช่องโดนแบนถาวร
+                </p>
+              </div>
+              <div class="mt-6 pt-4 border-t border-blue-200/70 flex items-center justify-between text-xs font-semibold text-blue-800">
+                <span>เซฟเวอร์ชันสคริปต์ A/B</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- Card 4: Filming Brief -->
+            <div class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-emerald-500/5 transition">
+              <div>
+                <div class="w-12 h-12 rounded-xl bg-white border border-emerald-200 shadow-sm flex items-center justify-center text-emerald-700 mb-4">
+                  <i data-lucide="clapperboard" class="w-6 h-6"></i>
+                </div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="text-base font-bold text-slate-900">ใบบรีฟกองถ่าย</h3>
+                  <span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-inter">Brief</span>
+                </div>
+                <p class="text-[11px] font-bold text-emerald-700 font-inter mb-2 uppercase">SHOT LIST & SCHEDULE</p>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  สรุป Shot List มิติกล้อง พร็อพ และคิวพูดเป็น PDF/Notion ส่งต่อนักแสดงและทีมตัดต่อให้ถ่ายจบงานได้ในเทคเดียวโดยไม่ตกหล่น
+                </p>
+              </div>
+              <div class="mt-6 pt-4 border-t border-emerald-200/70 flex items-center justify-between text-xs font-semibold text-emerald-800">
+                <span>Export เป็น 1-Click Brief</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Conversion Banner -->
+      <section class="py-12 bg-slate-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 rounded-2xl p-8 sm:p-12 text-white shadow-xl flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
+            <div class="max-w-xl">
+              <span class="inline-block px-3 py-1 rounded-full bg-white/10 text-xs font-semibold mb-3 border border-white/20">
+                พร้อมใช้งานทันที ไม่ต้องผูกบัตรเครดิต
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">
+                เริ่มสร้างสคริปต์ไวรัลตัวแรกของคุณฟรีวันนี้
+              </h2>
+              <p class="text-blue-100 text-xs sm:text-sm">
+                เปลี่ยนวิธีทำวิดีโอแบบเดิมๆ ที่พึ่งพาการเดา มาสู่กระบวนการผลิตที่เป็นระบบ เพิ่มยอดขายได้ต่อเนื่อง
+              </p>
+            </div>
+            <div class="flex-shrink-0 flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <button onclick="openAuthModal('register')" class="px-6 py-3 bg-white text-blue-700 hover:bg-blue-50 font-bold text-sm rounded-xl shadow-md transition">
+                เริ่มต้นใช้งานฟรี
+              </button>
+              <button onclick="switchView('library')" class="px-6 py-3 bg-blue-800/60 hover:bg-blue-800 text-white border border-white/20 font-semibold text-sm rounded-xl transition">
+                ดูคลังตัวอย่าง
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Minimalist Footer -->
+      <footer class="py-8 bg-white border-t border-slate-200 text-slate-500 text-xs">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-2 font-inter">
+            <span class="font-bold text-blue-700">MEW Content OS</span>
+            <span>• © 2025 MEW Inc. All rights reserved.</span>
+          </div>
+          <div class="flex items-center gap-6">
+            <a href="#" class="hover:text-slate-800">นโยบายความเป็นส่วนตัว</a>
+            <a href="#" class="hover:text-slate-800">เงื่อนไขการให้บริการ</a>
+            <a href="#" class="hover:text-slate-800">ศูนย์ช่วยเหลือ</a>
+            <span class="inline-flex items-center gap-1.5 text-emerald-600 font-medium">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              ระบบทำงานปกติ
+            </span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- ------------------------------------------------------------- -->
+    <!-- VIEW 2: PROJECT LIBRARY (DASHBOARD & CARDS)                   -->
+    <!-- ------------------------------------------------------------- -->
+    <div id="view-library" class="view-panel hidden flex-1 py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Breadcrumb & Top Bar -->
+        <div class="flex items-center justify-between mb-4">
+          <nav class="flex items-center gap-2 text-xs text-slate-500">
+            <button onclick="switchView('landing')" class="hover:text-blue-600">หน้าหลัก</button>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            <span class="font-semibold text-slate-800">คลังโปรเจกต์คอนเทนต์</span>
+          </nav>
+          <span class="text-xs text-slate-500 font-inter">ทั้งหมด 12 วิดีโอ</span>
+        </div>
+
+        <!-- Page Header & Action -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 mb-6">
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              คลังโปรเจกต์คอนเทนต์ (Content Projects)
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              โปรเจกต์ทั้งหมดที่บันทึกไว้ สามารถกดเข้าไปดูบรีฟ แก้ไขสคริปต์ หรือส่งงานต่อให้ทีมตัดต่อได้ทุกเมื่อ
+            </p>
+          </div>
+          <button onclick="startNewProject()" class="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition flex items-center gap-2 flex-shrink-0 self-start sm:self-auto">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>+ สร้างโปรเจกต์ใหม่</span>
+          </button>
+        </div>
+
+        <!-- 4 Summary Stats Bar -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-[11px] font-medium text-slate-500">พร้อมตัดต่อ (Ready for Edit)</p>
+                <p class="text-lg font-bold text-slate-900 font-inter">4 <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
+              </div>
+            </div>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+                <i data-lucide="video" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-[11px] font-medium text-slate-500">กำลังถ่ายทำ (Filming)</p>
+                <p class="text-lg font-bold text-slate-900 font-inter">3 <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
+              </div>
+            </div>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+                <i data-lucide="file-edit" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-[11px] font-medium text-slate-500">ดราฟต์สคริปต์ (Drafting)</p>
+                <p class="text-lg font-bold text-slate-900 font-inter">3 <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
+              </div>
+            </div>
+            <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                <i data-lucide="share-2" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-[11px] font-medium text-slate-500">โพสต์แล้ว (Published)</p>
+                <p class="text-lg font-bold text-slate-900 font-inter">2 <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
+              </div>
+            </div>
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+          </div>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm mb-6 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          
+          <!-- Search Bar -->
+          <div class="relative flex-1 max-w-md">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input 
+              type="text" 
+              id="library-search" 
+              oninput="handleLibrarySearch(this.value)" 
+              placeholder="ค้นหาชื่อโปรเจกต์, สินค้า, หรือแฮชแท็ก..." 
+              class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"
+            >
+          </div>
+
+          <!-- Status Filter Tabs -->
+          <div class="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
+            <button onclick="setLibraryFilter('all')" class="filter-tab active px-3 py-1.5 text-xs font-semibold rounded-lg transition bg-blue-600 text-white">
+              ทั้งหมด (12)
+            </button>
+            <button onclick="setLibraryFilter('ready')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
+              พร้อมตัดต่อ (4)
+            </button>
+            <button onclick="setLibraryFilter('filming')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
+              กำลังถ่าย (3)
+            </button>
+            <button onclick="setLibraryFilter('drafting')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
+              ร่างสคริปต์ (3)
+            </button>
+            <button onclick="setLibraryFilter('published')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
+              โพสต์แล้ว (2)
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Project Cards Grid -->
+        <div id="project-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Cards rendered dynamically via JS -->
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------------------- -->
+    <!-- VIEW 3: 4-STEP WIZARD WORKFLOW (BRAIN -> SCAN -> REMIX -> BRIEF)-->
+    <!-- ------------------------------------------------------------- -->
+    <div id="view-workflow" class="view-panel hidden flex-1 py-6 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Top 4-Step Pill Navigation System -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-2 shadow-sm mb-6">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            
+            <!-- Tab 1: สมองธุรกิจ -->
+            <button onclick="goToWorkflowStep(1)" id="wizard-tab-1" class="wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-purple-50 border border-purple-200">
+              <span id="tab-num-1" class="w-8 h-8 rounded-lg bg-purple-600 text-white font-bold text-sm flex items-center justify-center font-inter">1</span>
+              <div>
+                <p id="tab-label-1" class="text-xs font-bold text-purple-700">สมองธุรกิจ</p>
+                <p class="text-[10px] text-slate-500 font-inter uppercase font-semibold">Business Brain</p>
+              </div>
+            </button>
+
+            <!-- Tab 2: สแกนไวรัล VDO -->
+            <button onclick="goToWorkflowStep(2)" id="wizard-tab-2" class="wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-white hover:bg-slate-50 border border-transparent">
+              <span id="tab-num-2" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter">2</span>
+              <div>
+                <p id="tab-label-2" class="text-xs font-bold text-slate-700">สแกนไวรัล VDO</p>
+                <p class="text-[10px] text-slate-500 font-inter uppercase font-semibold">Scan Feed</p>
+              </div>
+            </button>
+
+            <!-- Tab 3: รีมิกซ์สคริปต์ -->
+            <button onclick="goToWorkflowStep(3)" id="wizard-tab-3" class="wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-white hover:bg-slate-50 border border-transparent">
+              <span id="tab-num-3" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter">3</span>
+              <div>
+                <p id="tab-label-3" class="text-xs font-bold text-slate-700">รีมิกซ์สคริปต์</p>
+                <p class="text-[10px] text-slate-500 font-inter uppercase font-semibold">Script Remix</p>
+              </div>
+            </button>
+
+            <!-- Tab 4: ถ่ายทำ & ส่งงาน -->
+            <button onclick="goToWorkflowStep(4)" id="wizard-tab-4" class="wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-white hover:bg-slate-50 border border-transparent">
+              <span id="tab-num-4" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter">4</span>
+              <div>
+                <p id="tab-label-4" class="text-xs font-bold text-slate-700">ถ่ายทำ & ส่งงาน</p>
+                <p class="text-[10px] text-slate-500 font-inter uppercase font-semibold">Filming & Schedule</p>
+              </div>
+            </button>
+
+          </div>
+        </div>
+
+        <!-- ==================== WORKFLOW STEP 1: BUSINESS BRAIN ==================== -->
+        <div id="step-content-1" class="step-panel">
+          
+          <!-- Step 1 Header -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-slate-900">
+                สมองธุรกิจ & คลังข้อมูลแกนกลาง (Business Brain)
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                ป้อน DNA ของแบรนด์เพื่อควบคุมการสแกนและร่างสคริปต์อัตโนมัติให้ตรงตัวตน 100%
+              </p>
+            </div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold self-start sm:self-auto">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>ความสมบูรณ์โปรไฟล์: <strong class="font-inter">92%</strong></span>
+            </div>
+          </div>
+
+          <!-- Step 1 Main Grid: 7 cols form + 5 cols Grill Me AI -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- Left Column: Core Form (7 cols) -->
+            <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 text-left">
+              
+              <!-- Brand & Product Name -->
+              <div>
+                <label class="block text-xs font-bold text-slate-800 mb-2">
+                  ชื่อแบรนด์และชื่อผลิตภัณฑ์หลัก (Brand & Product)
+                </label>
+                <div class="relative">
+                  <input 
+                    type="text" 
+                    id="input-product-name" 
+                    value="MEW Collagen Jelly Plus" 
+                    class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                  <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-medium text-slate-400">
+                    พร้อมขาย
+                  </span>
+                </div>
+              </div>
+
+              <!-- Target Audience (ICP) Chips -->
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-xs font-bold text-slate-800">
+                    กลุ่มเป้าหมายในอุดมคติ (Target ICP)
+                  </label>
+                  <span class="text-[11px] text-slate-400">เลือกได้หลายกลุ่ม</span>
+                </div>
+                <div id="icp-chips-container" class="flex flex-wrap gap-2">
+                  <button type="button" onclick="toggleChip(this)" class="icp-chip active px-3.5 py-1.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-300">
+                    วัยทำงาน 25-35 ปี ✓
+                  </button>
+                  <button type="button" onclick="toggleChip(this)" class="icp-chip active px-3.5 py-1.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-300">
+                    คนนอนดึก ผิวโทรม ✓
+                  </button>
+                  <button type="button" onclick="toggleChip(this)" class="icp-chip active px-3.5 py-1.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-300">
+                    สายสุขภาพ/เร่งรีบ ✓
+                  </button>
+                  <button type="button" onclick="toggleChip(this)" class="icp-chip px-3.5 py-1.5 rounded-full text-xs font-medium bg-white text-slate-600 border border-slate-200 hover:border-slate-300">
+                    คุณแม่หลังคลอด
+                  </button>
+                  <button type="button" onclick="promptAddICP()" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-50 text-slate-500 border border-dashed border-slate-300 hover:border-slate-400">
+                    + เพิ่มกลุ่มเป้าหมาย
+                  </button>
+                </div>
+              </div>
+
+              <!-- Core Offer & USP -->
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-xs font-bold text-slate-800">
+                    ข้อเสนอหลัก & จุดขายเด่น (Core Offer & USP)
+                  </label>
+                  <span class="text-[11px] text-purple-600 font-medium font-inter">Auto-bullet format</span>
+                </div>
+                <textarea 
+                  id="input-usp-text" 
+                  rows="4" 
+                  class="w-full p-3.5 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-800 leading-relaxed focus:outline-none focus:ring-2 focus:ring-blue-500 font-normal"
+                >• คอลลาเจนไดเปปไทด์เข้มข้น 10,000 mg ดูดซึมไวกว่าเปปไทด์ทั่วไป 5 เท่า
+• ผสมเซราไมด์สกัดจากข้าวญี่ปุ่น ล็อคความชุ่มชื้นใต้ผิว
+• นวัตกรรมเจลลี่พร้อมทาน ไม่ต้องชง รสส้มยูซุแท้ 0% น้ำตาล ไม่อ้วน</textarea>
+              </div>
+
+              <!-- Brand Tone of Voice -->
+              <div>
+                <label class="block text-xs font-bold text-slate-800 mb-2">
+                  น้ำเสียงของแบรนด์ (Tone of Voice)
+                </label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  <label class="tone-card active flex items-start gap-2.5 p-3 rounded-xl border-2 border-blue-600 bg-blue-50/50 cursor-pointer">
+                    <input type="radio" name="tone-select" value="fun" checked class="mt-0.5 text-blue-600 focus:ring-blue-500">
+                    <div>
+                      <p class="text-xs font-bold text-blue-800">สนุกสนาน เป็นกันเอง 🔥</p>
+                      <p class="text-[11px] text-slate-500">เพื่อนเล่าให้เพื่อนฟัง</p>
+                    </div>
+                  </label>
+                  <label class="tone-card flex items-start gap-2.5 p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer">
+                    <input type="radio" name="tone-select" value="expert" class="mt-0.5 text-blue-600 focus:ring-blue-500">
+                    <div>
+                      <p class="text-xs font-bold text-slate-800">ผู้เชี่ยวชาญ 💼</p>
+                      <p class="text-[11px] text-slate-500">เน้นวิจัย & ตัวเลข</p>
+                    </div>
+                  </label>
+                  <label class="tone-card flex items-start gap-2.5 p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer">
+                    <input type="radio" name="tone-select" value="urgent" class="mt-0.5 text-blue-600 focus:ring-blue-500">
+                    <div>
+                      <p class="text-xs font-bold text-slate-800">กระชับ ปิดการขายไว ⚡</p>
+                      <p class="text-[11px] text-slate-500">สายยิงแอดตรงจุด</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Prohibited Claims (FDA & Ad Guidelines) -->
+              <div class="pt-4 border-t border-slate-100">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-1.5">
+                    <i data-lucide="shield-alert" class="w-4 h-4 text-rose-500"></i>
+                    <label class="text-xs font-bold text-slate-800">
+                      คำต้องห้ามเคลมตามกฎหมาย อย. และระบบตรวจจับ
+                    </label>
+                  </div>
+                  <span class="text-[11px] text-slate-400">ระบบจะเตือนทันทีในแท็บสคริปต์</span>
+                </div>
+                <div id="prohibited-claims-container" class="flex flex-wrap gap-2">
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
+                    <span>100% เห็นผลทันที</span>
+                    <button onclick="this.parentElement.remove()" class="text-rose-400 hover:text-rose-700">×</button>
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
+                    <span>ขาวถาวร</span>
+                    <button onclick="this.parentElement.remove()" class="text-rose-400 hover:text-rose-700">×</button>
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
+                    <span>การันตีคืนเงิน</span>
+                    <button onclick="this.parentElement.remove()" class="text-rose-400 hover:text-rose-700">×</button>
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
+                    <span>รักษาฝ้าหายขาด</span>
+                    <button onclick="this.parentElement.remove()" class="text-rose-400 hover:text-rose-700">×</button>
+                  </span>
+                  <button type="button" onclick="promptAddProhibited()" class="px-3 py-1 rounded-lg border border-slate-200 text-slate-600 text-xs font-medium hover:bg-slate-50">
+                    + เพิ่มคำสั่งห้าม
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Column: Grill Me AI Copilot (5 cols) -->
+            <div class="lg:col-span-5 bg-gradient-to-b from-blue-50/70 to-indigo-50/40 p-6 rounded-2xl border border-blue-200/60 shadow-sm flex flex-col justify-between text-left">
+              
+              <div>
+                <!-- AI Header -->
+                <div class="flex items-center gap-3 pb-4 border-b border-blue-100 mb-4">
+                  <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm">
+                    <i data-lucide="bot" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-base font-bold text-slate-900">Grill Me AI Copilot</h3>
+                    <p class="text-xs text-blue-700 font-medium">เจาะลึกเพื่อดึงมุมมองที่คู่แข่งยังไม่เคยพูด</p>
+                  </div>
+                </div>
+
+                <!-- Chat Dialogue Prompt Card -->
+                <div class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm mb-4">
+                  <p class="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
+                    💡 "สินค้าตัวนี้มีจุดขายเด่นอะไรที่กินขาดคู่แข่งในงบไม่เกิน 500 บาท? ลูกค้าที่เคยกินคอลลาเจนผงแล้วบ่นเรื่องอะไรมากที่สุด?"
+                  </p>
+                </div>
+
+                <!-- Quick Reply Chips -->
+                <div class="space-y-2 mb-4">
+                  <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider font-inter">คำตอบด่วนที่แนะนำ:</p>
+                  
+                  <button onclick="applyQuickReply(this)" class="w-full text-left p-3 rounded-xl bg-white/90 hover:bg-white border border-blue-200/70 hover:border-blue-300 text-xs text-slate-700 transition leading-snug">
+                    ⚡ "คอลลาเจนทั่วไปต้องชง ล้างแก้ว มีกลิ่นคาว แต่ตัวนี้ฉีกซองเคี้ยวได้ทันที รสเหมือนขนมเยลลี่ญี่ปุ่น"
+                  </button>
+
+                  <button onclick="applyQuickReply(this)" class="w-full text-left p-3 rounded-xl bg-white/90 hover:bg-white border border-blue-200/70 hover:border-blue-300 text-xs text-slate-700 transition leading-snug">
+                    🍊 "ใส่ส้มยูซุแท้ มีวิตามินซีธรรมชาติในตัว ไม่ต้องซื้อวิตซีแยกมากินคู่กัน"
+                  </button>
+                </div>
+
+                <!-- Interactive Reply Input -->
+                <div class="mb-4">
+                  <textarea 
+                    id="grillme-input" 
+                    rows="2" 
+                    placeholder="พิมพ์คำตอบเพิ่มเติม หรือกดเลือกข้อแนะนำด้านบน..." 
+                    class="w-full p-3 bg-white border border-blue-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Footer Actions -->
+              <div class="pt-3 border-t border-blue-100 flex items-center justify-between">
+                <span class="text-[11px] text-slate-500">บันทึกเป็น Context ให้ AI ทันที</span>
+                <button onclick="saveGrillMeContext()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-sm transition flex items-center gap-1.5">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                  <span>บันทึกลงสมองกลาง</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Bottom Advance Bar -->
+          <div class="mt-8 bg-white p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span class="text-xs text-slate-500">ระบบจะนำข้อมูลชุดนี้ไปแปลงเป็นสคริปต์อัตโนมัติในขั้นตอนถัดไป</span>
+            <button onclick="goToWorkflowStep(2)" class="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold shadow-md shadow-blue-500/20 transition flex items-center justify-center gap-2">
+              <span>บันทึกและไปสแกนคลิป (ขั้นตอน 2)</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ==================== WORKFLOW STEP 2: SCAN FEED ==================== -->
+        <div id="step-content-2" class="step-panel hidden">
+          
+          <!-- Step 2 Header -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[11px] font-bold uppercase tracking-wider mb-2 font-inter">
+                Viral Video Intelligence Scanner
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold text-slate-900">
+                2. สแกนไวรัล VDO & ถอดรหัสโครงสร้างคลิป (Scan Feed)
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
+                วิเคราะห์คลิปไวรัล TikTok, IG Reels และ YouTube Shorts เพื่อดึงสูตร Hook และโครงสร้างการเล่าเรื่องที่ชนะใจอัลกอริทึม
+              </p>
+            </div>
+            <div class="bg-white px-4 py-2.5 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm self-start sm:self-auto">
+              <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                <i data-lucide="zap" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="text-[10px] text-slate-400">โควตาสแกน AI วันนี้</p>
+                <p class="text-xs font-bold text-slate-800 font-inter">24 / 50 คลิป</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top URL Scanner Hero Input -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-6 text-left">
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="link" class="w-4 h-4 text-blue-600"></i>
+                <span>วางลิงก์วิดีโอคลิปที่ต้องการวิเคราะห์เจาะลึก</span>
+              </label>
+              <span class="text-[11px] text-slate-400">รองรับ TikTok, Instagram Reels, YouTube Shorts</span>
+            </div>
+
+            <!-- Main Input Bar -->
+            <div class="flex flex-col sm:flex-row items-center gap-2 p-1.5 bg-slate-50 border border-slate-200 rounded-xl">
+              <!-- Platform Icons -->
+              <div class="hidden sm:flex items-center gap-1 pl-2 pr-1 text-slate-400">
+                <span class="px-2 py-1 rounded bg-black text-white text-[10px] font-bold font-inter">TT</span>
+                <span class="px-2 py-1 rounded bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white text-[10px] font-bold font-inter">IG</span>
+                <span class="px-2 py-1 rounded bg-red-600 text-white text-[10px] font-bold font-inter">YT</span>
+              </div>
+              
+              <div class="hidden sm:block h-5 w-[1px] bg-slate-200"></div>
+
+              <input 
+                type="text" 
+                id="input-scan-url" 
+                value="https://www.tiktok.com/@healthylife.th/video/734291882049104" 
+                class="flex-1 w-full px-3 py-2 bg-transparent text-xs sm:text-sm text-slate-800 focus:outline-none"
+              >
+
+              <button onclick="runVideoScan()" id="btn-scan-trigger" class="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-lg text-xs font-bold shadow-sm transition flex items-center justify-center gap-2 flex-shrink-0">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                <span id="scan-button-text">เริ่มสแกนและวิเคราะห์ AI</span>
+              </button>
+            </div>
+
+            <!-- Quick Sample Chips -->
+            <div class="mt-3 flex flex-wrap items-center gap-2 text-xs">
+              <span class="text-slate-400 text-[11px]">คลิปตัวอย่างยอดนิยม:</span>
+              <button onclick="applySampleUrl('https://www.tiktok.com/@healthylife.th/video/734291882049104')" class="px-3 py-1 rounded-full bg-blue-50 border border-blue-200/60 text-blue-700 font-medium hover:bg-blue-100 transition flex items-center gap-1">
+                <span>คลิปรีวิวยอดวิว 2.4M</span>
+                <span class="text-[9px] font-bold bg-amber-200 text-amber-900 px-1 rounded font-inter">HOT</span>
+              </button>
+              <button onclick="applySampleUrl('https://www.instagram.com/reel/C89xYz712k_before_after')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                คลิปเทียบ Before/After 850k
+              </button>
+              <button onclick="applySampleUrl('https://www.youtube.com/shorts/founder_story_18m')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                คลิปเล่าสตอรี่เจ้าของแบรนด์ 1.8M
+              </button>
+            </div>
+          </div>
+
+          <!-- 2-Column Grid: Left 9:16 Video Player + Right 4-Beat Anatomy -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start text-left">
+            
+            <!-- Left Column: Video Performance & 9:16 Mockup (~5 cols) -->
+            <div class="lg:col-span-5 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  คลิปต้นทางที่นำมาถอดรหัส
+                </span>
+                <span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded font-inter">
+                  TikTok Video
+                </span>
+              </div>
+
+              <!-- 9:16 Video Player Mockup -->
+              <div class="relative w-full aspect-[9/14] rounded-2xl overflow-hidden bg-slate-900 shadow-inner group">
+                <img 
+                  id="video-player-img" 
+                  src="./assets/video_preview.png" 
+                  alt="TikTok Video Preview" 
+                  class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition duration-500"
+                  onerror="this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80'"
+                >
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-slate-950/60 pointer-events-none"></div>
+
+                <!-- Top Overlay: Creator -->
+                <div class="absolute top-4 left-4 right-4 flex items-center justify-between">
+                  <div class="flex items-center gap-2 bg-black/40 backdrop-blur px-2.5 py-1 rounded-full border border-white/20 text-white text-xs">
+                    <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-900 font-bold flex items-center justify-center text-[10px]">H</span>
+                    <span class="font-inter font-semibold">@healthylife.th</span>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-red-600/80 text-white text-[10px] font-bold font-inter tracking-wider">
+                    VIRAL
+                  </span>
+                </div>
+
+                <!-- Center Play Button -->
+                <button onclick="toggleVideoPlayback()" class="absolute inset-0 m-auto w-14 h-14 rounded-full bg-white/90 text-blue-600 flex items-center justify-center shadow-lg hover:scale-110 transition active:scale-95">
+                  <i data-lucide="play" class="w-6 h-6 fill-current translate-x-0.5"></i>
+                </button>
+
+                <!-- Bottom Metrics -->
+                <div class="absolute bottom-4 left-4 right-4 text-white">
+                  <p class="text-xs font-medium leading-relaxed mb-2 line-clamp-2">
+                    "หยุดกินคอลลาเจนแบบเดิมถ้ายังไม่รู้ข้อนี้! เทียบให้ดูจะๆ ชงแล้วคาว vs ฉีกเคี้ยวทันที 🍇"
+                  </p>
+                  <div class="pt-2 border-t border-white/20 flex items-center justify-between text-[11px] text-slate-300 font-inter">
+                    <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3.5 h-3.5"></i> 2,450,000 วิว</span>
+                    <span class="flex items-center gap-1"><i data-lucide="heart" class="w-3.5 h-3.5"></i> 184.2K</span>
+                    <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> 42.1K</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Viral Score KPI Tile -->
+              <div class="p-4 rounded-xl bg-gradient-to-r from-amber-50 to-amber-100/60 border border-amber-200">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-bold text-amber-900">⚡ ปังกว่าปกติ 4.8 เท่า</span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500 text-white font-inter">Viral Ratio 96%</span>
+                </div>
+                <p class="text-[11px] text-amber-800/90 leading-relaxed">
+                  คลิปนี้รักษา Watch Time เฉลี่ย 82% ภายใน 5 วินาทีแรก ทำให้อัลกอริทึมดันเข้าสู่หน้า For You ต่อเนื่อง 7 วัน
+                </p>
+              </div>
+
+              <!-- Tone & Pacing Breakdown Tile -->
+              <div class="grid grid-cols-2 gap-3 p-3 bg-blue-50/60 rounded-xl border border-blue-100 text-xs">
+                <div>
+                  <p class="text-[10px] text-slate-500">อารมณ์หลัก (Core Emotion)</p>
+                  <p class="font-bold text-slate-800">ตื่นเต้น + สงสัยใคร่รู้</p>
+                </div>
+                <div>
+                  <p class="text-[10px] text-slate-500">จังหวะการตัดต่อ (Pacing)</p>
+                  <p class="font-bold text-slate-800">เปลี่ยนมุมทุก 1.8 วินาที</p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Column: 4-Beat Anatomy Timeline Flow (~7 cols) -->
+            <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              
+              <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                  <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">
+                    <i data-lucide="git-branch" class="w-4 h-4"></i>
+                  </span>
+                  <div>
+                    <h3 class="text-sm sm:text-base font-bold text-slate-900">
+                      ถอดรหัสโครงสร้างไวรัล 4 จังหวะ (Script Anatomy)
+                    </h3>
+                    <p class="text-xs text-slate-500">AI แยกแยะและวิเคราะห์ไทม์ไลน์ของวิดีโอนี้เพื่อเป็นพิมพ์เขียว</p>
+                  </div>
+                </div>
+                <button onclick="saveFormulaToIdeaBank()" class="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 border border-amber-300 text-amber-900 text-xs font-semibold transition flex items-center gap-1">
+                  ⭐ บันทึกสูตรนี้
+                </button>
+              </div>
+
+              <!-- Beat 1: Hook -->
+              <div class="p-4 rounded-xl bg-amber-50/70 border-2 border-amber-300 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-md bg-amber-500 text-white font-bold text-xs flex items-center justify-center font-inter">1</span>
+                    <span class="text-xs font-bold text-amber-950">จังหวะที่ 1: Hook ปิดประตูเลื่อนหนี</span>
+                  </div>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 font-inter">0:00 - 0:03</span>
+                </div>
+                <p class="text-xs text-amber-900 leading-relaxed">
+                  <strong>Visual Hook:</strong> นำแก้วชงคอลลาเจนผงที่มีคราบเหนียวเทียบกับมือที่ฉีกซองเจลลี่แล้วเคี้ยวทันทีแบบสดชื่น
+                </p>
+                <div class="p-2.5 rounded-lg bg-white/90 border border-amber-200 text-xs text-amber-800 font-medium">
+                  <strong>คำพูดเปิด (Verbal Hook):</strong> "หยุดกินคอลลาเจนแบบเดิมถ้ายังไม่รู้ข้อนี้... ทำไมยิ่งกินผิวยิ่งพัง?"
+                </div>
+                <p class="text-[11px] text-amber-700">💡 จิตวิทยา: Pattern Interrupt + ความกลัวสูญเปล่า (FOMO)</p>
+              </div>
+
+              <!-- Beat 2: Problem / Tension -->
+              <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-md bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center font-inter">2</span>
+                    <span class="text-xs font-bold text-slate-900">จังหวะที่ 2: ขยี้ปัญหา (Problem / Tension)</span>
+                  </div>
+                  <span class="text-[10px] font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-inter">0:03 - 0:12</span>
+                </div>
+                <p class="text-xs text-slate-700 leading-relaxed">
+                  ชี้ Pain Point คนทานอาหารเสริม: เสียเวลาชง เหม็นคาว ลืมกินจนหมดอายุ ปัญหายอดฮิตที่ทำให้คน 90% กินแล้วไม่เห็นผล เพราะทำไม่ต่อเนื่อง
+                </p>
+                <p class="text-[11px] text-slate-400">ภาพประกอบ: ขยะซองผงคอลลาเจนที่กองทิ้งไว้ในลิ้นชักที่ทำงาน</p>
+              </div>
+
+              <!-- Beat 3: Solution & Proof -->
+              <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-md bg-blue-600 text-white font-bold text-xs flex items-center justify-center font-inter">3</span>
+                    <span class="text-xs font-bold text-slate-900">จังหวะที่ 3: ทางออก & พิสูจน์ผลลัพธ์ (Solution & Proof)</span>
+                  </div>
+                  <span class="text-[10px] font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-inter">0:12 - 0:28</span>
+                </div>
+                <p class="text-xs text-slate-700 leading-relaxed">
+                  เปิดตัวพระเอก MEW Collagen Jelly: ซองพกง่าย ฉีกแล้วเคี้ยวได้เลย รสส้มยูซุแท้ หอมอร่อย ไม่มีน้ำตาล (0% Sugar) พร้อมเทคโนโลยี Ceramide นำเข้าจากญี่ปุ่น
+                </p>
+                <div class="flex items-center justify-between p-2 rounded-lg bg-blue-50 text-xs">
+                  <span class="text-slate-800">ทดสอบจริง 14 วัน: ผิวชุ่มชื้นขึ้น + รอยสิวจางลง</span>
+                  <span class="text-emerald-700 font-semibold">มีใบการันตีผลแล็บ ✓</span>
+                </div>
+              </div>
+
+              <!-- Beat 4: CTA -->
+              <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-md bg-emerald-600 text-white font-bold text-xs flex items-center justify-center font-inter">4</span>
+                    <span class="text-xs font-bold text-slate-900">จังหวะที่ 4: ปิดการขายด่วน (Call-to-Action)</span>
+                  </div>
+                  <span class="text-[10px] font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-inter">0:28 - 0:34</span>
+                </div>
+                <p class="text-xs text-slate-700 leading-relaxed">
+                  กระตุ้นข้อเสนอพิเศษ: จัดโปรเปิดตัว 2 กล่องแถมฟรี 1 กล่องเฉพาะในคลิปนี้ พร้อมชี้นิ้วชัดเจนไปที่ปุ่มตะกร้าสีเหลืองด้านล่างซ้าย
+                </p>
+                <p class="text-[11px] font-semibold text-rose-600">* Urgency: "จำกัดเพียง 50 ออเดอร์แรกของวันนี้เท่านั้น"</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Bottom Navigation Step 2 -->
+          <div class="mt-8 bg-white p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <button onclick="goToWorkflowStep(1)" class="w-full sm:w-auto px-5 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold transition">
+              ← กลับไปหน้าสมองธุรกิจ
+            </button>
+            <div class="flex items-center gap-2 text-xs text-slate-500">
+              <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+              <span>ระบบพร้อมส่งข้อมูลโครงสร้างนี้เข้าสู่โมดูล AI Script Remix ในคลิกเดียว</span>
+            </div>
+            <button onclick="goToWorkflowStep(3)" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 text-white rounded-xl text-sm font-semibold shadow-md shadow-blue-500/20 transition flex items-center justify-center gap-2">
+              <span>นำโครงสร้างนี้ไปสร้างสคริปต์ (ไปขั้นตอน 3)</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ==================== WORKFLOW STEP 3: SCRIPT REMIX ==================== -->
+        <div id="step-content-3" class="step-panel hidden">
+          
+          <!-- Step 3 Header -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-[11px] font-bold font-inter mb-2">
+                <span>STEP 3 OF 4</span>
+                <span>•</span>
+                <span class="text-emerald-700 font-semibold">Claim Guard Shield 100% Active</span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold text-slate-900">
+                3. ผสมสคริปต์ & ตรวจสอบคำเคลม (AI Script Remix & Claim Guard)
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
+                ระบบผสาน DNA สินค้าจากสมองธุรกิจ + โครงสร้างคลิปไวรัล พร้อม AI ตรวจจับคำต้องห้ามตามกฎหมาย อย. แบบเรียลไทม์
+              </p>
+            </div>
+            
+            <div class="flex items-center gap-2 self-start sm:self-auto">
+              <div class="bg-white px-3.5 py-2 rounded-xl border border-slate-200 text-center shadow-sm">
+                <p class="text-[10px] text-slate-400">ความยาวรวม</p>
+                <p id="total-script-duration" class="text-sm font-bold text-slate-800 font-inter">34 วินาที</p>
+              </div>
+              <div class="bg-white px-3.5 py-2 rounded-xl border border-slate-200 text-center shadow-sm">
+                <p class="text-[10px] text-slate-400">สถานะ อย.</p>
+                <p id="claim-guard-safety-label" class="text-sm font-bold text-emerald-600">ปลอดภัย 0 เสี่ยง</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 Bento Grid: 7 cols Script Control Card + 5 cols Director Pack -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start text-left">
+            
+            <!-- Left Column: Script Editor & Claim Guard (~7 cols) -->
+            <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+              
+              <!-- Script Header & Version Switcher -->
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded bg-blue-600 text-white font-bold text-[10px] font-inter">สคริปต์ A</span>
+                    <h3 class="text-sm sm:text-base font-bold text-slate-900">ฉีกเคี้ยวไม่ต้องชง (Hook ไวรัล 2.4M)</h3>
+                  </div>
+                  <div class="flex items-center gap-3 text-xs text-slate-500 mt-1">
+                    <span>ความยาวประเมิน: <strong class="text-slate-800 font-inter">34 วินาที</strong></span>
+                    <span>•</span>
+                    <span class="text-purple-700 font-medium">Tone: สนุกสนาน เป็นกันเอง</span>
+                  </div>
+                </div>
+
+                <div class="flex items-center p-1 bg-slate-100 rounded-lg text-xs font-semibold">
+                  <button class="px-2.5 py-1 rounded bg-white text-blue-700 shadow-sm font-inter">Ver 1.4 (ล่าสุด)</button>
+                  <button class="px-2.5 py-1 text-slate-500 hover:text-slate-800 font-inter">Ver 1.0</button>
+                </div>
+              </div>
+
+              <!-- Claim Guard Live Banner -->
+              <div id="claim-guard-banner" class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between gap-3 transition">
+                <div class="flex items-center gap-3">
+                  <div id="claim-guard-icon" class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <p id="claim-guard-headline" class="text-xs font-bold text-emerald-800">
+                      Claim Guard กำลังปกป้อง: ตรวจพบ 0 คำเสี่ยง
+                    </p>
+                    <p id="claim-guard-sub" class="text-[11px] text-emerald-700/80">
+                      กฎ อย. กองอาหารและยา กระทรวงสาธารณสุข ผ่านการตรวจสอบ 100%
+                    </p>
+                  </div>
+                </div>
+                <span id="claim-guard-pill" class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-emerald-700 border border-emerald-300 font-inter">
+                  Verified ✓
+                </span>
+              </div>
+
+              <!-- Script Cards (Inline Editable) -->
+              <div class="space-y-4">
+                
+                <!-- Section 1: Hook -->
+                <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm space-y-3">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold text-xs font-inter">01</span>
+                      <span class="text-xs font-bold text-slate-900">Hook ดึงคนดู</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 font-inter bg-slate-100 px-2 py-0.5 rounded">0 - 3 วินาที</span>
+                  </div>
+
+                  <!-- Visual Direction -->
+                  <div class="flex items-start gap-2 p-2.5 bg-blue-50/50 rounded-lg text-xs">
+                    <span class="px-1.5 py-0.5 rounded bg-blue-200 text-blue-800 font-bold text-[10px] font-inter uppercase">VISUAL</span>
+                    <p class="text-blue-900 font-medium">
+                      [A-Roll] ผู้หญิงถือซองเจลลี่เทียบกับแก้วคอลลาเจนชงที่เหลือคราบ ทำหน้าเบื่อแก้วชงแล้วยิ้มมองซองเจลลี่
+                    </p>
+                  </div>
+
+                  <!-- Audio / Dialogue (Editable) -->
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between text-[11px]">
+                      <span class="px-1.5 py-0.5 rounded bg-purple-100 text-purple-800 font-bold text-[10px] font-inter uppercase">AUDIO</span>
+                      <span class="text-slate-400">คลิกเพื่อแก้ไขบทพูด</span>
+                    </div>
+                    <textarea 
+                      id="script-hook" 
+                      rows="2" 
+                      oninput="handleScriptInput(this)" 
+                      class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 font-medium leading-relaxed focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >“ใครบอกว่ากินคอลลาเจนต้องเสียเวลาชง ลืมแก้วคาวๆ ไปได้เลย!”</textarea>
+                  </div>
+                </div>
+
+                <!-- Section 2: Body & Solution -->
+                <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm space-y-3">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold text-xs font-inter">02</span>
+                      <span class="text-xs font-bold text-slate-900">Body & Solution (เปิดตัวสินค้าและจุดเด่น)</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 font-inter bg-slate-100 px-2 py-0.5 rounded">3 - 22 วินาที</span>
+                  </div>
+
+                  <!-- Visual Direction -->
+                  <div class="flex items-start gap-2 p-2.5 bg-purple-50/50 rounded-lg text-xs">
+                    <span class="px-1.5 py-0.5 rounded bg-purple-200 text-purple-800 font-bold text-[10px] font-inter uppercase">VISUAL</span>
+                    <p class="text-purple-900 font-medium">
+                      [B-Roll] โคลสอัพฉีกซอง เนื้อเจลลี่เด้งดึ๋ง รสส้มยูซุสีทองใส เด้งตามจังหวะเพลง แล้วตัดมาที่ฉากเคี้ยวอร่อยชิลๆ ในรถ
+                    </p>
+                  </div>
+
+                  <!-- Audio / Dialogue (Editable) -->
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between text-[11px]">
+                      <span class="px-1.5 py-0.5 rounded bg-purple-100 text-purple-800 font-bold text-[10px] font-inter uppercase">AUDIO</span>
+                      <span class="text-slate-400">คลิกเพื่อแก้ไขบทพูด</span>
+                    </div>
+                    <textarea 
+                      id="script-body" 
+                      rows="3" 
+                      oninput="handleScriptInput(this)" 
+                      class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 font-medium leading-relaxed focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >“ตัวนี้คือ MEW Collagen Jelly Plus รวมเปปไทด์ 10,000 mg ไม่คาว พกง่าย กินตอนเร่งรีบได้ทุกที่”</textarea>
+                  </div>
+                </div>
+
+                <!-- Section 3: Call To Action -->
+                <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm space-y-3">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold text-xs font-inter">03</span>
+                      <span class="text-xs font-bold text-slate-900">Call To Action (ปิดการขายชี้ตะกร้า)</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 font-inter bg-slate-100 px-2 py-0.5 rounded">22 - 34 วินาที</span>
+                  </div>
+
+                  <!-- Visual Direction -->
+                  <div class="flex items-start gap-2 p-2.5 bg-blue-50/50 rounded-lg text-xs">
+                    <span class="px-1.5 py-0.5 rounded bg-blue-200 text-blue-800 font-bold text-[10px] font-inter uppercase">VISUAL</span>
+                    <p class="text-blue-900 font-medium">
+                      [A-Roll] ยิ้มโชว์ผิวใสสุขภาพดี + ชี้มือไปที่มุมซ้ายล่างของจอ พร้อมโชว์แพ็กเกจกล่อง 2 กล่องคู่กัน
+                    </p>
+                  </div>
+
+                  <!-- Audio / Dialogue (Editable) -->
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between text-[11px]">
+                      <span class="px-1.5 py-0.5 rounded bg-purple-100 text-purple-800 font-bold text-[10px] font-inter uppercase">AUDIO</span>
+                      <span class="text-slate-400">คลิกเพื่อแก้ไขบทพูด</span>
+                    </div>
+                    <textarea 
+                      id="script-cta" 
+                      rows="2" 
+                      oninput="handleScriptInput(this)" 
+                      class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 font-medium leading-relaxed focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >“กดโปร 2 แถม 1 ที่ตะกร้าซ้ายล่างก่อนของหมดนะคะ!”</textarea>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Interactive AI Prompt Action Toolbar -->
+              <div class="pt-4 border-t border-slate-100">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-blue-600"></i>
+                    <span>AI Prompt Actions ด่วน:</span>
+                  </span>
+                  <span class="text-[11px] text-slate-400">คลิกเพื่อปรับสคริปต์ทันที</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button onclick="aiRemixAction('punchy')" class="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold transition">
+                    ✨ เปลี่ยน Hook ให้แรงขึ้น
+                  </button>
+                  <button onclick="aiRemixAction('short')" class="px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-semibold transition">
+                    ⚡ ย่นให้เหลือ 20 วิ
+                  </button>
+                  <button onclick="aiRemixAction('formal')" class="px-3 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 text-xs font-semibold transition">
+                    🗣️ ปรับให้เป็นทางการขึ้น
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Column: Director Pack & Production Setup (~5 cols) -->
+            <div class="lg:col-span-5 space-y-6">
+              
+              <!-- Director Pack Card -->
+              <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center">
+                      <i data-lucide="camera" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-slate-900">Director Pack (คู่มือกำกับมุมกล้อง)</h4>
+                      <p class="text-[11px] text-slate-500">เตรียมการถ่ายทำสำหรับ Creator</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Difficulty Meter Badge -->
+                <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs">
+                  <span class="font-semibold text-slate-700 flex items-center gap-1.5">
+                    <i data-lucide="smartphone" class="w-4 h-4 text-emerald-600"></i>
+                    <span>ระดับการถ่าย:</span>
+                  </span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-bold text-[11px]">
+                    ง่าย (ใช้มือถือเครื่องเดียวได้ 🟢)
+                  </span>
+                </div>
+
+                <!-- Shot Breakdown Checklist -->
+                <div>
+                  <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2 font-inter">
+                    SHOT BREAKDOWN CHECKLIST (5 ช็อต)
+                  </p>
+                  <div class="space-y-2 text-xs">
+                    <label class="flex items-start gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100 cursor-pointer hover:bg-slate-100/70">
+                      <input type="checkbox" checked class="mt-0.5 rounded text-blue-600 focus:ring-blue-500">
+                      <div class="flex-1">
+                        <div class="flex items-center justify-between">
+                          <span class="font-bold text-slate-800">[A-Roll] คนพูดหน้ากล้อง</span>
+                          <span class="text-[10px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded font-inter">2 ซีน</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-0.5">แสงธรรมชาติข้างหน้าต่าง หรือไฟวง 1 ตัว มุมระดับสายตา</p>
+                      </div>
+                    </label>
+
+                    <label class="flex items-start gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100 cursor-pointer hover:bg-slate-100/70">
+                      <input type="checkbox" checked class="mt-0.5 rounded text-blue-600 focus:ring-blue-500">
+                      <div class="flex-1">
+                        <div class="flex items-center justify-between">
+                          <span class="font-bold text-slate-800">[B-Roll] ภาพแทรกสินค้าชัดๆ</span>
+                          <span class="text-[10px] font-bold text-purple-700 bg-purple-100 px-1.5 py-0.5 rounded font-inter">3 ซีน</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-0.5">จังหวะฉีกซอง, ซูมเนื้อเจลลี่ดึ๋งๆ, และภาพกล่อง 2 แถม 1</p>
+                      </div>
+                    </label>
+
+                    <label class="flex items-start gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100 cursor-pointer hover:bg-slate-100/70">
+                      <input type="checkbox" class="mt-0.5 rounded text-blue-600 focus:ring-blue-500">
+                      <div class="flex-1">
+                        <div class="flex items-center justify-between">
+                          <span class="font-bold text-slate-800">[Voiceover] เสียงบรรยายเสริม</span>
+                          <span class="text-[10px] font-medium text-slate-500 bg-slate-200 px-1.5 py-0.5 rounded">รออัด</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-0.5">บันทึกผ่านไมค์ไร้สาย หนีบปกเสื้อ เพื่อเสียงพูดที่ชัดเจน</p>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Props Required -->
+                <div class="p-3.5 rounded-xl bg-blue-50/70 border border-blue-100 text-xs">
+                  <p class="font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                    <i data-lucide="package" class="w-3.5 h-3.5 text-blue-600"></i>
+                    <span>อุปกรณ์และพร็อพที่ต้องเตรียม (Props Required):</span>
+                  </p>
+                  <ul class="text-[11px] text-slate-600 space-y-1 list-disc list-inside">
+                    <li>ซองตัวอย่าง 2 ซอง (ซองสำหรับฉีก 1, โชว์ 1)</li>
+                    <li>แก้วน้ำมีคราบ (สำหรับเปรียบเทียบในช็อต Hook)</li>
+                    <li>กล่องสินค้าคู่เพื่อประกอบ Call to Action</li>
+                  </ul>
+                </div>
+
+              </div>
+
+              <!-- Claim Guard Blocklist Widget -->
+              <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <div class="flex items-center gap-2">
+                    <i data-lucide="shield" class="w-4 h-4 text-emerald-600"></i>
+                    <h4 class="text-sm font-bold text-slate-900 font-inter">Claim Guard Blocklist</h4>
+                  </div>
+                  <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded font-inter">อย. กองอาหาร</span>
+                </div>
+                <p class="text-xs text-slate-500">คำที่ AI ตรวจสอบและระงับการแทรกลงในสคริปต์อัตโนมัติ:</p>
+                <div class="flex flex-wrap gap-1.5 text-xs">
+                  <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200 font-medium">ขาวถาวร ❌</span>
+                  <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200 font-medium">การันตีคืนเงิน ❌</span>
+                  <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200 font-medium">เห็นผล 100% ❌</span>
+                  <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200 font-medium">รักษาฝ้าหายขาด ❌</span>
+                </div>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                  <span class="text-emerald-700 font-medium">✓ สคริปต์ปัจจุบันเคลียร์ 100%</span>
+                  <a href="#" class="text-blue-600 hover:underline">ดูข้อบังคับ 2568 →</a>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Sticky Bottom Confirmation Toolbar -->
+          <div class="mt-8 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+            <button onclick="goToWorkflowStep(2)" class="w-full sm:w-auto px-5 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold transition">
+              ← กลับไปหน้าสแกนคลิป (ขั้นตอน 2)
+            </button>
+            <div class="flex items-center gap-2 text-xs text-slate-500">
+              <span class="font-medium text-slate-700">สคริปต์บันทึกล่าสุด</span>
+              <span>•</span>
+              <span class="text-emerald-700 font-semibold">พร้อมส่งออกไปยังคิวถ่ายทำ</span>
+            </div>
+            <button onclick="goToWorkflowStep(4)" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl text-sm font-bold shadow-md shadow-blue-500/20 transition flex items-center justify-center gap-2">
+              <span>ยืนยันสคริปต์และไปวางแผนถ่ายทำ (ไปขั้นตอน 4)</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ==================== WORKFLOW STEP 4: FILMING SCHEDULE & BRIEF ==================== -->
+        <div id="step-content-4" class="step-panel hidden">
+          
+          <!-- Step 4 Header -->
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 text-left">
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold font-inter tracking-wider mb-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                <span>STEP 4 • PRODUCTION WORKSPACE</span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold text-slate-900">
+                4. วางแผนถ่ายทำ & ส่งงานตัดต่อ (Filming Board & Editor Brief)
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
+                จัดคิวถ่ายทำตาม Shot List, เตรียม Asset กราฟิก และส่งออกบรีฟให้นักตัดต่อทำงานได้ทันทีแบบมืออาชีพ
+              </p>
+            </div>
+
+            <!-- Quick Stats Pill -->
+            <div class="bg-white px-4 py-2.5 rounded-xl border border-slate-200 flex items-center gap-4 text-xs shadow-sm self-start lg:self-auto">
+              <div>
+                <span class="text-slate-400">รวมเวลาคลิป:</span>
+                <strong class="font-inter text-slate-800 ml-1">34 วินาที</strong>
+              </div>
+              <div class="h-4 w-[1px] bg-slate-200"></div>
+              <div>
+                <span class="text-slate-400">จำนวน:</span>
+                <strong class="font-inter text-slate-800 ml-1">4 ช็อต</strong>
+              </div>
+              <div class="h-4 w-[1px] bg-slate-200"></div>
+              <div>
+                <span class="text-amber-700 font-medium">ส่งงาน:</span>
+                <strong class="text-amber-800 ml-1">พรุ่งนี้ 18:00 น.</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action & Export Toolbar -->
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm mb-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-2 text-slate-600 font-semibold self-start md:self-auto">
+              <i data-lucide="video" class="w-4 h-4 text-emerald-600"></i>
+              <span>โหมดควบคุมการผลิต: TikTok Commercial / E-Commerce Form</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+              <button onclick="copyShotListTable()" class="flex-1 md:flex-none px-3.5 py-2 rounded-lg border border-slate-200 hover:bg-slate-50 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span>คัดลอกตาราง Shot List</span>
+              </button>
+              <button onclick="downloadBriefMarkdown()" class="flex-1 md:flex-none px-3.5 py-2 rounded-lg border border-slate-200 hover:bg-slate-50 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>ดาวน์โหลด Markdown / PDF</span>
+              </button>
+              <button onclick="openEditorHandoffLink()" class="w-full md:w-auto px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-semibold transition flex items-center justify-center gap-1.5 shadow-sm">
+                <i data-lucide="link-2" class="w-3.5 h-3.5"></i>
+                <span>สร้างลิงก์ส่งงานให้นักตัดต่อ (Editor Link)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Section 1: Shot-by-Shot Filming Table / Production Board -->
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-6 text-left">
+            <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                  <i data-lucide="table" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">ตารางถ่ายทำแยกช็อต (Shot-by-Shot Board)</h3>
+                  <p class="text-[11px] text-slate-500">รายละเอียดการจัดมุมภาพและบทพูดตามไทม์ไลน์ 34 วินาที</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span id="filming-progress-badge" class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold font-inter">
+                  ความคืบหน้า: 2/4 ถ่ายแล้ว
+                </span>
+                <button onclick="insertShotRow()" class="px-3 py-1 bg-white border border-slate-200 hover:bg-slate-50 text-blue-600 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  <span>เพิ่มช็อตแทรก</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Responsive Table Container -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs text-left">
+                <thead class="bg-slate-50/80 border-b border-slate-200 text-slate-500 font-semibold">
+                  <tr>
+                    <th class="py-3 px-4 w-12 text-center">ลำดับ (#)</th>
+                    <th class="py-3 px-4 w-28">ประเภทซีน (TYPE)</th>
+                    <th class="py-3 px-4 w-64">มุมกล้อง & ภาพ (VISUAL FRAMING)</th>
+                    <th class="py-3 px-4 w-64">เสียง & บทพูด (AUDIO / SCRIPT)</th>
+                    <th class="py-3 px-4 w-40">อุปกรณ์ & พร็อพ (PROPS)</th>
+                    <th class="py-3 px-4 w-32 text-center">สถานะ (STATUS)</th>
+                  </tr>
+                </thead>
+                <tbody id="shot-list-table-body" class="divide-y divide-slate-100">
+                  <!-- Row 1: #01 Done -->
+                  <tr class="hover:bg-slate-50/60 transition">
+                    <td class="py-3.5 px-4 font-bold text-slate-400 font-inter text-center">#01</td>
+                    <td class="py-3.5 px-4">
+                      <span class="inline-block px-2 py-1 rounded bg-blue-100 text-blue-800 font-semibold text-[11px]">
+                        [A-Roll] คนพูดหน้ากล้อง
+                      </span>
+                      <p class="text-[10px] text-slate-400 font-inter mt-1">0:00 - 0:08 (8s)</p>
+                    </td>
+                    <td class="py-3.5 px-4">
+                      <p class="font-bold text-slate-800">Medium Shot (หน้าตรง เห็นถึงอก)</p>
+                      <p class="text-slate-500 mt-0.5">ถือซองเจลลี่เทียบแก้วชง แสดงสีหน้าเหนื่อยหน่ายกับการคนแก้ว</p>
+                    </td>
+                    <td class="py-3.5 px-4">
+                      <p class="text-slate-900 font-medium">"ใครบอกว่ากินคอลลาเจนต้องเสียเวลาชง..."</p>
+                      <p class="text-slate-400 text-[11px] mt-0.5">SFX: เสียงถอนหายใจเบาๆ + Pop เสียงแหลม</p>
+                    </td>
+                    <td class="py-3.5 px-4 text-slate-600">
+                      ซองเจลลี่ + แก้วชงใส่น้ำ
+                    </td>
+                    <td class="py-3.5 px-4 text-center">
+                      <button onclick="toggleRowStatus(this)" class="status-btn px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold border border-emerald-300">
+                        ถ่ายเสร็จแล้ว ✓
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- Row 2: #02 In Progress -->
+                  <tr class="hover:bg-slate-50/60 transition bg-amber-50/20">
+                    <td class="py-3.5 px-4 font-bold text-slate-400 font-inter text-center">#02</td>
+                    <td class="py-3.5 px-4">
+                      <span class="inline-block px-2 py-1 rounded bg-purple-100 text-purple-800 font-semibold text-[11px]">
+                        [B-Roll] ภาพแทรก
+                      </span>
+                      <p class="text-[10px] text-slate-400 font-inter mt-1">0:08 - 0:16 (8s)</p>
+                    </td>
+                    <td class="py-3.5 px-4">
+                      <p class="font-bold text-slate-800">Macro Close-up (ซูมฉีกซอง)</p>
+                      <p class="text-slate-500 mt-0.5">โชว์เนื้อสัมผัสเด้งดึ๋ง สีทองส้มยูซุฉ่ำเงา แสงไฟริมขอบชัดเจน</p>
+                    </td>
+                    <td class="py-3.5 px-4">
+                      <p class="text-slate-900 font-medium">ดนตรีจังหวะเร็ว สนุกสนาน (Beat Drops)</p>
+                      <p class="text-slate-400 text-[11px] mt-0.5">SFX: เสียงฉีกซอง crisp tear ชัดเจนระดับ 4K</p>
+                    </td>
+                    <td class="py-3.5 px-4 text-slate-600">
+                      ซองเจลลี่แกะใหม่ 1 ซอง
+                    </td>
+                    <td class="py-3.5 px-4 text-center">
+                      <button onclick="toggleRowStatus(this)" class="status-btn px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold border border-amber-300">
+                        กำลังถ่าย ⏳
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- Row 3: #03 Pending -->
+                  <tr class="hover:bg-slate-50/60 transition">
+                    <td class="py-3.5 px-4 font-bold text-slate-400 font-inter text-center">#03</td>
+                    <td class="py-3.5 px-4">
+                      <span class="inline-block px-2 py-1 rounded bg-purple-100 text-purple-800 font-semibold text-[11px]">
+                        [B-Roll] ภาพแทรก
+                      </span>
+                      <p class="text-[10px] text-slate-400 font-inter mt-1">0:16 - 0:26 (10s)</p>
+                    </td>
+                    <td class="py-3.5 px-4">
+                      <p class="font-bold text-slate-800">Over-shoulder (ในรถยนต์)</p>
+                      <p class="text-slate-500 mt-0.5">ตอนนั่งเคี้ยวในรถ ระหว่างเดินทาง สะท้อนความสะดวกคล่องตัว</p>
+                    </td>
+                    <td class="py-3.5 px-4">
+                      <p class="text-slate-900 font-medium">"พกง่าย กินตอนเร่งรีบได้ทุกที่..."</p>
+                      <p class="text-slate-400 text-[11px] mt-0.5">SFX: เสียงเปิดประตูรถเบาๆ คลอเสียงเพลงอินโทร</p>
+                    </td>
+                    <td class="py-3.5 px-4 text-slate-600">
+                      รถยนต์ / บรรยากาศนอกบ้าน
+                    </td>
+                    <td class="py-3.5 px-4 text-center">
+                      <button onclick="toggleRowStatus(this)" class="status-btn px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-medium border border-slate-200">
+                        ยังไม่ได้ถ่าย
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- Row 4: #04 Pending CTA -->
+                  <tr class="hover:bg-slate-50/60 transition">
+                    <td class="py-3.5 px-4 font-bold text-slate-400 font-inter text-center">#04</td>
+                    <td class="py-3.5 px-4">
+                      <span class="inline-block px-2 py-1 rounded bg-blue-100 text-blue-800 font-semibold text-[11px]">
+                        [A-Roll] ชี้ตะกร้า
+                      </span>
+                      <p class="text-[10px] text-slate-400 font-inter mt-1">0:26 - 0:34 (8s)</p>
+                    </td>
+                    <td class="py-3.5 px-4">
+                      <p class="font-bold text-slate-800">Medium Close-up ยิ้มสดใส</p>
+                      <p class="text-slate-500 mt-0.5">หันมายิ้มสดใส มั่นใจ และชี้ไปที่มุมซ้ายล่างของจอแบบชัดเจน</p>
+                    </td>
+                    <td class="py-3.5 px-4">
+                      <p class="text-slate-900 font-medium">"กดโปร 2 แถม 1 ที่ตะกร้าซ้ายล่างเลย!"</p>
+                      <p class="text-slate-400 text-[11px] mt-0.5">SFX: เสียง Ding! ชวนกด + ซาวด์ฉลองยอดขาย</p>
+                    </td>
+                    <td class="py-3.5 px-4 text-slate-600">
+                      ซองสินค้า 2 กล่อง
+                    </td>
+                    <td class="py-3.5 px-4 text-center">
+                      <button onclick="toggleRowStatus(this)" class="status-btn px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-medium border border-slate-200">
+                        ยังไม่ได้ถ่าย
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table Footer Status Note -->
+            <div class="p-3 bg-slate-50/70 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500">
+              <span>บันทึกล่าสุด: แก้ไขเทคที่ 2 มุม Over-shoulder เรียบร้อย</span>
+              <span class="text-blue-600 font-semibold">ตารางนี้รองรับการคลิกเปลี่ยนสถานะทันที</span>
+            </div>
+          </div>
+
+          <!-- Section 2: Bottom Two-Column Summary Cards -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-left">
+            
+            <!-- Left Card: Editor Delivery Brief & Notes -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                    <i data-lucide="scissors" class="w-4 h-4"></i>
+                  </div>
+                  <h3 class="text-sm font-bold text-slate-900">บรีฟทีมตัดต่อ (Editor Brief & Delivery Spec)</h3>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-inter">Ready for Editor</span>
+              </div>
+
+              <!-- Spec List -->
+              <div class="space-y-3 text-xs">
+                
+                <!-- Spec 1: Format -->
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <p class="font-bold text-slate-900 mb-0.5">อัตราส่วนและขนาดวิดีโอ (Format)</p>
+                  <p class="text-slate-600">แนวตั้ง 9:16 (1080x1920) คมชัด 60fps สำหรับ TikTok, Reels และ YouTube Shorts</p>
+                </div>
+
+                <!-- Spec 2: Subtitle Style -->
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <p class="font-bold text-slate-900 mb-0.5">สไตล์ซับไตเติล (Caption / Subtitle Style)</p>
+                  <p class="text-slate-600">ซับไตเติลภาษาไทย ตัวหนา ป๊อปอัปทีละคำ สีขาวขอบดำ มีไฮไลต์คำสำคัญสีเหลืองนีออนเพื่อดึงดูดสายตาตามกระแสไวรัล</p>
+                </div>
+
+                <!-- Spec 3: Sound Effects -->
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <p class="font-bold text-slate-900 mb-0.5">ดนตรีและซาวด์เอฟเฟกต์ (SFX & Audio)</p>
+                  <p class="text-slate-600">เสียง Whoosh ตอนสลับภาพเร็ว, เสียง Pop ตอนขึ้นซับ, ดนตรีสนุกสไตล์ T-Pop มีจังหวะเร้าอารมณ์ ซาวด์ไม่ทับเสียงพูด</p>
+                </div>
+
+                <!-- Spec 4: Safe Zone Checklist -->
+                <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 text-emerald-900">
+                  <p class="font-bold mb-0.5 flex items-center gap-1">
+                    <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-emerald-700"></i>
+                    <span>Safe Zone Checklist (กฎเหล็กห้ามตกขอบ)</span>
+                  </p>
+                  <p class="text-[11px] text-emerald-800">
+                    ตรวจสอบไม่ให้แคปชันหรือกราฟิกถูกแถบปุ่ม Like ขวามือ และแถบตะกร้าสินค้าสีเหลืองซ้ายล่างบดบังอย่างเด็ดขาด
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+                <span>แนบโฟลเดอร์ Google Drive Asset: /Assets_Collagen_v2/</span>
+                <a href="#" class="text-blue-600 font-semibold hover:underline">ดูพรีวิว Safe Zone</a>
+              </div>
+            </div>
+
+            <!-- Right Card: Publishing Schedule & Channels -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center">
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                  </div>
+                  <h3 class="text-sm font-bold text-slate-900">ตารางกำหนดโพสต์ (Multi-Channel Schedule)</h3>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-inter">3 แพลตฟอร์ม</span>
+              </div>
+
+              <!-- Channel Schedule Items -->
+              <div class="space-y-3 text-xs">
+                
+                <!-- TikTok -->
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <span class="w-9 h-9 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center font-inter">TT</span>
+                    <div>
+                      <div class="flex items-center gap-1.5">
+                        <span class="font-bold text-slate-900">TikTok Official</span>
+                        <span class="text-[9px] font-bold px-1.5 rounded bg-emerald-200 text-emerald-900 font-inter">Primary</span>
+                      </div>
+                      <p class="text-[11px] text-slate-500">วันศุกร์ 19:30 น. (ช่วง Prime Time คนเล่นเยอะที่สุด)</p>
+                    </div>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold font-inter">
+                    คิวงานยืนยันแล้ว
+                  </span>
+                </div>
+
+                <!-- Instagram Reels -->
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <span class="w-9 h-9 rounded-lg bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white font-bold text-xs flex items-center justify-center font-inter">IG</span>
+                    <div>
+                      <span class="font-bold text-slate-900">Instagram Reels</span>
+                      <p class="text-[11px] text-slate-500">วันเสาร์ 11:30 น. (ช่วงพักกลางวันกลุ่มทำงาน)</p>
+                    </div>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-full bg-slate-200 text-slate-700 text-[10px] font-medium font-inter">
+                    รอไฟล์สมบูรณ์
+                  </span>
+                </div>
+
+                <!-- YouTube Shorts -->
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <span class="w-9 h-9 rounded-lg bg-red-600 text-white font-bold text-xs flex items-center justify-center font-inter">YT</span>
+                    <div>
+                      <span class="font-bold text-slate-900">YouTube Shorts</span>
+                      <p class="text-[11px] text-slate-500">วันเสาร์ 18:00 น. (ช่วงต้นค่ำวันหยุดสุดสัปดาห์)</p>
+                    </div>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-full bg-slate-200 text-slate-700 text-[10px] font-medium font-inter">
+                    รอไฟล์สมบูรณ์
+                  </span>
+                </div>
+
+                <!-- Auto-sync Switch Toggle -->
+                <div class="p-3 rounded-xl bg-blue-50/80 border border-blue-200 flex items-center justify-between gap-4">
+                  <div>
+                    <p class="font-bold text-slate-900">Auto-sync to TikTok Seller Center</p>
+                    <p class="text-[11px] text-slate-500">ลิงก์และยิงตะกร้าสินค้าอัตโนมัติเมื่อวิดีโอถูกเผยแพร่</p>
+                  </div>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" checked id="toggle-autosync" class="sr-only peer">
+                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                  </label>
+                </div>
+
+              </div>
+
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+                <span>ตั้งค่าการแจ้งเตือนส่งไลน์กลุ่ม Line Notify อัตโนมัติ</span>
+                <span class="text-emerald-700 font-semibold">✓ เชื่อมต่อแล้ว</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Action Bar -->
+          <div class="mt-8 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+            <button onclick="goToWorkflowStep(3)" class="w-full sm:w-auto px-5 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold transition">
+              ← กลับไปปรับสคริปต์ (ขั้นตอน 3)
+            </button>
+            <button onclick="finalizeProjectAndGoToDetail()" class="w-full sm:w-auto px-8 py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-sm font-bold shadow-lg shadow-emerald-700/20 transition flex items-center justify-center gap-2">
+              <span>🚀 บันทึกโปรเจกต์ & ส่งบรีฟให้ทีมงาน</span>
+              <i data-lucide="check" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------------------- -->
+    <!-- VIEW 4: DETAIL VIEW (PRODUCTION CUE SHEET & HANDOFF)           -->
+    <!-- ------------------------------------------------------------- -->
+    <div id="view-detail" class="view-panel hidden flex-1 py-8 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Breadcrumb & Status -->
+        <div class="flex items-center justify-between mb-4">
+          <nav class="flex items-center gap-2 text-xs text-slate-500">
+            <button onclick="switchView('library')" class="hover:text-blue-600">คลังโปรเจกต์</button>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            <span id="detail-breadcrumb-title" class="font-semibold text-slate-800">MEW Collagen Jelly Plus (Launch V1)</span>
+          </nav>
+          <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold font-inter">
+            พร้อมส่งงานตัดต่อ
+          </span>
+        </div>
+
+        <!-- Detail Title Bar -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200 mb-6 text-left">
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 id="detail-project-title" class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                คอลลาเจนสูตรใหม่ 1 ซอง ผิวฉ่ำไวรัล 4.2x
+              </h1>
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-xs font-bold font-inter">#PROJ-892</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              สร้างโดย Mew Studio • ปรับปรุงล่าสุด 2 นาทีที่แล้ว • เป้าหมาย: TikTok Commercial & IG Reels
+            </p>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="copyDetailCueSheet()" class="px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl text-xs font-bold text-slate-700 shadow-sm transition flex items-center gap-1.5">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              <span>คัดลอก Cue Sheet</span>
+            </button>
+            <button onclick="downloadDetailPDF()" class="px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl text-xs font-bold text-slate-700 shadow-sm transition flex items-center gap-1.5">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+              <span>ส่งออกใบบรีฟ (PDF)</span>
+            </button>
+            <button onclick="openEditorHandoffLink()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-xs font-bold text-white shadow-sm transition flex items-center gap-1.5">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              <span>ส่งมอบงาน (Editor Handoff)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Production Cue Sheet Table (#01-#04 rows) -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-6 text-left">
+          <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i data-lucide="list-video" class="w-5 h-5 text-blue-600"></i>
+              <h3 class="text-sm font-bold text-slate-900">ตารางคิวงานการถ่ายทำแบบละเอียด (Production Cue Sheet)</h3>
+            </div>
+            <span class="text-xs text-slate-500 font-inter">รวมความยาว: 34 วินาที</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold">
+                <tr>
+                  <th class="py-3 px-4 w-14 text-center">ลำดับ</th>
+                  <th class="py-3 px-4 w-28">ไทม์ไลน์</th>
+                  <th class="py-3 px-4 w-60">มุมกล้อง (Visual Shot)</th>
+                  <th class="py-3 px-4">บทพูด & คิวเสียง (Audio / Dialogue)</th>
+                  <th class="py-3 px-4 w-36">พร็อพ (Props)</th>
+                  <th class="py-3 px-4 w-28 text-center">สถานะ</th>
+                </tr>
+              </thead>
+              <tbody id="detail-cue-table-body" class="divide-y divide-slate-100">
+                <!-- Dynamically populated or rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Handoff Specs & Multi-Channel Schedule Bento -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-left">
+          
+          <!-- Editor Handoff Specs -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2 pb-3 border-b border-slate-100">
+              <i data-lucide="file-check" class="w-4 h-4 text-emerald-600"></i>
+              <span>ข้อกำหนดการส่งมอบงานตัดต่อ (Editor Delivery Specs)</span>
+            </h3>
+            
+            <div class="space-y-3 text-xs">
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-500">Video Resolution</span>
+                <span class="font-bold text-slate-800 font-inter">1080 x 1920 (Vertical 9:16) 60fps</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-500">Audio Standards</span>
+                <span class="font-bold text-slate-800 font-inter">-14 LUFS (Normalized for TikTok)</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-500">Captions Font</span>
+                <span class="font-bold text-slate-800 font-inter">Prompt Bold (White with Black Outline)</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-500">Safe Margin</span>
+                <span class="font-bold text-slate-800">เว้นขอบล่าง 200px สำหรับแถบตะกร้า</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Multi-Channel Schedule -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2 pb-3 border-b border-slate-100">
+              <i data-lucide="share-2" class="w-4 h-4 text-blue-600"></i>
+              <span>กำหนดการโพสต์ทุกช่องทาง (Omnichannel Broadcast)</span>
+            </h3>
+
+            <div class="space-y-2.5 text-xs">
+              <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded bg-black text-white font-bold text-[10px] flex items-center justify-center font-inter">TT</span>
+                  <div>
+                    <p class="font-bold text-slate-800">TikTok @mew_collagen</p>
+                    <p class="text-[11px] text-slate-500">วันศุกร์นี้ 19:30 น.</p>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">Auto-sync ON</span>
+              </div>
+
+              <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white font-bold text-[10px] flex items-center justify-center font-inter">IG</span>
+                  <div>
+                    <p class="font-bold text-slate-800">Instagram Reels @mewstudio.th</p>
+                    <p class="text-[11px] text-slate-500">วันเสาร์นี้ 11:30 น.</p>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-700 text-[10px]">คิวยืนยัน</span>
+              </div>
+
+              <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded bg-red-600 text-white font-bold text-[10px] flex items-center justify-center font-inter">YT</span>
+                  <div>
+                    <p class="font-bold text-slate-800">YouTube Shorts Official</p>
+                    <p class="text-[11px] text-slate-500">วันเสาร์นี้ 18:00 น.</p>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-700 text-[10px]">คิวยืนยัน</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==================== AUTH MODAL (LOGIN & REGISTER) ==================== -->
+  <div id="auth-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <!-- 40% Dark Backdrop with Blur -->
+    <div onclick="closeAuthModal()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"></div>
+
+    <!-- Centered Modal Panel (Pure White Surface) -->
+    <div class="relative bg-white w-full max-w-[440px] rounded-2xl border border-slate-200/90 shadow-2xl p-6 sm:p-8 z-10 text-left transition-all transform">
+      
+      <!-- Close Button -->
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <!-- Brand Mini Badge -->
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-4">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-blue-600"></i>
+        <span id="auth-badge-text">สร้างบัญชีฟรีใน 1 นาที ✨</span>
+      </div>
+
+      <!-- Header Typography -->
+      <h2 id="auth-heading" class="text-xl sm:text-2xl font-bold text-slate-900 mb-1">
+        ยินดีต้อนรับกลับมา 👋
+      </h2>
+      <p id="auth-subheading" class="text-xs sm:text-sm text-slate-500 mb-6">
+        เข้าสู่ระบบเพื่อจัดการคอนเทนต์และสคริปต์ไวรัลของคุณ
+      </p>
+
+      <!-- Google 1-Click Login -->
+      <button onclick="simulateGoogleLogin()" class="w-full py-2.5 px-4 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2.5 transition shadow-sm mb-4">
+        <svg class="w-4 h-4" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span id="google-btn-text">เข้าสู่ระบบด้วย Google</span>
+      </button>
+
+      <!-- Form Divider -->
+      <div class="relative flex items-center justify-center my-4">
+        <div class="border-t border-slate-200 w-full"></div>
+        <span class="bg-white px-3 text-[11px] text-slate-400 font-medium absolute">หรือใช้อีเมล</span>
+      </div>
+
+      <!-- Auth Form Inputs -->
+      <form onsubmit="handleAuthSubmit(event)" class="space-y-3.5">
+        
+        <!-- Registration Only Field: Username/Brand Name -->
+        <div id="auth-field-brand" class="hidden">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่อผู้ใช้งาน หรือ ชื่อแบรนด์</label>
+          <input 
+            type="text" 
+            id="auth-brand-input" 
+            placeholder="เช่น Mew Studio หรือ สกินแคร์ออร์แกนิก" 
+            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+        </div>
+
+        <!-- Email Field -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">อีเมลใช้งาน</label>
+          <input 
+            type="email" 
+            id="auth-email-input" 
+            value="creator@mewstudio.com" 
+            required 
+            placeholder="name@business.com" 
+            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+        </div>
+
+        <!-- Password Field with Toggle -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="text-xs font-semibold text-slate-700">รหัสผ่าน</label>
+            <a href="#" id="auth-forgot-link" class="text-[11px] text-blue-600 hover:underline">ลืมรหัสผ่าน?</a>
+          </div>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="auth-password-input" 
+              value="secret123456" 
+              required 
+              placeholder="••••••••" 
+              class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10 font-inter"
+            >
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+              <i id="password-eye-icon" data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Terms Checkbox (Register Only) -->
+        <div id="auth-terms-field" class="hidden flex items-start gap-2 pt-1">
+          <input type="checkbox" id="auth-terms" class="mt-0.5 rounded text-blue-600 focus:ring-blue-500">
+          <label for="auth-terms" class="text-[11px] text-slate-500 leading-tight">
+            ฉันยอมรับ ข้อตกลงการใช้งาน และ นโยบายความเป็นส่วนตัว ของ MEW Content OS
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="auth-submit-btn" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-md shadow-blue-500/25 transition mt-2">
+          เข้าสู่ระบบ
+        </button>
+      </form>
+
+      <!-- Switcher Between Login and Register -->
+      <div class="mt-6 text-center text-xs text-slate-500">
+        <span id="auth-switch-prompt">ยังไม่มีบัญชีใช่ไหม?</span>
+        <button onclick="toggleAuthTab()" id="auth-switch-link" class="text-blue-600 font-bold ml-1 hover:underline">
+          สมัครสมาชิกใหม่
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-slate-700 transition transform duration-300">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-message">บันทึกข้อมูลเรียบร้อยแล้ว</span>
+  </div>
+
+  <!-- ==================== CLIENT LOGIC / JAVASCRIPT ==================== -->
+  <script>
+    // App State
+    let currentView = 'landing'; // 'landing' | 'library' | 'workflow' | 'detail'
+    let authModalOpen = false;
+    let authMode = 'login'; // 'login' | 'register'
+    let currentWorkflowStep = 1;
+    let activeLibraryFilter = 'all';
+
+    // Sample Projects for Library
+    const projectsData = [
+      {
+        id: 'proj-01',
+        title: 'คอลลาเจนสูตรใหม่ 1 ซอง ผิวฉ่ำไวรัล 4.2x',
+        product: 'MEW Collagen Jelly Plus',
+        hook: '“ถ้าคุณยังกินคอลลาเจนแบบเดิมอยู่...”',
+        target: 'ผู้หญิงวัยทำงาน 25-35 ปี (ผิวโทรม)',
+        shots: '4 ช็อต (Macro Close-up + Over-shoulder)',
+        duration: '34 วินาที',
+        updated: 'แก้ไขล่าสุด 2 ชม. ที่แล้ว',
+        status: 'ready',
+        statusLabel: 'พร้อมตัดต่อ (Ready for Editor)',
+        platforms: ['TikTok Official', 'IG Reels'],
+        avatar: 'ED',
+        avatarBg: 'bg-blue-100 text-blue-700'
+      },
+      {
+        id: 'proj-02',
+        title: 'เซรั่มใบบัวบก ลดสิวอักเสบใน 3 วันสูตรเร่งด่วน',
+        product: 'Organic Cica Serum',
+        hook: '“อย่าเพิ่งซื้อถ้ายังไม่รู้ข้อนี้...”',
+        target: 'วัยรุ่น/นักศึกษา เป็นสิวง่าย',
+        shots: '5 ช็อต (A-Roll + B-Roll ทดสอบเนื้อ)',
+        duration: '28 วินาที',
+        updated: 'แก้ไขล่าสุด 5 ชม. ที่แล้ว',
+        status: 'filming',
+        statusLabel: 'กำลังถ่ายทำ (Filming)',
+        platforms: ['TikTok Official'],
+        avatar: 'CR',
+        avatarBg: 'bg-purple-100 text-purple-700'
+      },
+      {
+        id: 'proj-03',
+        title: 'แกะกล่องวิตามินซีสด เคล็ดลับหน้าใสไม่ต้องพึ่งฟิลเตอร์',
+        product: 'Fresh Vit-C Ampoule',
+        hook: '“หมดเงินไปกี่บาทกับครีมกระแส มารู้วิธีนี้...”',
+        target: 'สายบิวตี้ ดูแลผิวพรีเมียม',
+        shots: '4 ช็อต (Unboxing + Texture Test)',
+        duration: '40 วินาที',
+        updated: 'แก้ไขล่าสุด เมื่อวานนี้',
+        status: 'ready',
+        statusLabel: 'พร้อมตัดต่อ (Ready for Editor)',
+        platforms: ['YouTube Shorts', 'TikTok'],
+        avatar: 'ED',
+        avatarBg: 'bg-blue-100 text-blue-700'
+      },
+      {
+        id: 'proj-04',
+        title: 'เจลลี่ไฟเบอร์คุมหิว พุงยุบข้ามคืนรสส้มยูซุ',
+        product: 'MEW Fiber Jelly Detox',
+        hook: '“กินดึกแค่ไหนก็ตื่นมารอด ด้วยซองนี้...”',
+        target: 'คนชอบกินมื้อดึก อึดอัดพุง',
+        shots: 'ยังไม่ระบุคิวกล้อง (รอสคริปต์ไฟนอล)',
+        duration: '~30 วินาที',
+        updated: 'แก้ไขล่าสุด 2 วันที่แล้ว',
+        status: 'drafting',
+        statusLabel: 'กำลังผสมสคริปต์ (Drafting)',
+        platforms: ['TikTok Official'],
+        avatar: 'CR',
+        avatarBg: 'bg-purple-100 text-purple-700'
+      },
+      {
+        id: 'proj-05',
+        title: 'รีวิวลิปบาล์มเปลี่ยนสี ปากฉ่ำวาว 24 ชม.',
+        product: 'Glow Plump Tint Balm',
+        hook: '“ลิปหลักร้อยที่เคาน์เตอร์แบรนด์ต้องสะเทือน...”',
+        target: 'นักเรียน/นักศึกษา ลิปพกพา',
+        shots: 'ยอดวิว 2.4M • บรีฟและสคริปต์สำเร็จ',
+        duration: '24 วินาที',
+        updated: 'โพสต์เมื่อ 12 มี.ค. 2025',
+        status: 'published',
+        statusLabel: 'โพสต์แล้ว (Published)',
+        platforms: ['TikTok', 'IG Reels'],
+        avatar: 'PUB',
+        avatarBg: 'bg-emerald-100 text-emerald-800'
+      },
+      {
+        id: 'proj-06',
+        title: 'กันแดดเนื้อน้ำนม ไม่เหนียวเหนอะหนะ ทาทับเมคอัพได้',
+        product: 'Invisible Watery Sunscreen SPF50+',
+        hook: '“ใครทากันแดดแล้วหน้าวอก หน้ามัน หยุดดูคลิปนี้!”',
+        target: 'คนทำงานกลางแจ้ง / เดินทางบ่อย',
+        shots: '4 ช็อต (Outdoor Test + Make-up)',
+        duration: '32 วินาที',
+        updated: 'แก้ไขล่าสุด 3 วันที่แล้ว',
+        status: 'ready',
+        statusLabel: 'พร้อมตัดต่อ (Ready for Editor)',
+        platforms: ['TikTok Official'],
+        avatar: 'ED',
+        avatarBg: 'bg-blue-100 text-blue-700'
+      }
+    ];
+
+    // Production Cue Sheet Rows for Detail View
+    const cueSheetRows = [
+      {
+        id: '#01',
+        time: '0:00 - 0:08 (8s)',
+        type: '[A-Roll] คนพูดหน้ากล้อง',
+        typeBg: 'bg-blue-100 text-blue-800',
+        shot: 'Medium Shot (หน้าตรง เห็นถึงอก)',
+        desc: 'ถือซองเจลลี่เทียบแก้วชง แสดงสีหน้าเหนื่อยหน่ายกับการคนแก้ว',
+        dialogue: '“ใครบอกว่ากินคอลลาเจนต้องเสียเวลาชง ลืมแก้วคาวๆ ไปได้เลย!”',
+        sfx: 'SFX: เสียงถอนหายใจเบาๆ + Pop เสียงแหลม',
+        props: 'ซองเจลลี่ + แก้วชงใส่น้ำ',
+        status: 'done',
+        statusText: 'ถ่ายเสร็จแล้ว ✓'
+      },
+      {
+        id: '#02',
+        time: '0:08 - 0:16 (8s)',
+        type: '[B-Roll] ภาพแทรก',
+        typeBg: 'bg-purple-100 text-purple-800',
+        shot: 'Macro Close-up (ซูมฉีกซอง)',
+        desc: 'โชว์เนื้อสัมผัสเด้งดึ๋ง สีทองส้มยูซุฉ่ำเงา แสงไฟริมขอบชัดเจน',
+        dialogue: 'ดนตรีจังหวะเร็ว สนุกสนาน (Beat Drops)',
+        sfx: 'SFX: เสียงฉีกซอง crisp tear ชัดเจนระดับ 4K',
+        props: 'ซองเจลลี่แกะใหม่ 1 ซอง',
+        status: 'filming',
+        statusText: 'กำลังถ่าย ⏳'
+      },
+      {
+        id: '#03',
+        time: '0:16 - 0:26 (10s)',
+        type: '[B-Roll] ภาพแทรก',
+        typeBg: 'bg-purple-100 text-purple-800',
+        shot: 'Over-shoulder (ในรถยนต์)',
+        desc: 'ตอนนั่งเคี้ยวในรถ ระหว่างเดินทาง สะท้อนความสะดวกคล่องตัว',
+        dialogue: '“พกง่าย กินตอนเร่งรีบได้ทุกที่...”',
+        sfx: 'SFX: เสียงเปิดประตูรถเบาๆ คลอเสียงเพลงอินโทร',
+        props: 'รถยนต์ / บรรยากาศนอกบ้าน',
+        status: 'pending',
+        statusText: 'ยังไม่ได้ถ่าย'
+      },
+      {
+        id: '#04',
+        time: '0:26 - 0:34 (8s)',
+        type: '[A-Roll] ชี้ตะกร้า',
+        typeBg: 'bg-blue-100 text-blue-800',
+        shot: 'Medium Close-up ยิ้มสดใส',
+        desc: 'หันมายิ้มสดใส มั่นใจ และชี้ไปที่มุมซ้ายล่างของจอแบบชัดเจน',
+        dialogue: '“กดโปร 2 แถม 1 ที่ตะกร้าซ้ายล่างก่อนของหมดนะคะ!”',
+        sfx: 'SFX: เสียง Ding! ชวนกด + ซาวด์ฉลองยอดขาย',
+        props: 'ซองสินค้า 2 กล่อง',
+        status: 'pending',
+        statusText: 'ยังไม่ได้ถ่าย'
+      }
+    ];
+
+    // Prohibited Words List
+    const prohibitedWords = [
+      'ขาวถาวร',
+      'การันตีคืนเงิน',
+      '100% เห็นผล',
+      'เห็นผล 100%',
+      'หายขาด',
+      'รักษาฝ้าหายขาด',
+      'ลดน้ำหนักทันที'
+    ];
+
+    // Initialize App
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProjectCards(projectsData);
+      renderDetailCueSheet(cueSheetRows);
+      lucide.createIcons();
+    });
+
+    // View Switching
+    function switchView(viewName) {
+      currentView = viewName;
+      document.querySelectorAll('.view-panel').forEach(panel => panel.classList.add('hidden'));
+      
+      const targetPanel = document.getElementById(`view-${viewName}`);
+      if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+      }
+
+      // Update Header Appearance
+      const landingActions = document.getElementById('landing-nav-actions');
+      const appActions = document.getElementById('app-nav-actions');
+      const autosaveBadge = document.getElementById('autosave-badge');
+      const navWorkspacePill = document.getElementById('nav-workspace-pill');
+
+      if (viewName === 'landing') {
+        landingActions.classList.remove('hidden');
+        appActions.classList.add('hidden');
+        autosaveBadge.classList.add('hidden');
+      } else {
+        landingActions.classList.add('hidden');
+        appActions.classList.remove('hidden');
+        autosaveBadge.classList.remove('hidden');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    // Modal Control
+    function openAuthModal(mode = 'login') {
+      authMode = mode;
+      updateAuthModalUI();
+      document.getElementById('auth-modal').classList.remove('hidden');
+      authModalOpen = true;
+      lucide.createIcons();
+    }
+
+    function closeAuthModal() {
+      document.getElementById('auth-modal').classList.add('hidden');
+      authModalOpen = false;
+    }
+
+    function toggleAuthTab() {
+      authMode = (authMode === 'login') ? 'register' : 'login';
+      updateAuthModalUI();
+    }
+
+    function updateAuthModalUI() {
+      const badge = document.getElementById('auth-badge-text');
+      const heading = document.getElementById('auth-heading');
+      const subheading = document.getElementById('auth-subheading');
+      const googleBtn = document.getElementById('google-btn-text');
+      const brandField = document.getElementById('auth-field-brand');
+      const termsField = document.getElementById('auth-terms-field');
+      const forgotLink = document.getElementById('auth-forgot-link');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const switchPrompt = document.getElementById('auth-switch-prompt');
+      const switchLink = document.getElementById('auth-switch-link');
+
+      if (authMode === 'register') {
+        badge.innerText = 'สร้างบัญชีฟรีใน 1 นาที ✨';
+        heading.innerText = 'สร้างบัญชีใหม่ฟรี ✨';
+        subheading.innerText = 'เริ่มผลิตคลิปปังของคุณได้ในไม่กี่คลิก';
+        googleBtn.innerText = 'ลงทะเบียนด้วย Google';
+        brandField.classList.remove('hidden');
+        termsField.classList.remove('hidden');
+        forgotLink.classList.add('hidden');
+        submitBtn.innerText = 'ลงทะเบียนใช้งานฟรี';
+        switchPrompt.innerText = 'มีบัญชีอยู่แล้วใช่ไหม?';
+        switchLink.innerText = 'เข้าสู่ระบบที่นี่';
+      } else {
+        badge.innerText = 'ยินดีต้อนรับกลับมา ✨';
+        heading.innerText = 'ยินดีต้อนรับกลับมา 👋';
+        subheading.innerText = 'เข้าสู่ระบบเพื่อจัดการคอนเทนต์และสคริปต์ไวรัลของคุณ';
+        googleBtn.innerText = 'เข้าสู่ระบบด้วย Google';
+        brandField.classList.add('hidden');
+        termsField.classList.add('hidden');
+        forgotLink.classList.remove('hidden');
+        submitBtn.innerText = 'เข้าสู่ระบบ';
+        switchPrompt.innerText = 'ยังไม่มีบัญชีใช่ไหม?';
+        switchLink.innerText = 'สมัครสมาชิกใหม่';
+      }
+      lucide.createIcons();
+    }
+
+    function togglePasswordVisibility() {
+      const pwd = document.getElementById('auth-password-input');
+      const icon = document.getElementById('password-eye-icon');
+      if (pwd.type === 'password') {
+        pwd.type = 'text';
+        icon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        pwd.type = 'password';
+        icon.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons();
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      closeAuthModal();
+      showToast(authMode === 'register' ? '🎉 สร้างบัญชีใหม่และเข้าสู่ระบบสำเร็จ!' : '👋 ยินดีต้อนรับกลับเข้าสู่ระบบ!');
+      switchView('library');
+    }
+
+    function simulateGoogleLogin() {
+      closeAuthModal();
+      showToast('🔑 เข้าสู่ระบบด้วย Google เรียบร้อยแล้ว!');
+      switchView('library');
+    }
+
+    // Workflow Wizard Stepper
+    function goToWorkflowStep(stepNum) {
+      currentWorkflowStep = stepNum;
+      
+      // Update Tab Styles
+      for (let i = 1; i <= 4; i++) {
+        const tab = document.getElementById(`wizard-tab-1`.replace('1', i));
+        const num = document.getElementById(`tab-num-1`.replace('1', i));
+        const label = document.getElementById(`tab-label-1`.replace('1', i));
+        const content = document.getElementById(`step-content-1`.replace('1', i));
+
+        if (i === stepNum) {
+          tab.className = 'wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-purple-50 border border-purple-300 shadow-sm';
+          num.className = 'w-8 h-8 rounded-lg bg-purple-600 text-white font-bold text-sm flex items-center justify-center font-inter';
+          label.className = 'text-xs font-bold text-purple-700';
+          content.classList.remove('hidden');
+        } else if (i < stepNum) {
+          tab.className = 'wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-emerald-50/60 border border-emerald-200/60 hover:bg-emerald-50';
+          num.className = 'w-8 h-8 rounded-lg bg-emerald-600 text-white font-bold text-sm flex items-center justify-center font-inter';
+          label.className = 'text-xs font-bold text-emerald-800';
+          content.classList.add('hidden');
+        } else {
+          tab.className = 'wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-white hover:bg-slate-50 border border-transparent';
+          num.className = 'w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter';
+          label.className = 'text-xs font-bold text-slate-700';
+          content.classList.add('hidden');
+        }
+      }
+
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    function startNewProject() {
+      switchView('workflow');
+      goToWorkflowStep(1);
+      showToast('✨ เริ่มต้นเวิร์กโฟลว์สร้างโปรเจกต์ใหม่ (ขั้นตอนที่ 1)');
+    }
+
+    function demoWorkflowPreview() {
+      switchView('workflow');
+      goToWorkflowStep(2);
+      showToast('🎬 แสดงผลหน้าวิเคราะห์วิดีโอ (Step 2 Preview)');
+    }
+
+    // Step 1 Interactive Helpers
+    function toggleChip(button) {
+      button.classList.toggle('active');
+      if (button.classList.contains('active')) {
+        button.className = 'icp-chip active px-3.5 py-1.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-300';
+        if (!button.innerText.includes('✓')) button.innerText += ' ✓';
+      } else {
+        button.className = 'icp-chip px-3.5 py-1.5 rounded-full text-xs font-medium bg-white text-slate-600 border border-slate-200 hover:border-slate-300';
+        button.innerText = button.innerText.replace(' ✓', '');
+      }
+    }
+
+    function promptAddICP() {
+      const val = prompt('กรุณาระบุกลุ่มเป้าหมายใหม่ (Target ICP):', 'คนทำงานฟรีแลนซ์/WFH');
+      if (val && val.trim()) {
+        const container = document.getElementById('icp-chips-container');
+        const newBtn = document.createElement('button');
+        newBtn.type = 'button';
+        newBtn.onclick = function() { toggleChip(this); };
+        newBtn.className = 'icp-chip active px-3.5 py-1.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-300';
+        newBtn.innerText = val.trim() + ' ✓';
+        container.insertBefore(newBtn, container.lastElementChild);
+        showToast(`เพิ่มกลุ่มเป้าหมาย "${val.trim()}" เรียบร้อยแล้ว`);
+      }
+    }
+
+    function promptAddProhibited() {
+      const val = prompt('กรุณาระบุคำต้องห้ามเคลมตามกฎหมาย อย. ใหม่:', 'สลายไขมันถาวร');
+      if (val && val.trim()) {
+        prohibitedWords.push(val.trim());
+        const container = document.getElementById('prohibited-claims-container');
+        const span = document.createElement('span');
+        span.className = 'inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold';
+        span.innerHTML = `<span>${val.trim()}</span><button onclick="this.parentElement.remove()" class="text-rose-400 hover:text-rose-700">×</button>`;
+        container.insertBefore(span, container.lastElementChild);
+        showToast(`เพิ่มคำสั่งห้าม "${val.trim()}" เรียบร้อย`);
+      }
+    }
+
+    function applyQuickReply(btn) {
+      const text = btn.innerText.replace(/^[⚡🍊]\s*"/, '').replace(/"$/, '');
+      const textarea = document.getElementById('grillme-input');
+      textarea.value = text;
+      textarea.focus();
+      showToast('คัดลอกคำตอบด่วนลงในกล่องข้อความแล้ว');
+    }
+
+    function saveGrillMeContext() {
+      const input = document.getElementById('grillme-input');
+      if (input.value.trim()) {
+        showToast('🧠 บันทึกข้อมูลเสริมเข้าสู่สมองกลาง (Business Brain) เรียบร้อย!');
+        input.value = '';
+      } else {
+        showToast('💡 ข้อมูลตัวอย่างถูกบันทึกเป็นบริบทของ AI สำเร็จ!');
+      }
+    }
+
+    // Step 2 Video Scanning Simulation
+    function applySampleUrl(url) {
+      document.getElementById('input-scan-url').value = url;
+      runVideoScan();
+    }
+
+    function runVideoScan() {
+      const btn = document.getElementById('btn-scan-trigger');
+      const text = document.getElementById('scan-button-text');
+      btn.disabled = true;
+      text.innerText = 'กำลังสแกนและถอดรหัส AI...';
+      
+      setTimeout(() => {
+        btn.disabled = false;
+        text.innerText = 'เริ่มสแกนและวิเคราะห์ AI';
+        showToast('⚡ ถอดรหัสโครงสร้างคลิปและคะแนนไวรัลสำเร็จ (Viral Score: 98/100)');
+      }, 1000);
+    }
+
+    function saveFormulaToIdeaBank() {
+      showToast('⭐ บันทึกสูตรโครงสร้าง 4 จังหวะนี้เข้าคลังไอเดียส่วนตัวเรียบร้อย!');
+    }
+
+    function toggleVideoPlayback() {
+      showToast('▶️ เล่นตัวอย่างคลิปวิดีโอ 9:16');
+    }
+
+    // Step 3 Live Script & Claim Guard Checker
+    function handleScriptInput(textarea) {
+      const allText = (document.getElementById('script-hook').value + ' ' + 
+                       document.getElementById('script-body').value + ' ' + 
+                       document.getElementById('script-cta').value).toLowerCase();
+
+      let detectedRisks = [];
+      prohibitedWords.forEach(word => {
+        if (allText.includes(word.toLowerCase())) {
+          detectedRisks.push(word);
+        }
+      });
+
+      const banner = document.getElementById('claim-guard-banner');
+      const icon = document.getElementById('claim-guard-icon');
+      const headline = document.getElementById('claim-guard-headline');
+      const sub = document.getElementById('claim-guard-sub');
+      const pill = document.getElementById('claim-guard-pill');
+      const label = document.getElementById('claim-guard-safety-label');
+
+      if (detectedRisks.length > 0) {
+        banner.className = 'p-3.5 rounded-xl bg-rose-50 border border-rose-300 flex items-center justify-between gap-3 transition animate-pulse';
+        icon.className = 'w-8 h-8 rounded-lg bg-rose-600 text-white flex items-center justify-center flex-shrink-0';
+        headline.className = 'text-xs font-bold text-rose-800';
+        headline.innerText = `⚠️ Claim Guard เตือน: ตรวจพบคำเสี่ยง "${detectedRisks.join(', ')}"`;
+        sub.className = 'text-[11px] text-rose-700/80';
+        sub.innerText = 'คำนี้อาจทำให้โฆษณาถูกระงับหรือผิด พ.ร.บ. อาหารและยา กรุณาปรับเปลี่ยน';
+        pill.className = 'text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-rose-700 border border-rose-300 font-inter';
+        pill.innerText = 'Risk Detected ❌';
+        label.className = 'text-sm font-bold text-rose-600';
+        label.innerText = `มีคำเสี่ยง (${detectedRisks.length})`;
+      } else {
+        banner.className = 'p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between gap-3 transition';
+        icon.className = 'w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0';
+        headline.className = 'text-xs font-bold text-emerald-800';
+        headline.innerText = 'Claim Guard กำลังปกป้อง: ตรวจพบ 0 คำเสี่ยง';
+        sub.className = 'text-[11px] text-emerald-700/80';
+        sub.innerText = 'กฎ อย. กองอาหารและยา กระทรวงสาธารณสุข ผ่านการตรวจสอบ 100%';
+        pill.className = 'text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-emerald-700 border border-emerald-300 font-inter';
+        pill.innerText = 'Verified ✓';
+        label.className = 'text-sm font-bold text-emerald-600';
+        label.innerText = 'ปลอดภัย 0 เสี่ยง';
+      }
+    }
+
+    function aiRemixAction(style) {
+      const hook = document.getElementById('script-hook');
+      const body = document.getElementById('script-body');
+      const cta = document.getElementById('script-cta');
+
+      if (style === 'punchy') {
+        hook.value = '“หยุดเสียเงินซื้อคอลลาเจนแบบเดิม! ถ้ายังไม่ได้ลองสูตรเคี้ยวสดชงไม่ต้องล้างแก้วตัวนี้”';
+        showToast('✨ ปรับ Hook ให้แรงและดึงสายตามากขึ้นเรียบร้อย!');
+      } else if (style === 'short') {
+        hook.value = '“คอลลาเจนไม่ต้องชง ฉีกเคี้ยวได้เลย!”';
+        body.value = '“MEW Jelly รวมไดเปปไทด์ 10,000 mg อร่อยสดชื่น 0% น้ำตาล”';
+        cta.value = '“รีบกดโปร 2 แถม 1 ที่ตะกร้าด้านล่าง!”';
+        document.getElementById('total-script-duration').innerText = '20 วินาที';
+        showToast('⚡ ย่นบทพูดให้กระชับเหลือ 20 วินาทีเรียบร้อย!');
+      } else if (style === 'formal') {
+        hook.value = '“นวัตกรรมใหม่ของการดูแลผิว สำหรับผู้ที่ไม่มีเวลาชงอาหารเสริมในชีวิตประจำวัน”';
+        body.value = '“ผลิตภัณฑ์ MEW Collagen Jelly Plus ผสานไดเปปไทด์เข้มข้นและสารสกัดข้าวญี่ปุ่น ผ่านการรับรองมาตรฐานระดับสากล”';
+        showToast('🗣️ ปรับโทนให้ดูน่าเชื่อถือและเป็นทางการเรียบร้อย!');
+      }
+      handleScriptInput();
+    }
+
+    // Step 4 & Detail Table Helpers
+    function renderDetailCueSheet(rows) {
+      const tbody = document.getElementById('detail-cue-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = rows.map((r, i) => `
+        <tr class="hover:bg-slate-50/60 transition ${r.status === 'filming' ? 'bg-amber-50/20' : ''}">
+          <td class="py-3 px-4 font-bold text-slate-400 font-inter text-center">${r.id}</td>
+          <td class="py-3 px-4">
+            <span class="inline-block px-2 py-0.5 rounded font-semibold text-[10px] ${r.typeBg}">${r.type}</span>
+            <p class="text-[10px] text-slate-400 font-inter mt-0.5">${r.time}</p>
+          </td>
+          <td class="py-3 px-4">
+            <p class="font-bold text-slate-800">${r.shot}</p>
+            <p class="text-slate-500 mt-0.5 text-[11px]">${r.desc}</p>
+          </td>
+          <td class="py-3 px-4">
+            <p class="text-slate-900 font-medium">${r.dialogue}</p>
+            <p class="text-slate-400 text-[10px] mt-0.5">${r.sfx}</p>
+          </td>
+          <td class="py-3 px-4 text-slate-600 text-[11px]">${r.props}</td>
+          <td class="py-3 px-4 text-center">
+            <button onclick="toggleRowStatus(this)" class="status-btn px-2.5 py-1 rounded-full text-[10px] font-bold border transition ${
+              r.status === 'done' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' :
+              r.status === 'filming' ? 'bg-amber-100 text-amber-800 border-amber-300' :
+              'bg-slate-100 text-slate-600 border-slate-200'
+            }">
+              ${r.statusText}
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleRowStatus(btn) {
+      if (btn.innerText.includes('ถ่ายเสร็จแล้ว')) {
+        btn.innerText = 'กำลังถ่าย ⏳';
+        btn.className = 'status-btn px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold border border-amber-300';
+      } else if (btn.innerText.includes('กำลังถ่าย')) {
+        btn.innerText = 'ยังไม่ได้ถ่าย';
+        btn.className = 'status-btn px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[10px] font-medium border border-slate-200';
+      } else {
+        btn.innerText = 'ถ่ายเสร็จแล้ว ✓';
+        btn.className = 'status-btn px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold border border-emerald-300';
+      }
+      showToast('อัปเดตสถานะการถ่ายทำเรียบร้อย');
+    }
+
+    function insertShotRow() {
+      const tbody = document.getElementById('shot-list-table-body');
+      const rowCount = tbody.children.length + 1;
+      const formattedNum = '#' + (rowCount < 10 ? '0' + rowCount : rowCount);
+      const newTr = document.createElement('tr');
+      newTr.className = 'hover:bg-slate-50/60 transition';
+      newTr.innerHTML = `
+        <td class="py-3.5 px-4 font-bold text-slate-400 font-inter text-center">${formattedNum}</td>
+        <td class="py-3.5 px-4">
+          <span class="inline-block px-2 py-1 rounded bg-purple-100 text-purple-800 font-semibold text-[11px]">[B-Roll] ช็อตแทรกใหม่</span>
+          <p class="text-[10px] text-slate-400 font-inter mt-1">แทรกคิว (4s)</p>
+        </td>
+        <td class="py-3.5 px-4">
+          <p class="font-bold text-slate-800">Close-up โชว์รายละเอียด</p>
+          <p class="text-slate-500 mt-0.5">ช็อตถ่ายเจาะเน้นความน่าทาน/สีสันสินค้า</p>
+        </td>
+        <td class="py-3.5 px-4">
+          <p class="text-slate-900 font-medium">เสียงบรรยายจุดเด่นเพิ่มเติม</p>
+          <p class="text-slate-400 text-[11px] mt-0.5">SFX: สวอชเบาๆ</p>
+        </td>
+        <td class="py-3.5 px-4 text-slate-600">สินค้าตัวอย่าง</td>
+        <td class="py-3.5 px-4 text-center">
+          <button onclick="toggleRowStatus(this)" class="status-btn px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-medium border border-slate-200">
+            ยังไม่ได้ถ่าย
+          </button>
+        </td>
+      `;
+      tbody.appendChild(newTr);
+      showToast(`เพิ่มช็อตแทรก ${formattedNum} เข้าตารางสำเร็จ`);
+    }
+
+    function copyShotListTable() {
+      navigator.clipboard.writeText(`MEW CONTENT OS - SHOT LIST TABLE\nProject: MEW Collagen Jelly Plus\n\n#01 [A-Roll 0:00-0:08]: ใครบอกว่ากินคอลลาเจนต้องเสียเวลาชง...\n#02 [B-Roll 0:08-0:16]: ดนตรีเร็ว ซูมฉีกซอง\n#03 [B-Roll 0:16-0:26]: พกง่าย กินตอนเร่งรีบในรถ\n#04 [A-Roll 0:26-0:34]: กดโปร 2 แถม 1 ที่ตะกร้าซ้ายล่าง`);
+      showToast('📋 คัดลอกตาราง Shot List ลงใน Clipboard แล้ว!');
+    }
+
+    function downloadBriefMarkdown() {
+      const mdContent = `# ใบบรีฟถ่ายทำ MEW Collagen Jelly Plus\n\n- วันที่ส่งมอบ: พรุ่งนี้ 18:00 น.\n- ความยาววิดีโอ: 34 วินาที (9:16 แนวตั้ง)\n- แพลตฟอร์ม: TikTok, Reels, YouTube Shorts\n\n## ตารางถ่ายทำ\n1. #01: Hook A-Roll (8s)\n2. #02: Texture Close-up B-Roll (8s)\n3. #03: Car Lifestyle B-Roll (10s)\n4. #04: Call To Action ชี้ตะกร้า (8s)\n`;
+      const blob = new Blob([mdContent], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'MEW_Editor_Brief.md';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('📥 ดาวน์โหลดไฟล์ Markdown ใบบรีฟสำเร็จ!');
+    }
+
+    function openEditorHandoffLink() {
+      prompt('🔗 ลิงก์สำหรับส่งมอบให้นักตัดต่อ (Read & Download Brief):', 'https://mewcontent.os/brief/share/token_89240fc7');
+    }
+
+    function finalizeProjectAndGoToDetail() {
+      switchView('detail');
+      showToast('🚀 บันทึกโปรเจกต์และเปิดหน้าใบบรีฟ Cue Sheet เรียบร้อยแล้ว!');
+    }
+
+    function copyDetailCueSheet() {
+      copyShotListTable();
+    }
+
+    function downloadDetailPDF() {
+      window.print();
+    }
+
+    // Library Filter & Search Logic
+    function renderProjectCards(list) {
+      const container = document.getElementById('project-cards-grid');
+      if (!container) return;
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center text-slate-400">
+            <i data-lucide="inbox" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
+            <p class="text-sm">ไม่พบโปรเจกต์ที่ตรงกับเงื่อนไขการค้นหา</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between text-left">
+          
+          <div>
+            <!-- Header Badges -->
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                ${item.platforms.map(p => `
+                  <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold font-inter">${p}</span>
+                `).join('')}
+              </div>
+              <span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full ${
+                item.status === 'ready' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                item.status === 'filming' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
+                item.status === 'published' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                'bg-purple-50 text-purple-700 border border-purple-200'
+              }">
+                <span class="w-1.5 h-1.5 rounded-full ${
+                  item.status === 'ready' ? 'bg-emerald-500' :
+                  item.status === 'filming' ? 'bg-amber-500' :
+                  item.status === 'published' ? 'bg-blue-500' : 'bg-purple-500'
+                }"></span>
+                <span>${item.statusLabel}</span>
+              </span>
+            </div>
+
+            <!-- Title -->
+            <h3 class="text-base font-bold text-slate-900 leading-snug mb-3">
+              ${item.title}
+            </h3>
+
+            <!-- Metadata Box -->
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 text-xs space-y-2 mb-4">
+              <div>
+                <span class="font-bold text-blue-700 font-inter">ท่อนฮุก:</span>
+                <span class="text-slate-800 ml-1 font-medium">${item.hook}</span>
+              </div>
+              <div>
+                <span class="text-slate-400">กลุ่ม:</span>
+                <span class="text-slate-600 ml-1">${item.target}</span>
+              </div>
+              <div class="pt-2 border-t border-slate-200/60 flex items-center justify-between text-slate-500 text-[11px]">
+                <span class="flex items-center gap-1">
+                  <i data-lucide="film" class="w-3.5 h-3.5 text-slate-400"></i>
+                  <span>${item.shots}</span>
+                </span>
+                <span class="font-bold text-slate-800 font-inter">${item.duration}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full ${item.avatarBg} font-bold text-xs flex items-center justify-center font-inter">
+                ${item.avatar}
+              </span>
+              <span class="text-[11px] text-slate-400">${item.updated}</span>
+            </div>
+            <button onclick="openProjectDetail('${item.id}', '${item.title}')" class="px-3 py-1.5 rounded-lg border border-blue-600 hover:bg-blue-50 text-blue-700 font-semibold text-xs transition flex items-center gap-1">
+              <span>✏️ เปิดแก้ไขสคริปต์ & บรีฟ</span>
+            </button>
+          </div>
+
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    function setLibraryFilter(filterType) {
+      activeLibraryFilter = filterType;
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.className = 'filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200';
+      });
+      event.target.className = 'filter-tab active px-3 py-1.5 text-xs font-semibold rounded-lg transition bg-blue-600 text-white';
+
+      applyFilterAndSearch();
+    }
+
+    function handleLibrarySearch(query) {
+      applyFilterAndSearch(query);
+    }
+
+    function applyFilterAndSearch(query = document.getElementById('library-search')?.value || '') {
+      let filtered = projectsData;
+      
+      if (activeLibraryFilter !== 'all') {
+        filtered = filtered.filter(p => p.status === activeLibraryFilter);
+      }
+
+      if (query && query.trim()) {
+        const q = query.trim().toLowerCase();
+        filtered = filtered.filter(p => 
+          p.title.toLowerCase().includes(q) || 
+          p.product.toLowerCase().includes(q) ||
+          p.target.toLowerCase().includes(q) ||
+          p.hook.toLowerCase().includes(q)
+        );
+      }
+
+      renderProjectCards(filtered);
+    }
+
+    function openProjectDetail(projId, projTitle) {
+      document.getElementById('detail-project-title').innerText = projTitle;
+      document.getElementById('detail-breadcrumb-title').innerText = projTitle;
+      switchView('detail');
+      showToast(`เปิดหน้าตรวจสอบ Cue Sheet และใบบรีฟ: ${projTitle}`);
+    }
+
+    function toggleUserMenu() {
+      showToast('👤 บัญชีผู้ใช้งาน: ฮาฟิส (Mew Studio) • แผน Creator Pro');
+    }
+
+    // Toast Utility
+    let toastTimeout = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.innerText = msg;
+      toast.classList.remove('hidden');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+      lucide.createIcons();
+    }
+  </script>
+
+</body>
+</html>
