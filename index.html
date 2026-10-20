@@ -79,6 +79,91 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #94A3B8;
     }
+
+    /* ==================== ONBOARDING TOUR ANIMATIONS ==================== */
+    @keyframes tourHandTap {
+      0%, 100% {
+        transform: translate(0, 0) scale(1) rotate(-12deg);
+      }
+      40% {
+        transform: translate(-6px, -6px) scale(0.9) rotate(-18deg);
+      }
+      55% {
+        transform: translate(-4px, -4px) scale(0.95) rotate(-15deg);
+      }
+    }
+    @keyframes tourRipple {
+      0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0.95;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(2.4);
+        opacity: 0;
+      }
+    }
+    @keyframes tourCardPop {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    @keyframes tourPulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.72), 0 0 0 4px #3B82F6, 0 0 25px 6px rgba(59, 130, 246, 0.55);
+      }
+      50% {
+        box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.72), 0 0 0 6px #60A5FA, 0 0 38px 12px rgba(59, 130, 246, 0.8);
+      }
+    }
+    .tour-spotlight-box {
+      position: fixed;
+      z-index: 9990;
+      pointer-events: none;
+      border-radius: 18px;
+      transition: top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  left 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: tourPulseGlow 2s infinite ease-in-out;
+    }
+    .tour-hand-pointer {
+      position: fixed;
+      z-index: 9996;
+      pointer-events: none;
+      transition: top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  left 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .tour-hand-icon {
+      animation: tourHandTap 1.15s infinite ease-in-out;
+      filter: drop-shadow(0 8px 16px rgba(0, 86, 255, 0.45));
+    }
+    .tour-ripple-ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      border: 3px solid #38BDF8;
+      background: rgba(56, 189, 248, 0.25);
+      animation: tourRipple 1.4s infinite cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tour-ripple-ring.delay-1 {
+      animation-delay: 0.45s;
+      border-color: #60A5FA;
+    }
+    .tour-tooltip-card {
+      position: fixed;
+      z-index: 9998;
+      transition: top 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                  left 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: tourCardPop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
   </style>
 </head>
 <body class="min-h-full flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900">
@@ -120,13 +205,21 @@
       </div>
 
       <!-- Right Actions / Navigation Links / User -->
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Always-Available Interactive Tour Trigger Button -->
+        <button onclick="startOnboardingTour(true)" id="header-tour-btn" class="px-3 py-1.5 text-xs font-bold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-300 rounded-xl shadow-sm transition flex items-center gap-1.5 relative group" title="เริ่มทัวร์แนะนำการใช้งานทีละขั้นตอน">
+          <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping absolute -top-0.5 -right-0.5"></span>
+          <span class="w-2 h-2 rounded-full bg-amber-500 absolute -top-0.5 -right-0.5"></span>
+          <i data-lucide="compass" class="w-3.5 h-3.5 text-amber-600 group-hover:rotate-45 transition"></i>
+          <span>สอนใช้งาน</span>
+        </button>
+
         <!-- Landing View Action Buttons -->
         <div id="landing-nav-actions" class="flex items-center gap-2">
-          <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-xl transition">
+          <button onclick="openAuthModal('login')" class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-xl transition">
             เข้าสู่ระบบ
           </button>
-          <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm shadow-blue-500/20 transition flex items-center gap-1.5">
+          <button onclick="openAuthModal('register')" id="nav-register-btn" class="px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm shadow-blue-500/20 transition flex items-center gap-1.5">
             <span>ทดลองใช้งานฟรี</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
@@ -197,12 +290,12 @@
           </p>
 
           <!-- CTAs -->
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8">
-            <button onclick="openAuthModal('register')" class="w-full sm:w-auto px-8 py-3.5 text-base font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-custom shadow-lg shadow-blue-500/25 transition flex items-center justify-center gap-2 group">
+          <div id="tour-target-hero-cta" class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 p-2 rounded-2xl">
+            <button id="btn-hero-free-trial" onclick="openAuthModal('register')" class="w-full sm:w-auto px-8 py-3.5 text-base font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-custom shadow-lg shadow-blue-500/25 transition flex items-center justify-center gap-2 group">
               <span>ทดลองใช้งานฟรี</span>
               <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-0.5 transition"></i>
             </button>
-            <button onclick="demoWorkflowPreview()" class="w-full sm:w-auto px-6 py-3.5 text-base font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 rounded-custom shadow-sm transition flex items-center justify-center gap-2">
+            <button id="btn-hero-demo" onclick="demoWorkflowPreview()" class="w-full sm:w-auto px-6 py-3.5 text-base font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 rounded-custom shadow-sm transition flex items-center justify-center gap-2">
               <i data-lucide="play-circle" class="w-5 h-5 text-blue-600"></i>
               <span>ดูตัวอย่างระบบ (Interactive Demo)</span>
             </button>
@@ -351,7 +444,7 @@
           </div>
 
           <!-- Cards Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div id="tour-target-4pillars" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-2 rounded-2xl">
             
             <!-- Card 1: Business Brain -->
             <div class="bg-purple-50/80 border border-purple-200/80 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-purple-500/5 transition">
@@ -506,7 +599,7 @@
         </div>
 
         <!-- Page Header & Action -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 mb-6">
+        <div id="tour-target-library-header" class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 mb-6 p-2 rounded-2xl">
           <div>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
               คลังโปรเจกต์คอนเทนต์ (Content Projects)
@@ -515,7 +608,7 @@
               โปรเจกต์ทั้งหมดที่บันทึกไว้ สามารถกดเข้าไปดูบรีฟ แก้ไขสคริปต์ หรือส่งงานต่อให้ทีมตัดต่อได้ทุกเมื่อ
             </p>
           </div>
-          <button onclick="startNewProject()" class="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition flex items-center gap-2 flex-shrink-0 self-start sm:self-auto">
+          <button id="btn-library-new-project" onclick="startNewProject()" class="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition flex items-center gap-2 flex-shrink-0 self-start sm:self-auto">
             <i data-lucide="plus" class="w-4 h-4"></i>
             <span>+ สร้างโปรเจกต์ใหม่</span>
           </button>
@@ -692,7 +785,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
             <!-- Left Column: Core Form (7 cols) -->
-            <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 text-left">
+            <div id="tour-target-step1-brain" class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 text-left">
               
               <!-- Brand & Product Name -->
               <div>
@@ -920,7 +1013,7 @@
           </div>
 
           <!-- Top URL Scanner Hero Input -->
-          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-6 text-left">
+          <div id="tour-target-step2-scanner" class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-6 text-left">
             <div class="flex items-center justify-between mb-2">
               <label class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                 <i data-lucide="link" class="w-4 h-4 text-blue-600"></i>
@@ -1192,7 +1285,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start text-left">
             
             <!-- Left Column: Script Editor & Claim Guard (~7 cols) -->
-            <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+            <div id="tour-target-step3-script" class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
               
               <!-- Script Header & Version Switcher -->
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
@@ -1348,7 +1441,7 @@
                   <span class="text-[11px] text-slate-400">คลิกเพื่อปรับสคริปต์ทันที</span>
                 </div>
                 <div class="flex flex-wrap gap-2">
-                  <button onclick="aiRemixAction('punchy')" class="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold transition">
+                  <button id="btn-ai-punchy" onclick="aiRemixAction('punchy')" class="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold transition">
                     ✨ เปลี่ยน Hook ให้แรงขึ้น
                   </button>
                   <button onclick="aiRemixAction('short')" class="px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-semibold transition">
@@ -1550,7 +1643,7 @@
           </div>
 
           <!-- Section 1: Shot-by-Shot Filming Table / Production Board -->
-          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-6 text-left">
+          <div id="tour-target-step4-table" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-6 text-left">
             <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
               <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
@@ -1565,7 +1658,7 @@
                 <span id="filming-progress-badge" class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold font-inter">
                   ความคืบหน้า: 2/4 ถ่ายแล้ว
                 </span>
-                <button onclick="insertShotRow()" class="px-3 py-1 bg-white border border-slate-200 hover:bg-slate-50 text-blue-600 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                <button id="btn-insert-shot" onclick="insertShotRow()" class="px-3 py-1 bg-white border border-slate-200 hover:bg-slate-50 text-blue-600 rounded-lg text-xs font-bold transition flex items-center gap-1">
                   <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                   <span>เพิ่มช็อตแทรก</span>
                 </button>
@@ -1876,7 +1969,7 @@
         </div>
 
         <!-- Detail Title Bar -->
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200 mb-6 text-left">
+        <div id="tour-target-detail-actions" class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200 mb-6 text-left p-2 rounded-2xl">
           <div>
             <div class="flex items-center gap-2">
               <h1 id="detail-project-title" class="text-2xl sm:text-3xl font-extrabold text-slate-900">
@@ -1899,7 +1992,7 @@
               <i data-lucide="download" class="w-3.5 h-3.5"></i>
               <span>ส่งออกใบบรีฟ (PDF)</span>
             </button>
-            <button onclick="openEditorHandoffLink()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-xs font-bold text-white shadow-sm transition flex items-center gap-1.5">
+            <button id="btn-editor-handoff" onclick="openEditorHandoffLink()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-xs font-bold text-white shadow-sm transition flex items-center gap-1.5">
               <i data-lucide="send" class="w-3.5 h-3.5"></i>
               <span>ส่งมอบงาน (Editor Handoff)</span>
             </button>
@@ -2138,6 +2231,106 @@
     <span id="toast-message">บันทึกข้อมูลเรียบร้อยแล้ว</span>
   </div>
 
+  <!-- Floating Quick Replay Tour Button (Bottom-Left) -->
+  <button onclick="startOnboardingTour(true)" id="floating-tour-btn" class="fixed bottom-6 left-6 z-40 bg-white hover:bg-blue-50 text-slate-800 border-2 border-blue-600/80 shadow-xl shadow-blue-900/10 px-4 py-2.5 rounded-full text-xs font-bold flex items-center gap-2 transition transform hover:scale-105 active:scale-95 group">
+    <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs shadow-sm group-hover:rotate-12 transition">
+      👆
+    </span>
+    <div class="text-left">
+      <p class="text-[11px] font-extrabold text-blue-700 leading-none">ไม่รู้เริ่มยังไง?</p>
+      <p class="text-[10px] text-slate-500 font-medium mt-0.5">กดดูอนิเมชันสอนใช้งาน</p>
+    </div>
+  </button>
+
+  <!-- ==================== INTERACTIVE ONBOARDING TOUR OVERLAY ==================== -->
+  <div id="onboarding-tour-layer" class="hidden">
+    
+    <!-- Spotlight Cutout Box (Dims everything outside, keeps target clickable) -->
+    <div id="tour-spotlight" class="tour-spotlight-box"></div>
+
+    <!-- Animated Hand Cursor & Ripple Rings Pointing at Exact Button -->
+    <div id="tour-pointer" class="tour-hand-pointer">
+      <div class="relative flex items-center justify-center">
+        <span class="tour-ripple-ring"></span>
+        <span class="tour-ripple-ring delay-1"></span>
+        <div class="tour-hand-icon relative z-10 flex items-center gap-1.5 translate-x-3 translate-y-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center text-xl shadow-xl border-2 border-white">
+            👆
+          </div>
+          <span id="tour-pointer-label" class="px-2.5 py-1 rounded-full bg-amber-400 text-slate-950 font-extrabold text-[11px] shadow-lg border border-white whitespace-nowrap">
+            กดตรงนี้!
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Guide Tooltip Card -->
+    <div id="tour-card" class="tour-tooltip-card w-[92vw] max-w-[390px] bg-white rounded-2xl border-2 border-blue-500/80 shadow-2xl overflow-hidden text-left">
+      <!-- Top Gradient Progress Bar -->
+      <div class="h-1.5 w-full bg-slate-100 overflow-hidden">
+        <div id="tour-progress-bar" class="h-full bg-gradient-to-r from-blue-600 via-indigo-500 to-emerald-500 transition-all duration-500" style="width: 12.5%"></div>
+      </div>
+
+      <div class="p-5">
+        <!-- Top Row: Badge + AutoPlay + Skip -->
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <span id="tour-step-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-[11px] font-extrabold font-inter">
+            <span class="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
+            <span>STEP 1 / 8</span>
+          </span>
+
+          <div class="flex items-center gap-1.5">
+            <button onclick="toggleTourAutoPlay()" id="tour-autoplay-btn" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-[11px] font-bold transition flex items-center gap-1" title="เล่นสาธิตอัตโนมัติ">
+              <span id="tour-autoplay-icon">▶</span>
+              <span id="tour-autoplay-text">เล่นอัตโนมัติ</span>
+            </button>
+            <button onclick="endOnboardingTour(true)" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 text-[11px] font-semibold transition">
+              ข้าม ✕
+            </button>
+          </div>
+        </div>
+
+        <!-- Title & Description -->
+        <h3 id="tour-title" class="text-base sm:text-lg font-extrabold text-slate-900 leading-snug mb-1.5">
+          👋 ยินดีต้อนรับ! เริ่มสร้างคลิปไวรัลตรงนี้
+        </h3>
+        <p id="tour-desc" class="text-xs text-slate-600 leading-relaxed mb-3.5">
+          กดปุ่ม "ทดลองใช้งานฟรี" เพื่อเข้าสู่ระบบ หรือกด "ดูตัวอย่างระบบ" เพื่อลองเล่นเวิร์กโฟลว์ 4 ขั้นตอนได้ทันที
+        </p>
+
+        <!-- Where to click callout + Live Simulation Button -->
+        <div class="p-3 rounded-xl bg-blue-50/80 border border-blue-200/80 mb-4 space-y-2">
+          <div class="flex items-start gap-2 text-xs text-blue-900 font-semibold">
+            <span class="text-sm leading-none">💡</span>
+            <span id="tour-tip-text">ชี้เป้า: กดปุ่มสีน้ำเงินในกรอบไฮไลต์ หรือกดปุ่มจำลองด้านล่าง</span>
+          </div>
+          <button onclick="runTourStepSimulation()" id="tour-simulate-btn" class="w-full py-2 px-3 rounded-lg bg-white hover:bg-blue-600 text-blue-700 hover:text-white border border-blue-300 font-bold text-xs shadow-sm transition flex items-center justify-center gap-1.5">
+            <span>⚡ กดจำลองการทำงานขั้นตอนนี้ให้ดูหน่อย!</span>
+          </button>
+        </div>
+
+        <!-- Bottom Navigation: Dots + Prev/Next -->
+        <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+          <!-- Step Dots -->
+          <div id="tour-dots-container" class="flex items-center gap-1">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Prev / Next Buttons -->
+          <div class="flex items-center gap-2">
+            <button onclick="prevTourStep()" id="tour-prev-btn" class="px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 font-semibold text-xs transition">
+              ← ก่อนหน้า
+            </button>
+            <button onclick="nextTourStep()" id="tour-next-btn" class="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 transition flex items-center gap-1">
+              <span id="tour-next-text">ถัดไป →</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
   <!-- ==================== CLIENT LOGIC / JAVASCRIPT ==================== -->
   <script>
     // App State
@@ -2313,6 +2506,16 @@
       renderProjectCards(projectsData);
       renderDetailCueSheet(cueSheetRows);
       lucide.createIcons();
+
+      // Auto-launch Interactive Onboarding Tour on first visit (or if ?tour=1 in URL)
+      const urlParams = new URLSearchParams(window.location.search);
+      const forceTour = urlParams.get('tour') === '1';
+      const hasSeenTour = localStorage.getItem('mew_onboarding_tour_done_v1');
+      if (!hasSeenTour || forceTour) {
+        setTimeout(() => {
+          startOnboardingTour(false);
+        }, 650);
+      }
     });
 
     // View Switching
@@ -2880,6 +3083,385 @@
       }, 3500);
       lucide.createIcons();
     }
+
+    // ==================== INTERACTIVE ONBOARDING TOUR ENGINE ====================
+    let tourActive = false;
+    let currentTourIndex = 0;
+    let tourAutoPlayInterval = null;
+
+    const tourSteps = [
+      {
+        view: 'landing',
+        targetId: 'tour-target-hero-cta',
+        pointerTargetId: 'btn-hero-free-trial',
+        pointerLabel: '1. กดเริ่มตรงนี้!',
+        badge: 'เริ่มต้นใช้งาน (1/8)',
+        title: '👋 ยินดีต้อนรับสู่ MEW Content OS!',
+        desc: 'เพิ่งเข้ามาครั้งแรกใช่ไหมครับ? ปุ่มสีน้ำเงินนี้คือจุดเริ่มต้นสำหรับเข้าสู่ระบบ หรือกด "ดูตัวอย่างระบบ" ข้างๆ เพื่อลองเล่นเวิร์กโฟลว์ได้ทันที',
+        tip: 'ชี้เป้า: กดปุ่ม "ทดลองใช้งานฟรี" หรือกดปุ่มจำลองด้านล่างเพื่อดูหน้าล็อกอิน',
+        simLabel: '⚡ จำลองกดเปิดหน้าสมัครใช้งานฟรี',
+        simulate: () => {
+          openAuthModal('register');
+          setTimeout(() => {
+            closeAuthModal();
+            showToast('✨ ตัวอย่างหน้าสมัครใช้งาน! ไปดูขั้นตอนถัดไปกันเลย');
+          }, 1600);
+        }
+      },
+      {
+        view: 'landing',
+        targetId: 'tour-target-4pillars',
+        pointerTargetId: 'tour-target-4pillars',
+        pointerLabel: '4 ขั้นตอนหลัก',
+        badge: 'ภาพรวมระบบ (2/8)',
+        title: '🧩 รู้จัก 4 ขั้นตอนผลิตคลิปเงินล้าน',
+        desc: 'ไม่ต้องคิดสคริปต์เองจากศูนย์! ระบบจะพาคุณเดินตาม 4 ขั้นตอนง่ายๆ: 1.สมองธุรกิจ ➔ 2.สแกนคลิปไวรัล ➔ 3.รีมิกซ์สคริปต์ (ตรวจ อย.) ➔ 4.ออกใบบรีฟกองถ่าย',
+        tip: 'ชี้เป้า: กด "ถัดไป" เพื่อเข้าไปดูหน้าใช้งานจริงในขั้นตอนที่ 1 กันเลย!',
+        simLabel: '⚡ พาเข้าสู่หน้าเวิร์กโฟลว์ขั้นตอนที่ 1 ทันที',
+        simulate: () => {
+          goToTourStep(2);
+        }
+      },
+      {
+        view: 'workflow',
+        workflowStep: 1,
+        targetId: 'tour-target-step1-brain',
+        pointerTargetId: 'icp-chips-container',
+        pointerLabel: 'คลิกเลือกกลุ่มลูกค้า!',
+        badge: 'ขั้นตอนที่ 1: สมองธุรกิจ (3/8)',
+        title: '🧠 ใส่ข้อมูลสินค้า & เลือกกลุ่มลูกค้า (ICP)',
+        desc: 'ในขั้นตอนนี้ ให้คุณพิมพ์ชื่อสินค้า จุดขายเด่น และคลิกเลือกป้ายกลุ่มเป้าหมาย (Tag สีม่วง) รวมถึงตั้ง "คำต้องห้ามเคลม อย." เพื่อให้ AI จำเป็นกฎเหล็กของแบรนด์',
+        tip: 'ชี้เป้า: ลองคลิกเลือกป้าย Tag กลุ่มเป้าหมาย หรือกดปุ่มจำลองด้านล่าง',
+        simLabel: '⚡ จำลองคลิกเลือกกลุ่มเป้าหมาย & คำตอบ AI',
+        simulate: () => {
+          const chips = document.querySelectorAll('#icp-chips-container .icp-chip');
+          if (chips.length > 3) toggleChip(chips[3]);
+          const quickReplyBtn = document.querySelector('button[onclick="applyQuickReply(this)"]');
+          if (quickReplyBtn) applyQuickReply(quickReplyBtn);
+        }
+      },
+      {
+        view: 'workflow',
+        workflowStep: 2,
+        targetId: 'tour-target-step2-scanner',
+        pointerTargetId: 'btn-scan-trigger',
+        pointerLabel: 'กดปุ่มสีส้มเพื่อสแกน!',
+        badge: 'ขั้นตอนที่ 2: สแกนไวรัล (4/8)',
+        title: '🔍 วางลิงก์คลิป TikTok / Reels แล้วกดสแกน!',
+        desc: 'ก๊อปปี้ลิงก์คลิปที่มียอดวิวสูงมาวางในช่องนี้ (หรือกดเลือกปุ่มคลิปตัวอย่างด้านล่าง) แล้วกดปุ่มสีส้ม "เริ่มสแกนและวิเคราะห์ AI" เพื่อถอดสูตร Hook 4 จังหวะ',
+        tip: 'ชี้เป้า: กดปุ่มสีส้ม "เริ่มสแกนและวิเคราะห์ AI" ได้เลย!',
+        simLabel: '⚡ จำลองกดสแกนคลิปไวรัลด้วย AI',
+        simulate: () => {
+          runVideoScan();
+        }
+      },
+      {
+        view: 'workflow',
+        workflowStep: 3,
+        targetId: 'tour-target-step3-script',
+        pointerTargetId: 'btn-ai-punchy',
+        pointerLabel: 'คลิกแก้บท / กดปุ่ม AI!',
+        badge: 'ขั้นตอนที่ 3: รีมิกซ์สคริปต์ (5/8)',
+        title: '✍️ แก้ไขบทพูด + ระบบ Claim Guard ตรวจ อย.',
+        desc: 'คลิกพิมพ์แก้บทพูดในกล่อง HOOK, BODY, CTA ได้โดยตรง! ถ้าเผลอพิมพ์คำเคลมเกินจริง (เช่น "ขาวถาวร") แถบ Claim Guard จะขึ้นสีแดงเตือนทันที หรือกดปุ่ม AI ด่วนด้านล่างเพื่อปรับบทพูดอัตโนมัติ',
+        tip: 'ชี้เป้า: ลองกดปุ่มจำลองด้านล่างเพื่อดูตอนระบบตรวจเจอคำต้องห้าม อย.!',
+        simLabel: '🚨 จำลองพิมพ์คำต้องห้าม "ขาวถาวร" (ทดสอบ อย.)',
+        simulate: () => {
+          const hookEl = document.getElementById('script-hook');
+          const orig = hookEl.value;
+          hookEl.value = '“กินซองนี้แล้วผิว ขาวถาวร เห็นผล 100% ทันที!”';
+          handleScriptInput(hookEl);
+          showToast('🚨 Claim Guard ตรวจพบคำเสี่ยง "ขาวถาวร, เห็นผล 100%"!');
+          setTimeout(() => {
+            hookEl.value = orig;
+            handleScriptInput(hookEl);
+            showToast('✅ ปรับแก้คำเคลมให้ถูกกฎ อย. ปลอดภัย 100% แล้ว');
+          }, 2600);
+        }
+      },
+      {
+        view: 'workflow',
+        workflowStep: 4,
+        targetId: 'tour-target-step4-table',
+        pointerTargetId: 'btn-insert-shot',
+        pointerLabel: 'คลิกสถานะ / เพิ่มช็อต!',
+        badge: 'ขั้นตอนที่ 4: ตารางถ่ายทำ (6/8)',
+        title: '🎬 ตารางคิวถ่ายแยกช็อต & อัปเดตสถานะกองถ่าย',
+        desc: 'ระบบแปลงสคริปต์เป็นตารางมุมกล้อง A-Roll / B-Roll และพร็อพที่ต้องเตรียม คุณสามารถคลิกที่ป้ายสถานะ ("ถ่ายเสร็จแล้ว ✓ / กำลังถ่าย") หรือกด "+ เพิ่มช็อตแทรก" ได้ทันที',
+        tip: 'ชี้เป้า: คลิกปุ่ม "+ เพิ่มช็อตแทรก" หรือคลิกป้ายสถานะในตารางได้เลย',
+        simLabel: '⚡ จำลองกดเพิ่มช็อตแทรกเข้าตารางถ่ายทำ',
+        simulate: () => {
+          insertShotRow();
+        }
+      },
+      {
+        view: 'detail',
+        targetId: 'tour-target-detail-actions',
+        pointerTargetId: 'btn-editor-handoff',
+        pointerLabel: 'กดส่งงานให้ทีมตัดต่อ!',
+        badge: 'หน้าส่งมอบงาน (7/8)',
+        title: '📤 ส่งออกใบบรีฟ PDF หรือแชร์ลิงก์ให้นักตัดต่อ',
+        desc: 'เมื่อบันทึกโปรเจกต์แล้ว จะได้หน้าสรุปใบงานไฟนอลพร้อมสเปกตัดต่อ (9:16 60fps, Safe Zone ไม่บังตะกร้า) กดปุ่มด้านขวาบนเพื่อคัดลอกตาราง ดาวน์โหลด PDF หรือส่งลิงก์ให้ทีมได้ทันที',
+        tip: 'ชี้เป้า: กดปุ่ม "คัดลอก Cue Sheet" หรือ "ส่งมอบงาน" ด้านขวาบน',
+        simLabel: '⚡ จำลองคัดลอกตาราง Cue Sheet ลง Clipboard',
+        simulate: () => {
+          copyDetailCueSheet();
+        }
+      },
+      {
+        view: 'library',
+        targetId: 'tour-target-library-header',
+        pointerTargetId: 'btn-library-new-project',
+        pointerLabel: 'กดสร้างโปรเจกต์ใหม่!',
+        badge: 'พร้อมลุยแล้ว! (8/8)',
+        title: '🎉 เสร็จสมบูรณ์! จัดการทุกคลิปได้ที่คลังโปรเจกต์',
+        desc: 'ทุกโปรเจกต์ที่คุณสร้างจะถูกเก็บไว้ในคลังนี้ กดปุ่ม "+ สร้างโปรเจกต์ใหม่" เพื่อเริ่มทำคลิปของคุณได้เลย! (หากต้องการดูอนิเมชันสอนใช้อีกครั้ง กดปุ่ม "สอนใช้งาน" ด้านบนขวาได้ตลอดเวลา)',
+        tip: 'ชี้เป้า: กดปุ่ม "🚀 เริ่มใช้งานจริงเลย!" เพื่อเริ่มสร้างคอนเทนต์แรกของคุณ',
+        simLabel: '🚀 เริ่มสร้างโปรเจกต์ใหม่ทันที!',
+        simulate: () => {
+          endOnboardingTour(false);
+          startNewProject();
+        }
+      }
+    ];
+
+    function startOnboardingTour(isManual = false) {
+      closeAuthModal();
+      tourActive = true;
+      currentTourIndex = 0;
+      document.getElementById('onboarding-tour-layer').classList.remove('hidden');
+      document.getElementById('floating-tour-btn').classList.add('hidden');
+      renderTourStep(0);
+      if (isManual) {
+        showToast('🎯 เริ่มโหมดอนิเมชันแนะนำการใช้งานทีละขั้นตอน');
+      }
+    }
+
+    function endOnboardingTour(showCompleteToast = true) {
+      tourActive = false;
+      stopTourAutoPlay();
+      localStorage.setItem('mew_onboarding_tour_done_v1', 'true');
+      document.getElementById('onboarding-tour-layer').classList.add('hidden');
+      document.getElementById('floating-tour-btn').classList.remove('hidden');
+      if (showCompleteToast) {
+        showToast('✅ ปิดโหมดสอนใช้งานแล้ว (กดปุ่ม "สอนใช้งาน" ด้านบนเพื่อดูซ้ำได้ตลอดเวลา)');
+      }
+    }
+
+    function goToTourStep(index) {
+      if (index < 0 || index >= tourSteps.length) return;
+      currentTourIndex = index;
+      renderTourStep(index);
+    }
+
+    function nextTourStep() {
+      if (currentTourIndex < tourSteps.length - 1) {
+        currentTourIndex++;
+        renderTourStep(currentTourIndex);
+      } else {
+        endOnboardingTour(false);
+        startNewProject();
+        showToast('🎉 เริ่มต้นสร้างโปรเจกต์แรกของคุณได้เลย!');
+      }
+    }
+
+    function prevTourStep() {
+      if (currentTourIndex > 0) {
+        currentTourIndex--;
+        renderTourStep(currentTourIndex);
+      }
+    }
+
+    function runTourStepSimulation() {
+      const step = tourSteps[currentTourIndex];
+      if (step && typeof step.simulate === 'function') {
+        step.simulate();
+      }
+    }
+
+    function toggleTourAutoPlay() {
+      const iconEl = document.getElementById('tour-autoplay-icon');
+      const textEl = document.getElementById('tour-autoplay-text');
+      const btnEl = document.getElementById('tour-autoplay-btn');
+
+      if (tourAutoPlayInterval) {
+        stopTourAutoPlay();
+        showToast('⏸ หยุดเล่นสาธิตอัตโนมัติแล้ว');
+      } else {
+        iconEl.innerText = '⏸';
+        textEl.innerText = 'กำลังเล่น...';
+        btnEl.className = 'px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-[11px] font-bold transition flex items-center gap-1 animate-pulse';
+        showToast('▶ เริ่มเล่นอนิเมชันสาธิตอัตโนมัติ');
+
+        tourAutoPlayInterval = setInterval(() => {
+          if (!tourActive) {
+            stopTourAutoPlay();
+            return;
+          }
+          if (currentTourIndex < tourSteps.length - 1) {
+            nextTourStep();
+          } else {
+            stopTourAutoPlay();
+            showToast('🎉 จบการสาธิตอัตโนมัติครบทั้ง 8 ขั้นตอนแล้ว!');
+          }
+        }, 3800);
+      }
+    }
+
+    function stopTourAutoPlay() {
+      if (tourAutoPlayInterval) {
+        clearInterval(tourAutoPlayInterval);
+        tourAutoPlayInterval = null;
+      }
+      const iconEl = document.getElementById('tour-autoplay-icon');
+      const textEl = document.getElementById('tour-autoplay-text');
+      const btnEl = document.getElementById('tour-autoplay-btn');
+      if (iconEl && textEl && btnEl) {
+        iconEl.innerText = '▶';
+        textEl.innerText = 'เล่นอัตโนมัติ';
+        btnEl.className = 'px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-[11px] font-bold transition flex items-center gap-1';
+      }
+    }
+
+    function renderTourStep(index) {
+      const step = tourSteps[index];
+      if (!step) return;
+
+      // 1. Ensure the right View & Workflow Step is active
+      if (currentView !== step.view) {
+        switchView(step.view);
+      }
+      if (step.view === 'workflow' && step.workflowStep) {
+        goToWorkflowStep(step.workflowStep);
+      }
+
+      // 2. Update Card Content
+      const progressPct = ((index + 1) / tourSteps.length) * 100;
+      document.getElementById('tour-progress-bar').style.width = `${progressPct}%`;
+      document.getElementById('tour-step-badge').innerHTML = `
+        <span class="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
+        <span>${step.badge}</span>
+      `;
+      document.getElementById('tour-title').innerText = step.title;
+      document.getElementById('tour-desc').innerText = step.desc;
+      document.getElementById('tour-tip-text').innerText = step.tip;
+      document.getElementById('tour-simulate-btn').innerHTML = `<span>${step.simLabel}</span>`;
+      document.getElementById('tour-pointer-label').innerText = step.pointerLabel;
+
+      // Prev / Next button states
+      const prevBtn = document.getElementById('tour-prev-btn');
+      const nextText = document.getElementById('tour-next-text');
+      const nextBtn = document.getElementById('tour-next-btn');
+
+      prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
+      if (index === tourSteps.length - 1) {
+        nextText.innerText = '🚀 เริ่มใช้งานจริงเลย!';
+        nextBtn.className = 'px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition flex items-center gap-1';
+      } else {
+        nextText.innerText = 'ถัดไป →';
+        nextBtn.className = 'px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 transition flex items-center gap-1';
+      }
+
+      // Render Step Dots
+      const dotsContainer = document.getElementById('tour-dots-container');
+      dotsContainer.innerHTML = tourSteps.map((_, idx) => `
+        <button onclick="goToTourStep(${idx})" title="ไปขั้นตอนที่ ${idx + 1}" class="h-2 rounded-full transition-all ${
+          idx === index ? 'w-5 bg-blue-600' : idx < index ? 'w-2 bg-emerald-500' : 'w-2 bg-slate-200 hover:bg-slate-300'
+        }"></button>
+      `).join('');
+
+      // 3. Scroll target into view & position spotlight + hand pointer + card
+      setTimeout(() => {
+        const targetEl = document.getElementById(step.targetId);
+        if (targetEl) {
+          const rect = targetEl.getBoundingClientRect();
+          const targetTopAbs = window.scrollY + rect.top;
+          const desiredScrollY = Math.max(0, targetTopAbs - 110);
+          window.scrollTo({ top: desiredScrollY, behavior: 'smooth' });
+        }
+        setTimeout(() => {
+          updateTourPositions();
+        }, 320);
+      }, 60);
+    }
+
+    function updateTourPositions() {
+      if (!tourActive) return;
+      const step = tourSteps[currentTourIndex];
+      if (!step) return;
+
+      const targetEl = document.getElementById(step.targetId);
+      const pointerEl = document.getElementById(step.pointerTargetId) || targetEl;
+      const spotlight = document.getElementById('tour-spotlight');
+      const pointer = document.getElementById('tour-pointer');
+      const card = document.getElementById('tour-card');
+
+      if (!targetEl) return;
+
+      const rect = targetEl.getBoundingClientRect();
+      const pad = 8;
+
+      // Clamp spotlight height so super tall containers still fit nicely on screen
+      const maxSpotHeight = Math.min(rect.height + pad * 2, window.innerHeight * 0.62);
+      const spotTop = Math.max(8, rect.top - pad);
+      const spotLeft = Math.max(8, rect.left - pad);
+      const spotWidth = Math.min(window.innerWidth - 16, rect.width + pad * 2);
+
+      spotlight.style.top = `${spotTop}px`;
+      spotlight.style.left = `${spotLeft}px`;
+      spotlight.style.width = `${spotWidth}px`;
+      spotlight.style.height = `${maxSpotHeight}px`;
+
+      // Position Animated Hand Pointer on the exact interactive button
+      if (pointerEl) {
+        const pRect = pointerEl.getBoundingClientRect();
+        const pTop = Math.min(window.innerHeight - 70, Math.max(20, pRect.top + Math.min(pRect.height * 0.55, 45)));
+        const pLeft = Math.min(window.innerWidth - 150, Math.max(20, pRect.left + Math.min(pRect.width * 0.5, 160)));
+        pointer.style.top = `${pTop}px`;
+        pointer.style.left = `${pLeft}px`;
+      }
+
+      // Position Tooltip Card smartly (below spotlight if space, otherwise above or bottom-right)
+      const cardWidth = Math.min(390, window.innerWidth * 0.92);
+      const cardHeight = card.offsetHeight || 275;
+      const spaceBelow = window.innerHeight - (spotTop + maxSpotHeight);
+      const spaceAbove = spotTop;
+
+      let cardTop;
+      let cardLeft;
+
+      if (window.innerWidth < 640) {
+        // Mobile: dock cleanly at bottom of screen
+        cardTop = window.innerHeight - cardHeight - 14;
+        cardLeft = (window.innerWidth - cardWidth) / 2;
+      } else if (spaceBelow >= cardHeight + 24) {
+        cardTop = spotTop + maxSpotHeight + 18;
+        cardLeft = Math.min(window.innerWidth - cardWidth - 20, Math.max(20, spotLeft));
+      } else if (spaceAbove >= cardHeight + 24) {
+        cardTop = spotTop - cardHeight - 18;
+        cardLeft = Math.min(window.innerWidth - cardWidth - 20, Math.max(20, spotLeft));
+      } else {
+        // Dock bottom-right so it doesn't cover the center of the spotlight
+        cardTop = Math.max(80, window.innerHeight - cardHeight - 24);
+        cardLeft = window.innerWidth - cardWidth - 24;
+      }
+
+      card.style.top = `${cardTop}px`;
+      card.style.left = `${cardLeft}px`;
+    }
+
+    window.addEventListener('resize', () => {
+      if (tourActive) updateTourPositions();
+    });
+    window.addEventListener('scroll', () => {
+      if (tourActive) updateTourPositions();
+    }, { passive: true });
+    window.addEventListener('keydown', (e) => {
+      if (!tourActive) return;
+      if (e.key === 'Escape') endOnboardingTour(true);
+      if (e.key === 'ArrowRight') nextTourStep();
+      if (e.key === 'ArrowLeft') prevTourStep();
+    });
   </script>
 
 </body>
