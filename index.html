@@ -164,94 +164,132 @@
                   left 0.4s cubic-bezier(0.22, 1, 0.36, 1);
       animation: tourCardPop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
+
+    /* ==================== INTUITIVE UX ENHANCEMENTS ==================== */
+    @keyframes subtleSlideUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .view-panel:not(.hidden),
+    .step-panel:not(.hidden) {
+      animation: subtleSlideUp 0.22s ease-out;
+    }
+    button, [role="button"], label.cursor-pointer {
+      min-height: 36px;
+    }
+    textarea:focus, input:focus {
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
   </style>
 </head>
 <body class="min-h-full flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900">
 
   <!-- ==================== TOP NAVIGATION BAR (SHARED HEADER) ==================== -->
   <header id="app-header" class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 transition-all duration-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
       
       <!-- Brand Logo & Workspace Switcher -->
       <div class="flex items-center gap-3">
-        <button onclick="switchView('landing')" class="flex items-center gap-2 group text-left focus:outline-none">
+        <button onclick="switchView('landing')" class="flex items-center gap-2.5 group text-left focus:outline-none" title="กลับสู่หน้าแรก">
           <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/30 group-hover:bg-blue-700 transition">
             <i data-lucide="sparkles" class="w-5 h-5"></i>
           </div>
           <div>
             <div class="flex items-center gap-1.5">
-              <span class="font-bold text-lg text-blue-700 tracking-tight font-inter">MEW Content OS</span>
+              <span class="font-bold text-base sm:text-lg text-blue-700 tracking-tight font-inter">MEW Content OS</span>
               <span class="text-[10px] font-bold bg-blue-100 text-blue-900 px-1.5 py-0.5 rounded-full font-inter">v2.4 PRO</span>
             </div>
-            <p id="header-subtitle" class="text-xs text-slate-500 font-medium">MEW Collagen Jelly Plus</p>
+            <p id="header-subtitle" class="text-[11px] text-slate-500 font-medium">โปรเจกต์: MEW Collagen Jelly Plus</p>
           </div>
         </button>
-
-        <!-- Divider -->
-        <div id="nav-divider" class="hidden sm:block h-5 w-[1px] bg-slate-200 mx-1"></div>
-
-        <!-- Workspace Dropdown / Status Pill -->
-        <div id="nav-workspace-pill" class="hidden md:flex items-center gap-2 bg-blue-50/70 border border-blue-100 px-3 py-1 rounded-full text-xs font-medium text-slate-700">
-          <span class="w-2 h-2 rounded-full bg-purple-600 animate-pulse"></span>
-          <span>Mew Studio Workspace</span>
-        </div>
       </div>
 
-      <!-- Center Auto-Save Indicator -->
-      <div id="autosave-badge" class="hidden lg:flex items-center gap-2 bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full text-xs font-medium text-emerald-800">
-        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-        <span id="autosave-text">บันทึกอัตโนมัติแล้ว</span>
-        <span class="text-[10px] text-slate-400 font-inter font-semibold">เมื่อสักครู่</span>
-      </div>
+      <!-- Center Global View Switcher (3-Second Wayfinding) -->
+      <nav aria-label="เมนูหลักของระบบ" class="hidden md:flex items-center bg-slate-100/90 p-1 rounded-xl border border-slate-200/80 gap-1">
+        <button onclick="switchView('landing')" id="global-nav-landing" class="global-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white text-blue-700 shadow-sm">
+          <i data-lucide="home" class="w-3.5 h-3.5"></i>
+          <span>หน้าแรก</span>
+        </button>
+        <button onclick="switchView('workflow')" id="global-nav-workflow" class="global-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5">
+          <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
+          <span>สตูดิโอสร้างคลิป (4 ขั้นตอน)</span>
+        </button>
+        <button onclick="switchView('library')" id="global-nav-library" class="global-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5">
+          <i data-lucide="folder-kanban" class="w-3.5 h-3.5"></i>
+          <span>คลังโปรเจกต์</span>
+          <span id="nav-library-count" class="px-1.5 py-0.2 rounded-full bg-slate-200/80 text-slate-700 text-[10px] font-bold font-inter">6</span>
+        </button>
+        <button onclick="switchView('detail')" id="global-nav-detail" class="global-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5">
+          <i data-lucide="clipboard-check" class="w-3.5 h-3.5"></i>
+          <span>ใบบรีฟกองถ่าย</span>
+        </button>
+      </nav>
 
       <!-- Right Actions / Navigation Links / User -->
-      <div class="flex items-center gap-2 sm:gap-3">
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <!-- Center Auto-Save Indicator (Compact) -->
+        <div id="autosave-badge" class="hidden xl:flex items-center gap-1.5 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full text-[11px] font-medium text-emerald-800" title="ระบบบันทึกการแก้ไขของคุณอัตโนมัติทุกครั้งที่พิมพ์">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span id="autosave-text">บันทึกอัตโนมัติแล้ว</span>
+        </div>
+
         <!-- Always-Available Interactive Tour Trigger Button -->
         <button onclick="startOnboardingTour(true)" id="header-tour-btn" class="px-3 py-1.5 text-xs font-bold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-300 rounded-xl shadow-sm transition flex items-center gap-1.5 relative group" title="เริ่มทัวร์แนะนำการใช้งานทีละขั้นตอน">
           <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping absolute -top-0.5 -right-0.5"></span>
           <span class="w-2 h-2 rounded-full bg-amber-500 absolute -top-0.5 -right-0.5"></span>
           <i data-lucide="compass" class="w-3.5 h-3.5 text-amber-600 group-hover:rotate-45 transition"></i>
-          <span>สอนใช้งาน</span>
+          <span class="hidden sm:inline">สอนใช้งาน</span>
         </button>
 
         <!-- Landing View Action Buttons -->
         <div id="landing-nav-actions" class="flex items-center gap-2">
-          <button onclick="openAuthModal('login')" class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-xl transition">
+          <button onclick="openAuthModal('login')" class="px-3 py-2 text-xs font-semibold text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-xl transition">
             เข้าสู่ระบบ
           </button>
-          <button onclick="openAuthModal('register')" id="nav-register-btn" class="px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm shadow-blue-500/20 transition flex items-center gap-1.5">
-            <span>ทดลองใช้งานฟรี</span>
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          <button onclick="startNewProject()" id="nav-register-btn" class="px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm shadow-blue-500/20 transition flex items-center gap-1.5">
+            <span>เริ่มสร้างคลิป</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
           </button>
         </div>
 
         <!-- App View Navigation Links -->
         <div id="app-nav-actions" class="hidden flex items-center gap-2">
-          <button onclick="switchView('library')" class="px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition flex items-center gap-1.5">
-            <i data-lucide="folder" class="w-4 h-4 text-slate-500"></i>
-            <span>คลังโปรเจกต์</span>
-          </button>
-          <button onclick="startNewProject()" class="px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition flex items-center gap-1.5">
-            <i data-lucide="plus" class="w-4 h-4"></i>
-            <span>สร้างใหม่</span>
+          <button onclick="startNewProject()" class="px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm transition flex items-center gap-1.5">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>เริ่มโปรเจกต์ใหม่</span>
           </button>
           
-          <div class="h-4 w-[1px] bg-slate-200 mx-1"></div>
+          <div class="hidden sm:block h-4 w-[1px] bg-slate-200 mx-0.5"></div>
 
           <!-- User Avatar -->
-          <button onclick="toggleUserMenu()" title="โปรไฟล์ผู้ใช้งาน" class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full hover:bg-slate-100 transition focus:outline-none">
+          <button onclick="toggleUserMenu()" title="โปรไฟล์ผู้ใช้งาน: ฮาฟิส (Mew)" class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full hover:bg-slate-100 transition focus:outline-none">
             <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-700 to-blue-500 text-white font-bold text-xs flex items-center justify-center shadow-sm">
               MK
             </div>
-            <div class="hidden xl:block text-left text-xs">
-              <div class="font-semibold text-slate-800">ฮาฟิส (Mew)</div>
+            <div class="hidden lg:block text-left text-xs">
+              <div class="font-semibold text-slate-800 leading-tight">ฮาฟิส (Mew)</div>
               <div class="text-[10px] text-blue-600 font-medium font-inter">Creator Pro</div>
             </div>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
           </button>
         </div>
 
       </div>
+    </div>
+
+    <!-- Mobile Quick Switcher Bar (Visible only on small screens) -->
+    <div class="md:hidden border-t border-slate-100 bg-slate-50/90 px-3 py-1.5 flex items-center justify-between gap-1 overflow-x-auto text-[11px]">
+      <button onclick="switchView('landing')" id="mobile-nav-landing" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-bold bg-white text-blue-700 shadow-sm text-center whitespace-nowrap">
+        1. หน้าแรก
+      </button>
+      <button onclick="switchView('workflow')" id="mobile-nav-workflow" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-medium text-slate-600 text-center whitespace-nowrap">
+        2. สตูดิโอ (4 ขั้น)
+      </button>
+      <button onclick="switchView('library')" id="mobile-nav-library" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-medium text-slate-600 text-center whitespace-nowrap">
+        3. คลังงาน
+      </button>
+      <button onclick="switchView('detail')" id="mobile-nav-detail" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-medium text-slate-600 text-center whitespace-nowrap">
+        4. ใบบรีฟ
+      </button>
     </div>
   </header>
 
@@ -333,37 +371,41 @@
               </div>
             </div>
 
-            <!-- Workflow 4-Step Pill Preview Inside Card -->
+            <!-- Workflow 4-Step Pill Preview Inside Card (Interactive Click-to-Jump) -->
             <div class="p-6 bg-slate-50/50 border-b border-slate-100">
+              <div class="flex items-center justify-between mb-2.5 text-[11px] text-slate-500">
+                <span class="font-semibold text-slate-700">👆 คลิกที่ขั้นตอนใดก็ได้เพื่อเปิดทดลองใช้งานทันที:</span>
+                <span class="text-blue-600 font-semibold hidden sm:inline">4 ขั้นตอนจบในหน้าเดียว</span>
+              </div>
               <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <div class="bg-blue-50 border border-blue-200/60 p-3 rounded-xl flex items-center gap-3">
-                  <span class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center">1</span>
-                  <div class="text-left">
+                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(1)" class="bg-blue-50 hover:bg-blue-100/80 border border-blue-200/80 p-3 rounded-xl flex items-center gap-3 text-left transition group">
+                  <span class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center group-hover:scale-105 transition">1</span>
+                  <div>
                     <p class="text-[10px] font-bold text-blue-700 uppercase font-inter">STEP 01</p>
                     <p class="text-xs font-bold text-slate-900">สมองธุรกิจ</p>
                   </div>
-                </div>
-                <div class="bg-blue-50 border border-blue-200/60 p-3 rounded-xl flex items-center gap-3">
-                  <span class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center">2</span>
-                  <div class="text-left">
+                </button>
+                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(2)" class="bg-blue-50 hover:bg-blue-100/80 border border-blue-200/80 p-3 rounded-xl flex items-center gap-3 text-left transition group">
+                  <span class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center group-hover:scale-105 transition">2</span>
+                  <div>
                     <p class="text-[10px] font-bold text-blue-700 uppercase font-inter">STEP 02</p>
                     <p class="text-xs font-bold text-slate-900">สแกนไวรัล</p>
                   </div>
-                </div>
-                <div class="bg-indigo-600 text-white p-3 rounded-xl flex items-center gap-3 shadow-md shadow-indigo-600/20">
-                  <span class="w-7 h-7 rounded-lg bg-white text-indigo-700 font-bold text-xs flex items-center justify-center">3</span>
-                  <div class="text-left">
-                    <p class="text-[10px] font-bold text-indigo-200 uppercase font-inter">STEP 03 (CURRENT)</p>
+                </button>
+                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(3)" class="bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-xl flex items-center gap-3 shadow-md shadow-indigo-600/20 text-left transition group">
+                  <span class="w-7 h-7 rounded-lg bg-white text-indigo-700 font-bold text-xs flex items-center justify-center group-hover:scale-105 transition">3</span>
+                  <div>
+                    <p class="text-[10px] font-bold text-indigo-200 uppercase font-inter">STEP 03 (ตัวอย่าง)</p>
                     <p class="text-xs font-bold text-white">สคริปต์รีมิกซ์</p>
                   </div>
-                </div>
-                <div class="bg-white border border-slate-200 p-3 rounded-xl flex items-center gap-3 opacity-75">
-                  <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-600 font-bold text-xs flex items-center justify-center">4</span>
-                  <div class="text-left">
+                </button>
+                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(4)" class="bg-white hover:bg-slate-50 border border-slate-200 p-3 rounded-xl flex items-center gap-3 text-left transition group">
+                  <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 font-bold text-xs flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition">4</span>
+                  <div>
                     <p class="text-[10px] font-bold text-slate-500 uppercase font-inter">STEP 04</p>
-                    <p class="text-xs font-bold text-slate-700">ใบบรีฟถ่ายทำ</p>
+                    <p class="text-xs font-bold text-slate-800">ใบบรีฟถ่ายทำ</p>
                   </div>
-                </div>
+                </button>
               </div>
             </div>
 
@@ -443,14 +485,17 @@
             </p>
           </div>
 
-          <!-- Cards Grid -->
+          <!-- Cards Grid (Interactive Step Launchers) -->
           <div id="tour-target-4pillars" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-2 rounded-2xl">
             
             <!-- Card 1: Business Brain -->
-            <div class="bg-purple-50/80 border border-purple-200/80 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-purple-500/5 transition">
+            <div onclick="switchView('workflow'); goToWorkflowStep(1)" role="button" tabindex="0" class="cursor-pointer bg-purple-50/80 border border-purple-200/80 hover:border-purple-400 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-purple-500/10 hover:-translate-y-0.5 transition group text-left">
               <div>
-                <div class="w-12 h-12 rounded-xl bg-white border border-purple-200 shadow-sm flex items-center justify-center text-purple-700 mb-4">
-                  <i data-lucide="brain" class="w-6 h-6"></i>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 rounded-xl bg-white border border-purple-200 shadow-sm flex items-center justify-center text-purple-700">
+                    <i data-lucide="brain" class="w-6 h-6"></i>
+                  </div>
+                  <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-purple-800 border border-purple-200 font-inter">ขั้นตอนที่ 1</span>
                 </div>
                 <div class="flex items-center gap-2 mb-1">
                   <h3 class="text-base font-bold text-slate-900">สมองธุรกิจ</h3>
@@ -461,17 +506,20 @@
                   คลังข้อมูลสินค้า รวบรวมจุดขาย USP ข้อห้าม และกลุ่มเป้าหมาย เพื่อป้อนเป็น DNA เฉพาะของแบรนด์ ให้ AI สร้างสคริปต์ได้ตรงตัวตน 100%
                 </p>
               </div>
-              <div class="mt-6 pt-4 border-t border-purple-200/70 flex items-center justify-between text-xs font-semibold text-purple-800">
-                <span>เก็บข้อมูลได้ไม่จำกัด SKU</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              <div class="mt-6 pt-4 border-t border-purple-200/70 flex items-center justify-between text-xs font-bold text-purple-800">
+                <span>กดเพื่อตั้งค่าข้อมูลสินค้า</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
               </div>
             </div>
 
             <!-- Card 2: Viral Radar -->
-            <div class="bg-amber-50/80 border border-amber-200/80 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-amber-500/5 transition">
+            <div onclick="switchView('workflow'); goToWorkflowStep(2)" role="button" tabindex="0" class="cursor-pointer bg-amber-50/80 border border-amber-200/80 hover:border-amber-400 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-amber-500/10 hover:-translate-y-0.5 transition group text-left">
               <div>
-                <div class="w-12 h-12 rounded-xl bg-white border border-amber-200 shadow-sm flex items-center justify-center text-amber-700 mb-4">
-                  <i data-lucide="scan" class="w-6 h-6"></i>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 rounded-xl bg-white border border-amber-200 shadow-sm flex items-center justify-center text-amber-700">
+                    <i data-lucide="scan" class="w-6 h-6"></i>
+                  </div>
+                  <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-amber-800 border border-amber-200 font-inter">ขั้นตอนที่ 2</span>
                 </div>
                 <div class="flex items-center gap-2 mb-1">
                   <h3 class="text-base font-bold text-slate-900">สแกนคลิป</h3>
@@ -482,17 +530,20 @@
                   เช็กคะแนนความปัง ถอดรหัสโครงสร้าง Hook วินาทีทอง 0-3s วิเคราะห์ Retention Rate และเหตุผลที่คลิปนั้นระเบิดยอดวิวบน TikTok & Reels
                 </p>
               </div>
-              <div class="mt-6 pt-4 border-t border-amber-200/70 flex items-center justify-between text-xs font-semibold text-amber-800">
-                <span>วิเคราะห์ได้ทุก URL ทันที</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              <div class="mt-6 pt-4 border-t border-amber-200/70 flex items-center justify-between text-xs font-bold text-amber-800">
+                <span>กดเพื่อลองสแกนลิงก์คลิป</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
               </div>
             </div>
 
             <!-- Card 3: Script Remix -->
-            <div class="bg-blue-50/80 border border-blue-200/80 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-blue-500/5 transition">
+            <div onclick="switchView('workflow'); goToWorkflowStep(3)" role="button" tabindex="0" class="cursor-pointer bg-blue-50/80 border border-blue-200/80 hover:border-blue-400 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-0.5 transition group text-left">
               <div>
-                <div class="w-12 h-12 rounded-xl bg-white border border-blue-200 shadow-sm flex items-center justify-center text-blue-700 mb-4">
-                  <i data-lucide="sparkles" class="w-6 h-6"></i>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 rounded-xl bg-white border border-blue-200 shadow-sm flex items-center justify-center text-blue-700">
+                    <i data-lucide="sparkles" class="w-6 h-6"></i>
+                  </div>
+                  <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-blue-800 border border-blue-200 font-inter">ขั้นตอนที่ 3</span>
                 </div>
                 <div class="flex items-center gap-2 mb-1">
                   <h3 class="text-base font-bold text-slate-900">สตูดิโอสคริปต์</h3>
@@ -503,17 +554,20 @@
                   แต่งบทพูดคลิปขายเนียนๆ พร้อมระบบ Claim Guard ตรวจจับและแทนที่คำเคลมเกินจริงตามกฎหมาย อย. ป้องกันช่องโดนแบนถาวร
                 </p>
               </div>
-              <div class="mt-6 pt-4 border-t border-blue-200/70 flex items-center justify-between text-xs font-semibold text-blue-800">
-                <span>เซฟเวอร์ชันสคริปต์ A/B</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              <div class="mt-6 pt-4 border-t border-blue-200/70 flex items-center justify-between text-xs font-bold text-blue-800">
+                <span>กดเพื่อแต่งสคริปต์ & เช็ก อย.</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
               </div>
             </div>
 
             <!-- Card 4: Filming Brief -->
-            <div class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-emerald-500/5 transition">
+            <div onclick="switchView('workflow'); goToWorkflowStep(4)" role="button" tabindex="0" class="cursor-pointer bg-emerald-50/80 border border-emerald-200/80 hover:border-emerald-400 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-0.5 transition group text-left">
               <div>
-                <div class="w-12 h-12 rounded-xl bg-white border border-emerald-200 shadow-sm flex items-center justify-center text-emerald-700 mb-4">
-                  <i data-lucide="clapperboard" class="w-6 h-6"></i>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 rounded-xl bg-white border border-emerald-200 shadow-sm flex items-center justify-center text-emerald-700">
+                    <i data-lucide="clapperboard" class="w-6 h-6"></i>
+                  </div>
+                  <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-emerald-800 border border-emerald-200 font-inter">ขั้นตอนที่ 4</span>
                 </div>
                 <div class="flex items-center gap-2 mb-1">
                   <h3 class="text-base font-bold text-slate-900">ใบบรีฟกองถ่าย</h3>
@@ -524,9 +578,9 @@
                   สรุป Shot List มิติกล้อง พร็อพ และคิวพูดเป็น PDF/Notion ส่งต่อนักแสดงและทีมตัดต่อให้ถ่ายจบงานได้ในเทคเดียวโดยไม่ตกหล่น
                 </p>
               </div>
-              <div class="mt-6 pt-4 border-t border-emerald-200/70 flex items-center justify-between text-xs font-semibold text-emerald-800">
-                <span>Export เป็น 1-Click Brief</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              <div class="mt-6 pt-4 border-t border-emerald-200/70 flex items-center justify-between text-xs font-bold text-emerald-800">
+                <span>กดเพื่อดูตารางถ่ายทำ</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
               </div>
             </div>
 
@@ -595,7 +649,7 @@
             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             <span class="font-semibold text-slate-800">คลังโปรเจกต์คอนเทนต์</span>
           </nav>
-          <span class="text-xs text-slate-500 font-inter">ทั้งหมด 12 วิดีโอ</span>
+          <span id="library-total-label" class="text-xs text-slate-500 font-inter font-semibold">แสดง 6 จาก 6 โปรเจกต์</span>
         </div>
 
         <!-- Page Header & Action -->
@@ -605,7 +659,7 @@
               คลังโปรเจกต์คอนเทนต์ (Content Projects)
             </h1>
             <p class="text-xs sm:text-sm text-slate-600 mt-1">
-              โปรเจกต์ทั้งหมดที่บันทึกไว้ สามารถกดเข้าไปดูบรีฟ แก้ไขสคริปต์ หรือส่งงานต่อให้ทีมตัดต่อได้ทุกเมื่อ
+              คลิกที่การ์ดสถานะด้านล่างเพื่อกรองดูแต่ละขั้นตอน หรือกดปุ่มขวาบนเพื่อสร้างสคริปต์ใหม่
             </p>
           </div>
           <button id="btn-library-new-project" onclick="startNewProject()" class="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition flex items-center gap-2 flex-shrink-0 self-start sm:self-auto">
@@ -614,59 +668,59 @@
           </button>
         </div>
 
-        <!-- 4 Summary Stats Bar -->
+        <!-- 4 Summary Stats Bar (Interactive Filter Cards) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center justify-between">
+          <button type="button" onclick="setLibraryFilter('ready')" class="text-left bg-white hover:bg-emerald-50/40 p-4 rounded-xl border border-slate-200 hover:border-emerald-300 flex items-center justify-between transition group">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-105 transition">
                 <i data-lucide="check-circle-2" class="w-5 h-5"></i>
               </div>
               <div>
-                <p class="text-[11px] font-medium text-slate-500">พร้อมตัดต่อ (Ready for Edit)</p>
-                <p class="text-lg font-bold text-slate-900 font-inter">4 <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
+                <p class="text-[11px] font-medium text-slate-500">พร้อมตัดต่อ (Ready)</p>
+                <p class="text-lg font-bold text-slate-900 font-inter"><span id="stat-ready-count">3</span> <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
               </div>
             </div>
             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-          </div>
+          </button>
 
-          <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center justify-between">
+          <button type="button" onclick="setLibraryFilter('filming')" class="text-left bg-white hover:bg-amber-50/40 p-4 rounded-xl border border-slate-200 hover:border-amber-300 flex items-center justify-between transition group">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+              <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-105 transition">
                 <i data-lucide="video" class="w-5 h-5"></i>
               </div>
               <div>
                 <p class="text-[11px] font-medium text-slate-500">กำลังถ่ายทำ (Filming)</p>
-                <p class="text-lg font-bold text-slate-900 font-inter">3 <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
+                <p class="text-lg font-bold text-slate-900 font-inter"><span id="stat-filming-count">1</span> <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
               </div>
             </div>
             <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-          </div>
+          </button>
 
-          <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center justify-between">
+          <button type="button" onclick="setLibraryFilter('drafting')" class="text-left bg-white hover:bg-purple-50/40 p-4 rounded-xl border border-slate-200 hover:border-purple-300 flex items-center justify-between transition group">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+              <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-105 transition">
                 <i data-lucide="file-edit" class="w-5 h-5"></i>
               </div>
               <div>
                 <p class="text-[11px] font-medium text-slate-500">ดราฟต์สคริปต์ (Drafting)</p>
-                <p class="text-lg font-bold text-slate-900 font-inter">3 <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
+                <p class="text-lg font-bold text-slate-900 font-inter"><span id="stat-drafting-count">1</span> <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
               </div>
             </div>
             <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
-          </div>
+          </button>
 
-          <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center justify-between">
+          <button type="button" onclick="setLibraryFilter('published')" class="text-left bg-white hover:bg-blue-50/40 p-4 rounded-xl border border-slate-200 hover:border-blue-300 flex items-center justify-between transition group">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+              <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-105 transition">
                 <i data-lucide="share-2" class="w-5 h-5"></i>
               </div>
               <div>
                 <p class="text-[11px] font-medium text-slate-500">โพสต์แล้ว (Published)</p>
-                <p class="text-lg font-bold text-slate-900 font-inter">2 <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
+                <p class="text-lg font-bold text-slate-900 font-inter"><span id="stat-published-count">1</span> <span class="text-xs font-normal text-slate-500">โปรเจกต์</span></p>
               </div>
             </div>
             <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-          </div>
+          </button>
         </div>
 
         <!-- Filter & Search Toolbar -->
@@ -679,27 +733,30 @@
               type="text" 
               id="library-search" 
               oninput="handleLibrarySearch(this.value)" 
-              placeholder="ค้นหาชื่อโปรเจกต์, สินค้า, หรือแฮชแท็ก..." 
-              class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"
+              placeholder="ค้นหาชื่อโปรเจกต์, สินค้า, หรือท่อนฮุก..." 
+              class="w-full pl-10 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"
             >
+            <button type="button" id="clear-search-btn" onclick="resetLibrarySearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-xs px-1">
+              ✕
+            </button>
           </div>
 
           <!-- Status Filter Tabs -->
           <div class="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
-            <button onclick="setLibraryFilter('all')" class="filter-tab active px-3 py-1.5 text-xs font-semibold rounded-lg transition bg-blue-600 text-white">
-              ทั้งหมด (12)
+            <button id="filter-tab-all" onclick="setLibraryFilter('all')" class="filter-tab active px-3 py-1.5 text-xs font-semibold rounded-lg transition bg-blue-600 text-white">
+              ทั้งหมด (6)
             </button>
-            <button onclick="setLibraryFilter('ready')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
-              พร้อมตัดต่อ (4)
+            <button id="filter-tab-ready" onclick="setLibraryFilter('ready')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
+              พร้อมตัดต่อ (3)
             </button>
-            <button onclick="setLibraryFilter('filming')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
-              กำลังถ่าย (3)
+            <button id="filter-tab-filming" onclick="setLibraryFilter('filming')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
+              กำลังถ่าย (1)
             </button>
-            <button onclick="setLibraryFilter('drafting')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
-              ร่างสคริปต์ (3)
+            <button id="filter-tab-drafting" onclick="setLibraryFilter('drafting')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
+              ร่างสคริปต์ (1)
             </button>
-            <button onclick="setLibraryFilter('published')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
-              โพสต์แล้ว (2)
+            <button id="filter-tab-published" onclick="setLibraryFilter('published')" class="filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200">
+              โพสต์แล้ว (1)
             </button>
           </div>
 
@@ -719,43 +776,59 @@
     <div id="view-workflow" class="view-panel hidden flex-1 py-6 bg-slate-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <!-- Top 4-Step Pill Navigation System -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-2 shadow-sm mb-6">
+        <!-- Top 4-Step Pill Navigation System with Live Progress & Quick Action Guide -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-3 sm:p-4 shadow-sm mb-6">
+          <!-- Overall Progress Indicator Row -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-100">
+            <div class="flex items-center gap-2 text-xs">
+              <span id="workflow-step-pill" class="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800 font-bold font-inter">STEP 1 / 4</span>
+              <span id="workflow-quick-guide" class="text-slate-700 font-medium">
+                <strong>สิ่งที่ต้องทำหน้านี้:</strong> ตรวจสอบข้อมูลสินค้า เลือกกลุ่มลูกค้า แล้วกดปุ่มสีน้ำเงินด้านล่างเพื่อไปสแกนคลิป
+              </span>
+            </div>
+            <div class="flex items-center gap-2 self-end sm:self-auto">
+              <div class="w-24 h-2 bg-slate-100 rounded-full overflow-hidden">
+                <div id="workflow-top-progress" class="h-full bg-gradient-to-r from-purple-600 via-blue-600 to-emerald-500 transition-all duration-300" style="width: 25%"></div>
+              </div>
+              <span id="workflow-top-pct" class="text-[11px] font-bold text-slate-600 font-inter">25%</span>
+            </div>
+          </div>
+
           <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
             
             <!-- Tab 1: สมองธุรกิจ -->
             <button onclick="goToWorkflowStep(1)" id="wizard-tab-1" class="wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-purple-50 border border-purple-200">
-              <span id="tab-num-1" class="w-8 h-8 rounded-lg bg-purple-600 text-white font-bold text-sm flex items-center justify-center font-inter">1</span>
-              <div>
-                <p id="tab-label-1" class="text-xs font-bold text-purple-700">สมองธุรกิจ</p>
-                <p class="text-[10px] text-slate-500 font-inter uppercase font-semibold">Business Brain</p>
+              <span id="tab-num-1" class="w-8 h-8 rounded-lg bg-purple-600 text-white font-bold text-sm flex items-center justify-center font-inter flex-shrink-0">1</span>
+              <div class="min-w-0">
+                <p id="tab-label-1" class="text-xs font-bold text-purple-700 truncate">1. สมองธุรกิจ</p>
+                <p class="text-[10px] text-slate-500 truncate">ใส่ข้อมูลสินค้า & อย.</p>
               </div>
             </button>
 
             <!-- Tab 2: สแกนไวรัล VDO -->
             <button onclick="goToWorkflowStep(2)" id="wizard-tab-2" class="wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-white hover:bg-slate-50 border border-transparent">
-              <span id="tab-num-2" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter">2</span>
-              <div>
-                <p id="tab-label-2" class="text-xs font-bold text-slate-700">สแกนไวรัล VDO</p>
-                <p class="text-[10px] text-slate-500 font-inter uppercase font-semibold">Scan Feed</p>
+              <span id="tab-num-2" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter flex-shrink-0">2</span>
+              <div class="min-w-0">
+                <p id="tab-label-2" class="text-xs font-bold text-slate-700 truncate">2. สแกนไวรัล VDO</p>
+                <p class="text-[10px] text-slate-500 truncate">วางลิงก์ถอดสูตรคลิป</p>
               </div>
             </button>
 
             <!-- Tab 3: รีมิกซ์สคริปต์ -->
             <button onclick="goToWorkflowStep(3)" id="wizard-tab-3" class="wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-white hover:bg-slate-50 border border-transparent">
-              <span id="tab-num-3" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter">3</span>
-              <div>
-                <p id="tab-label-3" class="text-xs font-bold text-slate-700">รีมิกซ์สคริปต์</p>
-                <p class="text-[10px] text-slate-500 font-inter uppercase font-semibold">Script Remix</p>
+              <span id="tab-num-3" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter flex-shrink-0">3</span>
+              <div class="min-w-0">
+                <p id="tab-label-3" class="text-xs font-bold text-slate-700 truncate">3. รีมิกซ์สคริปต์</p>
+                <p class="text-[10px] text-slate-500 truncate">ปรับบทพูด & ตรวจ อย.</p>
               </div>
             </button>
 
             <!-- Tab 4: ถ่ายทำ & ส่งงาน -->
             <button onclick="goToWorkflowStep(4)" id="wizard-tab-4" class="wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-white hover:bg-slate-50 border border-transparent">
-              <span id="tab-num-4" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter">4</span>
-              <div>
-                <p id="tab-label-4" class="text-xs font-bold text-slate-700">ถ่ายทำ & ส่งงาน</p>
-                <p class="text-[10px] text-slate-500 font-inter uppercase font-semibold">Filming & Schedule</p>
+              <span id="tab-num-4" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter flex-shrink-0">4</span>
+              <div class="min-w-0">
+                <p id="tab-label-4" class="text-xs font-bold text-slate-700 truncate">4. ถ่ายทำ & ส่งงาน</p>
+                <p class="text-[10px] text-slate-500 truncate">ออกตารางคิวกล้อง</p>
               </div>
             </button>
 
@@ -855,24 +928,24 @@
                   น้ำเสียงของแบรนด์ (Tone of Voice)
                 </label>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                  <label class="tone-card active flex items-start gap-2.5 p-3 rounded-xl border-2 border-blue-600 bg-blue-50/50 cursor-pointer">
+                  <label onclick="selectBrandTone(this, 'สนุกสนาน เป็นกันเอง')" class="tone-card active flex items-start gap-2.5 p-3 rounded-xl border-2 border-blue-600 bg-blue-50/50 cursor-pointer transition">
                     <input type="radio" name="tone-select" value="fun" checked class="mt-0.5 text-blue-600 focus:ring-blue-500">
                     <div>
-                      <p class="text-xs font-bold text-blue-800">สนุกสนาน เป็นกันเอง 🔥</p>
+                      <p class="tone-title text-xs font-bold text-blue-800">สนุกสนาน เป็นกันเอง 🔥</p>
                       <p class="text-[11px] text-slate-500">เพื่อนเล่าให้เพื่อนฟัง</p>
                     </div>
                   </label>
-                  <label class="tone-card flex items-start gap-2.5 p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer">
+                  <label onclick="selectBrandTone(this, 'ผู้เชี่ยวชาญ น่าเชื่อถือ')" class="tone-card flex items-start gap-2.5 p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition">
                     <input type="radio" name="tone-select" value="expert" class="mt-0.5 text-blue-600 focus:ring-blue-500">
                     <div>
-                      <p class="text-xs font-bold text-slate-800">ผู้เชี่ยวชาญ 💼</p>
+                      <p class="tone-title text-xs font-bold text-slate-800">ผู้เชี่ยวชาญ 💼</p>
                       <p class="text-[11px] text-slate-500">เน้นวิจัย & ตัวเลข</p>
                     </div>
                   </label>
-                  <label class="tone-card flex items-start gap-2.5 p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer">
+                  <label onclick="selectBrandTone(this, 'กระชับ ปิดการขายไว')" class="tone-card flex items-start gap-2.5 p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition">
                     <input type="radio" name="tone-select" value="urgent" class="mt-0.5 text-blue-600 focus:ring-blue-500">
                     <div>
-                      <p class="text-xs font-bold text-slate-800">กระชับ ปิดการขายไว ⚡</p>
+                      <p class="tone-title text-xs font-bold text-slate-800">กระชับ ปิดการขายไว ⚡</p>
                       <p class="text-[11px] text-slate-500">สายยิงแอดตรงจุด</p>
                     </div>
                   </label>
@@ -1291,24 +1364,24 @@
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                 <div>
                   <div class="flex items-center gap-2">
-                    <span class="px-2 py-0.5 rounded bg-blue-600 text-white font-bold text-[10px] font-inter">สคริปต์ A</span>
+                    <span id="script-version-badge" class="px-2 py-0.5 rounded bg-blue-600 text-white font-bold text-[10px] font-inter">สคริปต์ A</span>
                     <h3 class="text-sm sm:text-base font-bold text-slate-900">ฉีกเคี้ยวไม่ต้องชง (Hook ไวรัล 2.4M)</h3>
                   </div>
                   <div class="flex items-center gap-3 text-xs text-slate-500 mt-1">
-                    <span>ความยาวประเมิน: <strong class="text-slate-800 font-inter">34 วินาที</strong></span>
+                    <span>ความยาวประเมิน: <strong id="script-card-duration" class="text-slate-800 font-inter">34 วินาที</strong></span>
                     <span>•</span>
-                    <span class="text-purple-700 font-medium">Tone: สนุกสนาน เป็นกันเอง</span>
+                    <span id="script-tone-display" class="text-purple-700 font-medium">Tone: สนุกสนาน เป็นกันเอง</span>
                   </div>
                 </div>
 
                 <div class="flex items-center p-1 bg-slate-100 rounded-lg text-xs font-semibold">
-                  <button class="px-2.5 py-1 rounded bg-white text-blue-700 shadow-sm font-inter">Ver 1.4 (ล่าสุด)</button>
-                  <button class="px-2.5 py-1 text-slate-500 hover:text-slate-800 font-inter">Ver 1.0</button>
+                  <button type="button" id="ver-btn-14" onclick="switchScriptVersion('1.4')" class="px-2.5 py-1 rounded bg-white text-blue-700 shadow-sm font-inter transition">Ver 1.4 (ล่าสุด)</button>
+                  <button type="button" id="ver-btn-10" onclick="switchScriptVersion('1.0')" class="px-2.5 py-1 rounded text-slate-500 hover:text-slate-800 font-inter transition">Ver 1.0 (ต้นฉบับ)</button>
                 </div>
               </div>
 
               <!-- Claim Guard Live Banner -->
-              <div id="claim-guard-banner" class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between gap-3 transition">
+              <div id="claim-guard-banner" class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition">
                 <div class="flex items-center gap-3">
                   <div id="claim-guard-icon" class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0">
                     <i data-lucide="shield-check" class="w-4 h-4"></i>
@@ -1322,9 +1395,14 @@
                     </p>
                   </div>
                 </div>
-                <span id="claim-guard-pill" class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-emerald-700 border border-emerald-300 font-inter">
-                  Verified ✓
-                </span>
+                <div class="flex items-center gap-2 self-end sm:self-auto">
+                  <button type="button" id="btn-claim-autofix" onclick="autoFixProhibitedClaims()" class="hidden px-3 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-bold shadow-sm transition flex items-center gap-1">
+                    <span>✨ แก้คำเสี่ยงให้อัตโนมัติ</span>
+                  </button>
+                  <span id="claim-guard-pill" class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-emerald-700 border border-emerald-300 font-inter whitespace-nowrap">
+                    Verified ✓
+                  </span>
+                </div>
               </div>
 
               <!-- Script Cards (Inline Editable) -->
@@ -1436,9 +1514,12 @@
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5 text-blue-600"></i>
-                    <span>AI Prompt Actions ด่วน:</span>
+                    <span>ปุ่มช่วยปรับบทพูดด้วย AI (กด 1 คลิก):</span>
                   </span>
-                  <span class="text-[11px] text-slate-400">คลิกเพื่อปรับสคริปต์ทันที</span>
+                  <button type="button" onclick="copyFullScriptText()" class="text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span>คัดลอกบทพูดทั้งหมด</span>
+                  </button>
                 </div>
                 <div class="flex flex-wrap gap-2">
                   <button id="btn-ai-punchy" onclick="aiRemixAction('punchy')" class="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold transition">
@@ -1449,6 +1530,9 @@
                   </button>
                   <button onclick="aiRemixAction('formal')" class="px-3 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 text-xs font-semibold transition">
                     🗣️ ปรับให้เป็นทางการขึ้น
+                  </button>
+                  <button onclick="aiRemixAction('test_risk')" class="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold transition" title="ลองทดสอบระบบตรวจจับคำต้องห้าม อย.">
+                    🚨 ทดสอบคำต้องห้าม อย.
                   </button>
                 </div>
               </div>
@@ -2503,22 +2587,22 @@
 
     // Initialize App
     document.addEventListener('DOMContentLoaded', () => {
+      updateLibraryStats();
       renderProjectCards(projectsData);
       renderDetailCueSheet(cueSheetRows);
+      updateFilmingProgress();
       lucide.createIcons();
 
-      // Auto-launch Interactive Onboarding Tour on first visit (or if ?tour=1 in URL)
+      // Only auto-launch tour if explicitly requested via ?tour=1 so first-time visitors aren't blocked by a dark overlay
       const urlParams = new URLSearchParams(window.location.search);
-      const forceTour = urlParams.get('tour') === '1';
-      const hasSeenTour = localStorage.getItem('mew_onboarding_tour_done_v1');
-      if (!hasSeenTour || forceTour) {
+      if (urlParams.get('tour') === '1') {
         setTimeout(() => {
           startOnboardingTour(false);
-        }, 650);
+        }, 450);
       }
     });
 
-    // View Switching
+    // View Switching with Global Active State
     function switchView(viewName) {
       currentView = viewName;
       document.querySelectorAll('.view-panel').forEach(panel => panel.classList.add('hidden'));
@@ -2528,11 +2612,27 @@
         targetPanel.classList.remove('hidden');
       }
 
+      // Update Desktop & Mobile Global Nav Active Highlight
+      const views = ['landing', 'workflow', 'library', 'detail'];
+      views.forEach(v => {
+        const dBtn = document.getElementById(`global-nav-${v}`);
+        const mBtn = document.getElementById(`mobile-nav-${v}`);
+        if (dBtn) {
+          dBtn.className = (v === viewName)
+            ? 'global-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white text-blue-700 shadow-sm'
+            : 'global-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5';
+        }
+        if (mBtn) {
+          mBtn.className = (v === viewName)
+            ? 'mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-bold bg-white text-blue-700 shadow-sm text-center whitespace-nowrap'
+            : 'mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-medium text-slate-600 text-center whitespace-nowrap';
+        }
+      });
+
       // Update Header Appearance
       const landingActions = document.getElementById('landing-nav-actions');
       const appActions = document.getElementById('app-nav-actions');
       const autosaveBadge = document.getElementById('autosave-badge');
-      const navWorkspacePill = document.getElementById('nav-workspace-pill');
 
       if (viewName === 'landing') {
         landingActions.classList.remove('hidden');
@@ -2631,36 +2731,76 @@
       switchView('library');
     }
 
-    // Workflow Wizard Stepper
+    // Workflow Wizard Stepper with Clear Progress & Action Guide
+    const workflowGuides = {
+      1: {
+        pct: 25,
+        pillClass: 'px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800 font-bold font-inter',
+        guide: '<strong>สิ่งที่ต้องทำหน้านี้:</strong> ตรวจสอบชื่อสินค้า เลือกกลุ่มลูกค้า (ICP) แล้วกดปุ่มสีน้ำเงินด้านล่างเพื่อไปสแกนคลิป'
+      },
+      2: {
+        pct: 50,
+        pillClass: 'px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-bold font-inter',
+        guide: '<strong>สิ่งที่ต้องทำหน้านี้:</strong> วางลิงก์คลิปไวรัล (หรือคลิกคลิปตัวอย่าง) กดสแกนดูสูตร 4 จังหวะ แล้วกดปุ่มไปขั้นตอนที่ 3'
+      },
+      3: {
+        pct: 75,
+        pillClass: 'px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 font-bold font-inter',
+        guide: '<strong>สิ่งที่ต้องทำหน้านี้:</strong> ปรับแก้บทพูดในกล่องข้อความ เช็กสถานะ อย. (Claim Guard) แล้วกดยืนยันเพื่อออกตารางถ่ายทำ'
+      },
+      4: {
+        pct: 100,
+        pillClass: 'px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold font-inter',
+        guide: '<strong>สิ่งที่ต้องทำหน้านี้:</strong> คลิกอัปเดตสถานะช็อตที่ถ่ายแล้ว หรือกด "บันทึกโปรเจกต์ & ส่งบรีฟให้ทีมงาน" ด้านล่างสุด'
+      }
+    };
+
     function goToWorkflowStep(stepNum) {
       currentWorkflowStep = stepNum;
       
-      // Update Tab Styles
+      // Update Top Progress & Quick Action Guide
+      const meta = workflowGuides[stepNum] || workflowGuides[1];
+      const stepPill = document.getElementById('workflow-step-pill');
+      const quickGuide = document.getElementById('workflow-quick-guide');
+      const topProgress = document.getElementById('workflow-top-progress');
+      const topPct = document.getElementById('workflow-top-pct');
+      if (stepPill) {
+        stepPill.className = meta.pillClass;
+        stepPill.innerText = `STEP ${stepNum} / 4`;
+      }
+      if (quickGuide) quickGuide.innerHTML = meta.guide;
+      if (topProgress) topProgress.style.width = `${meta.pct}%`;
+      if (topPct) topPct.innerText = `${meta.pct}%`;
+
+      // Update Tab Styles (Show ✓ on completed steps)
       for (let i = 1; i <= 4; i++) {
-        const tab = document.getElementById(`wizard-tab-1`.replace('1', i));
-        const num = document.getElementById(`tab-num-1`.replace('1', i));
-        const label = document.getElementById(`tab-label-1`.replace('1', i));
-        const content = document.getElementById(`step-content-1`.replace('1', i));
+        const tab = document.getElementById(`wizard-tab-${i}`);
+        const num = document.getElementById(`tab-num-${i}`);
+        const label = document.getElementById(`tab-label-${i}`);
+        const content = document.getElementById(`step-content-${i}`);
 
         if (i === stepNum) {
-          tab.className = 'wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-purple-50 border border-purple-300 shadow-sm';
-          num.className = 'w-8 h-8 rounded-lg bg-purple-600 text-white font-bold text-sm flex items-center justify-center font-inter';
-          label.className = 'text-xs font-bold text-purple-700';
+          tab.className = 'wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-purple-50 border-2 border-purple-400 shadow-sm';
+          num.className = 'w-8 h-8 rounded-lg bg-purple-600 text-white font-bold text-sm flex items-center justify-center font-inter flex-shrink-0';
+          num.innerText = i;
+          label.className = 'text-xs font-bold text-purple-800 truncate';
           content.classList.remove('hidden');
         } else if (i < stepNum) {
-          tab.className = 'wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-emerald-50/60 border border-emerald-200/60 hover:bg-emerald-50';
-          num.className = 'w-8 h-8 rounded-lg bg-emerald-600 text-white font-bold text-sm flex items-center justify-center font-inter';
-          label.className = 'text-xs font-bold text-emerald-800';
+          tab.className = 'wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-emerald-50/70 border border-emerald-200 hover:bg-emerald-50';
+          num.className = 'w-8 h-8 rounded-lg bg-emerald-600 text-white font-bold text-sm flex items-center justify-center font-inter flex-shrink-0';
+          num.innerText = '✓';
+          label.className = 'text-xs font-bold text-emerald-800 truncate';
           content.classList.add('hidden');
         } else {
-          tab.className = 'wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-white hover:bg-slate-50 border border-transparent';
-          num.className = 'w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter';
-          label.className = 'text-xs font-bold text-slate-700';
+          tab.className = 'wizard-tab text-left p-3 rounded-xl transition flex items-center gap-3 bg-white hover:bg-slate-50 border border-slate-200/70';
+          num.className = 'w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center font-inter flex-shrink-0';
+          num.innerText = i;
+          label.className = 'text-xs font-bold text-slate-700 truncate';
           content.classList.add('hidden');
         }
       }
 
-      window.scrollTo({ top: 120, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       lucide.createIcons();
     }
 
@@ -2726,11 +2866,33 @@
     function saveGrillMeContext() {
       const input = document.getElementById('grillme-input');
       if (input.value.trim()) {
-        showToast('🧠 บันทึกข้อมูลเสริมเข้าสู่สมองกลาง (Business Brain) เรียบร้อย!');
+        const uspEl = document.getElementById('input-usp-text');
+        if (uspEl && !uspEl.value.includes(input.value.trim())) {
+          uspEl.value = uspEl.value.trim() + '\n• ' + input.value.trim();
+        }
+        showToast('🧠 บันทึกจุดขายเสริมเข้าสู่สมองกลาง (Core Offer & USP) เรียบร้อย!');
         input.value = '';
       } else {
-        showToast('💡 ข้อมูลตัวอย่างถูกบันทึกเป็นบริบทของ AI สำเร็จ!');
+        showToast('💡 กรุณาคลิกเลือกคำตอบด่วนด้านบน หรือพิมพ์ข้อความก่อนกดบันทึกครับ');
       }
+    }
+
+    function selectBrandTone(cardEl, toneLabel) {
+      document.querySelectorAll('.tone-card').forEach(c => {
+        c.className = 'tone-card flex items-start gap-2.5 p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition';
+        const title = c.querySelector('.tone-title');
+        if (title) title.className = 'tone-title text-xs font-bold text-slate-800';
+      });
+      cardEl.className = 'tone-card active flex items-start gap-2.5 p-3 rounded-xl border-2 border-blue-600 bg-blue-50/50 cursor-pointer transition';
+      const activeTitle = cardEl.querySelector('.tone-title');
+      if (activeTitle) activeTitle.className = 'tone-title text-xs font-bold text-blue-800';
+
+      const radio = cardEl.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
+
+      const toneDisplay = document.getElementById('script-tone-display');
+      if (toneDisplay) toneDisplay.innerText = `Tone: ${toneLabel}`;
+      showToast(`🎙️ เปลี่ยนน้ำเสียงแบรนด์เป็น "${toneLabel}" แล้ว`);
     }
 
     // Step 2 Video Scanning Simulation
@@ -2762,9 +2924,10 @@
 
     // Step 3 Live Script & Claim Guard Checker
     function handleScriptInput(textarea) {
-      const allText = (document.getElementById('script-hook').value + ' ' + 
-                       document.getElementById('script-body').value + ' ' + 
-                       document.getElementById('script-cta').value).toLowerCase();
+      const hookEl = document.getElementById('script-hook');
+      const bodyEl = document.getElementById('script-body');
+      const ctaEl = document.getElementById('script-cta');
+      const allText = (hookEl.value + ' ' + bodyEl.value + ' ' + ctaEl.value).toLowerCase();
 
       let detectedRisks = [];
       prohibitedWords.forEach(word => {
@@ -2773,56 +2936,139 @@
         }
       });
 
+      // Highlight individual textarea if it contains a prohibited claim
+      [hookEl, bodyEl, ctaEl].forEach(el => {
+        const hasRisk = prohibitedWords.some(w => el.value.toLowerCase().includes(w.toLowerCase()));
+        el.className = hasRisk
+          ? 'w-full p-2.5 bg-rose-50/60 border-2 border-rose-400 rounded-lg text-xs text-slate-900 font-medium leading-relaxed focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500'
+          : 'w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 font-medium leading-relaxed focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500';
+      });
+
       const banner = document.getElementById('claim-guard-banner');
       const icon = document.getElementById('claim-guard-icon');
       const headline = document.getElementById('claim-guard-headline');
       const sub = document.getElementById('claim-guard-sub');
       const pill = document.getElementById('claim-guard-pill');
       const label = document.getElementById('claim-guard-safety-label');
+      const autoFixBtn = document.getElementById('btn-claim-autofix');
 
       if (detectedRisks.length > 0) {
-        banner.className = 'p-3.5 rounded-xl bg-rose-50 border border-rose-300 flex items-center justify-between gap-3 transition animate-pulse';
+        banner.className = 'p-3.5 rounded-xl bg-rose-50 border-2 border-rose-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition';
         icon.className = 'w-8 h-8 rounded-lg bg-rose-600 text-white flex items-center justify-center flex-shrink-0';
         headline.className = 'text-xs font-bold text-rose-800';
         headline.innerText = `⚠️ Claim Guard เตือน: ตรวจพบคำเสี่ยง "${detectedRisks.join(', ')}"`;
-        sub.className = 'text-[11px] text-rose-700/80';
-        sub.innerText = 'คำนี้อาจทำให้โฆษณาถูกระงับหรือผิด พ.ร.บ. อาหารและยา กรุณาปรับเปลี่ยน';
-        pill.className = 'text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-rose-700 border border-rose-300 font-inter';
-        pill.innerText = 'Risk Detected ❌';
+        sub.className = 'text-[11px] text-rose-700';
+        sub.innerText = 'คำนี้อาจทำให้โฆษณาถูกปิดกั้นหรือผิดเกณฑ์ อย. กดปุ่มขวาเพื่อแก้คำอัตโนมัติ';
+        pill.className = 'text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-rose-700 border border-rose-300 font-inter whitespace-nowrap';
+        pill.innerText = 'พบคำเสี่ยง ❌';
         label.className = 'text-sm font-bold text-rose-600';
         label.innerText = `มีคำเสี่ยง (${detectedRisks.length})`;
+        if (autoFixBtn) autoFixBtn.classList.remove('hidden');
       } else {
-        banner.className = 'p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between gap-3 transition';
+        banner.className = 'p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition';
         icon.className = 'w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0';
         headline.className = 'text-xs font-bold text-emerald-800';
         headline.innerText = 'Claim Guard กำลังปกป้อง: ตรวจพบ 0 คำเสี่ยง';
         sub.className = 'text-[11px] text-emerald-700/80';
         sub.innerText = 'กฎ อย. กองอาหารและยา กระทรวงสาธารณสุข ผ่านการตรวจสอบ 100%';
-        pill.className = 'text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-emerald-700 border border-emerald-300 font-inter';
+        pill.className = 'text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-emerald-700 border border-emerald-300 font-inter whitespace-nowrap';
         pill.innerText = 'Verified ✓';
         label.className = 'text-sm font-bold text-emerald-600';
         label.innerText = 'ปลอดภัย 0 เสี่ยง';
+        if (autoFixBtn) autoFixBtn.classList.add('hidden');
       }
+    }
+
+    function autoFixProhibitedClaims() {
+      const safeReplacements = {
+        'ขาวถาวร': 'ดูกระจ่างใสอย่างเป็นธรรมชาติ',
+        'การันตีคืนเงิน': 'รีวิวความพึงพอใจจากลูกค้าจริง',
+        '100% เห็นผลทันที': 'ช่วยให้ผิวดูชุ่มชื้นขึ้นเมื่อทานต่อเนื่อง',
+        '100% เห็นผล': 'ดูแลผิวอย่างต่อเนื่อง',
+        'เห็นผล 100%': 'รู้สึกได้ถึงความชุ่มชื้น',
+        'รักษาฝ้าหายขาด': 'ช่วยให้จุดด่างดำแลดูจางลง',
+        'หายขาด': 'แลดูจางลง',
+        'ลดน้ำหนักทันที': 'อยู่ท้อง แคลอรีต่ำ'
+      };
+      ['script-hook', 'script-body', 'script-cta'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        let val = el.value;
+        prohibitedWords.forEach(word => {
+          const replacement = safeReplacements[word] || 'ดูแลสุขภาพผิวอย่างเป็นธรรมชาติ';
+          const regex = new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+          val = val.replace(regex, replacement);
+        });
+        el.value = val;
+      });
+      handleScriptInput();
+      showToast('✅ แทนที่คำเสี่ยงด้วยคำที่ผ่านเกณฑ์ อย. เรียบร้อยแล้ว!');
+    }
+
+    function switchScriptVersion(ver) {
+      const btn14 = document.getElementById('ver-btn-14');
+      const btn10 = document.getElementById('ver-btn-10');
+      const badge = document.getElementById('script-version-badge');
+      const hook = document.getElementById('script-hook');
+      const body = document.getElementById('script-body');
+      const cta = document.getElementById('script-cta');
+
+      if (ver === '1.0') {
+        btn10.className = 'px-2.5 py-1 rounded bg-white text-blue-700 shadow-sm font-inter transition';
+        btn14.className = 'px-2.5 py-1 rounded text-slate-500 hover:text-slate-800 font-inter transition';
+        if (badge) badge.innerText = 'สคริปต์ B (Ver 1.0)';
+        hook.value = '“เคยไหม? ซื้อคอลลาเจนกระปุกมาแล้วลืมชงกินจนหมดอายุคาตู้”';
+        body.value = '“เปลี่ยนมาพก MEW Collagen Jelly Plus ซองเดียวได้ทั้งคอลลาเจนไดเปปไทด์และเซราไมด์จากญี่ปุ่น อร่อยไม่คาว”';
+        cta.value = '“จิ้มที่ตะกร้าซ้ายล่างเพื่อรับโปรเปิดตัวได้เลยค่ะ”';
+        showToast('📄 สลับมาดูสคริปต์ Ver 1.0 (ต้นฉบับ)');
+      } else {
+        btn14.className = 'px-2.5 py-1 rounded bg-white text-blue-700 shadow-sm font-inter transition';
+        btn10.className = 'px-2.5 py-1 rounded text-slate-500 hover:text-slate-800 font-inter transition';
+        if (badge) badge.innerText = 'สคริปต์ A (Ver 1.4)';
+        hook.value = '“ใครบอกว่ากินคอลลาเจนต้องเสียเวลาชง ลืมแก้วคาวๆ ไปได้เลย!”';
+        body.value = '“ตัวนี้คือ MEW Collagen Jelly Plus รวมเปปไทด์ 10,000 mg ไม่คาว พกง่าย กินตอนเร่งรีบได้ทุกที่”';
+        cta.value = '“กดโปร 2 แถม 1 ที่ตะกร้าซ้ายล่างก่อนของหมดนะคะ!”';
+        showToast('✨ สลับกลับมาที่สคริปต์ Ver 1.4 (ล่าสุด)');
+      }
+      handleScriptInput();
+    }
+
+    function copyFullScriptText() {
+      const hook = document.getElementById('script-hook').value;
+      const body = document.getElementById('script-body').value;
+      const cta = document.getElementById('script-cta').value;
+      navigator.clipboard.writeText(`[HOOK 0-3s]\n${hook}\n\n[BODY 3-22s]\n${body}\n\n[CTA 22-34s]\n${cta}`);
+      showToast('📋 คัดลอกบทพูดทั้ง 3 ช่วงลงใน Clipboard เรียบร้อย!');
     }
 
     function aiRemixAction(style) {
       const hook = document.getElementById('script-hook');
       const body = document.getElementById('script-body');
       const cta = document.getElementById('script-cta');
+      const dur1 = document.getElementById('total-script-duration');
+      const dur2 = document.getElementById('script-card-duration');
 
       if (style === 'punchy') {
         hook.value = '“หยุดเสียเงินซื้อคอลลาเจนแบบเดิม! ถ้ายังไม่ได้ลองสูตรเคี้ยวสดชงไม่ต้องล้างแก้วตัวนี้”';
+        if (dur1) dur1.innerText = '34 วินาที';
+        if (dur2) dur2.innerText = '34 วินาที';
         showToast('✨ ปรับ Hook ให้แรงและดึงสายตามากขึ้นเรียบร้อย!');
       } else if (style === 'short') {
         hook.value = '“คอลลาเจนไม่ต้องชง ฉีกเคี้ยวได้เลย!”';
         body.value = '“MEW Jelly รวมไดเปปไทด์ 10,000 mg อร่อยสดชื่น 0% น้ำตาล”';
         cta.value = '“รีบกดโปร 2 แถม 1 ที่ตะกร้าด้านล่าง!”';
-        document.getElementById('total-script-duration').innerText = '20 วินาที';
+        if (dur1) dur1.innerText = '20 วินาที';
+        if (dur2) dur2.innerText = '20 วินาที';
         showToast('⚡ ย่นบทพูดให้กระชับเหลือ 20 วินาทีเรียบร้อย!');
       } else if (style === 'formal') {
         hook.value = '“นวัตกรรมใหม่ของการดูแลผิว สำหรับผู้ที่ไม่มีเวลาชงอาหารเสริมในชีวิตประจำวัน”';
         body.value = '“ผลิตภัณฑ์ MEW Collagen Jelly Plus ผสานไดเปปไทด์เข้มข้นและสารสกัดข้าวญี่ปุ่น ผ่านการรับรองมาตรฐานระดับสากล”';
+        if (dur1) dur1.innerText = '36 วินาที';
+        if (dur2) dur2.innerText = '36 วินาที';
         showToast('🗣️ ปรับโทนให้ดูน่าเชื่อถือและเป็นทางการเรียบร้อย!');
+      } else if (style === 'test_risk') {
+        hook.value = '“กินซองนี้แล้วผิว ขาวถาวร เห็นผล 100% ทันที การันตีคืนเงิน!”';
+        showToast('🚨 ทดสอบใส่คำต้องห้าม อย. — ลองกดปุ่ม "✨ แก้คำเสี่ยงให้อัตโนมัติ" ในแถบสีแดงด้านบนได้เลย!');
       }
       handleScriptInput();
     }
@@ -2860,17 +3106,34 @@
       `).join('');
     }
 
+    function updateFilmingProgress() {
+      const tbody = document.getElementById('shot-list-table-body');
+      const badge = document.getElementById('filming-progress-badge');
+      if (!tbody || !badge) return;
+      const buttons = tbody.querySelectorAll('.status-btn');
+      const total = buttons.length;
+      let done = 0;
+      buttons.forEach(b => {
+        if (b.innerText.includes('ถ่ายเสร็จแล้ว')) done++;
+      });
+      badge.innerText = `ความคืบหน้า: ${done}/${total} ถ่ายแล้ว`;
+      badge.className = (done === total && total > 0)
+        ? 'px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold font-inter'
+        : 'px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold font-inter';
+    }
+
     function toggleRowStatus(btn) {
       if (btn.innerText.includes('ถ่ายเสร็จแล้ว')) {
         btn.innerText = 'กำลังถ่าย ⏳';
-        btn.className = 'status-btn px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold border border-amber-300';
+        btn.className = 'status-btn px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold border border-amber-300';
       } else if (btn.innerText.includes('กำลังถ่าย')) {
         btn.innerText = 'ยังไม่ได้ถ่าย';
-        btn.className = 'status-btn px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[10px] font-medium border border-slate-200';
+        btn.className = 'status-btn px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-medium border border-slate-200';
       } else {
         btn.innerText = 'ถ่ายเสร็จแล้ว ✓';
-        btn.className = 'status-btn px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold border border-emerald-300';
+        btn.className = 'status-btn px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold border border-emerald-300';
       }
+      updateFilmingProgress();
       showToast('อัปเดตสถานะการถ่ายทำเรียบร้อย');
     }
 
@@ -2902,6 +3165,7 @@
         </td>
       `;
       tbody.appendChild(newTr);
+      updateFilmingProgress();
       showToast(`เพิ่มช็อตแทรก ${formattedNum} เข้าตารางสำเร็จ`);
     }
 
@@ -2923,10 +3187,18 @@
     }
 
     function openEditorHandoffLink() {
-      prompt('🔗 ลิงก์สำหรับส่งมอบให้นักตัดต่อ (Read & Download Brief):', 'https://mewcontent.os/brief/share/token_89240fc7');
+      const shareUrl = 'https://mewcontent.os/brief/share/token_89240fc7';
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(shareUrl);
+      }
+      showToast('🔗 คัดลอกลิงก์ส่งงานให้นักตัดต่อลง Clipboard แล้ว! (ส่งทาง LINE ได้เลย)');
     }
 
     function finalizeProjectAndGoToDetail() {
+      const prodName = document.getElementById('input-product-name')?.value?.trim() || 'MEW Collagen Jelly Plus';
+      const hookText = document.getElementById('script-hook')?.value?.trim() || '“ใครบอกว่ากินคอลลาเจนต้องเสียเวลาชง...”';
+      document.getElementById('detail-project-title').innerText = `${prodName} — ใบบรีฟพร้อมตัดต่อ`;
+      document.getElementById('detail-breadcrumb-title').innerText = prodName;
       switchView('detail');
       showToast('🚀 บันทึกโปรเจกต์และเปิดหน้าใบบรีฟ Cue Sheet เรียบร้อยแล้ว!');
     }
@@ -2940,15 +3212,49 @@
     }
 
     // Library Filter & Search Logic
+    function updateLibraryStats() {
+      const counts = {
+        all: projectsData.length,
+        ready: projectsData.filter(p => p.status === 'ready').length,
+        filming: projectsData.filter(p => p.status === 'filming').length,
+        drafting: projectsData.filter(p => p.status === 'drafting').length,
+        published: projectsData.filter(p => p.status === 'published').length
+      };
+      const setElText = (id, txt) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = txt;
+      };
+      setElText('nav-library-count', counts.all);
+      setElText('stat-ready-count', counts.ready);
+      setElText('stat-filming-count', counts.filming);
+      setElText('stat-drafting-count', counts.drafting);
+      setElText('stat-published-count', counts.published);
+      setElText('filter-tab-all', `ทั้งหมด (${counts.all})`);
+      setElText('filter-tab-ready', `พร้อมตัดต่อ (${counts.ready})`);
+      setElText('filter-tab-filming', `กำลังถ่าย (${counts.filming})`);
+      setElText('filter-tab-drafting', `ร่างสคริปต์ (${counts.drafting})`);
+      setElText('filter-tab-published', `โพสต์แล้ว (${counts.published})`);
+    }
+
     function renderProjectCards(list) {
       const container = document.getElementById('project-cards-grid');
+      const totalLabel = document.getElementById('library-total-label');
+      if (totalLabel) {
+        totalLabel.innerText = `แสดง ${list.length} จาก ${projectsData.length} โปรเจกต์`;
+      }
       if (!container) return;
 
       if (list.length === 0) {
         container.innerHTML = `
-          <div class="col-span-full py-16 text-center text-slate-400">
-            <i data-lucide="inbox" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
-            <p class="text-sm">ไม่พบโปรเจกต์ที่ตรงกับเงื่อนไขการค้นหา</p>
+          <div class="col-span-full py-14 px-4 bg-white rounded-2xl border border-dashed border-slate-300 text-center">
+            <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+              <i data-lucide="search-x" class="w-6 h-6"></i>
+            </div>
+            <p class="text-sm font-bold text-slate-800 mb-1">ไม่พบโปรเจกต์ที่ตรงกับคำค้นหาหรือตัวกรองนี้</p>
+            <p class="text-xs text-slate-500 mb-4">ลองเปลี่ยนคำค้นหา หรือกดปุ่มด้านล่างเพื่อแสดงโปรเจกต์ทั้งหมด</p>
+            <button type="button" onclick="resetLibrarySearch()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition">
+              ล้างตัวกรองและแสดงทั้งหมด (${projectsData.length})
+            </button>
           </div>
         `;
         lucide.createIcons();
@@ -2956,7 +3262,7 @@
       }
 
       container.innerHTML = list.map(item => `
-        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between text-left">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md hover:border-blue-300 transition flex flex-col justify-between text-left">
           
           <div>
             <!-- Header Badges -->
@@ -3007,16 +3313,21 @@
           </div>
 
           <!-- Footer Actions -->
-          <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <span class="w-7 h-7 rounded-full ${item.avatarBg} font-bold text-xs flex items-center justify-center font-inter">
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-7 h-7 rounded-full ${item.avatarBg} font-bold text-xs flex items-center justify-center font-inter flex-shrink-0">
                 ${item.avatar}
               </span>
-              <span class="text-[11px] text-slate-400">${item.updated}</span>
+              <span class="text-[11px] text-slate-400 truncate">${item.updated}</span>
             </div>
-            <button onclick="openProjectDetail('${item.id}', '${item.title}')" class="px-3 py-1.5 rounded-lg border border-blue-600 hover:bg-blue-50 text-blue-700 font-semibold text-xs transition flex items-center gap-1">
-              <span>✏️ เปิดแก้ไขสคริปต์ & บรีฟ</span>
-            </button>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <button onclick="openProjectScript('${item.title}')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold text-xs transition" title="กลับไปแก้ไขบทพูดในขั้นตอนที่ 3">
+                ✏️ แก้บท
+              </button>
+              <button onclick="openProjectDetail('${item.id}', '${item.title}')" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-sm transition flex items-center gap-1">
+                <span>📋 ดูใบบรีฟ</span>
+              </button>
+            </div>
           </div>
 
         </div>
@@ -3027,15 +3338,34 @@
 
     function setLibraryFilter(filterType) {
       activeLibraryFilter = filterType;
-      document.querySelectorAll('.filter-tab').forEach(tab => {
-        tab.className = 'filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200';
+      const types = ['all', 'ready', 'filming', 'drafting', 'published'];
+      types.forEach(t => {
+        const tab = document.getElementById(`filter-tab-${t}`);
+        if (tab) {
+          tab.className = (t === filterType)
+            ? 'filter-tab active px-3 py-1.5 text-xs font-semibold rounded-lg transition bg-blue-600 text-white shadow-sm'
+            : 'filter-tab px-3 py-1.5 text-xs font-medium rounded-lg transition bg-slate-100 text-slate-600 hover:bg-slate-200';
+        }
       });
-      event.target.className = 'filter-tab active px-3 py-1.5 text-xs font-semibold rounded-lg transition bg-blue-600 text-white';
 
       applyFilterAndSearch();
     }
 
+    function resetLibrarySearch() {
+      const searchEl = document.getElementById('library-search');
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (searchEl) searchEl.value = '';
+      if (clearBtn) clearBtn.classList.add('hidden');
+      setLibraryFilter('all');
+      showToast('แสดงโปรเจกต์ทั้งหมดในคลังแล้ว');
+    }
+
     function handleLibrarySearch(query) {
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (clearBtn) {
+        if (query && query.trim()) clearBtn.classList.remove('hidden');
+        else clearBtn.classList.add('hidden');
+      }
       applyFilterAndSearch(query);
     }
 
@@ -3059,11 +3389,17 @@
       renderProjectCards(filtered);
     }
 
+    function openProjectScript(projTitle) {
+      switchView('workflow');
+      goToWorkflowStep(3);
+      showToast(`✏️ เปิดแก้ไขสคริปต์: ${projTitle}`);
+    }
+
     function openProjectDetail(projId, projTitle) {
       document.getElementById('detail-project-title').innerText = projTitle;
       document.getElementById('detail-breadcrumb-title').innerText = projTitle;
       switchView('detail');
-      showToast(`เปิดหน้าตรวจสอบ Cue Sheet และใบบรีฟ: ${projTitle}`);
+      showToast(`📋 เปิดหน้าใบบรีฟกองถ่าย: ${projTitle}`);
     }
 
     function toggleUserMenu() {
