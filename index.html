@@ -1,42 +1,93 @@
 <!DOCTYPE html>
-<html lang="th" class="h-full bg-slate-50">
+<html lang="th" class="h-full bg-[#fbfaf8]">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MEW Content OS - Complete End-to-End User Flow</title>
+  <meta name="theme-color" content="#fbfaf8">
+  <title>MEW Content OS | AI Growth System (mewteetawat.com Theme)</title>
   
   <!-- Google Fonts: Prompt, Inter, Noto Sans Thai -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS CDN Configured with Official mewteetawat.com V6.3 Palette -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#EFF4FF',
-              100: '#DCE9FF',
-              200: '#BFDBFE',
-              500: '#0056FF',
-              600: '#0042C8',
-              700: '#1D4ED8',
-              800: '#001550',
-              900: '#0B1C30',
+            // Map slate to mewteetawat.com V6.3 Paper, Soft Stone, Line, Muted & Deep Ink
+            slate: {
+              50: '#fbfaf8',   // --v6-paper
+              100: '#f4f2ee',  // --v6-soft
+              200: '#e7e3de',  // --v6-line
+              300: '#cfc9c1',  // dashed/input stone border
+              400: '#9b968e',  // warm faint stone
+              500: '#6b6762',  // --v6-muted
+              600: '#54504b',  // warm medium-dark stone
+              700: '#33312e',  // warm charcoal
+              800: '#1e1d1b',  // deep charcoal
+              900: '#11110f',  // --v6-ink (Primary Ink)
+              950: '#09090b',  // deepest dark ink
             },
-            canvas: '#F8FAFC',
+            // Map blue to mewteetawat.com V6.3 Warm Terracotta Coral & Ink
+            blue: {
+              50: '#fff1ec',   // --co-status-open bg
+              100: '#ffeadc',  // --p0-source warm peach
+              200: '#f5cbb8',  // soft coral border
+              300: '#f1a78b',
+              400: '#ef8a68',  // MEW gradient coral
+              500: '#ed765b',  // --v6-coral
+              600: '#11110f',  // Primary CTA dark button (--v6-ink)
+              700: '#ae4f3a',  // --co-coral-text (Eyebrow / Kicker / Active Text)
+              800: '#2a2a28',  // dark button hover
+              900: '#11110f',
+            },
+            // Map indigo & purple to mewteetawat.com V6.3 Electric Violet (--v6-violet)
+            indigo: {
+              50: '#f6f4ff',
+              100: '#f0edff',  // --co-status bg
+              200: '#dcd4ff',
+              500: '#8a76ff',  // --v6-violet
+              600: '#6e56e8',
+              700: '#5a46c9',  // --co-status text
+              800: '#42329e',
+              900: '#291f66',
+            },
+            purple: {
+              50: '#f6f4ff',
+              100: '#f0edff',  // --co-status bg
+              200: '#dcd4ff',
+              300: '#bfb0ff',
+              400: '#a475ff',
+              500: '#8a76ff',  // --v6-violet
+              600: '#745cf0',
+              700: '#5a46c9',  // --co-status text
+              800: '#42329e',
+              900: '#291f66',
+            },
+            brand: {
+              50: '#fff1ec',
+              100: '#ffeadc',
+              200: '#f5cbb8',
+              500: '#ed765b',
+              600: '#11110f',
+              700: '#ae4f3a',
+              800: '#2a2a28',
+              900: '#11110f',
+            },
+            canvas: '#fbfaf8',
             surface: '#FFFFFF',
             emerald: {
-              50: '#ECFDF5',
-              100: '#D1FAE5',
-              200: '#A7F3D0',
-              500: '#10B981',
-              600: '#059669',
-              700: '#005C3E',
-              800: '#002113',
+              50: '#eef8f2',
+              100: '#d7f0e1',
+              200: '#b2e2c6',
+              500: '#2f855a',
+              600: '#276749',
+              700: '#22543d',
+              800: '#1c4532',
             }
           },
           fontFamily: {
@@ -45,7 +96,7 @@
             thai: ['Noto Sans Thai', 'Prompt', 'sans-serif'],
           },
           borderRadius: {
-            'custom': '16px',
+            'custom': '9999px',
           }
         }
       }
@@ -56,31 +107,86 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
+    :root {
+      --v6-ink: #11110f;
+      --v6-muted: #6b6762;
+      --v6-line: #e7e3de;
+      --v6-paper: #fbfaf8;
+      --v6-soft: #f4f2ee;
+      --v6-coral: #ed765b;
+      --v6-coral-text: #ae4f3a;
+      --v6-violet: #8a76ff;
+    }
+
     body {
-      font-family: 'Prompt', 'Noto Sans Thai', 'Inter', sans-serif;
-      color: #0B1C30;
-      background-color: #F8FAFC;
+      font-family: 'Inter', 'Prompt', 'Noto Sans Thai', sans-serif;
+      color: var(--v6-ink);
+      background-color: var(--v6-paper);
     }
     .font-num {
       font-family: 'Inter', sans-serif;
     }
-    /* Custom scrollbar */
+
+    /* Subtle Film Noise Overlay from mewteetawat.com */
+    .site-noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 45;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    /* Signature mewteetawat.com Hero Mesh & Text Gradient */
+    .mew-hero-bg {
+      background:
+        radial-gradient(circle at 8% 85%, rgba(237, 118, 91, 0.14), transparent 38%),
+        radial-gradient(circle at 95% 15%, rgba(138, 118, 255, 0.16), transparent 40%),
+        var(--v6-paper);
+    }
+    .mew-gradient-text {
+      background: linear-gradient(90deg, #ef8a68, #8f7cff, #6fa1ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Offer Cards with Top Accent Bar from mewteetawat.com (.co-offer) */
+    .mew-offer-card {
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid var(--v6-line);
+      box-shadow: 0 18px 50px rgba(17, 17, 15, 0.05);
+    }
+    .mew-offer-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 4px;
+      background: var(--v6-coral);
+    }
+    .mew-offer-card.violet-bar::before {
+      background: var(--v6-violet);
+    }
+
+    /* Custom scrollbar in Warm Stone */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #F1F5F9;
+      background: #f4f2ee;
     }
     ::-webkit-scrollbar-thumb {
-      background: #CBD5E1;
+      background: #cfc9c1;
       border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #94A3B8;
+      background: #9b968e;
     }
 
-    /* ==================== ONBOARDING TOUR ANIMATIONS ==================== */
+    /* ==================== ONBOARDING TOUR ANIMATIONS (MEW V6 CORAL & VIOLET) ==================== */
     @keyframes tourHandTap {
       0%, 100% {
         transform: translate(0, 0) scale(1) rotate(-12deg);
@@ -114,17 +220,17 @@
     }
     @keyframes tourPulseGlow {
       0%, 100% {
-        box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.72), 0 0 0 4px #3B82F6, 0 0 25px 6px rgba(59, 130, 246, 0.55);
+        box-shadow: 0 0 0 9999px rgba(17, 17, 15, 0.72), 0 0 0 4px #ed765b, 0 0 25px 6px rgba(237, 118, 91, 0.55);
       }
       50% {
-        box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.72), 0 0 0 6px #60A5FA, 0 0 38px 12px rgba(59, 130, 246, 0.8);
+        box-shadow: 0 0 0 9999px rgba(17, 17, 15, 0.72), 0 0 0 6px #8a76ff, 0 0 38px 12px rgba(138, 118, 255, 0.75);
       }
     }
     .tour-spotlight-box {
       position: fixed;
       z-index: 9990;
       pointer-events: none;
-      border-radius: 18px;
+      border-radius: 20px;
       transition: top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
                   left 0.45s cubic-bezier(0.22, 1, 0.36, 1),
                   width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
@@ -140,7 +246,7 @@
     }
     .tour-hand-icon {
       animation: tourHandTap 1.15s infinite ease-in-out;
-      filter: drop-shadow(0 8px 16px rgba(0, 86, 255, 0.45));
+      filter: drop-shadow(0 8px 16px rgba(17, 17, 15, 0.4));
     }
     .tour-ripple-ring {
       position: absolute;
@@ -149,13 +255,13 @@
       width: 44px;
       height: 44px;
       border-radius: 9999px;
-      border: 3px solid #38BDF8;
-      background: rgba(56, 189, 248, 0.25);
+      border: 3px solid #ed765b;
+      background: rgba(237, 118, 91, 0.25);
       animation: tourRipple 1.4s infinite cubic-bezier(0.16, 1, 0.3, 1);
     }
     .tour-ripple-ring.delay-1 {
       animation-delay: 0.45s;
-      border-color: #60A5FA;
+      border-color: #8a76ff;
     }
     .tour-tooltip-card {
       position: fixed;
@@ -178,75 +284,79 @@
       min-height: 36px;
     }
     textarea:focus, input:focus {
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      box-shadow: 0 0 0 3px rgba(138, 118, 255, 0.28);
     }
   </style>
 </head>
-<body class="min-h-full flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900">
+<body class="min-h-full flex flex-col antialiased selection:bg-[#ffeadc] selection:text-[#11110f]">
 
-  <!-- ==================== TOP NAVIGATION BAR (SHARED HEADER) ==================== -->
-  <header id="app-header" class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 transition-all duration-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+  <!-- Subtle Texture Noise Layer from mewteetawat.com -->
+  <div class="site-noise" aria-hidden="true"></div>
+
+  <!-- ==================== TOP NAVIGATION BAR (FLOATING PILL STYLE FROM MEWTEETAWAT.COM) ==================== -->
+  <header id="app-header" class="sticky top-2.5 z-40 mx-auto w-[calc(100%-24px)] max-w-[1180px] rounded-2xl md:rounded-full bg-white/95 backdrop-blur-md border border-[#11110f]/[0.08] shadow-[0_10px_36px_rgba(17,17,15,0.08)] transition-all duration-200">
+    <div class="px-4 sm:px-5 h-14 flex items-center justify-between gap-3">
       
-      <!-- Brand Logo & Workspace Switcher -->
+      <!-- Brand Logo (MEW. AI GROWTH style) -->
       <div class="flex items-center gap-3">
         <button onclick="switchView('landing')" class="flex items-center gap-2.5 group text-left focus:outline-none" title="กลับสู่หน้าแรก">
-          <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/30 group-hover:bg-blue-700 transition">
-            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          <div class="w-8 h-8 rounded-full bg-[#11110f] flex items-center justify-center text-white font-black text-xs tracking-tighter group-hover:bg-[#ed765b] transition">
+            M.
           </div>
           <div>
-            <div class="flex items-center gap-1.5">
-              <span class="font-bold text-base sm:text-lg text-blue-700 tracking-tight font-inter">MEW Content OS</span>
-              <span class="text-[10px] font-bold bg-blue-100 text-blue-900 px-1.5 py-0.5 rounded-full font-inter">v2.4 PRO</span>
+            <div class="flex items-baseline gap-2">
+              <span class="font-black text-lg text-[#11110f] tracking-tighter font-inter">MEW.</span>
+              <span class="text-[10px] font-extrabold text-[#8d8983] tracking-[0.16em] uppercase font-inter">CONTENT OS</span>
+              <span class="hidden sm:inline-block text-[10px] font-extrabold bg-[#f0edff] text-[#5a46c9] px-2 py-0.5 rounded-full font-inter">Early Access</span>
             </div>
-            <p id="header-subtitle" class="text-[11px] text-slate-500 font-medium">โปรเจกต์: MEW Collagen Jelly Plus</p>
+            <p id="header-subtitle" class="text-[10px] text-[#6b6762] font-medium leading-none mt-0.5">โปรเจกต์: MEW Collagen Jelly Plus</p>
           </div>
         </button>
       </div>
 
-      <!-- Center Global View Switcher (3-Second Wayfinding) -->
-      <nav aria-label="เมนูหลักของระบบ" class="hidden md:flex items-center bg-slate-100/90 p-1 rounded-xl border border-slate-200/80 gap-1">
-        <button onclick="switchView('landing')" id="global-nav-landing" class="global-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white text-blue-700 shadow-sm">
-          <i data-lucide="home" class="w-3.5 h-3.5"></i>
+      <!-- Center Global View Switcher (mewteetawat.com pill links) -->
+      <nav aria-label="เมนูหลักของระบบ" class="hidden md:flex items-center bg-[#f4f2ee] p-1 rounded-full border border-[#e7e3de] gap-1">
+        <button onclick="switchView('landing')" id="global-nav-landing" class="global-nav-btn px-3.5 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1.5 bg-white text-[#11110f] shadow-sm">
+          <i data-lucide="home" class="w-3.5 h-3.5 text-[#ae4f3a]"></i>
           <span>หน้าแรก</span>
         </button>
-        <button onclick="switchView('workflow')" id="global-nav-workflow" class="global-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5">
+        <button onclick="switchView('workflow')" id="global-nav-workflow" class="global-nav-btn px-3.5 py-1.5 rounded-full text-xs font-medium text-[#6b6762] hover:text-[#11110f] transition flex items-center gap-1.5">
           <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
           <span>สตูดิโอสร้างคลิป (4 ขั้นตอน)</span>
         </button>
-        <button onclick="switchView('library')" id="global-nav-library" class="global-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5">
+        <button onclick="switchView('library')" id="global-nav-library" class="global-nav-btn px-3.5 py-1.5 rounded-full text-xs font-medium text-[#6b6762] hover:text-[#11110f] transition flex items-center gap-1.5">
           <i data-lucide="folder-kanban" class="w-3.5 h-3.5"></i>
           <span>คลังโปรเจกต์</span>
-          <span id="nav-library-count" class="px-1.5 py-0.2 rounded-full bg-slate-200/80 text-slate-700 text-[10px] font-bold font-inter">6</span>
+          <span id="nav-library-count" class="px-1.5 py-0.2 rounded-full bg-[#e7e3de] text-[#11110f] text-[10px] font-bold font-inter">6</span>
         </button>
-        <button onclick="switchView('detail')" id="global-nav-detail" class="global-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5">
+        <button onclick="switchView('detail')" id="global-nav-detail" class="global-nav-btn px-3.5 py-1.5 rounded-full text-xs font-medium text-[#6b6762] hover:text-[#11110f] transition flex items-center gap-1.5">
           <i data-lucide="clipboard-check" class="w-3.5 h-3.5"></i>
           <span>ใบบรีฟกองถ่าย</span>
         </button>
       </nav>
 
       <!-- Right Actions / Navigation Links / User -->
-      <div class="flex items-center gap-2 sm:gap-2.5">
-        <!-- Center Auto-Save Indicator (Compact) -->
-        <div id="autosave-badge" class="hidden xl:flex items-center gap-1.5 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full text-[11px] font-medium text-emerald-800" title="ระบบบันทึกการแก้ไขของคุณอัตโนมัติทุกครั้งที่พิมพ์">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      <div class="flex items-center gap-2">
+        <!-- Center Auto-Save Indicator -->
+        <div id="autosave-badge" class="hidden xl:flex items-center gap-1.5 bg-[#eef8f2] border border-[#b2e2c6] px-2.5 py-1 rounded-full text-[11px] font-semibold text-[#22543d]" title="ระบบบันทึกการแก้ไขของคุณอัตโนมัติทุกครั้งที่พิมพ์">
+          <span class="w-2 h-2 rounded-full bg-[#2f855a]"></span>
           <span id="autosave-text">บันทึกอัตโนมัติแล้ว</span>
         </div>
 
         <!-- Always-Available Interactive Tour Trigger Button -->
-        <button onclick="startOnboardingTour(true)" id="header-tour-btn" class="px-3 py-1.5 text-xs font-bold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-300 rounded-xl shadow-sm transition flex items-center gap-1.5 relative group" title="เริ่มทัวร์แนะนำการใช้งานทีละขั้นตอน">
-          <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping absolute -top-0.5 -right-0.5"></span>
-          <span class="w-2 h-2 rounded-full bg-amber-500 absolute -top-0.5 -right-0.5"></span>
-          <i data-lucide="compass" class="w-3.5 h-3.5 text-amber-600 group-hover:rotate-45 transition"></i>
+        <button onclick="startOnboardingTour(true)" id="header-tour-btn" class="px-3 py-1.5 text-xs font-extrabold text-[#ae4f3a] bg-[#fff1ec] hover:bg-[#ffeadc] border border-[#f5cbb8] rounded-full transition flex items-center gap-1.5 relative group" title="เริ่มทัวร์แนะนำการใช้งานทีละขั้นตอน">
+          <span class="w-2 h-2 rounded-full bg-[#ed765b] animate-ping absolute -top-0.5 -right-0.5"></span>
+          <span class="w-2 h-2 rounded-full bg-[#ed765b] absolute -top-0.5 -right-0.5"></span>
+          <i data-lucide="compass" class="w-3.5 h-3.5 text-[#ae4f3a] group-hover:rotate-45 transition"></i>
           <span class="hidden sm:inline">สอนใช้งาน</span>
         </button>
 
         <!-- Landing View Action Buttons -->
-        <div id="landing-nav-actions" class="flex items-center gap-2">
-          <button onclick="openAuthModal('login')" class="px-3 py-2 text-xs font-semibold text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-xl transition">
+        <div id="landing-nav-actions" class="flex items-center gap-1.5">
+          <button onclick="openAuthModal('login')" class="px-3 py-1.5 text-xs font-bold text-[#11110f] hover:bg-[#f4f2ee] rounded-full transition">
             เข้าสู่ระบบ
           </button>
-          <button onclick="startNewProject()" id="nav-register-btn" class="px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm shadow-blue-500/20 transition flex items-center gap-1.5">
+          <button onclick="startNewProject()" id="nav-register-btn" class="px-4 py-2 text-xs font-extrabold text-white bg-[#11110f] hover:bg-[#2a2a28] rounded-full transition flex items-center gap-1.5">
             <span>เริ่มสร้างคลิป</span>
             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
           </button>
@@ -254,21 +364,21 @@
 
         <!-- App View Navigation Links -->
         <div id="app-nav-actions" class="hidden flex items-center gap-2">
-          <button onclick="startNewProject()" class="px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm transition flex items-center gap-1.5">
+          <button onclick="startNewProject()" class="px-3.5 py-1.5 text-xs font-extrabold text-white bg-[#11110f] hover:bg-[#2a2a28] rounded-full transition flex items-center gap-1.5">
             <i data-lucide="plus" class="w-3.5 h-3.5"></i>
             <span>เริ่มโปรเจกต์ใหม่</span>
           </button>
           
-          <div class="hidden sm:block h-4 w-[1px] bg-slate-200 mx-0.5"></div>
+          <div class="hidden sm:block h-4 w-[1px] bg-[#e7e3de] mx-0.5"></div>
 
           <!-- User Avatar -->
-          <button onclick="toggleUserMenu()" title="โปรไฟล์ผู้ใช้งาน: ฮาฟิส (Mew)" class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full hover:bg-slate-100 transition focus:outline-none">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-700 to-blue-500 text-white font-bold text-xs flex items-center justify-center shadow-sm">
+          <button onclick="toggleUserMenu()" title="โปรไฟล์ผู้ใช้งาน: ฮาฟิส (Mew)" class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full hover:bg-[#f4f2ee] transition focus:outline-none">
+            <div class="w-8 h-8 rounded-full bg-[#11110f] text-white font-bold text-xs flex items-center justify-center shadow-sm">
               MK
             </div>
             <div class="hidden lg:block text-left text-xs">
-              <div class="font-semibold text-slate-800 leading-tight">ฮาฟิส (Mew)</div>
-              <div class="text-[10px] text-blue-600 font-medium font-inter">Creator Pro</div>
+              <div class="font-bold text-[#11110f] leading-tight">ฮาฟิส (Mew)</div>
+              <div class="text-[10px] text-[#ae4f3a] font-bold font-inter">Founder Alpha</div>
             </div>
           </button>
         </div>
@@ -276,18 +386,18 @@
       </div>
     </div>
 
-    <!-- Mobile Quick Switcher Bar (Visible only on small screens) -->
-    <div class="md:hidden border-t border-slate-100 bg-slate-50/90 px-3 py-1.5 flex items-center justify-between gap-1 overflow-x-auto text-[11px]">
-      <button onclick="switchView('landing')" id="mobile-nav-landing" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-bold bg-white text-blue-700 shadow-sm text-center whitespace-nowrap">
+    <!-- Mobile Quick Switcher Bar -->
+    <div class="md:hidden border-t border-[#e7e3de] bg-[#fbfaf8]/95 px-3 py-1.5 flex items-center justify-between gap-1 overflow-x-auto text-[11px] rounded-b-2xl">
+      <button onclick="switchView('landing')" id="mobile-nav-landing" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-full font-bold bg-white text-[#11110f] shadow-sm text-center whitespace-nowrap">
         1. หน้าแรก
       </button>
-      <button onclick="switchView('workflow')" id="mobile-nav-workflow" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-medium text-slate-600 text-center whitespace-nowrap">
+      <button onclick="switchView('workflow')" id="mobile-nav-workflow" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-full font-medium text-[#6b6762] text-center whitespace-nowrap">
         2. สตูดิโอ (4 ขั้น)
       </button>
-      <button onclick="switchView('library')" id="mobile-nav-library" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-medium text-slate-600 text-center whitespace-nowrap">
+      <button onclick="switchView('library')" id="mobile-nav-library" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-full font-medium text-[#6b6762] text-center whitespace-nowrap">
         3. คลังงาน
       </button>
-      <button onclick="switchView('detail')" id="mobile-nav-detail" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-medium text-slate-600 text-center whitespace-nowrap">
+      <button onclick="switchView('detail')" id="mobile-nav-detail" class="mobile-nav-btn flex-1 py-1.5 px-2 rounded-full font-medium text-[#6b6762] text-center whitespace-nowrap">
         4. ใบบรีฟ
       </button>
     </div>
@@ -297,113 +407,116 @@
   <main class="flex-1 flex flex-col">
 
     <!-- ------------------------------------------------------------- -->
-    <!-- VIEW 1: LANDING PAGE (FASTWORK / SAAS HERO STYLE)             -->
+    <!-- VIEW 1: LANDING PAGE (MEWTEETAWAT.COM V6.3 EDITORIAL THEME)   -->
     <!-- ------------------------------------------------------------- -->
     <div id="view-landing" class="view-panel flex-1">
       
-      <!-- Hero Section -->
-      <section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
-        <!-- Background Ambient Glow -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-blue-100/60 via-purple-50/40 to-transparent blur-3xl -z-10 pointer-events-none rounded-full"></div>
+      <!-- Hero Section (mew-hero-bg with radial coral & violet glow) -->
+      <section class="mew-hero-bg relative overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-24">
 
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
-          <!-- Badge -->
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-6 shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
-            <span>🚀 ตัวช่วยผลิตคลิปไวรัลสำหรับธุรกิจและแม่ค้าออนไลน์</span>
+          <!-- Eyebrow Kicker (mewteetawat.com .co-kicker style) -->
+          <p class="text-[11px] font-black tracking-[0.16em] uppercase text-[#ae4f3a] mb-3 font-inter">
+            MEW • AI CONTENT OPERATING SYSTEM
+          </p>
+
+          <!-- Status Pill -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fff1ec] border border-[#f5cbb8] text-[#ae4f3a] text-xs font-extrabold mb-6">
+            <span class="w-2 h-2 rounded-full bg-[#ed765b] animate-ping"></span>
+            <span>ระบบวางกลยุทธ์และผลิตคอนเทนต์ด้วย AI — ทำงานไวเหมือนมีทีมใหญ่</span>
           </div>
 
-          <!-- Main Headline -->
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.2] mb-6">
-            เปลี่ยนคลิปไวรัล<br>
-            <span class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              ให้เป็นยอดขายของแบรนด์คุณ
+          <!-- Main Headline with signature mewteetawat.com Coral->Violet->Sky gradient -->
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#11110f] tracking-tight leading-[1.18] mb-6">
+            เปลี่ยนคลิปไวรัลให้เป็นระบบ<br>
+            <span class="mew-gradient-text">
+              สร้างยอดขายของแบรนด์คุณ
             </span>
           </h1>
 
-          <!-- Subtitle -->
-          <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 font-normal leading-relaxed mb-8">
-            แกะสูตรคลิปฮิต ผสมข้อมูลสินค้าด้วย AI แล้วแปลงเป็นใบบรีฟมุมกล้องพร้อมถ่ายใน 1 นาที โดยไม่ต้องเดาทางอัลกอริทึมเองอีกต่อไป
+          <!-- Subtitle (--v6-muted #6b6762) -->
+          <p class="max-w-2xl mx-auto text-base sm:text-lg text-[#6b6762] font-normal leading-relaxed mb-8">
+            แกะสูตรคลิปฮิต ผสมข้อมูลสินค้าด้วย AI แล้วแปลงเป็นใบบรีฟมุมกล้องพร้อมถ่ายใน 1 นาที โดยให้มนุษย์ยังเป็นคนคุมการตัดสินใจที่สำคัญ
           </p>
 
-          <!-- CTAs -->
-          <div id="tour-target-hero-cta" class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 p-2 rounded-2xl">
-            <button id="btn-hero-free-trial" onclick="openAuthModal('register')" class="w-full sm:w-auto px-8 py-3.5 text-base font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-custom shadow-lg shadow-blue-500/25 transition flex items-center justify-center gap-2 group">
+          <!-- CTAs (.co-btn-dark & .co-btn-light from mewteetawat.com) -->
+          <div id="tour-target-hero-cta" class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 p-2 rounded-3xl">
+            <button id="btn-hero-free-trial" onclick="openAuthModal('register')" class="w-full sm:w-auto px-8 py-3.5 text-base font-extrabold text-white bg-[#11110f] hover:bg-[#2a2a28] rounded-full shadow-[0_14px_34px_rgba(17,17,15,0.16)] hover:-translate-y-0.5 transition flex items-center justify-center gap-2 group">
               <span>ทดลองใช้งานฟรี</span>
               <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-0.5 transition"></i>
             </button>
-            <button id="btn-hero-demo" onclick="demoWorkflowPreview()" class="w-full sm:w-auto px-6 py-3.5 text-base font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 rounded-custom shadow-sm transition flex items-center justify-center gap-2">
-              <i data-lucide="play-circle" class="w-5 h-5 text-blue-600"></i>
+            <button id="btn-hero-demo" onclick="demoWorkflowPreview()" class="w-full sm:w-auto px-7 py-3.5 text-base font-extrabold text-[#11110f] bg-white hover:bg-[#f4f2ee] border border-[#e7e3de] rounded-full shadow-sm hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+              <i data-lucide="play-circle" class="w-5 h-5 text-[#ed765b]"></i>
               <span>ดูตัวอย่างระบบ (Interactive Demo)</span>
             </button>
           </div>
 
           <!-- Micro Social Proof -->
-          <div class="flex items-center justify-center gap-3 text-xs text-slate-500">
+          <div class="flex items-center justify-center gap-3 text-xs text-[#6b6762]">
             <div class="flex -space-x-2">
-              <span class="inline-block w-7 h-7 rounded-full bg-blue-600 ring-2 ring-white text-white font-bold text-[10px] flex items-center justify-center">A</span>
-              <span class="inline-block w-7 h-7 rounded-full bg-indigo-500 ring-2 ring-white text-white font-bold text-[10px] flex items-center justify-center">B</span>
-              <span class="inline-block w-7 h-7 rounded-full bg-purple-500 ring-2 ring-white text-white font-bold text-[10px] flex items-center justify-center">M</span>
-              <span class="inline-block w-7 h-7 rounded-full bg-emerald-500 ring-2 ring-white text-white font-bold text-[10px] flex items-center justify-center">K</span>
+              <span class="inline-block w-7 h-7 rounded-full bg-[#11110f] ring-2 ring-[#fbfaf8] text-white font-bold text-[10px] flex items-center justify-center">M</span>
+              <span class="inline-block w-7 h-7 rounded-full bg-[#ed765b] ring-2 ring-[#fbfaf8] text-white font-bold text-[10px] flex items-center justify-center">E</span>
+              <span class="inline-block w-7 h-7 rounded-full bg-[#8a76ff] ring-2 ring-[#fbfaf8] text-white font-bold text-[10px] flex items-center justify-center">W</span>
+              <span class="inline-block w-7 h-7 rounded-full bg-[#2f855a] ring-2 ring-[#fbfaf8] text-white font-bold text-[10px] flex items-center justify-center">+</span>
             </div>
-            <span>มากกว่า <strong class="text-slate-800 font-semibold font-inter">1,240+ แบรนด์</strong> วางใจใช้งานใน TikTok & Reels</span>
+            <span>ออกแบบตามเวิร์กโฟลว์จริงของ <strong class="text-[#11110f] font-extrabold font-inter">MEW Content OS & AI Growth</strong></span>
           </div>
 
         </div>
 
         <!-- Hero App Showcase Card -->
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-          <div class="relative bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
+          <div class="mew-offer-card rounded-3xl overflow-hidden">
             <!-- Mockup Header -->
-            <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-4">
+            <div class="px-5 py-3.5 bg-[#f4f2ee] border-b border-[#e7e3de] flex items-center justify-between gap-4">
               <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-red-400"></span>
-                <span class="w-3 h-3 rounded-full bg-amber-400"></span>
-                <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
-                <span class="ml-2 text-xs font-semibold text-slate-700 truncate">Project: MEW Collagen Jelly Plus (Launch Campaign)</span>
+                <span class="w-3 h-3 rounded-full bg-[#ed765b]"></span>
+                <span class="w-3 h-3 rounded-full bg-[#f3a88e]"></span>
+                <span class="w-3 h-3 rounded-full bg-[#8a76ff]"></span>
+                <span class="ml-2 text-xs font-extrabold text-[#11110f] truncate font-inter">MEW CONTENT OS — Project: MEW Collagen Jelly Plus</span>
               </div>
               <div class="flex items-center gap-2">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[11px] font-semibold text-emerald-700">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#eef8f2] border border-[#b2e2c6] text-[11px] font-bold text-[#22543d]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#2f855a] animate-pulse"></span>
                   Claim Guard 100% ปลอดภัย
                 </span>
               </div>
             </div>
 
             <!-- Workflow 4-Step Pill Preview Inside Card (Interactive Click-to-Jump) -->
-            <div class="p-6 bg-slate-50/50 border-b border-slate-100">
-              <div class="flex items-center justify-between mb-2.5 text-[11px] text-slate-500">
-                <span class="font-semibold text-slate-700">👆 คลิกที่ขั้นตอนใดก็ได้เพื่อเปิดทดลองใช้งานทันที:</span>
-                <span class="text-blue-600 font-semibold hidden sm:inline">4 ขั้นตอนจบในหน้าเดียว</span>
+            <div class="p-6 bg-[#fbfaf8] border-b border-[#e7e3de]">
+              <div class="flex items-center justify-between mb-3 text-[11px] text-[#6b6762]">
+                <span class="font-bold text-[#11110f]">👆 คลิกที่ขั้นตอนใดก็ได้เพื่อเปิดทดลองใช้งานทันที:</span>
+                <span class="text-[#ae4f3a] font-extrabold hidden sm:inline uppercase tracking-wider">Capture ➔ Angle ➔ Script ➔ Produce</span>
               </div>
               <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(1)" class="bg-blue-50 hover:bg-blue-100/80 border border-blue-200/80 p-3 rounded-xl flex items-center gap-3 text-left transition group">
-                  <span class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center group-hover:scale-105 transition">1</span>
+                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(1)" class="bg-white hover:border-[#ed765b] border border-[#e7e3de] p-3 rounded-2xl flex items-center gap-3 text-left transition group shadow-sm">
+                  <span class="w-7 h-7 rounded-full bg-[#fff1ec] text-[#ae4f3a] font-extrabold text-xs flex items-center justify-center group-hover:bg-[#ed765b] group-hover:text-white transition">1</span>
                   <div>
-                    <p class="text-[10px] font-bold text-blue-700 uppercase font-inter">STEP 01</p>
-                    <p class="text-xs font-bold text-slate-900">สมองธุรกิจ</p>
+                    <p class="text-[10px] font-extrabold text-[#ae4f3a] uppercase font-inter">STEP 01</p>
+                    <p class="text-xs font-extrabold text-[#11110f]">สมองธุรกิจ</p>
                   </div>
                 </button>
-                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(2)" class="bg-blue-50 hover:bg-blue-100/80 border border-blue-200/80 p-3 rounded-xl flex items-center gap-3 text-left transition group">
-                  <span class="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center group-hover:scale-105 transition">2</span>
+                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(2)" class="bg-white hover:border-[#ed765b] border border-[#e7e3de] p-3 rounded-2xl flex items-center gap-3 text-left transition group shadow-sm">
+                  <span class="w-7 h-7 rounded-full bg-[#fff1ec] text-[#ae4f3a] font-extrabold text-xs flex items-center justify-center group-hover:bg-[#ed765b] group-hover:text-white transition">2</span>
                   <div>
-                    <p class="text-[10px] font-bold text-blue-700 uppercase font-inter">STEP 02</p>
-                    <p class="text-xs font-bold text-slate-900">สแกนไวรัล</p>
+                    <p class="text-[10px] font-extrabold text-[#ae4f3a] uppercase font-inter">STEP 02</p>
+                    <p class="text-xs font-extrabold text-[#11110f]">สแกนไวรัล</p>
                   </div>
                 </button>
-                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(3)" class="bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-xl flex items-center gap-3 shadow-md shadow-indigo-600/20 text-left transition group">
-                  <span class="w-7 h-7 rounded-lg bg-white text-indigo-700 font-bold text-xs flex items-center justify-center group-hover:scale-105 transition">3</span>
+                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(3)" class="bg-[#11110f] hover:bg-[#2a2a28] text-white p-3 rounded-2xl flex items-center gap-3 shadow-md text-left transition group">
+                  <span class="w-7 h-7 rounded-full bg-[#ed765b] text-white font-extrabold text-xs flex items-center justify-center group-hover:scale-105 transition">3</span>
                   <div>
-                    <p class="text-[10px] font-bold text-indigo-200 uppercase font-inter">STEP 03 (ตัวอย่าง)</p>
-                    <p class="text-xs font-bold text-white">สคริปต์รีมิกซ์</p>
+                    <p class="text-[10px] font-extrabold text-[#f3c2a6] uppercase font-inter">STEP 03 (ACTIVE)</p>
+                    <p class="text-xs font-extrabold text-white">สคริปต์รีมิกซ์</p>
                   </div>
                 </button>
-                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(4)" class="bg-white hover:bg-slate-50 border border-slate-200 p-3 rounded-xl flex items-center gap-3 text-left transition group">
-                  <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 font-bold text-xs flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition">4</span>
+                <button type="button" onclick="switchView('workflow'); goToWorkflowStep(4)" class="bg-white hover:border-[#ed765b] border border-[#e7e3de] p-3 rounded-2xl flex items-center gap-3 text-left transition group shadow-sm">
+                  <span class="w-7 h-7 rounded-full bg-[#f0edff] text-[#5a46c9] font-extrabold text-xs flex items-center justify-center group-hover:bg-[#8a76ff] group-hover:text-white transition">4</span>
                   <div>
-                    <p class="text-[10px] font-bold text-slate-500 uppercase font-inter">STEP 04</p>
-                    <p class="text-xs font-bold text-slate-800">ใบบรีฟถ่ายทำ</p>
+                    <p class="text-[10px] font-extrabold text-[#5a46c9] uppercase font-inter">STEP 04</p>
+                    <p class="text-xs font-extrabold text-[#11110f]">ใบบรีฟถ่ายทำ</p>
                   </div>
                 </button>
               </div>
@@ -412,58 +525,58 @@
             <!-- Bento Preview Body -->
             <div class="p-6 grid grid-cols-1 md:grid-cols-12 gap-6 bg-white">
               <!-- Left Reference Video Info -->
-              <div class="md:col-span-5 bg-slate-50 rounded-xl p-4 border border-slate-100 text-left">
+              <div class="md:col-span-5 bg-[#f4f2ee] rounded-2xl p-4 border border-[#e7e3de] text-left">
                 <div class="flex items-center justify-between mb-3">
-                  <span class="text-[11px] font-bold uppercase text-slate-500 font-inter">REFERENCE VIRAL VIDEO</span>
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-inter">Score 98/100</span>
+                  <span class="text-[11px] font-extrabold uppercase text-[#ae4f3a] tracking-wider font-inter">RADAR • VIRAL REFERENCE</span>
+                  <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#fff1ec] text-[#ae4f3a] border border-[#f5cbb8] font-inter">Score 98/100</span>
                 </div>
-                <div class="flex gap-3 items-center bg-white p-3 rounded-lg border border-slate-200 mb-3">
-                  <div class="w-14 h-16 rounded-md bg-blue-100 flex items-center justify-center text-blue-700 flex-shrink-0">
+                <div class="flex gap-3 items-center bg-white p-3 rounded-xl border border-[#e7e3de] mb-3">
+                  <div class="w-14 h-16 rounded-lg bg-[#fff1ec] flex items-center justify-center text-[#ed765b] flex-shrink-0">
                     <i data-lucide="play" class="w-5 h-5 fill-current"></i>
                   </div>
                   <div>
-                    <p class="text-xs font-bold text-slate-800 line-clamp-1">"อย่าเพิ่งซื้อถ้ายังไม่รู้ข้อนี้..."</p>
-                    <p class="text-[11px] text-slate-500 font-inter">2.4M วิว • Retention 78%</p>
-                    <span class="inline-block mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">
+                    <p class="text-xs font-extrabold text-[#11110f] line-clamp-1">"อย่าเพิ่งซื้อถ้ายังไม่รู้ข้อนี้..."</p>
+                    <p class="text-[11px] text-[#6b6762] font-inter">2.4M วิว • Retention 78%</p>
+                    <span class="inline-block mt-1 text-[10px] font-bold text-[#5a46c9] bg-[#f0edff] px-2 py-0.5 rounded-full">
                       Negative Frame + FOMO
                     </span>
                   </div>
                 </div>
-                <p class="text-[11px] text-slate-600 leading-relaxed">
-                  สูตร 4 จังหวะ: <strong>0-3s</strong> ช็อกด้วยคำถาม ➔ <strong>4-15s</strong> ขยี้ปัญหาการชง ➔ <strong>16-28s</strong> เฉลยเจลลี่ฉีกเคี้ยว ➔ <strong>29-34s</strong> ชี้ตะกร้า
+                <p class="text-[11px] text-[#6b6762] leading-relaxed">
+                  สูตร 4 จังหวะ: <strong class="text-[#11110f]">0-3s</strong> ช็อกด้วยคำถาม ➔ <strong class="text-[#11110f]">4-15s</strong> ขยี้ปัญหาการชง ➔ <strong class="text-[#11110f]">16-28s</strong> เฉลยเจลลี่ฉีกเคี้ยว ➔ <strong class="text-[#11110f]">29-34s</strong> ชี้ตะกร้า
                 </p>
               </div>
 
               <!-- Right AI Generated Script Result -->
-              <div class="md:col-span-7 bg-white rounded-xl border border-slate-200 p-4 text-left flex flex-col justify-between">
+              <div class="md:col-span-7 bg-white rounded-2xl border border-[#e7e3de] p-4 text-left flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center gap-2">
-                      <span class="w-6 h-6 rounded-md bg-purple-600 text-white flex items-center justify-center text-xs">
-                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                      <span class="w-6 h-6 rounded-full bg-[#11110f] text-white flex items-center justify-center text-xs">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#ef8a68]"></i>
                       </span>
-                      <span class="text-xs font-bold text-slate-900">AI Script Remix ผลลัพธ์พร้อมใช้งาน</span>
+                      <span class="text-xs font-extrabold text-[#11110f]">AI Script Remix ผลลัพธ์พร้อมใช้งาน</span>
                     </div>
-                    <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                    <span class="text-[11px] font-bold text-[#22543d] bg-[#eef8f2] border border-[#b2e2c6] px-2.5 py-0.5 rounded-full">
                       Claim Guard ผ่าน 100%
                     </span>
                   </div>
 
                   <div class="space-y-2 text-xs">
-                    <div class="p-2.5 rounded-lg bg-blue-50/70 border border-blue-100">
-                      <span class="font-bold text-blue-700 font-inter">🎬 HOOK (0-3s):</span>
-                      <span class="text-slate-800 ml-1">“ใครบอกว่ากินคอลลาเจนต้องเสียเวลาชง ลืมแก้วคาวๆ ไปได้เลย!”</span>
+                    <div class="p-3 rounded-xl bg-[#fff1ec] border border-[#f5cbb8]">
+                      <span class="font-extrabold text-[#ae4f3a] font-inter">🎬 HOOK (0-3s):</span>
+                      <span class="text-[#11110f] ml-1">“ใครบอกว่ากินคอลลาเจนต้องเสียเวลาชง ลืมแก้วคาวๆ ไปได้เลย!”</span>
                     </div>
-                    <div class="p-2.5 rounded-lg bg-purple-50/70 border border-purple-100">
-                      <span class="font-bold text-purple-700 font-inter">📦 BODY (3-22s):</span>
-                      <span class="text-slate-800 ml-1">“ตัวนี้คือ MEW Collagen Jelly Plus รวมเปปไทด์ 10,000 mg ไม่คาว พกง่าย ฉีกเคี้ยวได้ทันที”</span>
+                    <div class="p-3 rounded-xl bg-[#f6f4ff] border border-[#dcd4ff]">
+                      <span class="font-extrabold text-[#5a46c9] font-inter">📦 BODY (3-22s):</span>
+                      <span class="text-[#11110f] ml-1">“ตัวนี้คือ MEW Collagen Jelly Plus รวมเปปไทด์ 10,000 mg ไม่คาว พกง่าย ฉีกเคี้ยวได้ทันที”</span>
                     </div>
                   </div>
                 </div>
 
-                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <span class="text-[11px] text-slate-500">ดึงจุดขาย USP จาก Business Brain ตรง 3 จุด</span>
-                  <button onclick="startNewProject()" class="text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 px-3.5 py-1.5 rounded-lg shadow-sm transition">
+                <div class="mt-4 pt-3 border-t border-[#e7e3de] flex items-center justify-between">
+                  <span class="text-[11px] text-[#6b6762]">ดึงจุดขาย USP จาก Business Brain ตรง 3 จุด</span>
+                  <button onclick="startNewProject()" class="text-xs font-extrabold text-white bg-[#11110f] hover:bg-[#2a2a28] px-4 py-2 rounded-full shadow-sm transition">
                     สร้างใบบรีฟถ่ายทำทันที →
                   </button>
                 </div>
@@ -473,114 +586,117 @@
         </div>
       </section>
 
-      <!-- 4 Colorful Category Cards (Bento Architecture) -->
-      <section class="py-16 bg-white border-t border-slate-200/80">
+      <!-- 4 Pillars Section (mewteetawat.com .co-offer card aesthetic) -->
+      <section class="py-16 bg-[#f4f2ee] border-t border-[#e7e3de]">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center max-w-2xl mx-auto mb-12">
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3">
-              4 เครื่องมือหลัก รวมครบจบในระบบปฏิบัติการเดียว
+            <p class="text-[11px] font-black tracking-[0.16em] uppercase text-[#ae4f3a] mb-2 font-inter">
+              RADAR • CREATOR • CLAIM GUARD • FLOW
+            </p>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-[#11110f] mb-3 tracking-tight">
+              4 ขั้นตอนหลัก รวมครบจบในระบบปฏิบัติการเดียว
             </h2>
-            <p class="text-sm sm:text-base text-slate-600">
-              ออกแบบตามเวิร์กโฟลว์ของ Creator และธุรกิจยุคใหม่ เพื่อลดเวลาทำงานจาก 5 วัน เหลือเพียง 10 นาที
+            <p class="text-sm sm:text-base text-[#6b6762]">
+              ออกแบบตามเวิร์กโฟลว์ของ MEW Content OS เพื่อให้คนตัวเล็กทำงานและบริหารคอนเทนต์ได้เหมือนมีทีมใหญ่
             </p>
           </div>
 
-          <!-- Cards Grid (Interactive Step Launchers) -->
+          <!-- Cards Grid (Interactive Step Launchers styled like .co-offer on mewteetawat.com) -->
           <div id="tour-target-4pillars" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-2 rounded-2xl">
             
             <!-- Card 1: Business Brain -->
-            <div onclick="switchView('workflow'); goToWorkflowStep(1)" role="button" tabindex="0" class="cursor-pointer bg-purple-50/80 border border-purple-200/80 hover:border-purple-400 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-purple-500/10 hover:-translate-y-0.5 transition group text-left">
+            <div onclick="switchView('workflow'); goToWorkflowStep(1)" role="button" tabindex="0" class="mew-offer-card violet-bar cursor-pointer hover:border-[#8a76ff] rounded-3xl p-6 flex flex-col justify-between hover:-translate-y-1 transition group text-left">
               <div>
                 <div class="flex items-center justify-between mb-4">
-                  <div class="w-12 h-12 rounded-xl bg-white border border-purple-200 shadow-sm flex items-center justify-center text-purple-700">
-                    <i data-lucide="brain" class="w-6 h-6"></i>
+                  <div class="w-11 h-11 rounded-2xl bg-[#f0edff] flex items-center justify-center text-[#5a46c9]">
+                    <i data-lucide="brain" class="w-5 h-5"></i>
                   </div>
-                  <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-purple-800 border border-purple-200 font-inter">ขั้นตอนที่ 1</span>
+                  <span class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#f0edff] text-[#5a46c9] font-inter">ขั้นตอนที่ 1</span>
                 </div>
                 <div class="flex items-center gap-2 mb-1">
-                  <h3 class="text-base font-bold text-slate-900">สมองธุรกิจ</h3>
-                  <span class="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-inter">Brain</span>
+                  <h3 class="text-lg font-extrabold text-[#11110f]">สมองธุรกิจ</h3>
+                  <span class="text-[10px] font-extrabold bg-[#f4f2ee] text-[#6b6762] px-2 py-0.5 rounded-full font-inter">Brain</span>
                 </div>
-                <p class="text-[11px] font-bold text-purple-700 font-inter mb-2 uppercase">BUSINESS BRAIN DNA</p>
-                <p class="text-xs text-slate-600 leading-relaxed">
+                <p class="text-[11px] font-extrabold text-[#ae4f3a] font-inter mb-2 uppercase tracking-wider">BUSINESS BRAIN DNA</p>
+                <p class="text-xs text-[#6b6762] leading-relaxed">
                   คลังข้อมูลสินค้า รวบรวมจุดขาย USP ข้อห้าม และกลุ่มเป้าหมาย เพื่อป้อนเป็น DNA เฉพาะของแบรนด์ ให้ AI สร้างสคริปต์ได้ตรงตัวตน 100%
                 </p>
               </div>
-              <div class="mt-6 pt-4 border-t border-purple-200/70 flex items-center justify-between text-xs font-bold text-purple-800">
+              <div class="mt-6 pt-4 border-t border-[#e7e3de] flex items-center justify-between text-xs font-extrabold text-[#11110f]">
                 <span>กดเพื่อตั้งค่าข้อมูลสินค้า</span>
-                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-[#ed765b] group-hover:translate-x-1 transition"></i>
               </div>
             </div>
 
             <!-- Card 2: Viral Radar -->
-            <div onclick="switchView('workflow'); goToWorkflowStep(2)" role="button" tabindex="0" class="cursor-pointer bg-amber-50/80 border border-amber-200/80 hover:border-amber-400 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-amber-500/10 hover:-translate-y-0.5 transition group text-left">
+            <div onclick="switchView('workflow'); goToWorkflowStep(2)" role="button" tabindex="0" class="mew-offer-card cursor-pointer hover:border-[#ed765b] rounded-3xl p-6 flex flex-col justify-between hover:-translate-y-1 transition group text-left">
               <div>
                 <div class="flex items-center justify-between mb-4">
-                  <div class="w-12 h-12 rounded-xl bg-white border border-amber-200 shadow-sm flex items-center justify-center text-amber-700">
-                    <i data-lucide="scan" class="w-6 h-6"></i>
+                  <div class="w-11 h-11 rounded-2xl bg-[#fff1ec] flex items-center justify-center text-[#ae4f3a]">
+                    <i data-lucide="scan" class="w-5 h-5"></i>
                   </div>
-                  <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-amber-800 border border-amber-200 font-inter">ขั้นตอนที่ 2</span>
+                  <span class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#fff1ec] text-[#ae4f3a] font-inter">ขั้นตอนที่ 2</span>
                 </div>
                 <div class="flex items-center gap-2 mb-1">
-                  <h3 class="text-base font-bold text-slate-900">สแกนคลิป</h3>
-                  <span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-inter">Radar</span>
+                  <h3 class="text-lg font-extrabold text-[#11110f]">สแกนคลิป</h3>
+                  <span class="text-[10px] font-extrabold bg-[#f4f2ee] text-[#6b6762] px-2 py-0.5 rounded-full font-inter">Radar</span>
                 </div>
-                <p class="text-[11px] font-bold text-amber-700 font-inter mb-2 uppercase">VIRAL STRUCTURE SCAN</p>
-                <p class="text-xs text-slate-600 leading-relaxed">
+                <p class="text-[11px] font-extrabold text-[#ae4f3a] font-inter mb-2 uppercase tracking-wider">VIRAL STRUCTURE SCAN</p>
+                <p class="text-xs text-[#6b6762] leading-relaxed">
                   เช็กคะแนนความปัง ถอดรหัสโครงสร้าง Hook วินาทีทอง 0-3s วิเคราะห์ Retention Rate และเหตุผลที่คลิปนั้นระเบิดยอดวิวบน TikTok & Reels
                 </p>
               </div>
-              <div class="mt-6 pt-4 border-t border-amber-200/70 flex items-center justify-between text-xs font-bold text-amber-800">
+              <div class="mt-6 pt-4 border-t border-[#e7e3de] flex items-center justify-between text-xs font-extrabold text-[#11110f]">
                 <span>กดเพื่อลองสแกนลิงก์คลิป</span>
-                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-[#ed765b] group-hover:translate-x-1 transition"></i>
               </div>
             </div>
 
             <!-- Card 3: Script Remix -->
-            <div onclick="switchView('workflow'); goToWorkflowStep(3)" role="button" tabindex="0" class="cursor-pointer bg-blue-50/80 border border-blue-200/80 hover:border-blue-400 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-0.5 transition group text-left">
+            <div onclick="switchView('workflow'); goToWorkflowStep(3)" role="button" tabindex="0" class="mew-offer-card violet-bar cursor-pointer hover:border-[#8a76ff] rounded-3xl p-6 flex flex-col justify-between hover:-translate-y-1 transition group text-left">
               <div>
                 <div class="flex items-center justify-between mb-4">
-                  <div class="w-12 h-12 rounded-xl bg-white border border-blue-200 shadow-sm flex items-center justify-center text-blue-700">
-                    <i data-lucide="sparkles" class="w-6 h-6"></i>
+                  <div class="w-11 h-11 rounded-2xl bg-[#f0edff] flex items-center justify-center text-[#5a46c9]">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
                   </div>
-                  <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-blue-800 border border-blue-200 font-inter">ขั้นตอนที่ 3</span>
+                  <span class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#f0edff] text-[#5a46c9] font-inter">ขั้นตอนที่ 3</span>
                 </div>
                 <div class="flex items-center gap-2 mb-1">
-                  <h3 class="text-base font-bold text-slate-900">สตูดิโอสคริปต์</h3>
-                  <span class="text-[10px] font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-inter">Remix</span>
+                  <h3 class="text-lg font-extrabold text-[#11110f]">สตูดิโอสคริปต์</h3>
+                  <span class="text-[10px] font-extrabold bg-[#f4f2ee] text-[#6b6762] px-2 py-0.5 rounded-full font-inter">Creator</span>
                 </div>
-                <p class="text-[11px] font-bold text-blue-700 font-inter mb-2 uppercase">CLAIM GUARD SHIELD</p>
-                <p class="text-xs text-slate-600 leading-relaxed">
+                <p class="text-[11px] font-extrabold text-[#ae4f3a] font-inter mb-2 uppercase tracking-wider">CLAIM GUARD SHIELD</p>
+                <p class="text-xs text-[#6b6762] leading-relaxed">
                   แต่งบทพูดคลิปขายเนียนๆ พร้อมระบบ Claim Guard ตรวจจับและแทนที่คำเคลมเกินจริงตามกฎหมาย อย. ป้องกันช่องโดนแบนถาวร
                 </p>
               </div>
-              <div class="mt-6 pt-4 border-t border-blue-200/70 flex items-center justify-between text-xs font-bold text-blue-800">
+              <div class="mt-6 pt-4 border-t border-[#e7e3de] flex items-center justify-between text-xs font-extrabold text-[#11110f]">
                 <span>กดเพื่อแต่งสคริปต์ & เช็ก อย.</span>
-                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-[#ed765b] group-hover:translate-x-1 transition"></i>
               </div>
             </div>
 
             <!-- Card 4: Filming Brief -->
-            <div onclick="switchView('workflow'); goToWorkflowStep(4)" role="button" tabindex="0" class="cursor-pointer bg-emerald-50/80 border border-emerald-200/80 hover:border-emerald-400 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-0.5 transition group text-left">
+            <div onclick="switchView('workflow'); goToWorkflowStep(4)" role="button" tabindex="0" class="mew-offer-card cursor-pointer hover:border-[#ed765b] rounded-3xl p-6 flex flex-col justify-between hover:-translate-y-1 transition group text-left">
               <div>
                 <div class="flex items-center justify-between mb-4">
-                  <div class="w-12 h-12 rounded-xl bg-white border border-emerald-200 shadow-sm flex items-center justify-center text-emerald-700">
-                    <i data-lucide="clapperboard" class="w-6 h-6"></i>
+                  <div class="w-11 h-11 rounded-2xl bg-[#fff1ec] flex items-center justify-center text-[#ae4f3a]">
+                    <i data-lucide="clapperboard" class="w-5 h-5"></i>
                   </div>
-                  <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-emerald-800 border border-emerald-200 font-inter">ขั้นตอนที่ 4</span>
+                  <span class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#fff1ec] text-[#ae4f3a] font-inter">ขั้นตอนที่ 4</span>
                 </div>
                 <div class="flex items-center gap-2 mb-1">
-                  <h3 class="text-base font-bold text-slate-900">ใบบรีฟกองถ่าย</h3>
-                  <span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-inter">Brief</span>
+                  <h3 class="text-lg font-extrabold text-[#11110f]">ใบบรีฟกองถ่าย</h3>
+                  <span class="text-[10px] font-extrabold bg-[#f4f2ee] text-[#6b6762] px-2 py-0.5 rounded-full font-inter">Flow</span>
                 </div>
-                <p class="text-[11px] font-bold text-emerald-700 font-inter mb-2 uppercase">SHOT LIST & SCHEDULE</p>
-                <p class="text-xs text-slate-600 leading-relaxed">
+                <p class="text-[11px] font-extrabold text-[#ae4f3a] font-inter mb-2 uppercase tracking-wider">SHOT LIST & HANDOFF</p>
+                <p class="text-xs text-[#6b6762] leading-relaxed">
                   สรุป Shot List มิติกล้อง พร็อพ และคิวพูดเป็น PDF/Notion ส่งต่อนักแสดงและทีมตัดต่อให้ถ่ายจบงานได้ในเทคเดียวโดยไม่ตกหล่น
                 </p>
               </div>
-              <div class="mt-6 pt-4 border-t border-emerald-200/70 flex items-center justify-between text-xs font-bold text-emerald-800">
+              <div class="mt-6 pt-4 border-t border-[#e7e3de] flex items-center justify-between text-xs font-extrabold text-[#11110f]">
                 <span>กดเพื่อดูตารางถ่ายทำ</span>
-                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-[#ed765b] group-hover:translate-x-1 transition"></i>
               </div>
             </div>
 
@@ -588,27 +704,27 @@
         </div>
       </section>
 
-      <!-- Conversion Banner -->
-      <section class="py-12 bg-slate-50">
+      <!-- Dark Fieldnote / Conversion Banner (.rf-fieldnote style from mewteetawat.com) -->
+      <section class="py-14 bg-[#fbfaf8]">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 rounded-2xl p-8 sm:p-12 text-white shadow-xl flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
+          <div class="bg-[#11110f] rounded-3xl p-8 sm:p-12 text-white shadow-[0_30px_80px_rgba(17,17,15,0.16)] flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
             <div class="max-w-xl">
-              <span class="inline-block px-3 py-1 rounded-full bg-white/10 text-xs font-semibold mb-3 border border-white/20">
-                พร้อมใช้งานทันที ไม่ต้องผูกบัตรเครดิต
-              </span>
-              <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">
-                เริ่มสร้างสคริปต์ไวรัลตัวแรกของคุณฟรีวันนี้
+              <p class="text-[11px] font-black tracking-[0.16em] uppercase text-[#f3c2a6] mb-3 font-inter">
+                MEW TEETAWAT / BUILDING IN PUBLIC
+              </p>
+              <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-3 text-white">
+                เริ่มสร้างระบบผลิตคอนเทนต์ด้วย AI ของคุณวันนี้
               </h2>
-              <p class="text-blue-100 text-xs sm:text-sm">
-                เปลี่ยนวิธีทำวิดีโอแบบเดิมๆ ที่พึ่งพาการเดา มาสู่กระบวนการผลิตที่เป็นระบบ เพิ่มยอดขายได้ต่อเนื่อง
+              <p class="text-[#cfcac3] text-xs sm:text-sm leading-relaxed">
+                เปลี่ยนวิธีทำวิดีโอแบบเดิมๆ ที่พึ่งพาการเดา มาสู่ระบบ Research ➔ Angle ➔ Script ➔ Produce ที่วัดผลได้จริง
               </p>
             </div>
             <div class="flex-shrink-0 flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <button onclick="openAuthModal('register')" class="px-6 py-3 bg-white text-blue-700 hover:bg-blue-50 font-bold text-sm rounded-xl shadow-md transition">
-                เริ่มต้นใช้งานฟรี
+              <button onclick="openAuthModal('register')" class="px-7 py-3.5 bg-[#ed765b] hover:bg-[#ef8a68] text-white font-extrabold text-sm rounded-full shadow-md transition">
+                เริ่มต้นใช้งานฟรี →
               </button>
-              <button onclick="switchView('library')" class="px-6 py-3 bg-blue-800/60 hover:bg-blue-800 text-white border border-white/20 font-semibold text-sm rounded-xl transition">
-                ดูคลังตัวอย่าง
+              <button onclick="switchView('library')" class="px-7 py-3.5 bg-white/10 hover:bg-white/15 text-white border border-white/20 font-bold text-sm rounded-full transition">
+                ดูคลังโปรเจกต์ตัวอย่าง
               </button>
             </div>
           </div>
@@ -616,18 +732,19 @@
       </section>
 
       <!-- Minimalist Footer -->
-      <footer class="py-8 bg-white border-t border-slate-200 text-slate-500 text-xs">
+      <footer class="py-8 bg-[#fbfaf8] border-t border-[#e7e3de] text-[#6b6762] text-xs">
         <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div class="flex items-center gap-2 font-inter">
-            <span class="font-bold text-blue-700">MEW Content OS</span>
-            <span>• © 2025 MEW Inc. All rights reserved.</span>
+            <span class="font-black text-[#11110f] tracking-tighter">MEW.</span>
+            <span class="text-[10px] font-extrabold text-[#ae4f3a] tracking-widest uppercase">CONTENT OS</span>
+            <span>• © 2026 MEW AI Growth. All rights reserved.</span>
           </div>
           <div class="flex items-center gap-6">
-            <a href="#" class="hover:text-slate-800">นโยบายความเป็นส่วนตัว</a>
-            <a href="#" class="hover:text-slate-800">เงื่อนไขการให้บริการ</a>
-            <a href="#" class="hover:text-slate-800">ศูนย์ช่วยเหลือ</a>
-            <span class="inline-flex items-center gap-1.5 text-emerald-600 font-medium">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <a href="#" class="hover:text-[#11110f]">นโยบายความเป็นส่วนตัว</a>
+            <a href="#" class="hover:text-[#11110f]">เงื่อนไขการให้บริการ</a>
+            <a href="#" class="hover:text-[#11110f]">ศูนย์ช่วยเหลือ</a>
+            <span class="inline-flex items-center gap-1.5 text-[#22543d] font-semibold">
+              <span class="w-2 h-2 rounded-full bg-[#2f855a]"></span>
               ระบบทำงานปกติ
             </span>
           </div>
@@ -2316,13 +2433,13 @@
   </div>
 
   <!-- Floating Quick Replay Tour Button (Bottom-Left) -->
-  <button onclick="startOnboardingTour(true)" id="floating-tour-btn" class="fixed bottom-6 left-6 z-40 bg-white hover:bg-blue-50 text-slate-800 border-2 border-blue-600/80 shadow-xl shadow-blue-900/10 px-4 py-2.5 rounded-full text-xs font-bold flex items-center gap-2 transition transform hover:scale-105 active:scale-95 group">
-    <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs shadow-sm group-hover:rotate-12 transition">
+  <button onclick="startOnboardingTour(true)" id="floating-tour-btn" class="fixed bottom-6 left-6 z-40 bg-white hover:bg-[#fff1ec] text-[#11110f] border-2 border-[#11110f] shadow-xl px-4 py-2.5 rounded-full text-xs font-bold flex items-center gap-2 transition transform hover:scale-105 active:scale-95 group">
+    <span class="w-6 h-6 rounded-full bg-[#ed765b] text-white flex items-center justify-center text-xs shadow-sm group-hover:rotate-12 transition">
       👆
     </span>
     <div class="text-left">
-      <p class="text-[11px] font-extrabold text-blue-700 leading-none">ไม่รู้เริ่มยังไง?</p>
-      <p class="text-[10px] text-slate-500 font-medium mt-0.5">กดดูอนิเมชันสอนใช้งาน</p>
+      <p class="text-[11px] font-extrabold text-[#ae4f3a] leading-none">ไม่รู้เริ่มยังไง?</p>
+      <p class="text-[10px] text-[#6b6762] font-medium mt-0.5">กดดูอนิเมชันสอนใช้งาน</p>
     </div>
   </button>
 
@@ -2341,10 +2458,10 @@
         <span class="tour-ripple-ring"></span>
         <span class="tour-ripple-ring delay-1"></span>
         <div class="tour-hand-icon relative z-10 flex items-center gap-1.5 translate-x-3 translate-y-3">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center text-xl shadow-xl border-2 border-white">
+          <div class="w-10 h-10 rounded-full bg-[#11110f] text-white flex items-center justify-center text-xl shadow-xl border-2 border-white">
             👆
           </div>
-          <span id="tour-pointer-label" class="px-2.5 py-1 rounded-full bg-amber-400 text-slate-950 font-extrabold text-[11px] shadow-lg border border-white whitespace-nowrap">
+          <span id="tour-pointer-label" class="px-3 py-1 rounded-full bg-[#ed765b] text-white font-extrabold text-[11px] shadow-lg border border-white whitespace-nowrap">
             กำลังสาธิตจุดนี้
           </span>
         </div>
@@ -2352,43 +2469,43 @@
     </div>
 
     <!-- Interactive Guide Tooltip Card (Only Next / Prev / Skip are clickable) -->
-    <div id="tour-card" class="tour-tooltip-card w-[92vw] max-w-[390px] bg-white rounded-2xl border-2 border-blue-500/80 shadow-2xl overflow-hidden text-left">
+    <div id="tour-card" class="tour-tooltip-card w-[92vw] max-w-[390px] bg-white rounded-3xl border-2 border-[#11110f] shadow-[0_24px_60px_rgba(17,17,15,0.28)] overflow-hidden text-left">
       <!-- Top Gradient Progress Bar -->
-      <div class="h-1.5 w-full bg-slate-100 overflow-hidden">
-        <div id="tour-progress-bar" class="h-full bg-gradient-to-r from-blue-600 via-indigo-500 to-emerald-500 transition-all duration-500" style="width: 12.5%"></div>
+      <div class="h-1.5 w-full bg-[#f4f2ee] overflow-hidden">
+        <div id="tour-progress-bar" class="h-full bg-gradient-to-r from-[#ed765b] via-[#8a76ff] to-[#6fa1ff] transition-all duration-500" style="width: 12.5%"></div>
       </div>
 
       <div class="p-5">
         <!-- Top Row: Badge + Skip -->
         <div class="flex items-center justify-between gap-2 mb-3">
-          <span id="tour-step-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-[11px] font-extrabold font-inter">
-            <span class="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
+          <span id="tour-step-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#fff1ec] border border-[#f5cbb8] text-[#ae4f3a] text-[11px] font-extrabold font-inter">
+            <span class="w-2 h-2 rounded-full bg-[#ed765b] animate-ping"></span>
             <span>STEP 1 / 8</span>
           </span>
 
-          <button onclick="endOnboardingTour(true)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 text-[11px] font-semibold transition">
+          <button onclick="endOnboardingTour(true)" class="px-2.5 py-1 rounded-full bg-[#f4f2ee] hover:bg-[#e7e3de] text-[#6b6762] hover:text-[#11110f] text-[11px] font-bold transition">
             ข้ามการสอน ✕
           </button>
         </div>
 
         <!-- Title & Description -->
-        <h3 id="tour-title" class="text-base sm:text-lg font-extrabold text-slate-900 leading-snug mb-1.5">
+        <h3 id="tour-title" class="text-base sm:text-lg font-extrabold text-[#11110f] leading-snug mb-1.5">
           👋 ยินดีต้อนรับ! เริ่มสร้างคลิปไวรัลตรงนี้
         </h3>
-        <p id="tour-desc" class="text-xs text-slate-600 leading-relaxed mb-3.5">
+        <p id="tour-desc" class="text-xs text-[#6b6762] leading-relaxed mb-3.5">
           กดปุ่ม "ทดลองใช้งานฟรี" เพื่อเข้าสู่ระบบ หรือกด "ดูตัวอย่างระบบ" เพื่อลองเล่นเวิร์กโฟลว์ 4 ขั้นตอนได้ทันที
         </p>
 
         <!-- Auto-Animation Status Callout Box -->
-        <div class="p-3 rounded-xl bg-blue-50/80 border border-blue-200/80 mb-4">
-          <div class="flex items-start gap-2 text-xs text-blue-900 font-semibold">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping mt-1 flex-shrink-0"></span>
+        <div class="p-3 rounded-2xl bg-[#f4f2ee] border border-[#e7e3de] mb-4">
+          <div class="flex items-start gap-2 text-xs text-[#11110f] font-semibold">
+            <span class="w-2 h-2 rounded-full bg-[#ed765b] animate-ping mt-1 flex-shrink-0"></span>
             <span id="tour-tip-text">ระบบกำลังเล่นอนิเมชันสาธิตให้ดูอัตโนมัติ — กดปุ่ม "ถัดไป →" ด้านล่างเพื่อดูขั้นตอนต่อไป</span>
           </div>
         </div>
 
         <!-- Bottom Navigation: Dots + Prev/Next -->
-        <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+        <div class="flex items-center justify-between pt-2 border-t border-[#e7e3de]">
           <!-- Step Dots -->
           <div id="tour-dots-container" class="flex items-center gap-1">
             <!-- Rendered by JS -->
@@ -2396,10 +2513,10 @@
 
           <!-- Prev / Next Buttons -->
           <div class="flex items-center gap-2">
-            <button onclick="prevTourStep()" id="tour-prev-btn" class="px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 font-semibold text-xs transition">
+            <button onclick="prevTourStep()" id="tour-prev-btn" class="px-3.5 py-1.5 rounded-full border border-[#e7e3de] hover:bg-[#f4f2ee] text-[#6b6762] font-bold text-xs transition">
               ← ก่อนหน้า
             </button>
-            <button onclick="nextTourStep()" id="tour-next-btn" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/25 transition flex items-center gap-1">
+            <button onclick="nextTourStep()" id="tour-next-btn" class="px-5 py-2 rounded-full bg-[#11110f] hover:bg-[#2a2a28] text-white font-extrabold text-xs shadow-md transition flex items-center gap-1">
               <span id="tour-next-text">ถัดไป →</span>
             </button>
           </div>
@@ -2610,13 +2727,13 @@
         const mBtn = document.getElementById(`mobile-nav-${v}`);
         if (dBtn) {
           dBtn.className = (v === viewName)
-            ? 'global-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white text-blue-700 shadow-sm'
-            : 'global-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5';
+            ? 'global-nav-btn px-3.5 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1.5 bg-white text-[#11110f] shadow-sm'
+            : 'global-nav-btn px-3.5 py-1.5 rounded-full text-xs font-medium text-[#6b6762] hover:text-[#11110f] transition flex items-center gap-1.5';
         }
         if (mBtn) {
           mBtn.className = (v === viewName)
-            ? 'mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-bold bg-white text-blue-700 shadow-sm text-center whitespace-nowrap'
-            : 'mobile-nav-btn flex-1 py-1.5 px-2 rounded-lg font-medium text-slate-600 text-center whitespace-nowrap';
+            ? 'mobile-nav-btn flex-1 py-1.5 px-2 rounded-full font-bold bg-white text-[#11110f] shadow-sm text-center whitespace-nowrap'
+            : 'mobile-nav-btn flex-1 py-1.5 px-2 rounded-full font-medium text-[#6b6762] text-center whitespace-nowrap';
         }
       });
 
@@ -3656,7 +3773,7 @@
       const progressPct = ((index + 1) / tourSteps.length) * 100;
       document.getElementById('tour-progress-bar').style.width = `${progressPct}%`;
       document.getElementById('tour-step-badge').innerHTML = `
-        <span class="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
+        <span class="w-2 h-2 rounded-full bg-[#ed765b] animate-ping"></span>
         <span>${step.badge}</span>
       `;
       document.getElementById('tour-title').innerText = step.title;
@@ -3672,17 +3789,17 @@
       prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
       if (index === tourSteps.length - 1) {
         nextText.innerText = '🚀 เริ่มใช้งานจริงเลย!';
-        nextBtn.className = 'px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/25 transition flex items-center gap-1';
+        nextBtn.className = 'px-5 py-2 rounded-full bg-[#ed765b] hover:bg-[#ef8a68] text-white font-extrabold text-xs shadow-md transition flex items-center gap-1';
       } else {
         nextText.innerText = 'ถัดไป →';
-        nextBtn.className = 'px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/25 transition flex items-center gap-1';
+        nextBtn.className = 'px-5 py-2 rounded-full bg-[#11110f] hover:bg-[#2a2a28] text-white font-extrabold text-xs shadow-md transition flex items-center gap-1';
       }
 
       // Render Step Dots
       const dotsContainer = document.getElementById('tour-dots-container');
       dotsContainer.innerHTML = tourSteps.map((_, idx) => `
         <button onclick="goToTourStep(${idx})" title="ไปขั้นตอนที่ ${idx + 1}" class="h-2 rounded-full transition-all ${
-          idx === index ? 'w-5 bg-blue-600' : idx < index ? 'w-2 bg-emerald-500' : 'w-2 bg-slate-200 hover:bg-slate-300'
+          idx === index ? 'w-5 bg-[#ed765b]' : idx < index ? 'w-2 bg-[#11110f]' : 'w-2 bg-[#e7e3de] hover:bg-[#cfc9c1]'
         }"></button>
       `).join('');
 
