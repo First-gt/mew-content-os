@@ -2593,13 +2593,10 @@
       updateFilmingProgress();
       lucide.createIcons();
 
-      // Only auto-launch tour if explicitly requested via ?tour=1 so first-time visitors aren't blocked by a dark overlay
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('tour') === '1') {
-        setTimeout(() => {
-          startOnboardingTour(false);
-        }, 450);
-      }
+      // Auto-launch & Auto-play Interactive Onboarding Tour immediately on load
+      setTimeout(() => {
+        startOnboardingTour(false, true);
+      }, 600);
     });
 
     // View Switching with Global Active State
@@ -3561,14 +3558,19 @@
       }
     ];
 
-    function startOnboardingTour(isManual = false) {
+    let tourSimTimeout = null;
+
+    function startOnboardingTour(isManual = false, autoPlayImmediately = true) {
       closeAuthModal();
+      stopTourAutoPlay();
       tourActive = true;
       currentTourIndex = 0;
       document.getElementById('onboarding-tour-layer').classList.remove('hidden');
       document.getElementById('floating-tour-btn').classList.add('hidden');
       renderTourStep(0);
-      if (isManual) {
+      if (autoPlayImmediately) {
+        startTourAutoPlay();
+      } else if (isManual) {
         showToast('🎯 เริ่มโหมดอนิเมชันแนะนำการใช้งานทีละขั้นตอน');
       }
     }
@@ -3576,6 +3578,10 @@
     function endOnboardingTour(showCompleteToast = true) {
       tourActive = false;
       stopTourAutoPlay();
+      if (tourSimTimeout) {
+        clearTimeout(tourSimTimeout);
+        tourSimTimeout = null;
+      }
       localStorage.setItem('mew_onboarding_tour_done_v1', 'true');
       document.getElementById('onboarding-tour-layer').classList.add('hidden');
       document.getElementById('floating-tour-btn').classList.remove('hidden');
@@ -3597,7 +3603,7 @@
       } else {
         endOnboardingTour(false);
         startNewProject();
-        showToast('🎉 เริ่มต้นสร้างโปรเจกต์แรกของคุณได้เลย!');
+        showToast('🎉 จบอนิเมชันแนะนำการใช้งาน! เริ่มสร้างโปรเจกต์ของคุณได้เลย');
       }
     }
 
@@ -3615,32 +3621,41 @@
       }
     }
 
-    function toggleTourAutoPlay() {
+    function startTourAutoPlay() {
+      if (tourAutoPlayInterval) clearInterval(tourAutoPlayInterval);
       const iconEl = document.getElementById('tour-autoplay-icon');
       const textEl = document.getElementById('tour-autoplay-text');
       const btnEl = document.getElementById('tour-autoplay-btn');
+      if (iconEl && textEl && btnEl) {
+        iconEl.innerText = '⏸';
+        textEl.innerText = 'กำลังเล่นอัตโนมัติ...';
+        btnEl.className = 'px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-[11px] font-bold transition flex items-center gap-1 animate-pulse';
+      }
 
+      tourAutoPlayInterval = setInterval(() => {
+        if (!tourActive) {
+          stopTourAutoPlay();
+          return;
+        }
+        if (currentTourIndex < tourSteps.length - 1) {
+          nextTourStep();
+        } else {
+          stopTourAutoPlay();
+          endOnboardingTour(false);
+          switchView('workflow');
+          goToWorkflowStep(1);
+          showToast('🎉 สาธิตครบทั้ง 8 ขั้นตอนแล้ว! เริ่มใช้งานจริงได้เลยครับ');
+        }
+      }, 4200);
+    }
+
+    function toggleTourAutoPlay() {
       if (tourAutoPlayInterval) {
         stopTourAutoPlay();
-        showToast('⏸ หยุดเล่นสาธิตอัตโนมัติแล้ว');
+        showToast('⏸ หยุดเล่นสาธิตอัตโนมัติชั่วคราว');
       } else {
-        iconEl.innerText = '⏸';
-        textEl.innerText = 'กำลังเล่น...';
-        btnEl.className = 'px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-[11px] font-bold transition flex items-center gap-1 animate-pulse';
+        startTourAutoPlay();
         showToast('▶ เริ่มเล่นอนิเมชันสาธิตอัตโนมัติ');
-
-        tourAutoPlayInterval = setInterval(() => {
-          if (!tourActive) {
-            stopTourAutoPlay();
-            return;
-          }
-          if (currentTourIndex < tourSteps.length - 1) {
-            nextTourStep();
-          } else {
-            stopTourAutoPlay();
-            showToast('🎉 จบการสาธิตอัตโนมัติครบทั้ง 8 ขั้นตอนแล้ว!');
-          }
-        }, 3800);
       }
     }
 
@@ -3707,6 +3722,7 @@
       `).join('');
 
       // 3. Scroll target into view & position spotlight + hand pointer + card
+      if (tourSimTimeout) clearTimeout(tourSimTimeout);
       setTimeout(() => {
         const targetEl = document.getElementById(step.targetId);
         if (targetEl) {
@@ -3717,6 +3733,14 @@
         }
         setTimeout(() => {
           updateTourPositions();
+          // Automatically trigger the interactive demo action for workflow & detail steps during Auto-Play
+          if (tourAutoPlayInterval && index >= 2 && index <= 6 && typeof step.simulate === 'function') {
+            tourSimTimeout = setTimeout(() => {
+              if (tourActive && currentTourIndex === index) {
+                step.simulate();
+              }
+            }, 950);
+          }
         }, 320);
       }, 60);
     }
