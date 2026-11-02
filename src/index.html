@@ -563,24 +563,36 @@
     </section>
 
     <!-- ======================================================================
-         SCREEN 4: INSPIRING MOTIVATION SCREEN (SCANFEED PURE MINIMALIST ZEN)
+         SCREEN 4: INSPIRING MOTIVATION SCREEN (1:1 SCANFEED PURE MINIMALIST ZEN)
          ====================================================================== -->
     <section class="ob-screen" id="ob-screen-inspire" aria-label="ข้อความต้อนรับและให้กำลังใจ" tabindex="0">
-      <div class="scanfeed-zen-container" id="scanfeed-zen-box">
-        <!-- Top Text: Fixed User Name Greeting (never deletes) -->
-        <h2 class="scanfeed-zen-title">
-          ยินดีต้อนรับครับ, คุณ <span class="scanfeed-zen-name" id="ob-inspire-user-name">Creator</span>
-        </h2>
+      <!-- 1. Top Bar: Balanced Logo in Center (MEW Content OS) + Right Close Button '✕' like Scanfeed -->
+      <div class="scanfeed-zen-topbar">
+        <div class="scanfeed-zen-top-spacer" aria-hidden="true"></div>
+        <div class="scanfeed-zen-brand">
+          <span class="scanfeed-zen-logo-icon">⚡</span>
+          <span class="scanfeed-zen-brand-title">MEW Content OS</span>
+        </div>
+        <button type="button" class="scanfeed-zen-close-btn" id="ob-inspire-close" aria-label="ข้ามไปขั้นตอนถัดไป">✕</button>
+      </div>
 
-        <!-- Bottom Text: Dynamic Typewriter Inspiring Message (types and finishes/stops) -->
-        <div class="scanfeed-zen-typewriter-row">
-          <span class="mew-gradient-text scanfeed-zen-typed" id="ob-inspire-typewriter-text"></span><span class="typewriter-cursor scanfeed-zen-cursor" aria-hidden="true"></span>
+      <!-- 2. Center Stage: Exact 50% Vertical & Horizontal Centering, Pure Text with Typing Animation -->
+      <div class="scanfeed-zen-center-stage" id="scanfeed-zen-box">
+        <h1 class="scanfeed-zen-headline">
+          <span id="ob-inspire-typewriter-text">ยินดีต้อนรับกลับมาครับ คุณ<span class="scanfeed-zen-user-name" id="ob-inspire-user-name">Creator</span></span><span class="typewriter-cursor scanfeed-zen-cursor" id="ob-inspire-cursor" aria-hidden="true"></span>
+        </h1>
+      </div>
+
+      <!-- 3. Bottom Stage: Subtle Hint + Dynamic Spacebar Popup upon 4th message completion -->
+      <div class="scanfeed-zen-footer">
+        <div class="scanfeed-zen-bottom-hint" id="ob-inspire-hint">
+          <span class="scanfeed-hint-text">แตะเพื่ออ่านต่อ หรือกด Spacebar</span>
         </div>
 
-        <!-- Spacebar / Click Skip Hint -->
-        <div class="scanfeed-zen-hint" id="ob-inspire-hint">
+        <!-- Spacebar Popup Pill (pops up after 4th message finishes) -->
+        <div class="scanfeed-zen-space-popup" id="ob-inspire-spacebar-popup" aria-live="polite">
           <span class="scanfeed-kbd">Space</span>
-          <span class="scanfeed-hint-text">กด Spacebar เพื่อข้าม หรือคลิกที่ใดก็ได้เพื่อไปต่อ</span>
+          <span class="scanfeed-popup-text">กด Spacebar เพื่อข้าม หรือคลิกเพื่อไปต่อ →</span>
         </div>
       </div>
     </section>

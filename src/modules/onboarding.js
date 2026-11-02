@@ -146,12 +146,14 @@
       this.transProgressFill = document.getElementById('trans-progress-fill');
       this.btnTransNext = document.getElementById('ob-btn-trans-next');
 
-      // Step 4: Inspiring Motivation Screen (Scanfeed Zen)
+      // Step 4: Inspiring Motivation Screen (1:1 Scanfeed Zen)
       this.inspireScreen = document.getElementById('ob-screen-inspire');
       this.inspireZenBox = document.getElementById('scanfeed-zen-box');
       this.inspireUserName = document.getElementById('ob-inspire-user-name');
       this.inspireTypewriterEl = document.getElementById('ob-inspire-typewriter-text');
+      this.inspireCloseBtn = document.getElementById('ob-inspire-close');
       this.inspireHint = document.getElementById('ob-inspire-hint');
+      this.inspireSpacebarPopup = document.getElementById('ob-inspire-spacebar-popup');
       this.btnInspireNext = document.getElementById('ob-btn-inspire-next');
       this.btnBackInspire = document.getElementById('ob-back-inspire');
 
@@ -335,6 +337,12 @@
       if (this.btnBackInspire) {
         this.btnBackInspire.addEventListener('click', () => {
           this.goToStep(3);
+        });
+      }
+      if (this.inspireCloseBtn) {
+        this.inspireCloseBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.goToStep(5);
         });
       }
       // Click anywhere on Step 4 screen/container to advance
@@ -627,18 +635,17 @@
       }
     }
 
-    // Inspiring Motivation Typewriter (Top Name stays fixed, bottom quote types once and finishes/stops)
+    // Inspiring Motivation Typewriter (1:1 Scanfeed 4-messages sequence: types, pauses, erases -> stops on 4th + popup)
     startInspireTypewriter() {
-      // 1. Static User Name on top (never deleted)
-      if (this.inspireUserName) {
-        this.inspireUserName.textContent = this.profile.name || 'Creator';
-      }
-
-      // 2. Dynamic Typed Message at the bottom (types to completion and stops)
       if (!this.inspireTypewriterEl) return;
       this.inspireTypewriterActive = true;
+      this.inspireQuoteIndex = 0;
       this.inspireCharIndex = 0;
+      this.inspireIsDeleting = false;
       this.inspireTypewriterEl.textContent = '';
+      if (this.inspireSpacebarPopup) {
+        this.inspireSpacebarPopup.classList.remove('popup-visible');
+      }
       if (this.inspireTimer) clearTimeout(this.inspireTimer);
       this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 220);
     }
@@ -649,24 +656,67 @@
         clearTimeout(this.inspireTimer);
         this.inspireTimer = null;
       }
+      if (this.inspireSpacebarPopup) {
+        this.inspireSpacebarPopup.classList.remove('popup-visible');
+      }
     }
 
     tickInspireTypewriter() {
       if (!this.inspireTypewriterActive || !this.inspireTypewriterEl) return;
-      const targetMessage = typeof INSPIRE_MESSAGE !== 'undefined' ? INSPIRE_MESSAGE : (INSPIRE_QUOTES[0] || '');
 
-      if (this.inspireCharIndex < targetMessage.length) {
+      const userName = (this.profile && this.profile.name) ? this.profile.name : 'Creator';
+      const messages = [
+        `ยินดีต้อนรับกลับมาครับ คุณ${userName}`,
+        'การทำคอนเทนต์ที่ดี ไม่ใช่การเดา แต่คือการถอดรหัสสิ่งที่เวิร์ก',
+        'AI เตรียมโครงสร้างคลิปไวรัลกว่า 400+ รายการ พร้อมให้คุณต่อยอดแล้ว',
+        'คุณไม่ต้องเริ่มจากศูนย์อีกต่อไป มาเปลี่ยนยอดวิวให้เป็นยอดขายจริงไปด้วยกัน'
+      ];
+
+      const currentMessage = messages[this.inspireQuoteIndex % messages.length];
+
+      if (!this.inspireIsDeleting) {
         this.inspireCharIndex++;
-        this.inspireTypewriterEl.textContent = targetMessage.substring(0, this.inspireCharIndex);
-        const speed = 35 + Math.random() * 20;
+        this.inspireTypewriterEl.textContent = currentMessage.substring(0, this.inspireCharIndex);
+
+        if (this.inspireCharIndex >= currentMessage.length) {
+          // Check if this is the 4th message (index 3)
+          if (this.inspireQuoteIndex >= messages.length - 1) {
+            // STOP on 4th message! Do NOT delete, do NOT loop.
+            this.inspireTypewriterActive = false;
+            if (this.inspireTimer) {
+              clearTimeout(this.inspireTimer);
+              this.inspireTimer = null;
+            }
+            // Trigger Spacebar popup
+            if (this.inspireSpacebarPopup) {
+              this.inspireSpacebarPopup.classList.add('popup-visible');
+            }
+            return;
+          }
+
+          // Otherwise pause briefly then erase to show next message
+          const pauseTime = this.inspireQuoteIndex === 0 ? 1800 : 2000;
+          this.inspireIsDeleting = true;
+          this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), pauseTime);
+          return;
+        }
+
+        const speed = 36 + Math.random() * 20;
         this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), speed);
       } else {
-        // Typing finished! Stop typing, keep message displayed on screen, do NOT delete or loop.
-        this.inspireTypewriterActive = false;
-        if (this.inspireTimer) {
-          clearTimeout(this.inspireTimer);
-          this.inspireTimer = null;
+        // Deleting characters back
+        this.inspireCharIndex--;
+        this.inspireTypewriterEl.textContent = currentMessage.substring(0, this.inspireCharIndex);
+
+        if (this.inspireCharIndex <= 0) {
+          this.inspireIsDeleting = false;
+          this.inspireQuoteIndex++;
+          this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 320);
+          return;
         }
+
+        const deleteSpeed = 16;
+        this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), deleteSpeed);
       }
     }
 
@@ -677,6 +727,15 @@
       if (stepIndex < 0 || stepIndex >= this.screens.length) return;
 
       this.currentStep = stepIndex;
+
+      // Toggle Scanfeed Zen mode (Fullscreen 100vh canvas without top nav)
+      if (this.modal) {
+        if (stepIndex === 4) {
+          this.modal.classList.add('ob-mode-zen');
+        } else {
+          this.modal.classList.remove('ob-mode-zen');
+        }
+      }
 
       // Update screen active states
       this.screens.forEach((screen, idx) => {
@@ -883,6 +942,7 @@
     close() {
       if (this.modal) {
         this.modal.style.display = 'none';
+        this.modal.classList.remove('ob-mode-zen');
         this.stopTypewriter();
         this.stopBizTypewriter();
         this.stopTransTypewriter();
