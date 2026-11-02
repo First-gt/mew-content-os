@@ -1,0 +1,1008 @@
+/* ==============================================================================
+   MEW CONTENT OS — App Shell & Navigation Tree Stylesheet (Topic T01)
+   Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+   Pure Client-Side Frontend · Accessible WCAG AA/AAA · Responsive
+   Zero Fake Metrics · 100% Real Design System
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   1. Theme Custom Properties & Design Tokens (V6.3 Palette)
+   ------------------------------------------------------------------------------ */
+:root {
+  /* mewteetawat.com V6.3 Core Palette */
+  --v6-paper: #fbfaf8;          /* Warm Paper Canvas */
+  --v6-soft: #f4f2ee;           /* Soft Surface / Subdued Card */
+  --v6-white: #ffffff;          /* Pure White for Accent Cards */
+  --v6-line: #e7e3de;           /* Stone Divider Line */
+  --v6-line-strong: #cfc9c1;    /* Strong Stone Line */
+  --v6-ink: #11110f;            /* Primary Deep Ink */
+  --v6-ink-deep: #09090b;       /* Deepest Ink */
+  --v6-muted: #6b6762;          /* Warm Muted Neutral */
+  --v6-muted-light: #9b968e;    /* Light Muted Neutral */
+  --v6-coral: #ed765b;          /* Accent Coral */
+  --v6-coral-text: #ae4f3a;     /* Eyebrow / Kicker Coral Text */
+  --v6-coral-subtle: rgba(237, 118, 91, 0.12);
+  --v6-coral-glow: rgba(237, 118, 91, 0.25);
+  --v6-violet: #8a76ff;         /* Electric Violet */
+  --v6-violet-text: #5a46c9;    /* Violet Deep Text */
+  --v6-violet-subtle: rgba(138, 118, 255, 0.12);
+  --v6-amber: #f59e0b;          /* Stage Save Amber */
+  --v6-amber-subtle: rgba(245, 158, 11, 0.12);
+  --v6-indigo: #4f46e5;         /* Stage Ingredients Indigo */
+  --v6-indigo-subtle: rgba(79, 70, 229, 0.12);
+  --v6-green: #10b981;          /* Stage Approve Green */
+  --v6-green-subtle: rgba(16, 185, 129, 0.12);
+
+  /* Shadows */
+  --v6-shadow-card: 0 18px 50px rgba(17, 17, 15, 0.05);
+  --v6-shadow-sm: 0 4px 14px rgba(17, 17, 15, 0.03);
+  --v6-shadow-hover: 0 22px 55px rgba(17, 17, 15, 0.09);
+  --v6-shadow-sticky: 0 10px 30px rgba(17, 17, 15, 0.06);
+
+  /* Radii */
+  --v6-radius-pill: 9999px;
+  --v6-radius-card: 16px;
+  --v6-radius-lg: 20px;
+  --v6-radius-md: 12px;
+  --v6-radius-sm: 8px;
+
+  /* Typography */
+  --v6-font-sans: 'Inter', 'Prompt', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --v6-font-code: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Transitions */
+  --v6-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --v6-transition-fast: 0.18s var(--v6-ease);
+  --v6-transition-base: 0.25s var(--v6-ease);
+}
+
+/* ------------------------------------------------------------------------------
+   2. Base & Layout Shell
+   ------------------------------------------------------------------------------ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--v6-font-sans);
+  background-color: var(--v6-paper);
+  color: var(--v6-ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mew-app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--v6-paper);
+  position: relative;
+}
+
+/* ------------------------------------------------------------------------------
+   3. Top Brand Banner
+   ------------------------------------------------------------------------------ */
+.mew-top-bar {
+  background-color: var(--v6-white);
+  border-bottom: 1px solid var(--v6-line);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.mew-brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--v6-ink);
+  transition: opacity var(--v6-transition-fast);
+}
+
+.mew-brand-link:hover {
+  opacity: 0.9;
+}
+
+.mew-monogram {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--v6-radius-md);
+  background: var(--v6-ink);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(17, 17, 15, 0.12);
+}
+
+.mew-brand-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.mew-system-title {
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--v6-ink);
+}
+
+.mew-system-sub {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--v6-coral-text);
+  text-transform: uppercase;
+}
+
+.mew-bar-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background: var(--v6-soft);
+  border: 1px solid var(--v6-line);
+  border-radius: var(--v6-radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--v6-muted);
+}
+
+.mew-status-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--v6-green);
+  box-shadow: 0 0 0 2px var(--v6-green-subtle);
+}
+
+/* ------------------------------------------------------------------------------
+   4. Sticky Context Bar (<header data-testid="context-bar">)
+      Founder glances at screen -> immediately knows stage without reading content
+   ------------------------------------------------------------------------------ */
+.mew-context-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(251, 250, 248, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--v6-line);
+  box-shadow: var(--v6-shadow-sticky);
+  transition: all var(--v6-transition-base);
+}
+
+.context-bar-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Left: High-Visibility Stage Indicator */
+.stage-indicator-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.stage-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border-radius: var(--v6-radius-pill);
+  background: var(--v6-ink);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(17, 17, 15, 0.15);
+  transition: background-color var(--v6-transition-base), color var(--v6-transition-base);
+}
+
+.stage-badge-pill .stage-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--v6-coral);
+  transition: background-color var(--v6-transition-base);
+}
+
+.stage-badge-pill .stage-kicker {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+
+.stage-badge-pill .stage-name-display {
+  font-weight: 800;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+
+/* Dynamic Stage Accent Badges */
+.stage-badge-pill[data-stage-theme="overview"] {
+  background: var(--v6-ink);
+  color: #ffffff;
+}
+.stage-badge-pill[data-stage-theme="overview"] .stage-dot {
+  background: #60a5fa;
+}
+
+.stage-badge-pill[data-stage-theme="research"] {
+  background: var(--v6-coral);
+  color: #ffffff;
+}
+.stage-badge-pill[data-stage-theme="research"] .stage-dot {
+  background: #ffffff;
+}
+
+.stage-badge-pill[data-stage-theme="save"] {
+  background: var(--v6-amber);
+  color: #11110f;
+}
+.stage-badge-pill[data-stage-theme="save"] .stage-dot {
+  background: #b45309;
+}
+
+.stage-badge-pill[data-stage-theme="ingredients"] {
+  background: var(--v6-indigo);
+  color: #ffffff;
+}
+.stage-badge-pill[data-stage-theme="ingredients"] .stage-dot {
+  background: #a5b4fc;
+}
+
+.stage-badge-pill[data-stage-theme="remix"] {
+  background: var(--v6-violet);
+  color: #ffffff;
+}
+.stage-badge-pill[data-stage-theme="remix"] .stage-dot {
+  background: #ffffff;
+}
+
+.stage-badge-pill[data-stage-theme="approve"] {
+  background: var(--v6-green);
+  color: #ffffff;
+}
+.stage-badge-pill[data-stage-theme="approve"] .stage-dot {
+  background: #ffffff;
+}
+
+.stage-context-summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.stage-subtext {
+  font-size: 0.75rem;
+  color: var(--v6-muted);
+  font-weight: 500;
+}
+
+/* Middle / Stepper: 5 Pipeline Stages Visual Ladder */
+.stage-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  list-style: none;
+}
+
+.stepper-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--v6-muted-light);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--v6-radius-pill);
+  transition: all var(--v6-transition-fast);
+}
+
+.stepper-node .step-num {
+  font-size: 0.6875rem;
+  font-family: var(--v6-font-code);
+  font-weight: 700;
+}
+
+.stepper-node.is-current {
+  color: var(--v6-ink);
+  background: var(--v6-soft);
+  border: 1px solid var(--v6-line);
+  font-weight: 700;
+}
+
+.stepper-node.is-passed {
+  color: var(--v6-muted);
+}
+
+.stepper-arrow {
+  color: var(--v6-line-strong);
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+/* Right: Stage Trigger & Simulation Helpers */
+.context-bar-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.btn-stage-chip {
+  appearance: none;
+  border: 1px solid var(--v6-line);
+  background: var(--v6-white);
+  color: var(--v6-ink);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--v6-radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all var(--v6-transition-fast);
+}
+
+.btn-stage-chip:hover {
+  background: var(--v6-soft);
+  border-color: var(--v6-line-strong);
+  transform: translateY(-1px);
+}
+
+/* ------------------------------------------------------------------------------
+   5. Navigation Tree Bar (<nav data-testid="nav-root">)
+      5 items in strict spec 3 order:
+      00 Overview -> 01 Research -> 02 My Library -> 03 Remix -> 04 Content Board
+   ------------------------------------------------------------------------------ */
+.mew-nav-root {
+  background-color: var(--v6-white);
+  border-bottom: 1px solid var(--v6-line);
+  position: relative;
+  z-index: 90;
+}
+
+.nav-root-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-root-container::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-items-list {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+/* Nav Item Button / Link */
+.nav-tree-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  color: var(--v6-muted);
+  border: 1px solid transparent;
+  border-radius: var(--v6-radius-pill);
+  font-family: var(--v6-font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--v6-transition-base);
+}
+
+.nav-tree-item .nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  color: currentColor;
+}
+
+.nav-tree-item .nav-index {
+  font-family: var(--v6-font-code);
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0.65;
+}
+
+.nav-tree-item:hover {
+  color: var(--v6-ink);
+  background-color: var(--v6-soft);
+  transform: translateY(-2px);
+}
+
+/* Active Nav State Requirement: class is-active with distinct contrast */
+.nav-tree-item.is-active,
+.nav-tree-item.active {
+  background-color: var(--v6-ink);
+  color: #ffffff;
+  border-color: var(--v6-ink);
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(17, 17, 15, 0.16);
+  transform: translateY(-2px);
+}
+
+.nav-tree-item.is-active .nav-icon,
+.nav-tree-item.active .nav-icon {
+  color: #ffffff;
+}
+
+.nav-tree-item.is-active .nav-index,
+.nav-tree-item.active .nav-index {
+  color: var(--v6-coral);
+  opacity: 1;
+}
+
+/* Accessible Focus Ring (WCAG 2.4.7 AA/AAA) */
+.nav-tree-item:focus-visible,
+.btn-pill:focus-visible,
+.btn-stage-chip:focus-visible,
+.mew-brand-link:focus-visible {
+  outline: 2px solid var(--v6-coral);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------------------
+   6. Screen Outlet Container (<main data-testid="screen-outlet">)
+   ------------------------------------------------------------------------------ */
+.mew-screen-outlet {
+  flex: 1 0 auto;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* Individual Screen Container */
+.screen-view {
+  display: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.28s var(--v6-ease), transform 0.28s var(--v6-ease);
+}
+
+.screen-view.is-active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  animation: subtleSlideUp 0.3s var(--v6-ease) forwards;
+}
+
+@keyframes subtleSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------------------------
+   7. Card Design System (.mew-offer-card)
+      4px top accent bar in coral or violet, white bg, 1px border, soft shadow
+   ------------------------------------------------------------------------------ */
+.mew-offer-card {
+  position: relative;
+  background-color: var(--v6-white);
+  border: 1px solid var(--v6-line);
+  border-radius: var(--v6-radius-card);
+  box-shadow: var(--v6-shadow-card);
+  padding: 1.75rem;
+  overflow: hidden;
+  transition: transform var(--v6-transition-base), box-shadow var(--v6-transition-base), border-color var(--v6-transition-base);
+}
+
+.mew-offer-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--v6-coral);
+  transition: height var(--v6-transition-fast);
+}
+
+.mew-offer-card.violet-accent::before {
+  background-color: var(--v6-violet);
+}
+
+.mew-offer-card.ink-accent::before {
+  background-color: var(--v6-ink);
+}
+
+.mew-offer-card.green-accent::before {
+  background-color: var(--v6-green);
+}
+
+.mew-offer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--v6-shadow-hover);
+  border-color: var(--v6-line-strong);
+}
+
+/* ------------------------------------------------------------------------------
+   8. Button Design System
+      Primary CTA: deep ink #11110f with white text and pill rounded shape.
+      Ghost button: white background and line border.
+   ------------------------------------------------------------------------------ */
+.btn-pill {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--v6-radius-pill);
+  font-family: var(--v6-font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--v6-transition-base);
+  border: 1px solid transparent;
+}
+
+.btn-pill.btn-primary {
+  background-color: var(--v6-ink);
+  color: #ffffff;
+  border-color: var(--v6-ink);
+  box-shadow: 0 4px 14px rgba(17, 17, 15, 0.18);
+}
+
+.btn-pill.btn-primary:hover {
+  background-color: var(--v6-ink-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(17, 17, 15, 0.25);
+}
+
+.btn-pill.btn-ghost {
+  background-color: var(--v6-white);
+  color: var(--v6-ink);
+  border-color: var(--v6-line);
+}
+
+.btn-pill.btn-ghost:hover {
+  background-color: var(--v6-soft);
+  border-color: var(--v6-line-strong);
+  transform: translateY(-2px);
+}
+
+.btn-pill.btn-violet {
+  background-color: var(--v6-violet);
+  color: #ffffff;
+  border-color: var(--v6-violet);
+}
+
+.btn-pill.btn-violet:hover {
+  background-color: #7965f5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(138, 118, 255, 0.3);
+}
+
+.btn-action-badge {
+  font-family: var(--v6-font-code);
+  font-size: 0.6875rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--v6-radius-pill);
+  background: rgba(255, 255, 255, 0.2);
+  color: inherit;
+}
+
+.btn-pill.btn-ghost .btn-action-badge {
+  background: var(--v6-soft);
+  color: var(--v6-muted);
+}
+
+/* ------------------------------------------------------------------------------
+   9. Screen 00 Overview Dashboard View
+   ------------------------------------------------------------------------------ */
+.overview-hero-card {
+  background: linear-gradient(180deg, #ffffff 0%, var(--v6-soft) 100%);
+  border: 1px solid var(--v6-line);
+  border-radius: var(--v6-radius-lg);
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.overview-hero-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--v6-coral), var(--v6-violet));
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--v6-coral-text);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.hero-heading {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--v6-ink);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.hero-heading-gradient {
+  background: linear-gradient(135deg, var(--v6-coral) 0%, var(--v6-violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-desc {
+  font-size: 1rem;
+  color: var(--v6-muted);
+  max-width: 720px;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+.hero-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+/* Cards Grid for Overview */
+.overview-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.card-stage-tag {
+  font-size: 0.6875rem;
+  font-family: var(--v6-font-code);
+  font-weight: 700;
+  color: var(--v6-coral-text);
+  background: var(--v6-coral-subtle);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--v6-radius-pill);
+}
+
+.card-stage-tag.violet {
+  color: var(--v6-violet-text);
+  background: var(--v6-violet-subtle);
+}
+
+.card-stage-tag.ink {
+  color: var(--v6-ink);
+  background: var(--v6-soft);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--v6-ink);
+  margin-bottom: 0.5rem;
+}
+
+.card-body-text {
+  font-size: 0.875rem;
+  color: var(--v6-muted);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+
+.card-footer-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* ------------------------------------------------------------------------------
+   10. Screen Placeholders for 01-04
+   ------------------------------------------------------------------------------ */
+.screen-header-banner {
+  margin-bottom: 1.75rem;
+}
+
+.screen-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.badge-screen-pill {
+  font-size: 0.6875rem;
+  font-family: var(--v6-font-code);
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--v6-radius-pill);
+  background: var(--v6-soft);
+  color: var(--v6-ink);
+  border: 1px solid var(--v6-line);
+}
+
+.badge-screen-pill.coral {
+  background: var(--v6-coral-subtle);
+  color: var(--v6-coral-text);
+  border-color: rgba(237, 118, 91, 0.2);
+}
+
+.badge-screen-pill.violet {
+  background: var(--v6-violet-subtle);
+  color: var(--v6-violet-text);
+  border-color: rgba(138, 118, 255, 0.2);
+}
+
+.badge-screen-pill.green {
+  background: var(--v6-green-subtle);
+  color: #065f46;
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.screen-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--v6-ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4rem;
+}
+
+.screen-desc {
+  font-size: 0.9375rem;
+  color: var(--v6-muted);
+  line-height: 1.6;
+}
+
+/* ------------------------------------------------------------------------------
+   11. Human Save Gate Modal (Stage: "Save")
+   ------------------------------------------------------------------------------ */
+.mew-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 17, 15, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.mew-modal-backdrop.is-open {
+  display: flex;
+  animation: subtleFadeIn 0.2s var(--v6-ease);
+}
+
+.mew-modal-card {
+  width: 100%;
+  max-width: 600px;
+  background: var(--v6-white);
+  border: 1px solid var(--v6-line);
+  border-radius: var(--v6-radius-lg);
+  box-shadow: 0 24px 60px rgba(17, 17, 15, 0.2);
+  position: relative;
+  overflow: hidden;
+  animation: subtleSlideUp 0.25s var(--v6-ease);
+}
+
+.mew-modal-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--v6-amber);
+}
+
+.modal-header {
+  padding: 1.5rem 1.75rem 1rem;
+  border-bottom: 1px solid var(--v6-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title-group h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--v6-ink);
+}
+
+.modal-title-group p {
+  font-size: 0.8125rem;
+  color: var(--v6-muted);
+  margin-top: 0.2rem;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--v6-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--v6-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close-btn:hover {
+  color: var(--v6-ink);
+  background: var(--v6-soft);
+}
+
+.modal-body {
+  padding: 1.5rem 1.75rem;
+}
+
+.modal-body .choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.choice-label {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0.75rem;
+  border: 1px solid var(--v6-line);
+  border-radius: var(--v6-radius-md);
+  background: var(--v6-soft);
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--v6-transition-fast);
+}
+
+.choice-label input {
+  margin-bottom: 0.5rem;
+}
+
+.choice-label strong {
+  font-size: 0.875rem;
+  color: var(--v6-ink);
+}
+
+.choice-label span {
+  font-size: 0.75rem;
+  color: var(--v6-muted);
+}
+
+.choice-label:hover {
+  border-color: var(--v6-amber);
+  background: var(--v6-amber-subtle);
+}
+
+.modal-form-group {
+  margin-bottom: 1rem;
+}
+
+.modal-form-group label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--v6-ink);
+  margin-bottom: 0.4rem;
+}
+
+.modal-form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--v6-line);
+  border-radius: var(--v6-radius-md);
+  font-family: var(--v6-font-sans);
+  font-size: 0.875rem;
+  background: var(--v6-paper);
+  color: var(--v6-ink);
+  resize: vertical;
+}
+
+.modal-form-group textarea:focus {
+  outline: 2px solid var(--v6-amber);
+  border-color: transparent;
+}
+
+.modal-footer {
+  padding: 1rem 1.75rem 1.5rem;
+  border-top: 1px solid var(--v6-line);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+@keyframes subtleFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ------------------------------------------------------------------------------
+   12. Accessibility & Responsive Adjustments
+   ------------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .context-bar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .stage-stepper {
+    flex-wrap: wrap;
+  }
+
+  .mew-screen-outlet {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  .overview-hero-card {
+    padding: 1.5rem;
+  }
+
+  .modal-body .choice-grid {
+    grid-template-columns: 1fr;
+  }
+}

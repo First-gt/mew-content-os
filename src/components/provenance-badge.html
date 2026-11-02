@@ -1,0 +1,93 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T30: Provenance Snapshot & Source Attribution
+     Theme: mewteetawat.com V6.3
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="provenance-snapshot-container" id="provenance-snapshot-root" data-testid="provenance-snapshot-root" aria-label="ระบบบันทึกและตรวจสอบที่มาของวัตถุดิบ (Provenance Snapshot)">
+
+  <!-- Source Unavailable Global Alert / Badge -->
+  <div class="provenance-badge-wrap" id="badge-source-unavailable" data-testid="badge-source-unavailable" role="status" aria-live="polite" aria-label="ต้นทางถูกนำออกจากคลังแล้ว">
+    <span class="provenance-badge badge-source-unavailable font-bold">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+      </svg>
+      <span class="badge-text">ต้นทางถูกนำออกจากคลังแล้ว (แสดงข้อมูลผ่าน Provenance Snapshot)</span>
+    </span>
+  </div>
+
+  <!-- Snapshot Notice Banner -->
+  <section class="provenance-notice-card mew-offer-card" aria-labelledby="prov-notice-title">
+    <div class="notice-top-bar" aria-hidden="true"></div>
+    <div class="notice-header">
+      <div class="notice-icon-box" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          <path d="m9 12 2 2 4-4"></path>
+        </svg>
+      </div>
+      <div>
+        <h4 class="notice-title" id="prov-notice-title">หลักประกันความสมบูรณ์ของ Draft (A19 Provenance Guarantee)</h4>
+        <p class="notice-desc">
+          เมื่อ Saved Note ต้นทางถูกลบหรือแก้ไข ข้อมูลใน Remix Draft นี้ยังคงสมบูรณ์ ไม่สูญหาย 
+          ระบบแสดงข้อมูลที่บันทึกไว้ ณ เวลา Save Remix Draft พร้อมป้ายกำกับเพื่อความโปร่งใส
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Container for Active Trace Items -->
+  <div class="provenance-trace-viewer">
+    <div class="trace-viewer-header">
+      <span class="section-kicker font-num">SOURCE TRACE SNAPSHOT</span>
+      <h3 class="section-title">วัตถุดิบต้นทางที่ใช้สร้าง Draft นี้</h3>
+    </div>
+
+    <!-- c-source-trace container populated by ProvenanceManager -->
+    <div class="c-source-trace" id="provenance-active-trace-list" data-testid="c-source-trace" role="list" aria-label="รายการที่มาของวัตถุดิบใน Draft">
+      <!-- Trace cards will be dynamically rendered here -->
+    </div>
+  </div>
+
+  <!-- Snapshot Card Template for Dynamic Rendering -->
+  <template id="tmpl-provenance-snapshot-card" data-testid="tmpl-provenance-snapshot-card">
+    <article class="provenance-card mew-offer-card" data-ref-id="" role="listitem">
+      <div class="card-accent-bar" aria-hidden="true"></div>
+      
+      <div class="provenance-header">
+        <div class="lens-badge-group">
+          <span class="prov-lens-tag" data-field="lens">CONTENT</span>
+          <span class="badge-source-unavailable-tag badge-source-unavailable" data-field="unavailable-tag" data-testid="badge-source-unavailable" hidden>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+            </svg>
+            <span>ต้นทางไม่อยู่ในคลัง</span>
+          </span>
+        </div>
+        <span class="prov-version font-num" data-field="version">Version Snapshot: v1.0</span>
+      </div>
+
+      <h5 class="prov-source-title" data-field="title">ชื่อวัตถุดิบต้นทาง</h5>
+      
+      <div class="prov-why-box">
+        <span class="why-label">Founder WHY ที่บันทึกไว้:</span>
+        <p class="prov-why-snippet" data-field="why">เหตุผลที่คุณค่าของเนื้อหาชิ้นนี้ถูกหยิบยกมาต่อยอด</p>
+      </div>
+
+      <div class="prov-meta-row font-num">
+        <a href="#" class="prov-source-link trace-link" data-field="source-link" target="_blank" rel="noopener noreferrer" aria-label="เปิดลิงก์ต้นทางภายนอก">
+          <span>ลิงก์ต้นทาง</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+        <span class="prov-saved-date" data-field="date">บันทึก Snapshot ไว้แล้ว</span>
+      </div>
+    </article>
+  </template>
+
+</div>

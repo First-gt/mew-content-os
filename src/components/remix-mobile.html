@@ -1,0 +1,106 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T31: Mobile Behavior (Stepper + Sticky Summary)
+     Theme: mewteetawat.com V6.3 (Stone, Coral, Violet, Deep Ink)
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     Accessible WCAG AA/AAA UI · Responsive Breakpoint <= 768px
+     ============================================================================== -->
+
+<div class="remix-mobile-container" id="remix-mobile-root" data-testid="remix-mobile-root" role="region" aria-label="แถบควบคุม Remix Workspace สำหรับมือถือ">
+
+  <!-- Mobile 3-Step Stepper Header (Visible on Mobile <= 768px) -->
+  <nav class="remix-stepper" id="remix-stepper" data-testid="remix-stepper" aria-label="ขั้นตอนการปรุงคอนเทนต์บนมือถือ">
+    <button type="button" class="stepper-step active" id="step-ingredients" data-testid="step-ingredients" data-step="1" aria-current="step" aria-label="ขั้นตอนที่ 1: วัตถุดิบ">
+      <span class="step-num font-num">1</span>
+      <span class="step-title">วัตถุดิบ (Ingredients)</span>
+    </button>
+
+    <div class="stepper-divider" aria-hidden="true"></div>
+
+    <button type="button" class="stepper-step" id="step-direction" data-testid="step-direction" data-step="2" aria-label="ขั้นตอนที่ 2: ทิศทาง">
+      <span class="step-num font-num">2</span>
+      <span class="step-title">ทิศทาง (Direction)</span>
+    </button>
+
+    <div class="stepper-divider" aria-hidden="true"></div>
+
+    <button type="button" class="stepper-step" id="step-results" data-testid="step-results" data-step="3" aria-label="ขั้นตอนที่ 3: ผลลัพธ์">
+      <span class="step-num font-num">3</span>
+      <span class="step-title">ผลลัพธ์ (Results)</span>
+    </button>
+  </nav>
+
+  <!-- Mobile Sequential Navigation Bar (Prev / Step Indicator / Next) -->
+  <div class="mobile-step-nav" id="mobile-step-nav" data-testid="mobile-step-nav" aria-label="การนำทางระหว่างขั้นตอนบนมือถือ">
+    <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-mobile-prev-step" data-testid="btn-mobile-prev-step" aria-label="ย้อนกลับขั้นก่อนหน้า" style="visibility: hidden;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      <span id="btn-mobile-prev-label">ก่อนหน้า</span>
+    </button>
+
+    <span class="mobile-step-indicator font-num" id="mobile-step-indicator" data-testid="mobile-step-indicator" aria-live="polite">
+      ขั้นที่ 1 จาก 3: วัตถุดิบ
+    </span>
+
+    <button type="button" class="btn-pill btn-ink btn-sm" id="btn-mobile-next-step" data-testid="btn-mobile-next-step" aria-label="ไปขั้นตอนถัดไป">
+      <span id="btn-mobile-next-label">ถัดไป: กำหนดทิศทาง</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Sticky Summary Bar (Always visible on mobile <= 768px at bottom) -->
+  <aside class="sticky-summary" id="sticky-summary" data-testid="sticky-summary" role="region" aria-label="สรุปวัตถุดิบที่กำลังผสม" tabindex="0">
+    <div class="summary-left" id="btn-toggle-mobile-sheet" data-testid="btn-toggle-mobile-sheet">
+      <span class="summary-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </span>
+      <div class="summary-text-wrap">
+        <span class="summary-caption">วัตถุดิบที่กำลังปรุง (แตะเพื่อดูรายละเอียด)</span>
+        <span class="summary-pills font-num" id="mobile-summary-pills" data-testid="mobile-summary-pills">Content (0) + Packaging (0)</span>
+      </div>
+    </div>
+
+    <button type="button" class="btn-pill btn-ghost btn-sm btn-sheet-trigger" id="btn-open-mobile-sheet" data-testid="btn-open-mobile-sheet" aria-label="เปิดดูรายการวัตถุดิบ">
+      <span class="btn-sheet-text">ดูวัตถุดิบ</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
+  </aside>
+
+  <!-- Bottom Sheet Drawer: Lists Active Ingredients (Title + WHY + Lens) -->
+  <div class="mobile-ingredients-sheet" id="mobile-ingredients-sheet" data-testid="mobile-ingredients-sheet" role="dialog" aria-modal="true" aria-labelledby="mobile-sheet-title" hidden>
+    <div class="sheet-backdrop" id="sheet-backdrop" tabindex="-1"></div>
+    <div class="sheet-content">
+      <div class="sheet-drag-handle" aria-hidden="true"></div>
+      
+      <div class="sheet-header">
+        <div class="sheet-header-title-wrap">
+          <h4 class="sheet-title" id="mobile-sheet-title">วัตถุดิบที่ผสมอยู่ในขณะนี้</h4>
+          <span class="sheet-count-tag font-num" id="sheet-summary-count">Content (0) + Packaging (0)</span>
+        </div>
+        <button type="button" class="btn-close-sheet" id="btn-close-sheet" data-testid="btn-close-sheet" aria-label="ปิดหน้ารายละเอียด">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sheet-body" id="mobile-sheet-body" data-testid="mobile-sheet-body" tabindex="0" aria-label="รายการวัตถุดิบที่เลือกไว้">
+        <!-- Rendered by remix-mobile.js: shows each ingredient's title & founder why -->
+      </div>
+
+      <div class="sheet-footer">
+        <button type="button" class="btn-pill btn-ghost btn-block" id="btn-close-sheet-action" data-testid="btn-close-sheet-action">
+          ปิดหน้าต่าง
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

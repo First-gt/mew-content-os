@@ -1,0 +1,475 @@
+<!-- ==============================================================================
+     MEW CONTENT OS — S01 RESEARCH ENTRY COMPONENT (Topic T05)
+     Unified Reference Ingestion Gateway:
+       1) Paste Link (input-url + btn-analyze-clip)
+       2) Upload Owned Video (btn-upload-owned: "Upload a video you own / have permission to use")
+       3) Scan Feed (tab-scan-feed -> scan-feed-unavailable when scanFeedEnabled = false)
+     All 3 pathways route to: S02 Research Detail & Dual-Lens AI Analysis
+     Theme: mewteetawat.com V6.3 (Paper Canvas, Coral, Violet & Deep Ink)
+     Pure Frontend UI/UX — Zero Backend — Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="research-entry-container" id="research-entry-root" data-testid="research-entry-root">
+  
+  <!-- ============================================================================
+       SECTION HEADER & WORKFLOW CONTEXT
+       ============================================================================ -->
+  <header class="entry-header-section" aria-labelledby="research-entry-heading">
+    <div class="header-breadcrumbs">
+      <button type="button" class="crumb-link" id="btn-back-overview" data-testid="btn-back-overview" data-action="btn-back-overview" data-target="S00" aria-label="กลับสู่หน้า Overview Dashboard (S00)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>Overview</span>
+      </button>
+      <span class="crumb-separator" aria-hidden="true">/</span>
+      <span class="crumb-current">S01 Research Entry</span>
+    </div>
+
+    <div class="entry-headline-row">
+      <div class="headline-copy">
+        <div class="entry-eyebrow-row">
+          <span class="badge-kicker">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            S01 RESEARCH ENTRY · GATEWAY TO S02
+          </span>
+          <span class="badge-pill soft">Dual-Lens Intake Gateway</span>
+        </div>
+        <h1 id="research-entry-heading" class="entry-main-title">
+          Bring Reference Clips into <span class="mew-gradient-text">Dual-Lens Analysis</span>
+        </h1>
+        <p class="entry-main-desc">
+          เลือก 1 ใน 3 ช่องทางนำเข้าเพื่อส่งคลิปเข้าสู่ <strong>S02 Research Detail</strong> ถอดรหัสสองเลนส์แยก <strong>WHAT</strong> (สาระที่เขาพูด) ออกจาก <strong>HOW</strong> (ลีลาวิธีที่เขาเล่า) อย่างโปร่งใสและตรงไปตรงมา
+        </p>
+      </div>
+
+      <!-- Human Save Gate Status Indicator -->
+      <div class="human-gate-pill-box" title="การตัดสินใจบันทึกคลิปเข้าคลังขึ้นอยู่กับมนุษย์ 100% ไม่มีระบบ AI Auto-Save">
+        <span class="gate-icon" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </span>
+        <div class="gate-copy">
+          <span class="gate-title">Human Save Gate</span>
+          <span class="gate-sub">No AI Auto-Save</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================================
+       UNIFIED 3-PATHWAY INGESTION GATEWAY GROUP
+       Both visually and semantically grouped as a single entrance leading to S02
+       ============================================================================ -->
+  <section class="entry-pathways-group" aria-label="กลุ่ม 3 ทางเข้าสู่วิจัยคลิปต้นฉบับ S01 สู่ S02">
+    
+    <!-- Unified Gateway Card -->
+    <div class="mew-offer-card entry-gateway-card coral-accent" data-testid="entry-gateway-card">
+      
+      <!-- Card Top: Group Architecture Context & Tab Switcher -->
+      <div class="gateway-card-header">
+        <div class="gateway-header-info">
+          <div class="gateway-badge-indicator">
+            <span class="badge-step-code">S01</span>
+            <span class="gateway-label">3 Ingestion Pathways &rarr; S02 Workspace</span>
+          </div>
+          <h2 class="gateway-card-title">เลือกทางเข้าสำหรับคลิปอ้างอิงของคุณ</h2>
+          <p class="gateway-card-desc">
+            ทุกทางเข้าจะลงทะเบียน Reference Item ด้วยสถานะ <code>Waiting for analysis</code> และเปิดเข้าสู่ห้องวิเคราะห์ S02 ทันที
+          </p>
+        </div>
+
+        <!-- The 3 Pathway Navigation Tabs -->
+        <div class="entry-tablist" role="tablist" aria-label="เลือก 1 ใน 3 ทางเข้านำเข้าคลิป">
+          <!-- Tab 1: Paste Link / URL Input -->
+          <button 
+            type="button" 
+            class="entry-tab-btn active" 
+            id="tab-url" 
+            data-testid="tab-url" 
+            role="tab" 
+            aria-selected="true" 
+            aria-controls="panel-url" 
+            data-tab-target="url"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+            <span class="tab-label">1. Paste Video URL</span>
+            <span class="tab-sublabel">ลิงก์คลิปออนไลน์</span>
+          </button>
+
+          <!-- Tab 2: Upload Video You Own -->
+          <button 
+            type="button" 
+            class="entry-tab-btn" 
+            id="tab-upload" 
+            data-testid="tab-upload" 
+            role="tab" 
+            aria-selected="false" 
+            aria-controls="panel-upload" 
+            data-tab-target="upload"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span class="tab-label">2. Upload Owned Video</span>
+            <span class="tab-sublabel">ไฟล์ที่คุณมีสิทธิ์</span>
+          </button>
+
+          <!-- Tab 3: Scan Feed (with honest unavailable state) -->
+          <button 
+            type="button" 
+            class="entry-tab-btn" 
+            id="tab-scan-feed" 
+            data-testid="tab-scan-feed" 
+            role="tab" 
+            aria-selected="false" 
+            aria-controls="panel-scan-feed" 
+            data-tab-target="scan-feed"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="2"></circle>
+              <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
+            </svg>
+            <span class="tab-label">3. Scan Feed</span>
+            <span class="tab-pill-badge" id="tab-scan-badge">Adapter Needed</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ========================================================================
+           PANEL 1: PASTE VIDEO URL
+           DOD: input-url + btn-analyze-clip + error-url-invalid
+           ======================================================================== -->
+      <div 
+        id="panel-url" 
+        data-testid="panel-url" 
+        class="pathway-panel active" 
+        role="tabpanel" 
+        aria-labelledby="tab-url"
+      >
+        <div class="pathway-inner">
+          <form class="url-ingest-form" id="form-url-ingest" novalidate onsubmit="return false;">
+            
+            <div class="field-label-row">
+              <label for="input-url" class="field-main-label">
+                <span class="label-text">วาง URL คลิปที่ต้องการส่งเข้าวิเคราะห์</span>
+                <span class="label-required" aria-hidden="true">*</span>
+              </label>
+              <span class="field-hint">รองรับลิงก์ TikTok, IG Reels, YouTube Shorts หรือเว็บวิดีโอ</span>
+            </div>
+
+            <!-- URL Input Bar & Action Button -->
+            <div class="input-action-bar">
+              <div class="input-icon-prefix" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+              </div>
+
+              <!-- REQUIRED: input-url -->
+              <input 
+                type="url" 
+                id="input-url" 
+                name="url"
+                data-testid="input-url" 
+                class="v6-text-input input-url" 
+                placeholder="วางลิงก์ที่นี่ เช่น https://example.com/watch?v=post-and-forget หรือ TikTok/Reels URL" 
+                aria-label="URL คลิปต้นฉบับสำหรับวิเคราะห์" 
+                aria-describedby="error-url-invalid url-input-helper"
+                autocomplete="off"
+                spellcheck="false"
+              />
+
+              <!-- REQUIRED: btn-analyze-clip -->
+              <button 
+                type="submit" 
+                class="btn-pill btn-primary btn-analyze-clip" 
+                id="btn-analyze-clip" 
+                data-testid="btn-analyze-clip" 
+                data-action="btn-analyze-clip" 
+                aria-label="Analyze Clip: ส่ง URL เข้าวิเคราะห์และเปิดหน้า S02"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <span class="btn-label-text">Analyze Clip</span>
+                <span class="btn-destination-badge" aria-hidden="true">&rarr; S02</span>
+              </button>
+            </div>
+
+            <!-- REQUIRED: error-url-invalid (Hidden by default; shown on empty/invalid URL) -->
+            <div 
+              id="error-url-invalid" 
+              data-testid="error-url-invalid" 
+              class="error-url-invalid" 
+              role="alert" 
+              aria-live="assertive" 
+              hidden
+            >
+              <div class="error-alert-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+              </div>
+              <div class="error-alert-body">
+                <span class="error-alert-title">URL ว่างหรือรูปแบบไม่ถูกต้อง</span>
+                <span class="error-alert-desc" id="error-url-text">กรุณากรอก URL ที่ถูกต้องและขึ้นต้นด้วย http:// หรือ https:// เพื่อเริ่มต้นวิเคราะห์ใน S02</span>
+              </div>
+            </div>
+
+            <!-- Helper Row: Supported Platforms & Spec Compliance Guarantee -->
+            <div class="url-helper-row" id="url-input-helper">
+              <div class="platform-tags-list">
+                <span class="tag-title">แพลตฟอร์มที่รองรับ:</span>
+                <span class="platform-tag">TikTok</span>
+                <span class="platform-tag">Instagram Reels</span>
+                <span class="platform-tag">YouTube Shorts</span>
+                <span class="platform-tag">Web Videos</span>
+              </div>
+              <div class="compliance-note">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <span>ระบบสกัดเฉพาะโครงสร้างเพื่อการวิจัย ไม่ดาวน์โหลดหรือคัดลอกไฟล์ซ้ำซ้อน</span>
+              </div>
+            </div>
+
+            <!-- Fast-testing Presets for Founder / UX Verification -->
+            <div class="quick-presets-box">
+              <span class="presets-caption">คลิกลอง URL ตัวอย่างตาม UX Spec Section 6:</span>
+              <div class="presets-buttons-wrap">
+                <button type="button" class="preset-chip-btn" data-preset-url="https://example.com/watch?v=post-and-forget" data-preset-title="Story A: Post and forget it (อย่าเฝ้ายอด)">
+                  <span class="preset-tag">Story A</span>
+                  <span class="preset-name">Post and forget it (Content Focus)</span>
+                </button>
+                <button type="button" class="preset-chip-btn" data-preset-url="https://example.com/watch?v=the-ticking-clock" data-preset-title="Story B: The Ticking Clock (โครงสร้างนาฬิกากดดัน)">
+                  <span class="preset-tag">Story B</span>
+                  <span class="preset-name">The Ticking Clock (Packaging Focus)</span>
+                </button>
+                <button type="button" class="preset-chip-btn" data-preset-url="https://www.tiktok.com/@mewteetawat/video/7391823901" data-preset-title="TikTok Short Reference">
+                  <span class="preset-tag">TikTok</span>
+                  <span class="preset-name">@mewteetawat Clip</span>
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- ========================================================================
+           PANEL 2: UPLOAD OWNED VIDEO
+           DOD: btn-upload-owned with text "Upload a video you own / have permission to use"
+           ======================================================================== -->
+      <div 
+        id="panel-upload" 
+        data-testid="panel-upload" 
+        class="pathway-panel" 
+        role="tabpanel" 
+        aria-labelledby="tab-upload" 
+        hidden
+      >
+        <div class="pathway-inner">
+          <div class="upload-zone-card" id="upload-zone-droparea" tabindex="0" role="region" aria-label="พื้นที่อัปโหลดวิดีโอที่คุณเป็นเจ้าของ">
+            
+            <input 
+              type="file" 
+              id="input-file-owned" 
+              data-testid="input-file-owned" 
+              accept="video/mp4,video/quicktime,video/webm" 
+              class="visually-hidden-file-input" 
+              aria-label="เลือกไฟล์วิดีโอจากอุปกรณ์ของคุณ" 
+            />
+
+            <div class="upload-graphic-circle" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+
+            <div class="upload-instruction-block">
+              <!-- REQUIRED EXACT TEXT in btn-upload-owned -->
+              <button 
+                type="button" 
+                class="btn-pill btn-ghost btn-upload-owned" 
+                id="btn-upload-owned" 
+                data-testid="btn-upload-owned" 
+                data-action="btn-upload-owned" 
+                aria-label="Upload a video you own / have permission to use"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span>Upload a video you own / have permission to use</span>
+              </button>
+
+              <p class="upload-subtext">
+                หรือลากไฟล์วิดีโอของคุณมาวางในกล่องนี้โดยตรง (รองรับไฟล์ .mp4, .mov, .webm สูงสุด 100MB)
+              </p>
+            </div>
+
+            <!-- Permission & Honesty Policy Box (UX Spec Section 0 & S01) -->
+            <div class="permission-policy-box" role="note" aria-label="นโยบายลิขสิทธิ์และความโปร่งใส">
+              <div class="policy-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div class="policy-text">
+                <strong>นโยบายสิทธิ์ตาม UX Spec:</strong> ระบบวิจัยเฉพาะไฟล์ที่คุณเป็นเจ้าของ หรือได้รับสิทธิ์ใช้งานอย่างถูกต้อง AI จะถอดโครงสร้างจากคำพูดและจังหวะเพื่อเป็นวัตถุดิบทางความคิดสู่ S02 เท่านั้น
+              </div>
+            </div>
+
+            <!-- Upload File Status Preview (Hidden until a file is chosen) -->
+            <div id="upload-file-status" class="upload-file-status" hidden>
+              <div class="file-info-badge">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <span class="file-name" id="uploaded-file-name">filename.mp4</span>
+                <span class="file-size" id="uploaded-file-size">0 MB</span>
+              </div>
+              <button type="button" class="btn-pill btn-primary btn-proceed-upload" id="btn-proceed-upload">
+                <span>Proceed to Analysis &rarr; S02</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================================================
+           PANEL 3: SCAN FEED
+           DOD: Shows scan-feed-unavailable with honest text until scanFeedEnabled = true
+           ======================================================================== -->
+      <div 
+        id="panel-scan-feed" 
+        data-testid="panel-scan-feed" 
+        class="pathway-panel" 
+        role="tabpanel" 
+        aria-labelledby="tab-scan-feed" 
+        hidden
+      >
+        <div class="pathway-inner">
+          
+          <!-- REQUIRED: scan-feed-unavailable -->
+          <div 
+            id="scan-feed-unavailable" 
+            data-testid="scan-feed-unavailable" 
+            class="scan-feed-unavailable mew-offer-card" 
+            role="region" 
+            aria-label="สถานะ Scan Feed ยังไม่พร้อมใช้งาน"
+          >
+            <div class="unavailable-icon-ring" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+              </svg>
+            </div>
+
+            <div class="unavailable-content">
+              <div class="unavailable-badge-row">
+                <span class="badge-pill coral">Scan Feed Adapter Status: Offline</span>
+                <span class="flag-mono-tag">scanFeedEnabled = false</span>
+              </div>
+
+              <h3 class="unavailable-headline">
+                ยังไม่มี Adapter หรือ API สำหรับ Scan Feed ที่เชื่อมต่อและใช้งานได้จริง
+              </h3>
+
+              <!-- DOD HONEST DIRECT STATEMENT -->
+              <p class="unavailable-statement">
+                ระบบ MEW Content OS ปฏิบัติตามหลักความโปร่งใสอย่างเคร่งครัด (Strict Honesty &amp; Transparency): 
+                <strong>ยังไม่มี Adapter หรือ API สำหรับดึงฟีดแพลตฟอร์มที่เชื่อมต่อและใช้งานได้จริงในขณะนี้</strong> 
+                ระบบจึงไม่แกล้งทำเหมือนกำลังสแกนฟีดจริง (Mock/Simulate is strictly disabled) จนกว่า flag <code>scanFeedEnabled</code> จะถูกเปิดเป็น <code>true</code> และมี Adapter รองรับจริงตามกฎหมาย
+              </p>
+
+              <div class="unavailable-details-box">
+                <div class="detail-row">
+                  <span class="detail-label">นโยบายระบบ:</span>
+                  <span class="detail-value">ห้ามนำคลิปจาก Scan Feed เข้า Vault โดยไม่ผ่านการตรวจสอบ (Spec S01)</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">ทางออกปัจจุบัน:</span>
+                  <span class="detail-value">แนะนำให้ใช้การวาง URL ตรง หรืออัปโหลดคลิปที่คุณมีสิทธิ์ในแถบ 1 และ 2 ด้านบน เพื่อเข้าสู่ S02 ได้ทันที</span>
+                </div>
+              </div>
+
+              <div class="unavailable-actions">
+                <button type="button" class="btn-pill btn-primary btn-switch-to-url" id="btn-switch-to-url">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  </svg>
+                  <span>ใช้วิธีวาง URL แทน (แนะนำ)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Feed Container (Only displayed when scanFeedEnabled flag is true) -->
+          <div 
+            id="scan-feed-active-content" 
+            data-testid="scan-feed-active-content" 
+            class="scan-feed-active-content" 
+            hidden
+          >
+            <div class="active-feed-header">
+              <span class="badge-pill green">Adapter Connected · scanFeedEnabled = true</span>
+              <h3 class="active-feed-title">Active Feed Ingestion Queue</h3>
+            </div>
+            <div class="feed-items-list" id="feed-items-list">
+              <!-- Dynamically populated if scanFeedEnabled is true -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ========================================================================
+           CARD FOOTER: COHESIVE PIPELINE DESTINATION SUMMARY
+           Reinforces that all 3 pathways unite as one pipeline leading to S02
+           ======================================================================== -->
+      <footer class="gateway-card-footer">
+        <div class="destination-pipeline-indicator">
+          <span class="pipeline-node-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 14 14"></polyline>
+            </svg>
+          </span>
+          <div class="pipeline-text-wrap">
+            <span class="pipeline-destination-label">ปลายทางร่วมกัน:</span>
+            <strong class="pipeline-destination-title">S02 Research Detail / Dual-Lens AI Analysis (WHAT &amp; HOW)</strong>
+          </div>
+        </div>
+
+        <div class="pipeline-status-badge">
+          <span class="status-indicator-dot" aria-hidden="true"></span>
+          <span>สถานะเมื่อเข้า S02: <code>Waiting for analysis</code></span>
+        </div>
+      </footer>
+
+    </div>
+  </section>
+
+</div>

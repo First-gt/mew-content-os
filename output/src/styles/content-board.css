@@ -1,0 +1,581 @@
+/**
+ * ==============================================================================
+ * MEW CONTENT OS — S09 Content Board Styles (Topic T28)
+ * Theme: mewteetawat.com V6.3
+ * Pure Modern CSS · Accessible WCAG UI · Responsive Layout · Zero Fake Metrics
+ * ==============================================================================
+ */
+
+:root {
+  --paper-canvas: #fbfaf8;
+  --surface-soft: #f4f2ee;
+  --stone-line: #e7e3de;
+  --deep-ink: #11110f;
+  --muted-text: #6b6762;
+  --coral-accent: #ed765b;
+  --kicker-coral: #ae4f3a;
+  --violet-accent: #8a76ff;
+  --amber-accent: #f59e0b;
+  --neutral-gray: #9ca3af;
+}
+
+.content-board-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Inter', 'Prompt', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--deep-ink, #11110f);
+}
+
+/* ==============================================================================
+   Board Header
+   ============================================================================== */
+.board-header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.board-header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.board-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
+.badge-pill.coral {
+  background: rgba(237, 118, 91, 0.12);
+  color: var(--kicker-coral, #ae4f3a);
+  border: 1px solid rgba(237, 118, 91, 0.28);
+}
+
+.badge-pill.soft {
+  background: var(--surface-soft, #f4f2ee);
+  color: var(--muted-text, #6b6762);
+  border: 1px solid var(--stone-line, #e7e3de);
+}
+
+.board-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.board-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--deep-ink, #11110f);
+  margin: 0;
+}
+
+.board-subtitle {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--muted-text, #6b6762);
+  margin: 4px 0 0 0;
+  max-width: 840px;
+}
+
+/* Governance Gating Policy Notice */
+.board-governance-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid var(--stone-line, #e7e3de);
+  border-left: 4px solid var(--coral-accent, #ed765b);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.notice-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--coral-accent, #ed765b);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.notice-text {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--deep-ink, #11110f);
+  margin: 0;
+}
+
+.notice-text strong {
+  color: var(--kicker-coral, #ae4f3a);
+}
+
+/* ==============================================================================
+   4-Stage Kanban Grid
+   ============================================================================== */
+.kanban-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(260px, 1fr));
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.kanban-column {
+  background: var(--surface-soft, #f4f2ee);
+  border: 1px solid var(--stone-line, #e7e3de);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 540px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.kanban-column.drag-over {
+  background: #f0ede6;
+  border-color: var(--coral-accent, #ed765b);
+}
+
+.kanban-column.drop-blocked {
+  background: #fef2f2;
+  border-color: #ef4444;
+}
+
+.kanban-column-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--stone-line, #e7e3de);
+}
+
+.col-indicator-bar {
+  width: 4px;
+  height: 20px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Distinct color per stage */
+.col-indicator-bar.neutral { background: var(--neutral-gray, #9ca3af); }
+.col-indicator-bar.amber { background: var(--amber-accent, #f59e0b); }
+.col-indicator-bar.coral { background: var(--coral-accent, #ed765b); }
+.col-indicator-bar.violet { background: var(--violet-accent, #8a76ff); }
+
+.col-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.col-title-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.col-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--deep-ink, #11110f);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.col-gated-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  background: rgba(237, 118, 91, 0.12);
+  color: var(--kicker-coral, #ae4f3a);
+  border: 1px solid rgba(237, 118, 91, 0.3);
+  border-radius: 4px;
+}
+
+.col-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  background: #ffffff;
+  border: 1px solid var(--stone-line, #e7e3de);
+  border-radius: 9999px;
+  color: var(--deep-ink, #11110f);
+  min-width: 14px;
+  text-align: center;
+}
+
+.kanban-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-grow: 1;
+}
+
+/* Empty Placeholder */
+.col-empty-placeholder {
+  border: 1.5px dashed var(--stone-line, #e7e3de);
+  border-radius: 10px;
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--muted-text, #6b6762);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  background: rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  user-select: none;
+}
+
+/* ==============================================================================
+   Board Card (.mew-offer-card style)
+   ============================================================================== */
+.board-card.mew-offer-card {
+  background: #ffffff;
+  border: 1px solid var(--stone-line, #e7e3de);
+  border-radius: 12px;
+  padding: 16px 14px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 18px 50px rgba(17, 17, 15, 0.05), 0 2px 6px rgba(17, 17, 15, 0.02);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: grab;
+}
+
+.board-card.mew-offer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 55px rgba(17, 17, 15, 0.08), 0 4px 12px rgba(17, 17, 15, 0.03);
+  border-color: #d8d3cc;
+}
+
+.board-card.mew-offer-card:focus-visible {
+  outline: 2px solid var(--coral-accent, #ed765b);
+  outline-offset: 2px;
+}
+
+.board-card.mew-offer-card.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+/* 4px top accent bar */
+.card-accent-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--neutral-gray, #9ca3af);
+}
+
+.board-card[data-stage="draft"] .card-accent-bar {
+  background: var(--neutral-gray, #9ca3af);
+}
+
+.board-card[data-stage="needs-review"] .card-accent-bar {
+  background: var(--amber-accent, #f59e0b);
+}
+
+.board-card[data-stage="approved"] .card-accent-bar {
+  background: var(--coral-accent, #ed765b);
+}
+
+.board-card[data-stage="ready-for-production"] .card-accent-bar {
+  background: var(--violet-accent, #8a76ff);
+}
+
+/* Card Header */
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-stage-pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: var(--surface-soft, #f4f2ee);
+  color: var(--deep-ink, #11110f);
+  border: 1px solid var(--stone-line, #e7e3de);
+}
+
+.board-card[data-stage="draft"] .card-stage-pill {
+  background: #f3f4f6;
+  color: #4b5563;
+  border-color: #e5e7eb;
+}
+
+.board-card[data-stage="needs-review"] .card-stage-pill {
+  background: #fffbeb;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.board-card[data-stage="approved"] .card-stage-pill {
+  background: #fff1ee;
+  color: var(--kicker-coral, #ae4f3a);
+  border-color: #ffdcd4;
+}
+
+.board-card[data-stage="ready-for-production"] .card-stage-pill {
+  background: #f5f3ff;
+  color: #5b21b6;
+  border-color: #ddd6fe;
+}
+
+/* Claim Flag Count */
+.claim-flag-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  background: var(--surface-soft, #f4f2ee);
+  border: 1px solid var(--stone-line, #e7e3de);
+  color: var(--muted-text, #6b6762);
+  transition: all 0.15s ease;
+}
+
+.claim-flag-wrap.has-flags {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+.claim-flag-wrap svg {
+  flex-shrink: 0;
+}
+
+/* Card Title */
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--deep-ink, #11110f);
+  margin: 0;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  word-break: break-word;
+}
+
+/* Source Trace */
+.card-source-trace {
+  font-size: 0.78rem;
+  color: var(--muted-text, #6b6762);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  background: var(--surface-soft, #f4f2ee);
+  border-radius: 6px;
+  border: 1px solid var(--stone-line, #e7e3de);
+}
+
+.trace-label {
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--deep-ink, #11110f);
+}
+
+.trace-summary {
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--muted-text, #6b6762);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Card Actions */
+.card-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--stone-line, #e7e3de);
+  margin-top: 4px;
+}
+
+/* Buttons */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.btn-pill.btn-ghost {
+  background: #ffffff;
+  border: 1px solid var(--stone-line, #e7e3de);
+  color: var(--deep-ink, #11110f);
+}
+
+.btn-pill.btn-ghost:hover {
+  background: var(--surface-soft, #f4f2ee);
+  border-color: #d1ccc4;
+  transform: translateY(-1px);
+}
+
+.btn-pill.btn-ghost:active {
+  transform: translateY(0);
+}
+
+.btn-pill.btn-ghost:focus-visible {
+  outline: 2px solid var(--coral-accent, #ed765b);
+  outline-offset: 2px;
+}
+
+.btn-submit-review:hover {
+  border-color: var(--amber-accent, #f59e0b) !important;
+  color: #b45309 !important;
+}
+
+.btn-back-to-draft:hover {
+  border-color: var(--neutral-gray, #9ca3af) !important;
+  color: #374151 !important;
+}
+
+/* Governance Stage Badge */
+.stage-governance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  background: var(--surface-soft, #f4f2ee);
+  border: 1px solid var(--stone-line, #e7e3de);
+  color: var(--muted-text, #6b6762);
+}
+
+.board-card[data-stage="approved"] .stage-governance-badge {
+  background: #fff1ee;
+  color: var(--kicker-coral, #ae4f3a);
+  border-color: #ffdcd4;
+}
+
+.board-card[data-stage="ready-for-production"] .stage-governance-badge {
+  background: #f5f3ff;
+  color: #5b21b6;
+  border-color: #ddd6fe;
+}
+
+/* Accessible Toast Notification */
+.board-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.board-toast {
+  pointer-events: auto;
+  background: var(--deep-ink, #11110f);
+  color: #ffffff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(17, 17, 15, 0.18);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: boardToastSlideUp 0.25s ease forwards;
+}
+
+.board-toast.toast-warning {
+  background: #78350f;
+  border: 1px solid #f59e0b;
+}
+
+.board-toast.toast-error {
+  background: #7f1d1d;
+  border: 1px solid #ef4444;
+}
+
+@keyframes boardToastSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==============================================================================
+   Responsive & Accessibility
+   ============================================================================== */
+@media (max-width: 1100px) {
+  .kanban-grid {
+    grid-template-columns: repeat(4, 280px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board-card.mew-offer-card,
+  .btn-pill,
+  .board-toast {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}

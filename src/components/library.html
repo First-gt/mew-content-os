@@ -1,0 +1,487 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - S04 & S05 DUAL-VAULT REFERENCE LIBRARY & SAVED DETAIL
+     Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+     Pure Client-Side Frontend Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="library-container" id="library-root">
+
+  <!-- ============================================================================
+       TOP HEADER & WORKFLOW CONTEXT
+       ============================================================================ -->
+  <header class="library-header">
+    <div class="library-header-main">
+      <div class="library-badges-row">
+        <span class="badge-pill coral">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+          S04 Reference Library
+        </span>
+        <span class="badge-pill soft">Founder-Curated Decisions</span>
+        <span class="badge-pill soft">Dual-Vault Architecture</span>
+      </div>
+
+      <h1 class="library-title">
+        Dual-Vault <span class="mew-gradient-text">Reference Library</span>
+      </h1>
+      
+      <p class="library-subtitle">
+        คลังวัตถุดิบทางความคิด 2 คลังที่คัดกรองโดย Founder — แยกเก็บตามการตัดสินใจ: สาระและมุมคิด (<strong>WHAT</strong>) ใน Content Vault หรือวิธีเล่าและจังหวะ (<strong>HOW</strong>) ใน Packaging Vault พร้อม Founder WHY Note กำกับทุกชิ้น
+      </p>
+    </div>
+
+    <!-- Quick Navigation & Research Trigger -->
+    <div class="library-header-actions">
+      <button type="button" class="btn-pill btn-ghost" data-navigate="overview" aria-label="กลับสู่หน้า Overview">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>Back to Overview</span>
+      </button>
+
+      <button type="button" class="btn-pill btn-primary" data-navigate="research" aria-label="ค้นคว้าคลิปต้นฉบับใหม่">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <span>Research New Clip</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================================
+       VAULT TAB SWITCHER (DUAL-VAULT TABS: CONTENT VS PACKAGING)
+       ============================================================================ -->
+  <section class="vault-switcher-section" aria-label="สลับคลังอ้างอิง">
+    <div class="vault-tabs-wrapper" role="tablist" aria-label="คลังอ้างอิง 2 คลัง">
+      
+      <!-- Tab 1: Content Vault (WHAT) -->
+      <button 
+        type="button" 
+        class="vault-tab-btn active content-tab" 
+        id="tab-content-vault" 
+        data-testid="tab-content-vault"
+        role="tab" 
+        aria-selected="true" 
+        aria-controls="panel-content-vault" 
+        tabindex="0"
+      >
+        <div class="tab-indicator-bar coral" aria-hidden="true"></div>
+        <div class="vault-tab-icon-wrap coral" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <div class="vault-tab-info">
+          <div class="vault-tab-title-row">
+            <span class="vault-tab-title">Content Vault</span>
+            <span class="vault-count vault-count-badge coral font-num" id="count-content-vault" data-testid="vault-count">0 ชิ้น</span>
+          </div>
+          <span class="vault-tab-caption">แก่นเนื้อหา · ประเด็นคิด · ปรัชญา (WHAT)</span>
+        </div>
+      </button>
+
+      <!-- Tab 2: Packaging Vault (HOW) -->
+      <button 
+        type="button" 
+        class="vault-tab-btn packaging-tab" 
+        id="tab-packaging-vault" 
+        data-testid="tab-packaging-vault"
+        role="tab" 
+        aria-selected="false" 
+        aria-controls="panel-packaging-vault" 
+        tabindex="-1"
+      >
+        <div class="tab-indicator-bar violet" aria-hidden="true"></div>
+        <div class="vault-tab-icon-wrap violet" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+        </div>
+        <div class="vault-tab-info">
+          <div class="vault-tab-title-row">
+            <span class="vault-tab-title">Packaging Vault</span>
+            <span class="vault-count vault-count-badge violet font-num" id="count-packaging-vault" data-testid="vault-count">0 ชิ้น</span>
+          </div>
+          <span class="vault-tab-caption">วิธีเล่า · จังหวะตัดต่อ · Hook (HOW)</span>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ============================================================================
+       VAULT CONTROLS & FILTER ROW (SEARCH, TAGS & ACTIONS)
+       ============================================================================ -->
+  <section class="vault-controls-bar" aria-label="เครื่องมือค้นหาและตัวกรอง">
+    
+    <!-- Search Input -->
+    <div class="search-input-box">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input 
+        type="search" 
+        id="input-library-search" 
+        class="library-search-field" 
+        placeholder="ค้นหาตามชื่อคลิป, Creator, หรือคำสำคัญ..." 
+        aria-label="ค้นหาข้อมูลอ้างอิงในคลัง"
+      >
+      <button type="button" class="btn-clear-search" id="btn-clear-search" aria-label="ล้างคำค้นหา" hidden>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Topic Tag Filters -->
+    <div class="tag-filters-container" id="library-tag-filters" role="toolbar" aria-label="กรองตามหมวดหมู่">
+      <button type="button" class="tag-filter-chip active" data-tag="all">ทั้งหมด</button>
+      <button type="button" class="tag-filter-chip" data-tag="Mindset">Mindset</button>
+      <button type="button" class="tag-filter-chip" data-tag="Creator Economy">Creator Economy</button>
+      <button type="button" class="tag-filter-chip" data-tag="Hook Technique">Hook Technique</button>
+      <button type="button" class="tag-filter-chip" data-tag="Pacing">Pacing</button>
+      <button type="button" class="tag-filter-chip" data-tag="Sound Design">Sound Design</button>
+      <button type="button" class="tag-filter-chip" data-tag="Consistency">Consistency</button>
+    </div>
+
+    <!-- Status & Quick Action Link to Remix -->
+    <div class="vault-status-summary">
+      <span class="vault-total-label" id="vault-summary-text">แสดง 0 รายการคัดสรร</span>
+      <button type="button" class="btn-pill btn-violet btn-sm" data-navigate="remix" id="btn-goto-remix-top">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        <span>Open Remix Studio</span>
+      </button>
+    </div>
+
+  </section>
+
+  <!-- ============================================================================
+       VAULT PANELS CONTAINER
+       ============================================================================ -->
+  <div class="vault-panels-deck">
+
+    <!-- ------------------------------------------------------------------------
+         PANEL 1: CONTENT VAULT (WHAT)
+         ------------------------------------------------------------------------ -->
+    <section 
+      id="panel-content-vault" 
+      class="vault-panel-view active" 
+      role="tabpanel" 
+      aria-labelledby="tab-content-vault"
+    >
+      <div class="vault-grid" id="grid-content-vault">
+        <!-- Rendered dynamically by library.js with .mew-offer-card style -->
+      </div>
+
+      <!-- Empty State for Content Vault -->
+      <div class="vault-empty-state" id="empty-content-vault" hidden>
+        <div class="empty-state-card">
+          <div class="empty-icon-wrap coral">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="12" y1="18" x2="12" y2="12"></line>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+          </div>
+          <h3 class="empty-title">ยังไม่มีรายการใน Content Vault</h3>
+          <p class="empty-desc">
+            คลังนี้จัดเก็บเฉพาะสาระ แก่นคิด (WHAT) ที่คุณคัดสรรและเขียนเหตุผลกำกับเพื่อนำไปสังเคราะห์คอนเทนต์ เริ่มต้นวิจัยคลิปแรกของคุณ
+          </p>
+          <div class="empty-actions">
+            <button type="button" class="btn-pill btn-primary" data-navigate="research">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span>ไปค้นคว้าที่ Research Studio</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------------
+         PANEL 2: PACKAGING VAULT (HOW)
+         ------------------------------------------------------------------------ -->
+    <section 
+      id="panel-packaging-vault" 
+      class="vault-panel-view" 
+      role="tabpanel" 
+      aria-labelledby="tab-packaging-vault" 
+      hidden
+    >
+      <div class="vault-grid" id="grid-packaging-vault">
+        <!-- Rendered dynamically by library.js with .mew-offer-card style -->
+      </div>
+
+      <!-- Empty State for Packaging Vault -->
+      <div class="vault-empty-state" id="empty-packaging-vault" hidden>
+        <div class="empty-state-card">
+          <div class="empty-icon-wrap violet">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <h3 class="empty-title">ยังไม่มีรายการใน Packaging Vault</h3>
+          <p class="empty-desc">
+            คลังนี้จัดเก็บลีลา วิธีเล่า และจังหวะ Hook (HOW) ที่คุณชื่นชอบ พร้อมข้อคิดการนำไปปรับใช้ เริ่มต้นค้นพบลีลาการนำเสนอใหม่ๆ
+          </p>
+          <div class="empty-actions">
+            <button type="button" class="btn-pill btn-primary" data-navigate="research">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span>ไปค้นคว้าที่ Research Studio</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============================================================================
+       S05: REFERENCE DETAIL DRAWER (SLIDE-OVER FOR SAVED REVIEW & NOTE EDITING)
+       ============================================================================ -->
+  <div 
+    id="library-detail-drawer" 
+    class="drawer-backdrop" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-labelledby="drawer-reference-title" 
+    aria-describedby="drawer-reference-desc"
+    hidden
+  >
+    <div class="drawer-panel mew-offer-card" id="drawer-panel-card">
+      
+      <!-- Drawer Header -->
+      <div class="drawer-header">
+        <div class="drawer-header-info">
+          <div class="drawer-badge-row">
+            <span class="badge-pill coral" id="drawer-vault-badge">Content Vault · WHAT</span>
+            <span class="badge-pill soft font-num" id="drawer-saved-date">บันทึกเมื่อเร็วๆ นี้</span>
+          </div>
+          <h2 class="drawer-title" id="drawer-reference-title">Reference Title</h2>
+          <p class="drawer-desc" id="drawer-reference-desc">คำอธิบายรายละเอียดของ reference</p>
+        </div>
+
+        <button 
+          type="button" 
+          class="btn-close-drawer" 
+          id="btn-close-library-drawer" 
+          aria-label="ปิดหน้ารายละเอียด"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Drawer Metadata Bar -->
+      <div class="drawer-meta-strip">
+        <div class="drawer-author-box">
+          <div class="drawer-author-avatar font-num" id="drawer-author-avatar">CR</div>
+          <div class="drawer-author-details">
+            <span class="drawer-author-name" id="drawer-author-name">Creator</span>
+            <span class="drawer-author-sub" id="drawer-source-info">Source Reference · 1:00 นาที</span>
+          </div>
+        </div>
+
+        <div class="drawer-source-link-wrap">
+          <a href="#" target="_blank" rel="noopener noreferrer" class="drawer-source-link link-source" id="drawer-source-url">
+            <span>ชมคลิปต้นฉบับ</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Drawer Scrollable Content -->
+      <div class="drawer-body">
+
+        <!-- Tags Row -->
+        <div class="drawer-section">
+          <h4 class="drawer-section-heading">หมวดหมู่และคีย์เวิร์ด (Topic Tags)</h4>
+          <div class="drawer-tags-list" id="drawer-tags-list">
+            <!-- Dynamic tags -->
+          </div>
+        </div>
+
+        <!-- Section 1: Founder WHY Note (Core Feature with In-line Edit) -->
+        <div class="drawer-section highlight-section">
+          <div class="section-title-between">
+            <div class="title-with-badge">
+              <span class="kicker-label coral" id="drawer-kicker-why">FOUNDER REASONING GATE</span>
+              <h3 class="drawer-section-title">Founder WHY Note</h3>
+            </div>
+            
+            <button type="button" class="btn-text-action" id="btn-toggle-edit-why" aria-label="แก้ไขบันทึก Founder WHY Note">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+              <span id="btn-edit-text">Edit My Note</span>
+            </button>
+          </div>
+
+          <!-- Note Display View -->
+          <div class="founder-note-card founder-why-box" id="display-founder-note-view">
+            <div class="founder-quote-symbol" aria-hidden="true">“</div>
+            <p class="founder-note-quote" id="drawer-founder-why-text">
+              บันทึกเหตุผลของคุณ
+            </p>
+            <div class="founder-signature-row">
+              <span class="founder-signature-badge">Founder's Decision</span>
+              <span class="founder-signature-dot">·</span>
+              <span class="founder-signature-time" id="drawer-note-updated-time">Verified in Vault</span>
+            </div>
+          </div>
+
+          <!-- Note Edit View (Form) -->
+          <div class="founder-note-edit-box" id="form-founder-note-edit" hidden>
+            <label for="input-drawer-edit-note" class="edit-label">
+              ปรับปรุงเหตุผลที่คุณเลือกเก็บชิ้นนี้ (Founder WHY):
+            </label>
+            <textarea 
+              id="input-drawer-edit-note" 
+              class="drawer-edit-textarea" 
+              rows="4" 
+              placeholder="พิมพ์บันทึกเหตุผลของคุณ..."
+            ></textarea>
+            <div class="edit-char-row">
+              <span class="edit-char-count font-num" id="drawer-edit-char-count">0 ตัวอักษร</span>
+              <span class="edit-char-guide">เขียนสั้นกระชับ ตรงประเด็นเพื่อใช้อ้างอิงตอน Remix</span>
+            </div>
+            <div class="edit-actions-row">
+              <button type="button" class="btn-pill btn-primary btn-sm" id="btn-save-drawer-note">
+                <span>Save Note</span>
+              </button>
+              <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-cancel-drawer-note">
+                <span>Cancel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: AI Insight & Essence Summary -->
+        <div class="drawer-section">
+          <div class="title-with-badge">
+            <span class="kicker-label">DECONSTRUCTED INTELLIGENCE</span>
+            <h3 class="drawer-section-title">AI Insight &amp; Strategic Summary</h3>
+          </div>
+          <div class="ai-insight-box">
+            <div class="ai-insight-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </div>
+            <p class="ai-insight-paragraph" id="drawer-ai-insight-text">
+              สรุปย่อการวิเคราะห์เชิงโครงสร้าง
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 3: Traceable Structure & Beats Reference -->
+        <div class="drawer-section">
+          <div class="title-with-badge">
+            <span class="kicker-label">TIMELINE &amp; STRUCTURE</span>
+            <h3 class="drawer-section-title">Reference Structure Beats</h3>
+          </div>
+          <div class="beats-timeline-list" id="drawer-beats-list">
+            <!-- Dynamic beats -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Drawer Action Footer (Sticky bottom) -->
+      <div class="drawer-footer">
+        <div class="drawer-footer-left">
+          <button type="button" class="btn-pill btn-ghost" id="btn-footer-close-drawer">
+            <span>Close</span>
+          </button>
+        </div>
+        <div class="drawer-footer-right">
+          <button type="button" class="btn-pill btn-primary btn-use-in-remix" id="btn-drawer-use-in-remix">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span>Use in Remix</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container for Library Actions -->
+  <aside 
+    id="library-toast" 
+    class="library-toast-box" 
+    role="status" 
+    aria-live="polite" 
+    aria-atomic="true" 
+    hidden
+  >
+    <div class="library-toast-content">
+      <div class="toast-icon-circle coral" id="library-toast-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <div class="toast-texts">
+        <strong class="toast-msg-title" id="library-toast-title">Updated</strong>
+        <p class="toast-msg-desc" id="library-toast-desc">บันทึกข้อมูลเรียบร้อยแล้ว</p>
+      </div>
+      <button type="button" class="btn-toast-dismiss" id="btn-library-toast-dismiss" aria-label="ปิดการแจ้งเตือน">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Dual Notification Toast for Remix Selection compatibility -->
+  <aside 
+    id="toast-added-to-selection" 
+    class="library-toast-box" 
+    role="status" 
+    aria-live="polite" 
+    aria-atomic="true" 
+    hidden
+  >
+    <div class="library-toast-content">
+      <div class="toast-icon-circle violet">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <div class="toast-texts">
+        <strong class="toast-msg-title">Added to Remix Selection</strong>
+        <p class="toast-msg-desc">เพิ่มคลิปอ้างอิงเข้าตะกร้า Remix เรียบร้อยแล้ว</p>
+      </div>
+    </div>
+  </aside>
+
+</div>

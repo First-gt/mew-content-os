@@ -1,0 +1,213 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T23: S07 Remix Workspace — Direction Panel
+     Theme: mewteetawat.com V6.3 (Stone, Coral, Violet, Deep Ink)
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="ws-direction-panel" id="ws-direction" data-testid="ws-direction" role="region" aria-label="กำหนดทิศทางความคิดและมุมมองใหม่">
+
+  <!-- Direction Header -->
+  <header class="direction-header">
+    <div class="direction-badges-row">
+      <span class="badge-pill badge-coral">Direction & Voice</span>
+      <span class="badge-pill badge-soft">Founder Angle Gating</span>
+    </div>
+    <h3 class="direction-heading">ทิศทางความคิดและจุดยืนของเรา (Direction)</h3>
+    <p class="direction-subheading">
+      AI ไม่สามารถคิดมุมมองแทนคุณได้ ระบุกลุ่มคนดูและ "สิ่งใหม่ที่เราจะพูด" (Our POV) เพื่อให้ไอเดียที่ออกมามีความเป็นเอกลักษณ์ ไม่ซ้ำใคร
+    </p>
+  </header>
+
+  <!-- Direction Form Card (.mew-offer-card style) -->
+  <form class="direction-form mew-offer-card" id="direction-form" onsubmit="return false;" novalidate>
+
+    <!-- Row 1: Audience & Goal -->
+    <div class="form-row two-cols">
+      <div class="form-group">
+        <label for="dir-audience" class="form-label required">
+          <span>กลุ่มผู้ฟัง / ลูกค้าเป้าหมาย (Audience)</span>
+          <span class="req-star" aria-hidden="true">*</span>
+        </label>
+        <input 
+          type="text" 
+          id="dir-audience" 
+          data-testid="dir-audience"
+          name="audience"
+          class="form-input" 
+          placeholder="เช่น Solo Founder และ Creator ที่เหนื่อยกับการเฝ้ายอดวิว"
+          aria-required="true"
+          required
+          autocomplete="off"
+        />
+        <span class="field-hint">ระบุกลุ่มคนที่คุณต้องการเปลี่ยนมุมมองความคิดอย่างเจาะจง</span>
+      </div>
+
+      <div class="form-group">
+        <label for="dir-goal" class="form-label">
+          <span>เป้าหมายหลักของคอนเทนต์ (Goal)</span>
+        </label>
+        <input 
+          type="text" 
+          id="dir-goal" 
+          data-testid="dir-goal"
+          name="goal"
+          class="form-input" 
+          placeholder="เช่น เปลี่ยนกรอบคิดเรื่อง Detachment และความสม่ำเสมอ"
+          autocomplete="off"
+        />
+        <span class="field-hint">ผลลัพธ์หรือความรู้สึกที่อยากให้คนดูได้รับหลังดูจบ</span>
+      </div>
+    </div>
+
+    <!-- Row 2: Our Unique POV ("สิ่งใหม่ที่เราจะพูด" - Critical Required Field) -->
+    <div class="form-group pov-group">
+      <div class="form-label-row">
+        <label for="dir-our-pov" class="form-label required">
+          <span>สิ่งใหม่ที่เราจะพูด / มุมมองที่แตกต่าง (Our Unique POV)</span>
+          <span class="req-star" aria-hidden="true">*</span>
+        </label>
+        <span class="pov-badge-founder" title="จุดยืนนี้ต้องมาจาก Founder เท่านั้น ห้าม AI คิดแทน">Founder POV Only</span>
+      </div>
+      <textarea 
+        id="dir-our-pov" 
+        data-testid="dir-our-pov"
+        name="ourPov"
+        class="form-textarea" 
+        rows="3" 
+        placeholder="ระบุข้อโต้แย้งหรือมุมมองใหม่ที่ไม่มีใครพูดถึง เช่น 'ยอดวิววันแรกคือภาพลวงตา ความสำเร็จวัดที่ผลงานสะสม 100 ชิ้น และการกล้าทดลองไอเดียใหม่โดยไม่กลัวล้มเหลว'"
+        aria-required="true"
+        required
+      ></textarea>
+      <div class="field-footer-row">
+        <span class="field-hint">ช่องนี้ผู้ใช้เป็นคนระบุเองเสมอ (AI จะไม่เติมแทน) เพื่อเป็นแกนกลางสังเคราะห์ Original Concepts</span>
+        <span class="char-counter" id="our-pov-counter" aria-live="polite">0 ตัวอักษร</span>
+      </div>
+    </div>
+
+    <!-- Row 3: Tone, CTA & Constraints -->
+    <div class="form-row three-cols">
+      <div class="form-group">
+        <label for="dir-tone" class="form-label">
+          <span>น้ำเสียง (Tone & Style)</span>
+        </label>
+        <div class="select-wrapper">
+          <select id="dir-tone" data-testid="dir-tone" name="tone" class="form-select">
+            <option value="calm-thoughtful" selected>Calm & Thoughtful (สุขุม ชวนคิด)</option>
+            <option value="direct-punchy">Direct & Punchy (ตรงประเด็น ฉับไว)</option>
+            <option value="warm-mentor">Warm Mentor (เป็นมิตร ชี้แนะ)</option>
+            <option value="analytical">Analytical (ลึกซึ้ง มีหลักการ)</option>
+          </select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="dir-cta" class="form-label">
+          <span>Call to Action (CTA)</span>
+        </label>
+        <input 
+          type="text" 
+          id="dir-cta" 
+          data-testid="dir-cta"
+          name="cta"
+          class="form-input" 
+          placeholder="เช่น บันทึกไว้ดูซ้ำ, ทดลองเขียนบทตามโครงสร้างนี้"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="dir-constraints" class="form-label">
+          <span>ข้อจำกัด (Constraints)</span>
+        </label>
+        <input 
+          type="text" 
+          id="dir-constraints" 
+          data-testid="dir-constraints"
+          name="constraints"
+          class="form-input" 
+          placeholder="เช่น ไม่ใช้สถิติสมมติ, ยาวไม่เกิน 60 วิ, ซื่อสัตย์ต่อประสบการณ์จริง"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <!-- Row 4: Copyright & Rights Guidelines -->
+    <div class="form-group">
+      <label for="dir-rights" class="form-label">
+        <span>แนวปฏิบัติลิขสิทธิ์ / สิทธิการนำเสนอ (Rights & Fairness)</span>
+      </label>
+      <input 
+        type="text" 
+        id="dir-rights" 
+        data-testid="dir-rights"
+        name="rights"
+        class="form-input rights-input" 
+        value="ยืมเฉพาะโครงสร้างทางความคิดและเทคนิค ไม่คัดลอกคำพูดหรือทรัพย์สินทางปัญญา"
+        autocomplete="off"
+      />
+      <span class="field-hint">บันทึกเป็นมาตรฐานความปลอดภัยทางกฎหมายและจริยธรรมของคอนเทนต์ชิ้นนี้</span>
+    </div>
+
+    <!-- Brand Brain Reference Box (อ่านจาก store หรือ fallback mock) -->
+    <section class="brand-brain-box" id="brand-brain" data-testid="brand-brain" aria-label="Brand Brain Context (DNA อัตโนมัติ)">
+      <div class="brain-title-row">
+        <div class="brain-title-left">
+          <svg class="brain-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2a9 9 0 0 0-9 9c0 3.6 2.1 6.7 5.2 8.1L9 22h6l.8-2.9C18.9 17.7 21 14.6 21 11a9 9 0 0 0-9-9z"></path>
+            <path d="M10 12h4"></path>
+          </svg>
+          <h4 class="brain-title">Brand Brain Context (DNA อัตโนมัติ)</h4>
+        </div>
+        <span class="brain-sync-badge" id="brain-sync-status">
+          <span class="sync-dot"></span>
+          <span>Synced with Brand Brain</span>
+        </span>
+      </div>
+      <div class="brain-pills-row">
+        <div class="brain-pill" id="brand-brain-offer">
+          <span class="brain-pill-label">Offer</span>
+          <span class="brain-pill-val" data-field="offer">MEW Content OS Platform</span>
+        </div>
+        <div class="brain-pill" id="brand-brain-voice">
+          <span class="brain-pill-label">Voice DNA</span>
+          <span class="brain-pill-val" data-field="voiceDna">Thoughtful, Practical, No-fluff</span>
+        </div>
+        <div class="brain-pill" id="brand-brain-proof">
+          <span class="brain-pill-label">Proof</span>
+          <span class="brain-pill-val" data-field="proof">100% Originality Guard</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Actions & Gating Row -->
+    <div class="direction-actions-row">
+      <div class="gating-hint" id="hint-need-direction" data-testid="hint-need-direction" role="status" aria-live="polite">
+        <svg class="gating-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span class="gating-text" id="gating-reason-text">กรุณาระบุ Audience และ Our Unique POV เพื่อปลดล็อกปุ่มสังเคราะห์</span>
+      </div>
+
+      <button 
+        type="button" 
+        id="btn-generate-concepts" 
+        data-testid="btn-generate-concepts"
+        class="btn-pill btn-primary btn-generate" 
+        disabled
+        aria-label="สร้าง Original Concepts จากวัตถุดิบและทิศทางที่กำหนด"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        <span>Create Original Concepts</span>
+      </button>
+    </div>
+
+  </form>
+
+</div>

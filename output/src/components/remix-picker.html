@@ -1,0 +1,404 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T19: S06 Remix Reference Picker (Two Columns)
+     Theme: mewteetawat.com V6.3
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="remix-picker-container" id="remix-picker-root">
+
+  <!-- Header Section -->
+  <header class="remix-picker-header">
+    <div class="picker-badges-row">
+      <span class="badge-pill coral">S06 Remix Recipe</span>
+      <span class="badge-pill soft">Two-Column Ingredient Selector</span>
+      <span class="badge-pill violet">Multi-Select (Unlimited)</span>
+    </div>
+    <h2 class="picker-title">เลือกวัตถุดิบต้นแบบสำหรับสังเคราะห์คอนเทนต์ใหม่</h2>
+    <p class="picker-subtitle">
+      ผสมผสานแก่นความคิด (<strong>WHAT</strong>) จาก Content Vault และเทคนิคการเล่า (<strong>HOW</strong>) จาก Packaging Vault ได้อย่างอิสระ ไม่จำกัดอัตราส่วน 1:1
+    </p>
+
+    <!-- Optional AI Recommend Notice (Strictly Optional - No Auto Select) -->
+    <div class="picker-ai-recommend-box" id="picker-ai-recommend-box" data-testid="ai-recommend" role="region" aria-label="คำแนะนำจับคู่ทางเลือก">
+      <div class="ai-recommend-badge">
+        <span class="sparkle-icon" aria-hidden="true">✦</span>
+        <span>AI Recommend (Optional)</span>
+      </div>
+      <p class="ai-recommend-text">
+        ระบบแนะนำแนวทางจับคู่ตามสาระและจังหวะเล่า โดยเป็นการแนะนำเสริมที่ผู้ใช้งานตัดสินใจเลือกเอง 100% ปราศจากการสุ่มหรือติ๊กเลือกอัตโนมัติ
+      </p>
+    </div>
+  </header>
+
+  <!-- Two Columns Container -->
+  <div class="picker-columns-grid">
+
+    <!-- Left Column: Content Vault (WHAT) -->
+    <section class="picker-column content-col mew-offer-card" id="picker-content" data-testid="picker-content" aria-labelledby="heading-picker-content">
+      <div class="col-header">
+        <div class="col-title-wrap">
+          <div class="col-indicator-bar coral" aria-hidden="true"></div>
+          <h3 class="col-title" id="heading-picker-content">Content Vault (สาระ / มุมคิด - WHAT)</h3>
+        </div>
+        <span class="picked-count-badge coral font-num" id="count-picked-content">เลือกแล้ว 0 ชิ้น</span>
+      </div>
+
+      <p class="col-desc">เลือกสาระ แก่นเรื่อง ปรัชญา หรือมุมมองที่ต้องการนำมาถ่ายทอด</p>
+
+      <!-- Column Search -->
+      <div class="col-search-box">
+        <label for="search-picker-content" class="sr-only">ค้นหาใน Content Vault</label>
+        <div class="search-input-wrap">
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input 
+            type="search" 
+            id="search-picker-content" 
+            data-testid="search-picker-content"
+            class="picker-search-input" 
+            placeholder="ค้นหาแก่นเนื้อหา, แท็ก, หรือ Founder WHY..." 
+            aria-label="ค้นหาใน Content Vault"
+          />
+        </div>
+      </div>
+
+      <!-- Item List for Content References (C1, C2, C3...) -->
+      <div class="picker-items-list" id="list-picker-content" role="group" aria-label="รายการ Content References">
+        
+        <!-- C1: note-a -->
+        <article class="picker-item-row" data-note-id="note-a" data-lens="content">
+          <div class="picker-check-wrap">
+            <input 
+              type="checkbox" 
+              class="picker-checkbox" 
+              id="pick-note-a" 
+              data-testid="pick-note-a"
+              name="pick-note-a" 
+              data-note-id="note-a" 
+              data-lens="content" 
+              data-action="toggle-pick"
+              aria-label="เลือก Post and forget it เข้าตะกร้า Remix"
+            />
+          </div>
+          <div class="picker-item-body">
+            <div class="item-meta-row">
+              <span class="item-creator">Creator A</span>
+              <span class="item-tag-pill">Mindset</span>
+              <span class="item-tag-pill">Workflow</span>
+            </div>
+            <h4 class="item-title">Post and forget it (อย่าเฝ้ายอด)</h4>
+            <p class="item-why-snippet">
+              ชอบสารหลัก อยากต่อยอดว่าเราไม่ควรต้องคอยนั่งตอบลูกค้า/เฝ้าคอมเมนต์ทุกชั่วโมงเหมือนกัน MEW มีแนวทางช่วยทำงานซ้ำ ๆ ด้วย Automation
+            </p>
+          </div>
+          <div class="picker-item-actions">
+            <button 
+              type="button" 
+              class="btn-pill btn-ghost btn-sm btn-preview" 
+              id="btn-preview-note-a" 
+              data-testid="btn-preview-note-a"
+              data-note-id="note-a" 
+              data-action="preview" 
+              aria-label="ดู WHY/ที่มา ของ Post and forget it"
+            >
+              <span>ดู WHY/ที่มา</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- C2: note-c2 -->
+        <article class="picker-item-row" data-note-id="note-c2" data-lens="content">
+          <div class="picker-check-wrap">
+            <input 
+              type="checkbox" 
+              class="picker-checkbox" 
+              id="pick-note-c2" 
+              data-testid="pick-note-c2"
+              name="pick-note-c2" 
+              data-note-id="note-c2" 
+              data-lens="content" 
+              data-action="toggle-pick"
+              aria-label="เลือก Audience questions are market research เข้าตะกร้า Remix"
+            />
+          </div>
+          <div class="picker-item-body">
+            <div class="item-meta-row">
+              <span class="item-creator">Creator C</span>
+              <span class="item-tag-pill">Market Research</span>
+              <span class="item-tag-pill">Customer Voice</span>
+            </div>
+            <h4 class="item-title">Audience questions are market research (คำถามคอมเมนต์)</h4>
+            <p class="item-why-snippet">
+              คำถามในคอมเมนต์คือขุมทรัพย์ Market Research ชั้นดี อยากหยิบประเด็นนี้มาสอนว่าอย่ามองข้ามเสียงของลูกค้า
+            </p>
+          </div>
+          <div class="picker-item-actions">
+            <button 
+              type="button" 
+              class="btn-pill btn-ghost btn-sm btn-preview" 
+              id="btn-preview-note-c2" 
+              data-testid="btn-preview-note-c2"
+              data-note-id="note-c2" 
+              data-action="preview" 
+              aria-label="ดู WHY/ที่มา ของ Audience questions"
+            >
+              <span>ดู WHY/ที่มา</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- C3: note-c3 -->
+        <article class="picker-item-row" data-note-id="note-c3" data-lens="content">
+          <div class="picker-check-wrap">
+            <input 
+              type="checkbox" 
+              class="picker-checkbox" 
+              id="pick-note-c3" 
+              data-testid="pick-note-c3"
+              name="pick-note-c3" 
+              data-note-id="note-c3" 
+              data-lens="content" 
+              data-action="toggle-pick"
+              aria-label="เลือก Automate repetitive follow-up เข้าตะกร้า Remix"
+            />
+          </div>
+          <div class="picker-item-body">
+            <div class="item-meta-row">
+              <span class="item-creator">Creator D</span>
+              <span class="item-tag-pill">Automation</span>
+              <span class="item-tag-pill">Human Review</span>
+            </div>
+            <h4 class="item-title">Automate repetitive follow-up responsibly</h4>
+            <p class="item-why-snippet">
+              ระบบช่วยคัดกรองและตอบคำถามซ้ำ ๆ ได้อย่างมีความรับผิดชอบ ช่วยคืนเวลาให้ Creator โฟกัสงานที่มีมูลค่าสูง
+            </p>
+          </div>
+          <div class="picker-item-actions">
+            <button 
+              type="button" 
+              class="btn-pill btn-ghost btn-sm btn-preview" 
+              id="btn-preview-note-c3" 
+              data-testid="btn-preview-note-c3"
+              data-note-id="note-c3" 
+              data-action="preview" 
+              aria-label="ดู WHY/ที่มา ของ Automate repetitive follow-up"
+            >
+              <span>ดู WHY/ที่มา</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Right Column: Packaging Vault (HOW) -->
+    <section class="picker-column packaging-col mew-offer-card" id="picker-packaging" data-testid="picker-packaging" aria-labelledby="heading-picker-packaging">
+      <div class="col-header">
+        <div class="col-title-wrap">
+          <div class="col-indicator-bar violet" aria-hidden="true"></div>
+          <h3 class="col-title" id="heading-picker-packaging">Packaging Vault (เทคนิค / จังหวะ - HOW)</h3>
+        </div>
+        <span class="picked-count-badge violet font-num" id="count-picked-packaging">เลือกแล้ว 0 ชิ้น</span>
+      </div>
+
+      <p class="col-desc">เลือกเทคนิคเปิดคลิป จังหวะตัดต่อ หรือโครงสร้างการเล่าเรื่องที่น่าสนใจ</p>
+
+      <!-- Column Search -->
+      <div class="col-search-box">
+        <label for="search-picker-packaging" class="sr-only">ค้นหาใน Packaging Vault</label>
+        <div class="search-input-wrap">
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input 
+            type="search" 
+            id="search-picker-packaging" 
+            data-testid="search-picker-packaging"
+            class="picker-search-input" 
+            placeholder="ค้นหาเทคนิคการเล่า, Hook, หรือจังหวะเสียง..." 
+            aria-label="ค้นหาใน Packaging Vault"
+          />
+        </div>
+      </div>
+
+      <!-- Item List for Packaging References (P1, P2...) -->
+      <div class="picker-items-list" id="list-picker-packaging" role="group" aria-label="รายการ Packaging References">
+        
+        <!-- P1: note-b -->
+        <article class="picker-item-row" data-note-id="note-b" data-lens="packaging">
+          <div class="picker-check-wrap">
+            <input 
+              type="checkbox" 
+              class="picker-checkbox" 
+              id="pick-note-b" 
+              data-testid="pick-note-b"
+              name="pick-note-b" 
+              data-note-id="note-b" 
+              data-lens="packaging" 
+              data-action="toggle-pick"
+              aria-label="เลือก The Ticking Clock เข้าตะกร้า Remix"
+            />
+          </div>
+          <div class="picker-item-body">
+            <div class="item-meta-row">
+              <span class="item-creator">Creator B</span>
+              <span class="item-tag-pill">Tension</span>
+              <span class="item-tag-pill">Hook-Conflict</span>
+            </div>
+            <h4 class="item-title">The Ticking Clock (โครงสร้างนาฬิกากดดัน)</h4>
+            <p class="item-why-snippet">
+              อยากลองโครงสร้างเปิดเรื่องที่กดดันแบบนี้กับเนื้อหางานธุรกิจ ใช้ SFX และภาพที่เรามีสิทธิ์เอง ไม่เอาเสียงต้นฉบับ
+            </p>
+          </div>
+          <div class="picker-item-actions">
+            <button 
+              type="button" 
+              class="btn-pill btn-ghost btn-sm btn-preview" 
+              id="btn-preview-note-b" 
+              data-testid="btn-preview-note-b"
+              data-note-id="note-b" 
+              data-action="preview" 
+              aria-label="ดู WHY/ที่มา ของ The Ticking Clock"
+            >
+              <span>ดู WHY/ที่มา</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- P2: note-p2 -->
+        <article class="picker-item-row" data-note-id="note-p2" data-lens="packaging">
+          <div class="picker-check-wrap">
+            <input 
+              type="checkbox" 
+              class="picker-checkbox" 
+              id="pick-note-p2" 
+              data-testid="pick-note-p2"
+              name="pick-note-p2" 
+              data-note-id="note-p2" 
+              data-lens="packaging" 
+              data-action="toggle-pick"
+              aria-label="เลือก Numbered reveal structure เข้าตะกร้า Remix"
+            />
+          </div>
+          <div class="picker-item-body">
+            <div class="item-meta-row">
+              <span class="item-creator">Creator P</span>
+              <span class="item-tag-pill">Numbered List</span>
+              <span class="item-tag-pill">Visual Comparison</span>
+            </div>
+            <h4 class="item-title">Numbered reveal / visual comparison structure</h4>
+            <p class="item-why-snippet">
+              โครงสร้างการเล่าแบบแบ่ง 3 ข้อ พร้อมภาพเปรียบเทียบซ้ายขวา ทำให้ผู้ชมเห็นความต่างได้ทันทีใน 5 วินาทีแรก
+            </p>
+          </div>
+          <div class="picker-item-actions">
+            <button 
+              type="button" 
+              class="btn-pill btn-ghost btn-sm btn-preview" 
+              id="btn-preview-note-p2" 
+              data-testid="btn-preview-note-p2"
+              data-note-id="note-p2" 
+              data-action="preview" 
+              aria-label="ดู WHY/ที่มา ของ Numbered reveal"
+            >
+              <span>ดู WHY/ที่มา</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Reusable Template for Dynamic Picker Items -->
+  <template id="tmpl-picker-item">
+    <article class="picker-item-row" data-note-id="{noteId}">
+      <div class="picker-check-wrap">
+        <input 
+          type="checkbox" 
+          class="picker-checkbox" 
+          id="pick-{noteId}" 
+          data-testid="pick-{noteId}"
+          name="pick-{noteId}" 
+          data-note-id="{noteId}" 
+          data-action="toggle-pick" 
+        />
+        <label for="pick-{noteId}" class="sr-only">เลือกรายการนี้</label>
+      </div>
+      <div class="picker-item-body">
+        <div class="item-meta-row">
+          <span class="item-creator"></span>
+          <span class="item-tag-pill"></span>
+        </div>
+        <h4 class="item-title"></h4>
+        <p class="item-why-snippet"></p>
+      </div>
+      <div class="picker-item-actions">
+        <button 
+          type="button" 
+          class="btn-pill btn-ghost btn-sm btn-preview" 
+          id="btn-preview-{noteId}" 
+          data-testid="btn-preview-{noteId}"
+          data-note-id="{noteId}" 
+          data-action="preview" 
+          aria-label="ดู WHY/ที่มา"
+        >
+          <span>ดู WHY/ที่มา</span>
+        </button>
+      </div>
+    </article>
+  </template>
+
+  <!-- Reference WHY / Source Preview Modal -->
+  <div 
+    class="picker-preview-modal-backdrop" 
+    id="picker-preview-modal" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-labelledby="preview-modal-title" 
+    hidden
+  >
+    <div class="picker-preview-card mew-offer-card" role="document">
+      <div class="preview-modal-header">
+        <div class="preview-title-group">
+          <span class="badge-pill coral" id="preview-lens-badge">Content Vault</span>
+          <h3 id="preview-modal-title" class="preview-modal-title">ที่มาและเหตุผลในการบันทึก (Founder WHY)</h3>
+        </div>
+        <button type="button" class="btn-close-modal" id="btn-close-preview" data-action="close-preview" aria-label="ปิดหน้าต่าง">✕</button>
+      </div>
+
+      <div class="preview-modal-body">
+        <div class="preview-meta-block">
+          <h4 class="preview-item-title" id="preview-item-title">หัวข้ออ้างอิง</h4>
+          <p class="preview-creator-text" id="preview-item-creator">โดย Creator</p>
+        </div>
+
+        <div class="preview-section-box">
+          <h5 class="preview-section-label">Founder WHY (ทำไมผู้ก่อตั้งถึงบันทึกชิ้นนี้):</h5>
+          <blockquote class="preview-why-quote" id="preview-item-why">
+            เหตุผลในการบันทึก
+          </blockquote>
+        </div>
+
+        <div class="preview-details-grid">
+          <div class="preview-detail-card">
+            <span class="preview-sub-label">สิ่งที่นำมาต่อยอด (WHAT/HOW):</span>
+            <p class="preview-sub-text" id="preview-item-borrow">คำแนะนำการต่อยอด</p>
+          </div>
+          <div class="preview-detail-card">
+            <span class="preview-sub-label">แท็กและบริบท:</span>
+            <div class="preview-tags-wrap" id="preview-item-tags"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-modal-footer">
+        <button type="button" class="btn-pill btn-ghost" id="btn-cancel-preview" data-action="close-preview">
+          ปิดหน้าต่าง
+        </button>
+        <button type="button" class="btn-pill btn-primary" id="btn-confirm-toggle-pick" data-action="confirm-pick">
+          เลือกชิ้นนี้เข้าตะกร้า
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

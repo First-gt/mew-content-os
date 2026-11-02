@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEW CONTENT OS — App Shell & Navigation Tree</title>
+
+  <!-- Google Fonts: Inter, Prompt, Noto Sans Thai -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- App Shell Stylesheet (mewteetawat.com V6.3 Theme) -->
+  <link rel="stylesheet" href="../styles/app-shell.css">
+</head>
+<body>
+
+  <!-- Full App Shell Wrapper -->
+  <div class="mew-app-container">
+
+    <!-- Top Brand Bar -->
+    <div class="mew-top-bar" role="banner">
+      <a href="#overview" class="mew-brand-link" aria-label="MEW Content OS หน้าแรก">
+        <div class="mew-monogram" aria-hidden="true">M</div>
+        <div class="mew-brand-titles">
+          <span class="mew-system-title">MEW CONTENT OS</span>
+          <span class="mew-system-sub">Creative Pipeline V6.3</span>
+        </div>
+      </a>
+
+      <div class="mew-bar-status" title="สถานะระบบพร้อมทำงาน">
+        <span class="mew-status-pulse" aria-hidden="true"></span>
+        <span>System Ready · Zero Fake Metrics</span>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         STICKY CONTEXT BAR (<header data-testid="context-bar">)
+         Founder glances at screen -> immediately knows stage without reading content
+         ======================================================================== -->
+    <header data-testid="context-bar" class="mew-context-bar" role="region" aria-label="แถบระบุสถานะ Stage ปัจจุบัน">
+      <div class="context-bar-inner">
+        
+        <!-- Left: Prominent Stage Badge -->
+        <div class="stage-indicator-card">
+          <div class="stage-badge-pill" data-testid="current-stage-badge" id="current-stage-badge" data-stage-theme="overview">
+            <span class="stage-dot" aria-hidden="true"></span>
+            <span class="stage-kicker">STAGE:</span>
+            <span class="stage-name-display" id="stage-name" data-testid="stage-name">Overview</span>
+          </div>
+
+          <div class="stage-context-summary">
+            <span class="stage-subtext" id="stage-subtext">ภาพรวมระบบคอนเทนต์: คลังวิจัย, สถานะวัตถุดิบ 2 คลัง และดราฟต์รีมิกซ์ล่าสุด</span>
+          </div>
+        </div>
+
+        <!-- Middle: 5 Pipeline Stages Stepper (Research -> Save -> Ingredients -> Remix -> Approve) -->
+        <ol class="stage-stepper" aria-label="ลำดับขั้นตอน Workflow Pipeline">
+          <li class="stepper-node" data-stage="research" title="ขั้นตอนที่ 1: วิจัยคลิปต้นฉบับ">
+            <span class="step-num">01</span>
+            <span>Research</span>
+          </li>
+          <li class="stepper-arrow" aria-hidden="true">&rarr;</li>
+          <li class="stepper-node" data-stage="save" title="ขั้นตอนที่ 2: Human Save Gate แยกเก็บตามเจตนา">
+            <span class="step-num">02</span>
+            <span>Save Gate</span>
+          </li>
+          <li class="stepper-arrow" aria-hidden="true">&rarr;</li>
+          <li class="stepper-node" data-stage="ingredients" title="ขั้นตอนที่ 3: คลังวัตถุดิบ 2 คลัง (Content/Packaging)">
+            <span class="step-num">03</span>
+            <span>Ingredients</span>
+          </li>
+          <li class="stepper-arrow" aria-hidden="true">&rarr;</li>
+          <li class="stepper-node" data-stage="remix" title="ขั้นตอนที่ 4: สตูดิโอรีมิกซ์ สังเคราะห์ไอเดียสดใหม่">
+            <span class="step-num">04</span>
+            <span>Remix</span>
+          </li>
+          <li class="stepper-arrow" aria-hidden="true">&rarr;</li>
+          <li class="stepper-node" data-stage="approve" title="ขั้นตอนที่ 5: บอร์ดอนุมัติบทและส่งมอบบรีฟ">
+            <span class="step-num">05</span>
+            <span>Approve</span>
+          </li>
+        </ol>
+
+        <!-- Right: Stage Quick Triggers -->
+        <div class="context-bar-actions">
+          <button type="button" class="btn-stage-chip" data-action="open-save-gate" title="จำลองเปิด Human Save Gate (เปลี่ยน stage เป็น Save)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            <span>Simulate Save Gate</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Accessible Live Region for Screen Readers -->
+      <div id="stage-announcer" class="sr-only" aria-live="polite" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"></div>
+    </header>
+
+    <!-- ========================================================================
+         APP NAVIGATION TREE (<nav data-testid="nav-root">)
+         5 items in strict spec 3 order:
+         1. nav-overview (00 Overview / Dashboard)
+         2. nav-research (01 Research)
+         3. nav-library  (02 My Library)
+         4. nav-remix    (03 Remix Studio)
+         5. nav-board    (04 Content Board)
+         ======================================================================== -->
+    <nav data-testid="nav-root" class="mew-nav-root" aria-label="แถบนำทางหลัก MEW Content OS">
+      <div class="nav-root-container">
+        <ul class="nav-items-list" role="menubar">
+          
+          <!-- Item 1: nav-overview -->
+          <li role="none">
+            <button type="button" 
+                    class="nav-tree-item is-active" 
+                    id="nav-overview" 
+                    data-testid="nav-overview" 
+                    data-target="overview" 
+                    role="menuitem" 
+                    aria-current="page"
+                    aria-label="00 Overview Dashboard">
+              <span class="nav-index">00</span>
+              <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span class="nav-label">Overview</span>
+            </button>
+          </li>
+
+          <!-- Item 2: nav-research -->
+          <li role="none">
+            <button type="button" 
+                    class="nav-tree-item" 
+                    id="nav-research" 
+                    data-testid="nav-research" 
+                    data-target="research" 
+                    role="menuitem"
+                    aria-label="01 Research Studio">
+              <span class="nav-index">01</span>
+              <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span class="nav-label">Research</span>
+            </button>
+          </li>
+
+          <!-- Item 3: nav-library -->
+          <li role="none">
+            <button type="button" 
+                    class="nav-tree-item" 
+                    id="nav-library" 
+                    data-testid="nav-library" 
+                    data-target="library" 
+                    role="menuitem"
+                    aria-label="02 My Library Reference Vaults">
+              <span class="nav-index">02</span>
+              <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              <span class="nav-label">My Library</span>
+            </button>
+          </li>
+
+          <!-- Item 4: nav-remix -->
+          <li role="none">
+            <button type="button" 
+                    class="nav-tree-item" 
+                    id="nav-remix" 
+                    data-testid="nav-remix" 
+                    data-target="remix" 
+                    role="menuitem"
+                    aria-label="03 Remix Studio Creative Synthesis">
+              <span class="nav-index">03</span>
+              <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span class="nav-label">Remix Studio</span>
+            </button>
+          </li>
+
+          <!-- Item 5: nav-board -->
+          <li role="none">
+            <button type="button" 
+                    class="nav-tree-item" 
+                    id="nav-board" 
+                    data-testid="nav-board" 
+                    data-target="board" 
+                    role="menuitem"
+                    aria-label="04 Content Board Approval Pipeline">
+              <span class="nav-index">04</span>
+              <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="9" y1="3" x2="9" y2="21"></line>
+                <line x1="15" y1="3" x2="15" y2="21"></line>
+              </svg>
+              <span class="nav-label">Content Board</span>
+            </button>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+
+    <!-- ========================================================================
+         SCREEN OUTLET (<main data-testid="screen-outlet">)
+         Dynamic container switching views client-side without page reload
+         ======================================================================== -->
+    <main data-testid="screen-outlet" class="mew-screen-outlet" id="screen-outlet">
+      
+      <!-- --------------------------------------------------------------------
+           SCREEN 00: OVERVIEW DASHBOARD (Active by default)
+           -------------------------------------------------------------------- -->
+      <section class="screen-view is-active" id="screen-overview" data-screen="overview" data-stage="Overview" aria-label="Screen 00: Overview Dashboard">
+        
+        <!-- Hero Card with Gradient -->
+        <article class="overview-hero-card">
+          <div class="hero-eyebrow">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>CREATIVE PIPELINE · MEWTEETAWAT.COM V6.3</span>
+          </div>
+
+          <h1 class="hero-heading">
+            Turn Raw Clips into <span class="hero-heading-gradient">Actionable DNA</span>
+          </h1>
+
+          <p class="hero-desc">
+            วิจัยคลิปต้นฉบับ แยกสาระ (<strong>WHAT</strong>) และลีลา (<strong>HOW</strong>) ด้วย AI จากนั้นผ่าน Human Save Gate เพื่อส่งเข้า 2 Vaults แยกกัน ก่อนนำมาผสมผสานใน Remix Studio สังเคราะห์เป็นไอเดียสดใหม่
+          </p>
+
+          <!-- 3 Primary Action Buttons -->
+          <div class="hero-actions-row">
+            <button type="button" class="btn-pill btn-primary" data-navigate="research" aria-label="เริ่มวิจัยคลิปต้นฉบับ">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span>Research a Clip</span>
+              <span class="btn-action-badge">S01</span>
+            </button>
+
+            <button type="button" class="btn-pill btn-ghost" data-navigate="library" aria-label="เปิดคลังวัตถุดิบ My Library">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              <span>Open My Library</span>
+              <span class="btn-action-badge">S04</span>
+            </button>
+
+            <button type="button" class="btn-pill btn-violet" data-navigate="remix" aria-label="เข้าสู่สตูดิโอรีมิกซ์ Remix Studio">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span>Start Remix</span>
+              <span class="btn-action-badge">S06</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 3 Offer Cards (.mew-offer-card style with 4px top accent bar) -->
+        <div class="overview-cards-grid">
+          
+          <!-- Card 1: Recent Research -->
+          <article class="mew-offer-card" tabindex="0">
+            <div class="card-header-row">
+              <span class="card-stage-tag">S01 · RESEARCH INBOX</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <h2 class="card-title">Recent Research</h2>
+            <p class="card-body-text">
+              คลิปต้นฉบับที่นำเข้าเพื่อวิเคราะห์แก่นคิดและโครงสร้าง แยกแยะมิติตัวเนื้อหา (WHAT) ออกจากรูปแบบการนำเสนอ (HOW) ก่อนตัดสินใจบันทึก
+            </p>
+            <div class="card-footer-action">
+              <button type="button" class="btn-pill btn-ghost" data-navigate="research">
+                <span>View Research Inbox &rarr;</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 2: Dual-Vault Summary -->
+          <article class="mew-offer-card violet-accent" tabindex="0">
+            <div class="card-header-row">
+              <span class="card-stage-tag violet">S04 · REFERENCE VAULTS</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </div>
+            <h2 class="card-title">Vault Summary</h2>
+            <p class="card-body-text">
+              คลัง 2 ส่วนที่แยกจากกันเด็ดขาด: <strong>Content Vault</strong> เก็บสาระ/มุมมอง และ <strong>Packaging Vault</strong> เก็บลีลา/Hook/จังหวะตัดต่อ พร้อมบันทึก Founder WHY
+            </p>
+            <div class="card-footer-action">
+              <button type="button" class="btn-pill btn-ghost" data-navigate="library">
+                <span>Browse Vaults &rarr;</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 3: Remix Drafts -->
+          <article class="mew-offer-card ink-accent" tabindex="0">
+            <div class="card-header-row">
+              <span class="card-stage-tag ink">S06 · REMIX DRAFTS</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+            <h2 class="card-title">Remix Drafts</h2>
+            <p class="card-body-text">
+              ไอเดียตั้งต้นและโครงร่างสตอรี่บอร์ดที่สังเคราะห์จากวัตถุดิบหลายแหล่ง ผสมผสาน Brand Voice ของคุณเข้ากับ Original Angle ที่แท้จริง
+            </p>
+            <div class="card-footer-action">
+              <button type="button" class="btn-pill btn-ghost" data-navigate="remix">
+                <span>Continue Remix &rarr;</span>
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- --------------------------------------------------------------------
+           SCREEN 01: RESEARCH STUDIO
+           -------------------------------------------------------------------- -->
+      <section class="screen-view" id="screen-research" data-screen="research" data-stage="Research" aria-label="Screen 01: Research Studio" hidden>
+        <header class="screen-header-banner">
+          <div class="screen-badge-row">
+            <span class="badge-screen-pill coral">STAGE: RESEARCH · S01 & S02</span>
+            <span class="badge-screen-pill">Dual-Lens WHAT / HOW</span>
+          </div>
+          <h1 class="screen-title">Research Studio & AI Analysis</h1>
+          <p class="screen-desc">
+            วิเคราะห์คลิปต้นฉบับด้วยโมเดลถอดรหัส 2 มิติ: <strong>Content (WHAT)</strong> วิเคราะห์สาระและข้อเท็จจริง และ <strong>Packaging (HOW)</strong> วิเคราะห์เทคนิคการเปิดคลิป จังหวะตัดต่อ และการเล่าเรื่อง
+          </p>
+        </header>
+
+        <div class="overview-cards-grid">
+          <article class="mew-offer-card" tabindex="0">
+            <span class="card-stage-tag">RESEARCH ENTRY</span>
+            <h2 class="card-title">Input Reference Clip</h2>
+            <p class="card-body-text">
+              วาง URL หรืออัปโหลดวิดีโอเพื่อเริ่มต้นการถอดรหัสโครงสร้างคลิปแบบอัตโนมัติ
+            </p>
+            <div class="card-footer-action">
+              <button type="button" class="btn-pill btn-primary" data-action="open-save-gate">
+                <span>Save to Library (Gate S03)</span>
+              </button>
+            </div>
+          </article>
+
+          <article class="mew-offer-card violet-accent" tabindex="0">
+            <span class="card-stage-tag violet">INBOX RESULTS</span>
+            <h2 class="card-title">Clip Breakdown & Insights</h2>
+            <p class="card-body-text">
+              ผลวิเคราะห์แก่นคิดเบื้องหลัง: คลิปนี้ดึงดูดความสนใจด้วยคำถามที่ท้าทายความเชื่อเดิม และปิดท้ายด้วยแนวทางที่ปฏิบัติได้ทันที
+            </p>
+            <div class="card-footer-action">
+              <button type="button" class="btn-pill btn-ghost" data-navigate="library">
+                <span>Go to Library &rarr;</span>
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- --------------------------------------------------------------------
+           SCREEN 02: MY LIBRARY (DUAL-VAULT REFERENCE LIBRARY)
+           -------------------------------------------------------------------- -->
+      <section class="screen-view" id="screen-library" data-screen="library" data-stage="Ingredients" aria-label="Screen 02: My Library" hidden>
+        <header class="screen-header-banner">
+          <div class="screen-badge-row">
+            <span class="badge-screen-pill">STAGE: INGREDIENTS · S04 & S05</span>
+            <span class="badge-screen-pill">Dual-Vault Reference Architecture</span>
+          </div>
+          <h1 class="screen-title">My Library — Reference Vaults</h1>
+          <p class="screen-desc">
+            คลังวัตถุดิบทางความคิด 2 ส่วน: <strong>Content Vault</strong> (สาระ/มุมคิด) และ <strong>Packaging Vault</strong> (วิธีเล่า/Hook/จังหวะ) พร้อมบันทึก Founder WHY
+          </p>
+        </header>
+
+        <div class="overview-cards-grid">
+          <article class="mew-offer-card" tabindex="0">
+            <span class="card-stage-tag">CONTENT VAULT (WHAT)</span>
+            <h2 class="card-title">Saved Content Ideas</h2>
+            <p class="card-body-text">
+              วัตถุดิบเชิงเนื้อหาและมุมมองความคิดที่ผ่านการคัดสรร พร้อมเหตุผลระบุว่าทำไมประเด็นนี้จึงสำคัญต่อผู้ฟังของคุณ
+            </p>
+            <div class="card-footer-action">
+              <button type="button" class="btn-pill btn-primary" data-navigate="remix">
+                <span>Use in Remix &rarr;</span>
+              </button>
+            </div>
+          </article>
+
+          <article class="mew-offer-card violet-accent" tabindex="0">
+            <span class="card-stage-tag violet">PACKAGING VAULT (HOW)</span>
+            <h2 class="card-title">Saved Presentation Styles</h2>
+            <p class="card-body-text">
+              รูปแบบการเล่าเรื่อง โครงสร้าง Hook เปิดหัว และเทคนิคการลำดับภาพที่สามารถนำไปปรับใช้กับเนื้อหาเรื่องอื่นได้
+            </p>
+            <div class="card-footer-action">
+              <button type="button" class="btn-pill btn-violet" data-navigate="remix">
+                <span>Select for Remix &rarr;</span>
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- --------------------------------------------------------------------
+           SCREEN 03: REMIX STUDIO
+           -------------------------------------------------------------------- -->
+      <section class="screen-view" id="screen-remix" data-screen="remix" data-stage="Remix" aria-label="Screen 03: Remix Studio" hidden>
+        <header class="screen-header-banner">
+          <div class="screen-badge-row">
+            <span class="badge-screen-pill violet">STAGE: REMIX · S06 & S07</span>
+            <span class="badge-screen-pill">Multi-Source Creative Synthesis</span>
+          </div>
+          <h1 class="screen-title">Remix Studio — Creative Synthesis</h1>
+          <p class="screen-desc">
+            เลือกผสมวัตถุดิบทางความคิด (Content N) และลูกเล่นการนำเสนอ (Packaging N) กำหนดทิศทางของแบรนด์ เพื่อสังเคราะห์แนวคิดต้นฉบับใหม่ 2-3 แบบ
+          </p>
+        </header>
+
+        <div class="overview-cards-grid">
+          <article class="mew-offer-card violet-accent" tabindex="0">
+            <span class="card-stage-tag violet">INGREDIENT BASKET</span>
+            <h2 class="card-title">Selected References</h2>
+            <p class="card-body-text">
+              วัตถุดิบที่หยิบมาจากทั้งสองคลัง เตรียมพร้อมสำหรับการผสมผสานในกระบวนการสังเคราะห์ไอเดียสดใหม่
+            </p>
+            <div class="card-footer-action">
+              <button type="button" class="btn-pill btn-ghost" data-navigate="library">
+                <span>+ Pick More Ingredients</span>
+              </button>
+            </div>
+          </article>
+
+          <article class="mew-offer-card ink-accent" tabindex="0">
+            <span class="card-stage-tag ink">SYNTHESIS ENGINE</span>
+            <h2 class="card-title">Original Concepts</h2>
+            <p class="card-body-text">
+              แนวคิดต้นฉบับที่สังเคราะห์ขึ้นมาใหม่โดยอิงจากแก่นคิดของคุณเอง พร้อมรายละเอียด Hook, ลำดับเรื่อง และทิศทางภาพ
+            </p>
+            <div class="card-footer-action">
+              <button type="button" class="btn-pill btn-primary" data-navigate="board">
+                <span>Send to Content Board &rarr;</span>
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- --------------------------------------------------------------------
+           SCREEN 04: CONTENT BOARD
+           -------------------------------------------------------------------- -->
+      <section class="screen-view" id="screen-board" data-screen="board" data-stage="Approve" aria-label="Screen 04: Content Board" hidden>
+        <header class="screen-header-banner">
+          <div class="screen-badge-row">
+            <span class="badge-screen-pill green">STAGE: APPROVE · S08 & S09</span>
+            <span class="badge-screen-pill">Editorial Pipeline & Director Brief</span>
+          </div>
+          <h1 class="screen-title">Content Board — Approval Pipeline</h1>
+          <p class="screen-desc">
+            กระดานติดตามสถานะงานคอนเทนต์: ร่างไอเดีย (<strong>Draft</strong>) ตรวจทานความถูกต้อง (<strong>Needs Review</strong>) อนุมัติบทฉบับจริง (<strong>Approved</strong>) จนถึงเตรียมคิวถ่ายทำและบรีฟผู้กำกับ
+          </p>
+        </header>
+
+        <div class="overview-cards-grid">
+          <article class="mew-offer-card green-accent" tabindex="0">
+            <span class="card-stage-tag ink">PIPELINE COLUMNS</span>
+            <h2 class="card-title">Production Stages</h2>
+            <p class="card-body-text">
+              จัดการลำดับขั้นตอนการทำงานอย่างเป็นระบบ ตรวจสอบความถูกต้องและลิขสิทธิ์ก่อนอนุมัติเข้าสู่ขั้นตอนถ่ายทำ
+            </p>
+            <div class="card-footer-action">
+              <button type="button" class="btn-pill btn-primary" data-navigate="remix">
+                <span>Create New Draft &rarr;</span>
+              </button>
+            </div>
+          </article>
+
+          <article class="mew-offer-card" tabindex="0">
+            <span class="card-stage-tag">DIRECTOR BRIEF</span>
+            <h2 class="card-title">Production Hand-off</h2>
+            <p class="card-body-text">
+              โครงสร้างบทและบรีฟผู้กำกับที่ได้รับการอนุมัติ พร้อมส่งต่อให้ทีมตัดต่อหรือเก็บเป็นพิมพ์เขียวสำหรับถ่ายทำ
+            </p>
+            <div class="card-footer-action">
+              <button type="button" class="btn-pill btn-ghost" data-navigate="overview">
+                <span>Back to Overview &rarr;</span>
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ========================================================================
+         HUMAN SAVE GATE MODAL (S03 - Stage: "Save")
+         Demonstrating the Human Save Gate stage transition
+         ======================================================================== -->
+    <div class="mew-modal-backdrop" id="save-gate-modal" role="dialog" aria-modal="true" aria-labelledby="modal-save-title" aria-hidden="true">
+      <div class="mew-modal-card">
+        
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <h2 id="modal-save-title">Human Save Gate (S03)</h2>
+            <p>บันทึกเข้าคลังวัตถุดิบ — กรุณาเลือกเจตนาและระบุเหตุผล WHY</p>
+          </div>
+          <button type="button" class="modal-close-btn" data-action="close-save-gate" aria-label="ปิดหน้าต่าง Save Gate">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="choice-grid" role="radiogroup" aria-label="เลือกคลังวัตถุดิบที่ต้องการบันทึก">
+            <label class="choice-label">
+              <input type="radio" name="save-destination" value="content" checked>
+              <strong>Content Vault</strong>
+              <span>เก็บสาระ / ไอเดีย (WHAT)</span>
+            </label>
+
+            <label class="choice-label">
+              <input type="radio" name="save-destination" value="packaging">
+              <strong>Packaging Vault</strong>
+              <span>เก็บลูกเล่น / ลีลา (HOW)</span>
+            </label>
+
+            <label class="choice-label">
+              <input type="radio" name="save-destination" value="both">
+              <strong>Both Vaults</strong>
+              <span>เก็บทั้งสองคลังแยกกัน</span>
+            </label>
+          </div>
+
+          <div class="modal-form-group">
+            <label for="save-why-note">Founder WHY Note (เหตุผลที่คุณตัดสินใจบันทึกชิ้นนี้):</label>
+            <textarea id="save-why-note" rows="3" placeholder="ตัวอย่าง: ชอบการเปิดประเด็นด้วยคำถามขัดแย้งสามัญสำนึก ทำให้คนหยุดฟังใน 3 วินาทีแรก..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-pill btn-ghost" data-action="close-save-gate">
+            <span>ยกเลิก</span>
+          </button>
+          <button type="button" class="btn-pill btn-primary" data-action="close-save-gate">
+            <span>บันทึกเข้าคลัง</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- App Shell Controller Module -->
+  <script type="module" src="../modules/app-shell.js"></script>
+
+</body>
+</html>

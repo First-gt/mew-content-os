@@ -1,0 +1,150 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T29: Approve Concept & Director Brief Handoff Gating
+     Theme: mewteetawat.com V6.3
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     WCAG AA/AAA Accessible · Responsive Flex & Grid Architecture
+     ============================================================================== -->
+
+<div class="approve-handoff-container" id="approve-handoff-root" data-testid="approve-handoff-root" role="region" aria-label="อนุมัติคอนเซปต์และส่งมอบสรุปให้ทีมผลิต">
+
+  <!-- Header Section -->
+  <header class="ah-header">
+    <div class="ah-badges-row">
+      <span class="badge-pill coral">Governance & Handoff</span>
+      <span class="badge-pill soft">Immutable Revision Guard</span>
+    </div>
+    <div class="ah-title-row">
+      <div>
+        <h3 class="ah-heading">การอนุมัติคอนเซปต์ (Approve & Director Brief)</h3>
+        <p class="ah-subheading">
+          การอนุมัติจะสร้าง Immutable Snapshot Revision ที่ไม่สามารถแก้ไขย้อนหลังได้ เพื่อส่งมอบให้ผู้กำกับและทีมผลิตทำงานต่อได้อย่างแม่นยำ
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Approval Action & Gating Control Box -->
+  <section class="approval-action-box mew-offer-card" aria-label="สถานะการตรวจสอบและการอนุมัติคอนเซปต์">
+    <div class="gating-status-col">
+      <div class="approval-info-meta">
+        <span class="governance-kicker">Gating Criteria Checklist</span>
+        <span class="governance-desc">ต้องผ่านการตรวจ Claims, Rights และอยู่ในสถานะ Needs Review</span>
+      </div>
+
+      <!-- Blocker Hint Message (Shows reasons when approval is blocked) -->
+      <div class="hint-blocked-message" id="hint-approve-blocked" data-testid="hint-approve-blocked" role="status" aria-live="polite" hidden>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="hint-approve-text" data-testid="hint-approve-text">ไม่สามารถอนุมัติได้: ต้องอยู่ในขั้น Needs Review และไม่มี Claim Flag ค้าง</span>
+      </div>
+    </div>
+
+    <!-- Main Approve Concept Action Button (Strict Copy: "Approve Concept") -->
+    <div class="approval-cta-group">
+      <button type="button" class="btn-pill btn-primary btn-approve" id="btn-approve-concept" data-testid="btn-approve-concept" disabled aria-describedby="hint-approve-text">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Approve Concept</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Director Brief Card (Rendered automatically after approval) -->
+  <section class="director-brief-card mew-offer-card" id="director-brief-section" data-testid="director-brief-section" aria-label="สรุปบรีฟสำหรับผู้กำกับ" hidden>
+    <div class="brief-card-header">
+      <div class="brief-title-group">
+        <span class="brief-version-badge font-num" id="brief-revision-id">Revision #1.0 (Locked)</span>
+        <h4 class="brief-title" id="brief-concept-title">Director & Editor Brief</h4>
+      </div>
+      <div class="brief-tag-group">
+        <span class="immutable-pill" title="Revision นี้ถูกล็อกแบบถาวร ไม่สามารถแก้ไขได้ แก้ได้โดยสร้าง revision ใหม่เท่านั้น">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>Immutable Revision</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Brief Body Sections: Hook, Story Beats, Source Trace, Rights, Constraints -->
+    <div class="brief-body">
+      <!-- 1. Hook -->
+      <div class="brief-block">
+        <span class="brief-block-label">1. Hook & First 3 Seconds (จุดหยุดนิ้ว):</span>
+        <p class="brief-block-text brief-hook-content" id="brief-hook" data-testid="brief-hook"></p>
+      </div>
+
+      <!-- 2. Story Beats -->
+      <div class="brief-block">
+        <span class="brief-block-label">2. Story Beats & Audio Pacing (จังหวะการเล่าเรื่อง):</span>
+        <ol class="brief-beats-list" id="brief-beats" data-testid="brief-beats"></ol>
+      </div>
+
+      <!-- 3. Source Trace & References -->
+      <div class="brief-block">
+        <span class="brief-block-label">3. Source Trace & Attribution (แหล่งที่มา & ความเชื่อมโยง):</span>
+        <div class="brief-block-text brief-sources-content" id="brief-sources" data-testid="brief-sources">ยืมแก่นความคิดและวิธีเล่าเรื่องจากคลังไอเดียที่ผ่านการคัดสรร (Attribution Preserved)</div>
+      </div>
+
+      <!-- 4. Rights & Fair Use Boundaries -->
+      <div class="brief-block">
+        <span class="brief-block-label">4. Rights & Fair Use Boundaries (ขอบเขตลิขสิทธิ์และการดัดแปลง):</span>
+        <p class="brief-block-text" id="brief-rights" data-testid="brief-rights">ยืมเฉพาะโครงสร้างทางความคิดและเทคนิค ห้ามใช้เสียงเพลงหรือฟุตเทจที่มีลิขสิทธิ์</p>
+      </div>
+
+      <!-- 5. Production Constraints -->
+      <div class="brief-block">
+        <span class="brief-block-label">5. Production Constraints (ข้อจำกัดการถ่ายทำและการตัดต่อ):</span>
+        <p class="brief-block-text" id="brief-constraints" data-testid="brief-constraints">ความยาวไม่เกิน 60 วินาที, จังหวะตัดต่อฉับไว</p>
+      </div>
+    </div>
+
+    <!-- Handoff Action Footer -->
+    <div class="brief-actions-footer">
+      <div class="export-controls-wrapper">
+        <label for="select-export-format" class="sr-only">เลือกรูปแบบไฟล์ส่งออกบรีฟผู้กำกับ</label>
+        <select id="select-export-format" class="export-format-select" aria-label="เลือกรูปแบบไฟล์สำหรับส่งออก">
+          <option value="markdown">Markdown (.md)</option>
+          <option value="json">JSON (.json)</option>
+        </select>
+
+        <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-export-director-brief" data-testid="btn-export-director-brief" aria-label="ส่งออกบรีฟสำหรับผู้กำกับเป็นไฟล์">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Export Brief (JSON/MD)</span>
+        </button>
+      </div>
+
+      <!-- Gated: Only visible if mewEditVerified === true (Spec A21) -->
+      <button type="button" class="btn-pill btn-primary btn-sm" id="btn-send-to-mew-edit" data-testid="btn-send-to-mew-edit" hidden aria-label="ส่งมอบบรีฟนี้เข้าสู่ MEW Edit สำหรับตัดต่อ">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+        <span>Send to MEW Edit</span>
+      </button>
+    </div>
+
+    <!-- Non-destructive Policy Notice -->
+    <div class="brief-policy-note">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span>การอนุมัตินี้ไม่ทำการ trigger publish หรือ render วิดีโอโดยอัตโนมัติ การแก้ไขข้อมูลต้องทำผ่านการสร้าง Revision ใหม่เท่านั้น</span>
+    </div>
+  </section>
+
+  <!-- Interactive Feedback Toast -->
+  <div class="ah-feedback-toast" id="toast-approve-handoff" role="status" aria-live="polite" hidden></div>
+
+</div>

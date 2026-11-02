@@ -1,0 +1,658 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - S06 & S07 REMIX STUDIO & CREATIVE SYNTHESIS
+     Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+     Pure Client-Side Frontend Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="remix-container" id="remix-root">
+
+  <!-- ============================================================================
+       TOP HEADER & WORKFLOW CONTEXT
+       ============================================================================ -->
+  <header class="remix-header">
+    <div class="remix-header-main">
+      <div class="remix-badges-row">
+        <span class="badge-pill violet">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          S06 · S07 Remix Studio
+        </span>
+        <span class="badge-pill soft">Creative Synthesis Engine</span>
+        <span class="badge-pill soft">Multi-Ingredient C(N) + P(N)</span>
+      </div>
+
+      <h1 class="remix-title">
+        Remix Studio — <span class="mew-gradient-text-violet">Creative Synthesis</span>
+      </h1>
+      
+      <p class="remix-subtitle">
+        ห้องทดลองความคิดสร้างสรรค์: เลือกผสมวัตถุดิบทางความคิด (<strong>Content</strong>) และลูกเล่นการนำเสนอ (<strong>Packaging</strong>) กำหนดทิศทางของแบรนด์ เพื่อสังเคราะห์แนวคิดต้นฉบับใหม่ 2-3 แบบที่คมชัด ซื่อสัตย์ต่อแก่นคิด และไม่มีการมโนตัวเลข
+      </p>
+    </div>
+
+    <!-- Quick Navigation Actions -->
+    <div class="remix-header-actions">
+      <button type="button" class="btn-pill btn-ghost" data-navigate="library" aria-label="กลับสู่หน้า My Library">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span>Open My Library</span>
+      </button>
+
+      <button type="button" class="btn-pill btn-primary" id="btn-open-picker-header" aria-label="เปิดหน้าต่างเลือกวัตถุดิบ">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>+ Add Ingredient</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================================
+       S06: SELECTED INGREDIENTS BASKET BAR (C(N) + P(N) Multi-Picker Bar)
+       ============================================================================ -->
+  <section class="remix-basket-bar-section" aria-label="แถบสรุปวัตถุดิบที่เลือก">
+    <div class="remix-basket-card mew-offer-card">
+      <div class="basket-card-inner">
+        
+        <!-- Basket Stats & Rule Status -->
+        <div class="basket-meta-group">
+          <div class="basket-title-wrap">
+            <div class="basket-icon-circle" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="basket-title">Selected Ingredients Basket</div>
+              <div class="basket-subtitle" id="basket-summary-text">
+                กำลังโหลดวัตถุดิบ...
+              </div>
+            </div>
+          </div>
+
+          <!-- Formula & Validation Pill -->
+          <div class="basket-formula-badge" id="basket-validation-badge">
+            <span class="status-indicator-dot" aria-hidden="true"></span>
+            <span id="basket-validation-text">ตรวจสอบเงื่อนไข C ≥ 1</span>
+          </div>
+        </div>
+
+        <!-- Selected Ingredient Chips Strip -->
+        <div class="basket-chips-scroller" id="basket-chips-scroller" role="region" aria-label="รายการวัตถุดิบในตะกร้า">
+          <div class="basket-chips-list" id="basket-chips-list">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Basket Actions -->
+        <div class="basket-actions-group">
+          <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-open-picker-bar" aria-label="เลือกวัตถุดิบเพิ่มจากคลัง">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add Ingredient</span>
+          </button>
+
+          <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-load-sample-pair" aria-label="โหลดคู่ตัวอย่าง Story A และ Story B">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+            </svg>
+            <span>Reset to Story A+B</span>
+          </button>
+
+          <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-clear-basket" aria-label="ล้างวัตถุดิบทั้งหมด">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            <span>Clear</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================================
+       S07: 3-COLUMN WORKSPACE LAYOUT (V6 WARM CANVAS & SOFT CARDS)
+       Column 1: Ingredients (What & How to borrow)
+       Column 2: Direction (Founder Strategic Guardrails)
+       Column 3: Original Concepts (AI Synthesis Output)
+       ============================================================================ -->
+  <main class="remix-workspace-grid" id="remix-workspace">
+
+    <!-- ==========================================================================
+         COLUMN 1: INGREDIENTS (วัตถุดิบที่เลือก)
+         ========================================================================== -->
+    <section class="remix-col col-ingredients" aria-labelledby="col-ingredients-heading">
+      <div class="col-header-row">
+        <div class="col-title-wrap">
+          <span class="col-step-pill">1</span>
+          <div>
+            <h2 id="col-ingredients-heading" class="col-heading">Ingredients</h2>
+            <p class="col-subheading">วัตถุดิบที่เลือก C(N) + P(N)</p>
+          </div>
+        </div>
+        <span class="badge-pill soft" id="col-ingredients-count">0 ชิ้น</span>
+      </div>
+
+      <!-- Ingredient Borrowing Instructions Notice -->
+      <div class="borrow-guide-box">
+        <div class="borrow-guide-icon" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        </div>
+        <p class="borrow-guide-text">
+          ระบบจะดึง <strong>What to borrow</strong> จาก Content Vault และ <strong>How to borrow</strong> จาก Packaging Vault มาใช้สังเคราะห์
+        </p>
+      </div>
+
+      <!-- Active Selected Ingredient Cards List -->
+      <div class="ingredients-cards-stack" id="ingredients-cards-stack">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Empty State for Column 1 -->
+      <div class="col-empty-card" id="ingredients-empty-state" hidden>
+        <div class="empty-icon-wrap" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </svg>
+        </div>
+        <h3 class="empty-title">ยังไม่มีวัตถุดิบในตะกร้า</h3>
+        <p class="empty-desc">
+          เลือก Content อย่างน้อย 1 รายการเพื่อเป็นแก่นสาระ และเลือก Packaging สำหรับจังหวะการเล่า
+        </p>
+        <div class="empty-actions">
+          <button type="button" class="btn-pill btn-primary btn-sm" id="btn-empty-add-picker">
+            <span>+ เลือกวัตถุดิบจากคลัง</span>
+          </button>
+          <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-empty-load-sample">
+            <span>ใช้วัตถุดิบแนะนำ (Story A+B)</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         COLUMN 2: DIRECTION (ทิศทางของ Founder)
+         ========================================================================== -->
+    <section class="remix-col col-direction" aria-labelledby="col-direction-heading">
+      <div class="col-header-row">
+        <div class="col-title-wrap">
+          <span class="col-step-pill">2</span>
+          <div>
+            <h2 id="col-direction-heading" class="col-heading">Founder Direction</h2>
+            <p class="col-subheading">กำหนดทิศทางความคิดและกรอบความจริง</p>
+          </div>
+        </div>
+        <span class="badge-pill violet">Strategic Guardrails</span>
+      </div>
+
+      <!-- Direction Form Card -->
+      <div class="direction-form-card mew-offer-card violet-bar">
+        
+        <!-- Preset Selector Pills -->
+        <div class="preset-selector-group">
+          <div class="preset-label-row">
+            <span class="preset-label">โหลดทิศทางสำเร็จรูป:</span>
+            <button type="button" class="btn-text-action" id="btn-reset-direction">คืนค่าเริ่มต้น</button>
+          </div>
+          <div class="preset-pills-row" role="radiogroup" aria-label="ทิศทางสำเร็จรูป">
+            <button type="button" class="preset-chip active" data-preset="thought-leader" role="radio" aria-checked="true">
+              <span>Thought Leadership</span>
+            </button>
+            <button type="button" class="preset-chip" data-preset="contrarian" role="radio" aria-checked="false">
+              <span>Contrarian POV</span>
+            </button>
+            <button type="button" class="preset-chip" data-preset="playbook" role="radio" aria-checked="false">
+              <span>Actionable Playbook</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Form Inputs -->
+        <form id="remix-direction-form" class="direction-form" onsubmit="return false;">
+          
+          <!-- Field 1: Target Audience -->
+          <div class="form-field-group">
+            <label for="input-target-audience" class="form-label">
+              <span class="label-title">1. Target Audience</span>
+              <span class="label-hint">ผู้ชมเป้าหมาย &amp; ปัญหาที่เผชิญ</span>
+            </label>
+            <div class="input-wrapper">
+              <textarea 
+                id="input-target-audience" 
+                class="form-textarea" 
+                rows="2" 
+                placeholder="เช่น Solo Creator และ Founder ที่เหนื่อยกับการนั่งเฝ้ายอดวิวหลังโพสต์ จนเบิร์นเอาท์และหมดไฟสร้างงาน"
+                required
+              >Solo Creator และ Founder ที่เหนื่อยกับการนั่งเฝ้ายอดวิวหลังโพสต์ จนเบิร์นเอาท์และหมดไฟสร้างสรรค์งานระยะยาว</textarea>
+            </div>
+          </div>
+
+          <!-- Field 2: Our Point of View (POV) -->
+          <div class="form-field-group">
+            <label for="input-our-pov" class="form-label">
+              <span class="label-title">2. Our Point of View</span>
+              <span class="label-hint">มุมมองหรือปรัชญาเฉพาะตัว</span>
+            </label>
+            <div class="input-wrapper">
+              <textarea 
+                id="input-our-pov" 
+                class="form-textarea" 
+                rows="2" 
+                placeholder="เช่น การสร้างคุณค่าที่ยั่งยืนไม่ได้วัดที่ความเร็ว feedback แต่เกิดจากการแยกกระบวนการสร้างออกจากความวิตกกังวล"
+                required
+              >คอนเทนต์ที่ดีเกิดจากจังหวะการสร้างที่ต่อเนื่องและปล่อยวาง (Detachment) การเฝ้าดูยอดวิวทันทีหลังโพสต์ทำให้เกิด Cognitive Bias จนสูญเสียความกล้าที่จะทดลองไอเดียใหม่</textarea>
+            </div>
+          </div>
+
+          <!-- Field 3: Brand Truth / Offer -->
+          <div class="form-field-group">
+            <label for="input-brand-truth" class="form-label">
+              <span class="label-title">3. Brand Truth / Offer</span>
+              <span class="label-hint">ข้อเท็จจริงของแบรนด์เรา (ห้ามมโน)</span>
+            </label>
+            <div class="input-wrapper">
+              <textarea 
+                id="input-brand-truth" 
+                class="form-textarea" 
+                rows="2" 
+                placeholder="เช่น MEW Content OS ช่วยจัดระเบียบความคิดและสกัดแก่นคลิปอย่างเป็นระบบโดยไม่พึ่งพาสถิติสมมติ"
+                required
+              >เรามีระบบ MEW Content OS ที่แยกคลัง Content (สาระ) และ Packaging (วิธีเล่า) ชัดเจน ช่วยให้ Creator สร้างคอนเทนต์ที่มีคุณภาพได้ต่อเนื่องโดยไม่พึ่งพาตัวเลขลวงตา</textarea>
+            </div>
+          </div>
+
+          <!-- Field 4: Goal of this Content -->
+          <div class="form-field-group">
+            <label class="form-label">
+              <span class="label-title">4. Content Goal</span>
+              <span class="label-hint">เป้าหมายหลักของคอนเทนต์ชิ้นนี้</span>
+            </label>
+            <div class="goal-radios-grid">
+              <label class="goal-radio-card">
+                <input type="radio" name="content_goal" value="perspective-shift" checked>
+                <div class="goal-card-content">
+                  <span class="goal-name">Perspective Shift</span>
+                  <span class="goal-sub">เปลี่ยนมุมมองคนดู</span>
+                </div>
+              </label>
+
+              <label class="goal-radio-card">
+                <input type="radio" name="content_goal" value="trust-authority">
+                <div class="goal-card-content">
+                  <span class="goal-name">Trust &amp; Authority</span>
+                  <span class="goal-sub">สร้างความน่าเชื่อถือ</span>
+                </div>
+              </label>
+
+              <label class="goal-radio-card">
+                <input type="radio" name="content_goal" value="actionable-clarity">
+                <div class="goal-card-content">
+                  <span class="goal-name">Actionable Clarity</span>
+                  <span class="goal-sub">ชี้แนะแนวทางปฏิบัติ</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Field 5: Constraints & Guardrails -->
+          <div class="form-field-group">
+            <label for="input-constraints" class="form-label">
+              <span class="label-title">5. Constraints &amp; Guardrails</span>
+              <span class="label-hint">ข้อห้ามเด็ดขาดเพื่อรักษาความจริงใจ</span>
+            </label>
+            <div class="input-wrapper">
+              <textarea 
+                id="input-constraints" 
+                class="form-textarea" 
+                rows="2" 
+                placeholder="เช่น ห้ามมโนตัวเลขสถิติ, ห้ามใช้น้ำเสียงสั่งสอน, เน้นความจริงใจแบบ Founder เล่าให้ฟัง"
+              >ห้ามใช้สถิติหรือเปอร์เซ็นต์สมมติ, ห้ามเล่นมุกฝืด, ซื่อสัตย์ต่อประสบการณ์จริง, เล่าแบบ Founder แบ่งปันให้เพื่อนฟังอย่างถ่อมตน</textarea>
+            </div>
+          </div>
+
+          <!-- Form Submit / Generate Action -->
+          <div class="direction-submit-wrap">
+            <button 
+              type="button" 
+              class="btn-pill btn-primary btn-generate-cta" 
+              id="btn-generate-concepts"
+              aria-label="เริ่มการสังเคราะห์แนวคิดต้นฉบับด้วย AI"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span>Generate Concepts</span>
+            </button>
+            <p class="generate-disclaimer">
+              สังเคราะห์ 3 Original Concepts พร้อม Story Beats &amp; Claim Verification
+            </p>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         COLUMN 3: ORIGINAL CONCEPTS (ผลลัพธ์แนวคิดต้นฉบับ 2-3 แบบ)
+         ========================================================================== -->
+    <section class="remix-col col-concepts" aria-labelledby="col-concepts-heading">
+      <div class="col-header-row">
+        <div class="col-title-wrap">
+          <span class="col-step-pill">3</span>
+          <div>
+            <h2 id="col-concepts-heading" class="col-heading">Original Concepts</h2>
+            <p class="col-subheading">ผลลัพธ์แนวคิดต้นฉบับจากการสังเคราะห์</p>
+          </div>
+        </div>
+        
+        <!-- Concepts Action Bar -->
+        <div class="concepts-top-actions">
+          <button 
+            type="button" 
+            class="btn-pill btn-ghost btn-sm" 
+            id="btn-compare-concepts-top"
+            aria-label="เปิดหน้าต่างเปรียบเทียบแนวคิดทั้งหมด"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span>Compare Concepts</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Concepts Stack Container -->
+      <div class="concepts-output-wrapper" id="concepts-output-wrapper">
+        
+        <!-- Loading State Skeleton -->
+        <div class="concepts-loading-card mew-offer-card" id="concepts-loading-state" hidden>
+          <div class="loading-spinner-circle" aria-hidden="true"></div>
+          <div class="loading-meta">
+            <h3 class="loading-title">กำลังสังเคราะห์แนวคิดต้นฉบับด้วย AI...</h3>
+            <p class="loading-step-text" id="loading-step-text">สกัดแก่นคิดจาก Content Vault...</p>
+          </div>
+          <div class="loading-progress-bar">
+            <div class="loading-progress-fill" id="loading-progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- Active Concepts List -->
+        <div class="concepts-cards-stack" id="concepts-cards-stack">
+          <!-- Rendered by JS: Concept A, Concept B, Concept C -->
+        </div>
+
+        <!-- Empty State for Column 3 -->
+        <div class="col-empty-card" id="concepts-empty-state" hidden>
+          <div class="empty-icon-wrap violet" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="12" y1="18" x2="12" y2="12"></line>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+          </div>
+          <h3 class="empty-title">พร้อมสำหรับการสังเคราะห์</h3>
+          <p class="empty-desc">
+            เลือกวัตถุดิบในคอลัมน์ซ้าย ตรวจสอบทิศทางของแบรนด์ แล้วกดปุ่ม <strong>'Generate Concepts'</strong> เพื่อสร้างไอเดียต้นฉบับ
+          </p>
+          <button type="button" class="btn-pill btn-primary btn-sm" id="btn-empty-generate">
+            <span>Generate Concepts Now</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================================
+       MODAL 1: MULTI-INGREDIENT PICKER MODAL (เลือกวัตถุดิบจากคลัง)
+       ============================================================================ -->
+  <div 
+    id="remix-picker-modal" 
+    class="remix-modal-backdrop" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-labelledby="picker-modal-title" 
+    hidden
+  >
+    <div class="remix-modal-card mew-offer-card violet-bar">
+      
+      <!-- Modal Header -->
+      <div class="remix-modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-badge-row">
+            <span class="badge-pill violet">S06 Ingredient Picker</span>
+            <span class="badge-pill soft">Dual-Vault Repository</span>
+          </div>
+          <h2 id="picker-modal-title" class="remix-modal-title">เลือกวัตถุดิบเข้าสู่ Remix Studio</h2>
+          <p class="remix-modal-subtitle">
+            เลือก Content Vault อย่างน้อย 1 รายการเพื่อเป็นแก่นสาระ และเลือก Packaging Vault เพิ่มเติมได้ตามต้องการ
+          </p>
+        </div>
+
+        <button type="button" class="btn-close-modal" id="btn-close-picker-modal" aria-label="ปิดหน้าต่างเลือกวัตถุดิบ">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Filter & Search Bar in Modal -->
+      <div class="picker-filter-bar">
+        <div class="picker-search-wrapper">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="search" 
+            id="input-picker-search" 
+            class="picker-search-input" 
+            placeholder="ค้นหาชื่อคลิป, ครีเอเตอร์, แท็ก หรือ Founder Note..."
+          >
+        </div>
+
+        <div class="picker-vault-filters" role="group" aria-label="กรองประเภทคลัง">
+          <button type="button" class="filter-chip active" data-picker-filter="all">ทั้งหมด</button>
+          <button type="button" class="filter-chip" data-picker-filter="content">Content Vault (สาระ)</button>
+          <button type="button" class="filter-chip" data-picker-filter="packaging">Packaging Vault (วิธีเล่า)</button>
+        </div>
+      </div>
+
+      <!-- Picker Items List -->
+      <div class="picker-items-list" id="picker-items-list" role="region" aria-label="รายการอ้างอิงที่มีให้เลือก">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="remix-modal-footer">
+        <div class="picker-selection-summary" id="picker-selection-summary">
+          เลือกแล้ว 0 รายการ (Content: 0 · Packaging: 0)
+        </div>
+        <div class="modal-footer-actions">
+          <button type="button" class="btn-pill btn-ghost" id="btn-cancel-picker">ยกเลิก</button>
+          <button type="button" class="btn-pill btn-primary" id="btn-confirm-picker">
+            ยืนยันวัตถุดิบเข้าตะกร้า
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       MODAL 2: CONCEPT COMPARISON MATRIX MODAL (เปรียบเทียบ Concept A vs B vs C)
+       ============================================================================ -->
+  <div 
+    id="remix-compare-modal" 
+    class="remix-modal-backdrop" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-labelledby="compare-modal-title" 
+    hidden
+  >
+    <div class="remix-modal-card mew-offer-card compare-modal-card">
+      
+      <!-- Modal Header -->
+      <div class="remix-modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-badge-row">
+            <span class="badge-pill violet">Creative Synthesis Matrix</span>
+            <span class="badge-pill soft">Side-by-Side Evaluation</span>
+          </div>
+          <h2 id="compare-modal-title" class="remix-modal-title">Concept Comparison Matrix</h2>
+          <p class="remix-modal-subtitle">
+            เปรียบเทียบความแตกต่างระหว่างแต่ละ Concept ในมิติของ Hook, Story Beats, Pacing, และแหล่งอ้างอิง
+          </p>
+        </div>
+
+        <button type="button" class="btn-close-modal" id="btn-close-compare-modal" aria-label="ปิดหน้าต่างเปรียบเทียบ">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Comparison Matrix Grid Container -->
+      <div class="compare-matrix-scroll" id="compare-matrix-scroll">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="remix-modal-footer">
+        <span class="matrix-footnote">
+          ทุก Concept อิงจาก Brand Truth และวัตถุดิบต้นฉบับจริงโดยไม่มีการมโนสถิติ
+        </span>
+        <button type="button" class="btn-pill btn-ghost" id="btn-close-compare-footer">
+          ปิดหน้าต่างเปรียบเทียบ
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       MODAL 3: REFINE CONCEPT DIALOG (ปรับแต่งแนวคิดเฉพาะมุมมอง)
+       ============================================================================ -->
+  <div 
+    id="remix-refine-modal" 
+    class="remix-modal-backdrop" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-labelledby="refine-modal-title" 
+    hidden
+  >
+    <div class="remix-modal-card mew-offer-card coral-accent refine-modal-card">
+      
+      <div class="remix-modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-badge-row">
+            <span class="badge-pill coral">Refine Angle</span>
+            <span class="badge-pill soft" id="refine-concept-target-badge">Concept A</span>
+          </div>
+          <h2 id="refine-modal-title" class="remix-modal-title">ปรับแต่งมุมมองคอนเซปต์</h2>
+          <p class="remix-modal-subtitle">
+            ระบุความต้องการเพิ่มเติม เช่น ต้องการให้ฮุคกระชับขึ้น, เน้นประเด็นความจริงใจ, หรือปรับจังหวะภาพ
+          </p>
+        </div>
+
+        <button type="button" class="btn-close-modal" id="btn-close-refine-modal" aria-label="ปิดหน้าต่างปรับแต่ง">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="refine-modal-body">
+        <!-- Quick Refine Prompts -->
+        <div class="refine-presets-wrap">
+          <span class="refine-presets-label">คำสั่งปรับแต่งด่วน:</span>
+          <div class="refine-presets-row">
+            <button type="button" class="refine-chip" data-prompt="ทำให้ Hook กระชับและท้าทายความเชื่อเดิมมากยิ่งขึ้น">
+              ⚡ กระชับ Hook ให้ทรงพลัง
+            </button>
+            <button type="button" class="refine-chip" data-prompt="ขยาย Beat 2 ให้เห็นความเจ็บปวดของการนั่งเฝ้ายอดวิวชัดเจนขึ้น">
+              🎯 เน้น Pain Point ให้ลึกซึ้ง
+            </button>
+            <button type="button" class="refine-chip" data-prompt="ปรับโทนเสียงให้มีความอบอุ่นแบบ Founder ถ่อมตน ไม่โอ้อวด">
+              🤝 ปรับโทนให้อบอุ่น จริงใจ
+            </button>
+          </div>
+        </div>
+
+        <div class="form-field-group">
+          <label for="input-refine-custom-prompt" class="form-label">
+            <span class="label-title">คำแนะนำการปรับปรุง:</span>
+          </label>
+          <textarea 
+            id="input-refine-custom-prompt" 
+            class="form-textarea" 
+            rows="3" 
+            placeholder="พิมพ์คำสั่งเพื่อปรับแก้ เช่น ขอเปลี่ยน Beat 4 ให้เป็นการตั้งคำถามปลายเปิดแทน CTA ขายตรง..."
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="remix-modal-footer">
+        <button type="button" class="btn-pill btn-ghost" id="btn-cancel-refine">ยกเลิก</button>
+        <button type="button" class="btn-pill btn-primary" id="btn-apply-refine">
+          ปรับแต่งคอนเซปต์นี้
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       TOAST NOTIFICATION COMPONENT
+       ============================================================================ -->
+  <aside 
+    id="remix-toast" 
+    class="remix-toast-box" 
+    role="status" 
+    aria-live="polite" 
+    aria-atomic="true" 
+    hidden
+  >
+    <div class="remix-toast-content">
+      <div class="toast-icon-circle violet" id="remix-toast-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <div class="toast-texts">
+        <strong class="toast-msg-title" id="remix-toast-title">Remix Studio</strong>
+        <p class="toast-msg-desc" id="remix-toast-desc">ดำเนินการสำเร็จ</p>
+      </div>
+      <button type="button" class="btn-toast-dismiss" id="btn-remix-toast-dismiss" aria-label="ปิดการแจ้งเตือน">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </aside>
+
+</div>

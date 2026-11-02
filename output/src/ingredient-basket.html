@@ -1,0 +1,118 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T20: Ingredient Basket Bar + Continue Gating (S06)
+     Theme: mewteetawat.com V6.3
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<aside class="ingredient-bar ingredient-basket-bar" id="ingredient-bar" role="region" aria-label="ตะกร้าวัตถุดิบ Remix">
+  <div class="basket-inner-container">
+    
+    <!-- Left: Summary & Chips -->
+    <div class="basket-selection-area">
+      <div class="basket-counts-summary">
+        <span class="basket-icon-wrap" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+        </span>
+        <div class="basket-badge-group">
+          <span class="basket-count-pill coral font-num" id="count-content-basket">Content (0)</span>
+          <span class="basket-count-pill violet font-num" id="count-packaging-basket">Packaging (0)</span>
+        </div>
+      </div>
+
+      <!-- Ingredient Chips List (Drag & Drop Reorderable) -->
+      <div class="basket-chips-scroll" id="basket-chips-list" role="list" aria-label="วัตถุดิบที่เลือกไว้">
+        <span class="empty-basket-hint" id="empty-basket-hint">ยังไม่ได้เลือกวัตถุดิบ</span>
+      </div>
+    </div>
+
+    <!-- Right: Gating Hint & Action Button -->
+    <div class="basket-actions-area">
+      <div class="gating-hint-text" id="hint-need-content" role="status" aria-live="polite">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>ต้องเลือกอย่างน้อย 1 Content เพื่อเป็นสาระหลัก (Packaging เป็นทางเลือก)</span>
+      </div>
+
+      <button 
+        type="button" 
+        id="btn-continue-to-remix" 
+        class="btn-pill btn-primary btn-continue" 
+        disabled
+        aria-disabled="true"
+        aria-label="ไปยังหน้า Remix Workspace เพื่อสังเคราะห์ไอเดีย"
+      >
+        <span>ไปยังห้องปรุง (Remix Workspace)</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Chip Template -->
+  <template id="tmpl-basket-chip">
+    <div class="ingredient-chip" id="" data-note-id="" draggable="true" role="listitem" tabindex="0">
+      <span class="drag-handle" title="ลากเพื่อเปลี่ยนลำดับวัตถุดิบ" aria-hidden="true">
+        <svg width="10" height="14" viewBox="0 0 10 14" fill="currentColor">
+          <circle cx="2" cy="2" r="1.5"></circle>
+          <circle cx="8" cy="2" r="1.5"></circle>
+          <circle cx="2" cy="7" r="1.5"></circle>
+          <circle cx="8" cy="7" r="1.5"></circle>
+          <circle cx="2" cy="12" r="1.5"></circle>
+          <circle cx="8" cy="12" r="1.5"></circle>
+        </svg>
+      </span>
+      <span class="chip-lens-tag font-num"></span>
+      <span class="chip-title"></span>
+      <span class="both-source-badge font-num" hidden title="คลิปนี้ถูกเลือกทั้งฝั่ง Content และ Packaging">ร่วมคลิป</span>
+      <div class="chip-actions">
+        <button type="button" class="btn-preview-chip" title="ดูเนื้อหาฉบับย่อ" aria-label="ดูตัวอย่างวัตถุดิบ">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+        <button type="button" class="btn-remove-chip" title="นำออกจากตะกร้า" aria-label="นำวัตถุดิบนี้ออกจากตะกร้า">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </template>
+
+  <!-- Ingredient Preview Modal -->
+  <div class="ingredient-preview-modal" id="ingredient-preview-modal" role="dialog" aria-modal="true" aria-labelledby="preview-modal-title" hidden>
+    <div class="preview-modal-backdrop" id="preview-modal-backdrop"></div>
+    <div class="preview-modal-card mew-offer-card">
+      <div class="preview-modal-header">
+        <div class="preview-badge-row">
+          <span class="preview-lens-badge font-num" id="preview-lens-badge">Content</span>
+          <span class="preview-source-badge font-num" id="preview-source-badge" hidden>ร่วมคลิป</span>
+        </div>
+        <button type="button" class="btn-close-preview" id="btn-close-preview" aria-label="ปิดหน้าต่างตัวอย่าง">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="preview-modal-body">
+        <h4 class="preview-note-title" id="preview-modal-title">ชื่อวัตถุดิบ</h4>
+        <p class="preview-founder-why" id="preview-founder-why"></p>
+        <div class="preview-tags-list" id="preview-tags-list"></div>
+        <div class="preview-source-meta" id="preview-source-meta"></div>
+      </div>
+    </div>
+  </div>
+</aside>

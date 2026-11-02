@@ -1,0 +1,278 @@
+<!-- ==============================================================================
+     MEW CONTENT OS — S02 Content Analysis Panel (WHAT) (Topic T09)
+     Pure Client-Side Frontend · Zero Server Dependencies
+     Theme: mewteetawat.com V6.3 (Paper Canvas, Warm Stone, Coral Accent & Deep Ink)
+
+     Definition of Done (DOD) Checklist:
+     - HTML sections:
+       1. ca-core-idea: แก่นความคิด (Core Idea)
+       2. ca-audience: กลุ่มเป้าหมาย (Target Audience)
+       3. ca-key-points: ประเด็นหลัก (Key Points)
+       4. ca-claims-evidence: ข้ออ้างและหลักฐาน (Claims & Evidence)
+       5. ca-examples: ตัวอย่างประกอบ (Examples Cited)
+       6. ca-extendable-angles: มุมต่อยอดสู่ธุรกิจเรา (Extendable Angles)
+       7. ca-what-is-good: ทำไมถึงดี / คำถาม "อะไรดี?" (What is Good)
+     - Fields ที่ว่างแสดง "ไม่ทราบ" โดยไม่ซ่อนทั้ง section
+     - ถ้าไม่มี timestamp ซ่อน timecode หรือแสดง "ไม่ทราบเวลา" ห้ามแต่งเลขเวลา
+     - CSS Claims & Evidence แยกชัดระหว่าง "มีหลักฐาน" กับ "ไม่มีหลักฐาน" (badge evidence-missing)
+     - ไม่มีปุ่ม Save อัตโนมัติ และไม่มีการบังคับให้ผู้ใช้เลือก
+     - STRICT NEGATIVE CONSTRAINT: Zero fake/arbitrary statistics.
+     ============================================================================== -->
+
+<div 
+  class="content-analysis-panel mew-offer-card coral-bar" 
+  id="content-analysis-panel" 
+  data-testid="content-analysis-panel"
+  role="region" 
+  aria-label="แผงผลวิเคราะห์สาระสำคัญ Content Analysis (WHAT)"
+>
+
+  <!-- ==========================================================================
+       PANEL HEADER & PHILOSOPHY NOTICE
+       ========================================================================== -->
+  <header class="content-panel-header">
+    <div class="content-header-main">
+      <div class="header-badge-row">
+        <span class="badge-pill coral-accent">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Content Lens (WHAT)
+        </span>
+        <span class="panel-kicker-tag font-num">Deconstruction 01</span>
+      </div>
+
+      <h2 class="content-panel-title">
+        สาระสำคัญ &amp; แก่นเนื้อหา
+      </h2>
+      <p class="content-panel-desc">
+        ถอดรหัสสิ่งที่มีประโยชน์แท้จริง (<strong>WHAT</strong>) โดยแยกขาดจากวิธีการเล่า (<strong>HOW</strong>) เพื่อให้ตัดสินใจเก็บเฉพาะแก่นสารได้อย่างอิสระ
+      </p>
+    </div>
+
+    <!-- Independent Human Choice Reminder (No AI Score / No Forced Save) -->
+    <aside class="founder-agency-callout" aria-label="หลักการอิสระในการตัดสินใจของ Founder">
+      <div class="callout-icon" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+      </div>
+      <div class="callout-content">
+        <strong class="callout-title">Independent Vault Save</strong>
+        <span class="callout-text">คุณมีอิสระในการ Save เฉพาะ Content แม้จะไม่ชอบ Packaging หรือแม้ระบบ AI จะไม่วิเคราะห์ Packaging ก็ตาม (ปราศจากการให้เกรดหรือการบังคับใดๆ)</span>
+      </div>
+    </aside>
+  </header>
+
+  <!-- ==========================================================================
+       SECTION 1: ca-core-idea (แก่นความคิด)
+       ========================================================================== -->
+  <section 
+    class="analysis-section ca-core-idea" 
+    id="ca-core-idea" 
+    data-testid="ca-core-idea" 
+    aria-labelledby="heading-ca-core-idea"
+  >
+    <div class="section-header-row">
+      <h3 class="section-badge-title coral-kicker" id="heading-ca-core-idea">
+        <span class="section-step-num font-num">01</span>
+        <span>Core Idea (แก่นความคิด)</span>
+      </h3>
+      <span class="section-caption-label">ความคิดหลัก 1 ประโยคที่เป็นหัวใจของคลิป</span>
+    </div>
+
+    <div 
+      class="analysis-card-box core-idea-box" 
+      id="content-core-idea" 
+      data-testid="content-core-idea"
+      role="region"
+      aria-live="polite"
+    >
+      <span class="empty-field-text">ไม่ทราบ</span>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 2: ca-audience (กลุ่มเป้าหมาย)
+       ========================================================================== -->
+  <section 
+    class="analysis-section ca-audience" 
+    id="ca-audience" 
+    data-testid="ca-audience" 
+    aria-labelledby="heading-ca-audience"
+  >
+    <div class="section-header-row">
+      <h3 class="section-badge-title coral-kicker" id="heading-ca-audience">
+        <span class="section-step-num font-num">02</span>
+        <span>Target Audience (กลุ่มผู้ฟังเป้าหมาย)</span>
+      </h3>
+      <span class="section-caption-label">คนที่สาระนี้ตั้งใจสื่อสารโดยตรง</span>
+    </div>
+
+    <div 
+      class="analysis-card-box" 
+      id="content-audience" 
+      data-testid="content-audience"
+      role="region"
+      aria-live="polite"
+    >
+      <span class="empty-field-text">ไม่ทราบ</span>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 3: ca-key-points (ประเด็นหลัก)
+       ========================================================================== -->
+  <section 
+    class="analysis-section ca-key-points" 
+    id="ca-key-points" 
+    data-testid="ca-key-points" 
+    aria-labelledby="heading-ca-key-points"
+  >
+    <div class="section-header-row">
+      <h3 class="section-badge-title coral-kicker" id="heading-ca-key-points">
+        <span class="section-step-num font-num">03</span>
+        <span>Key Points (ประเด็นหลักที่นำเสนอ)</span>
+      </h3>
+      <span class="section-caption-label">ข้อสรุปย่อยที่ประกอบขึ้นเป็นแก่นความคิด</span>
+    </div>
+
+    <ul 
+      class="analysis-bullet-list" 
+      id="content-key-points" 
+      data-testid="content-key-points"
+      role="list"
+      aria-live="polite"
+    >
+      <li class="empty-list-item">
+        <span class="empty-field-text">ไม่ทราบ</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 4: ca-claims-evidence (ข้ออ้างและหลักฐาน)
+       DOD: แยกชัดระหว่าง "มีหลักฐาน" กับ "ไม่มีหลักฐาน" (badge evidence-missing)
+       DOD: ถ้าไม่มี timestamp → ซ่อน timecode / แสดง "ไม่ทราบเวลา" ห้ามแต่งเลขเวลา
+       ========================================================================== -->
+  <section 
+    class="analysis-section ca-claims-evidence" 
+    id="ca-claims-evidence" 
+    data-testid="ca-claims-evidence" 
+    aria-labelledby="heading-ca-claims-evidence"
+  >
+    <div class="section-header-row">
+      <h3 class="section-badge-title coral-kicker" id="heading-ca-claims-evidence">
+        <span class="section-step-num font-num">04</span>
+        <span>Claims &amp; Evidence (ข้ออ้างและหลักฐาน)</span>
+      </h3>
+      <span class="section-caption-label">ตรวจสอบความน่าเชื่อถือ แยกข้ออ้างลอยๆ ออกจากหลักฐานจริง</span>
+    </div>
+
+    <div 
+      class="claims-list-wrapper" 
+      id="content-claims-evidence" 
+      data-testid="content-claims-evidence"
+      role="region"
+      aria-live="polite"
+    >
+      <div class="claim-item-card empty-claim-box">
+        <span class="empty-field-text">ไม่ทราบ</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 5: ca-examples (ตัวอย่างประกอบ)
+       ========================================================================== -->
+  <section 
+    class="analysis-section ca-examples" 
+    id="ca-examples" 
+    data-testid="ca-examples" 
+    aria-labelledby="heading-ca-examples"
+  >
+    <div class="section-header-row">
+      <h3 class="section-badge-title coral-kicker" id="heading-ca-examples">
+        <span class="section-step-num font-num">05</span>
+        <span>Examples Cited (ตัวอย่างประกอบ)</span>
+      </h3>
+      <span class="section-caption-label">เคส กรณีศึกษา หรือเหตุการณ์จริงที่ยกขึ้นมาอธิบาย</span>
+    </div>
+
+    <div 
+      class="analysis-card-box muted-bg" 
+      id="content-examples" 
+      data-testid="content-examples"
+      role="region"
+      aria-live="polite"
+    >
+      <span class="empty-field-text">ไม่ทราบ</span>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 6: ca-extendable-angles (มุมมองต่อยอด)
+       ========================================================================== -->
+  <section 
+    class="analysis-section ca-extendable-angles" 
+    id="ca-extendable-angles" 
+    data-testid="ca-extendable-angles" 
+    aria-labelledby="heading-ca-extendable-angles"
+  >
+    <div class="section-header-row">
+      <h3 class="section-badge-title coral-kicker" id="heading-ca-extendable-angles">
+        <span class="section-step-num font-num">06</span>
+        <span>Extendable Angles (มุมมองต่อยอดสู่ธุรกิจของเรา)</span>
+      </h3>
+      <span class="section-caption-label">ไอเดียการประยุกต์หรือเชื่อมโยงเข้ากับ Brand/Offer ของตนเอง</span>
+    </div>
+
+    <ul 
+      class="analysis-bullet-list highlight-list" 
+      id="content-extendable-angles" 
+      data-testid="content-extendable-angles"
+      role="list"
+      aria-live="polite"
+    >
+      <li class="empty-list-item">
+        <span class="empty-field-text">ไม่ทราบ</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 7: ca-what-is-good (คำถาม "อะไรดี?")
+       DOD: หัวข้อชัดเจน คำถาม "อะไรดี?" ทำไมสาระนี้ถึงน่าเก็บ
+       ========================================================================== -->
+  <section 
+    class="analysis-section ca-what-is-good" 
+    id="ca-what-is-good" 
+    data-testid="ca-what-is-good" 
+    aria-labelledby="heading-ca-what-is-good"
+  >
+    <div class="section-header-row">
+      <h3 class="section-badge-title good-kicker" id="heading-ca-what-is-good">
+        <span class="section-step-num font-num">07</span>
+        <span class="question-primary">What is Good? (อะไรดี?)</span>
+      </h3>
+      <span class="section-caption-label">คำถามหลัก: ทำไมสาระและแก่นคิดนี้ถึงมีคุณค่าควรแก่การเก็บเข้าคลัง Content</span>
+    </div>
+
+    <div 
+      class="good-insight-box coral-tint" 
+      id="content-what-is-good" 
+      data-testid="content-what-is-good"
+      role="region"
+      aria-live="polite"
+    >
+      <span class="empty-field-text">ไม่ทราบ</span>
+    </div>
+  </section>
+
+</div>

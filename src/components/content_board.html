@@ -1,0 +1,661 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - S08 & S09 CONTENT BOARD, SCRIPT OUTLINE & DIRECTOR BRIEF
+     Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+     Pure Client-Side Frontend Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="content-board-container" id="content-board-root">
+
+  <!-- ============================================================================
+       TOP HEADER & PIPELINE WORKFLOW OVERVIEW
+       ============================================================================ -->
+  <header class="board-header">
+    <div class="board-header-main">
+      <div class="board-badges-row">
+        <span class="badge-pill coral">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="9" y1="3" x2="9" y2="21"></line>
+            <line x1="15" y1="3" x2="15" y2="21"></line>
+          </svg>
+          S08 · S09 Content Pipeline
+        </span>
+        <span class="badge-pill soft">Script Outline &amp; Director Brief</span>
+        <span class="badge-pill soft">Editorial Production Board</span>
+      </div>
+
+      <h1 class="board-title">
+        Content Board — <span class="mew-gradient-text-coral">Production Pipeline</span>
+      </h1>
+      
+      <p class="board-subtitle">
+        กระดานติดตามสถานะงานคอนเทนต์ตั้งแต่ขั้นร่างไอเดีย (<strong>Draft</strong>) ตรวจทานความถูกต้อง (<strong>Needs Review</strong>) อนุมัติบทฉบับจริง (<strong>Approved</strong>) จนถึงเตรียมคิวถ่ายทำและส่งมอบบรีฟผู้กำกับ (<strong>Ready for Production</strong>) มุ่งเน้นคุณค่าแท้จริงโดยไม่มีตัวเลขสถิติสมมติ
+      </p>
+    </div>
+
+    <!-- Header Quick Actions -->
+    <div class="board-header-actions">
+      <button type="button" class="btn-pill btn-ghost" data-navigate="remix" aria-label="กลับสู่ห้องทดลอง Remix Studio">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        <span>Open Remix Studio</span>
+      </button>
+
+      <button type="button" class="btn-pill btn-primary" id="btn-create-concept-card" aria-label="สร้างการ์ดคอนเทนต์ใหม่">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>+ New Concept Draft</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================================
+       BOARD TOOLBAR: SEARCH, FILTER, AND PIPELINE STATS
+       ============================================================================ -->
+  <section class="board-toolbar-section" aria-label="แถบเครื่องมือค้นหาและตัวกรองสถานะ">
+    <div class="board-toolbar-card mew-offer-card">
+      <div class="toolbar-inner">
+        
+        <!-- Search & Filter Controls -->
+        <div class="toolbar-search-wrap">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              id="board-search-input" 
+              class="toolbar-search-input" 
+              placeholder="ค้นหาตามชื่อคลิป, Hook, มุมมอง, หรือหัวข้อ..." 
+              aria-label="ค้นหาการ์ดคอนเทนต์"
+            >
+            <button type="button" id="board-search-clear" class="btn-search-clear" aria-label="ล้างคำค้นหา" hidden>
+              &times;
+            </button>
+          </div>
+
+          <!-- Quick Stage Filters -->
+          <div class="stage-filter-group" role="tablist" aria-label="กรองตามสถานะงาน">
+            <button type="button" class="filter-tab active" data-stage="all" role="tab" aria-selected="true">
+              <span>All Stages</span>
+              <span class="count-pill" id="filter-count-all">0</span>
+            </button>
+            <button type="button" class="filter-tab" data-stage="draft" role="tab" aria-selected="false">
+              <span class="status-indicator-dot dot-draft" aria-hidden="true"></span>
+              <span>Draft</span>
+              <span class="count-pill" id="filter-count-draft">0</span>
+            </button>
+            <button type="button" class="filter-tab" data-stage="review" role="tab" aria-selected="false">
+              <span class="status-indicator-dot dot-review" aria-hidden="true"></span>
+              <span>Needs Review</span>
+              <span class="count-pill" id="filter-count-review">0</span>
+            </button>
+            <button type="button" class="filter-tab" data-stage="approved" role="tab" aria-selected="false">
+              <span class="status-indicator-dot dot-approved" aria-hidden="true"></span>
+              <span>Approved</span>
+              <span class="count-pill" id="filter-count-approved">0</span>
+            </button>
+            <button type="button" class="filter-tab" data-stage="ready" role="tab" aria-selected="false">
+              <span class="status-indicator-dot dot-ready" aria-hidden="true"></span>
+              <span>Ready for Production</span>
+              <span class="count-pill" id="filter-count-ready">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Pipeline Quick Health Stats (Zero Fake Metrics) -->
+        <div class="toolbar-meta-wrap">
+          <div class="pipeline-integrity-badge" title="สถานะความถูกต้องของเนื้อหา">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+            <span>Claim Verified · 0 Fake Metrics</span>
+          </div>
+          <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-refresh-board" aria-label="รีเฟรชบอร์ด">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            <span>Sync</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================================
+       S09 KANBAN BOARD: 4 PRODUCTION STAGES
+       1. Draft (Idea / Scripting)
+       2. Needs Review (Founder Review & Verification)
+       3. Approved (Immutable Approved Revision)
+       4. Ready for Production (Director Brief Ready)
+       ============================================================================ -->
+  <main class="kanban-board-grid" id="kanban-board-grid" aria-label="บอร์ดกระบวนการผลิตคอนเทนต์ 4 ขั้น">
+
+    <!-- Column 1: Draft -->
+    <section class="kanban-column column-draft" data-stage-id="draft" aria-labelledby="col-title-draft">
+      <div class="column-header">
+        <div class="column-header-title-wrap">
+          <span class="column-accent-dot dot-draft" aria-hidden="true"></span>
+          <h2 id="col-title-draft" class="column-title">Draft</h2>
+          <span class="column-count-badge" id="count-stage-draft">0</span>
+        </div>
+        <p class="column-desc">ร่างไอเดียจาก Remix Studio และเตรียม Script Outline</p>
+      </div>
+
+      <div class="column-dropzone" id="dropzone-draft" data-stage="draft" role="region" aria-label="รายการในสถานะ Draft">
+        <!-- Cards inserted dynamically -->
+      </div>
+    </section>
+
+    <!-- Column 2: Needs Review -->
+    <section class="kanban-column column-review" data-stage-id="review" aria-labelledby="col-title-review">
+      <div class="column-header">
+        <div class="column-header-title-wrap">
+          <span class="column-accent-dot dot-review" aria-hidden="true"></span>
+          <h2 id="col-title-review" class="column-title">Needs Review</h2>
+          <span class="column-count-badge" id="count-stage-review">0</span>
+        </div>
+        <p class="column-desc">ตรวจทานประเด็น เหตุผลเชิงสร้างสรรค์ และการยืนยันข้อเท็จจริง</p>
+      </div>
+
+      <div class="column-dropzone" id="dropzone-review" data-stage="review" role="region" aria-label="รายการในสถานะ Needs Review">
+        <!-- Cards inserted dynamically -->
+      </div>
+    </section>
+
+    <!-- Column 3: Approved -->
+    <section class="kanban-column column-approved" data-stage-id="approved" aria-labelledby="col-title-approved">
+      <div class="column-header">
+        <div class="column-header-title-wrap">
+          <span class="column-accent-dot dot-approved" aria-hidden="true"></span>
+          <h2 id="col-title-approved" class="column-title">Approved</h2>
+          <span class="column-count-badge" id="count-stage-approved">0</span>
+        </div>
+        <p class="column-desc">อนุมัติเนื้อหาแล้ว สร้าง Immutable Approved Revision ล็อกบทเรียบร้อย</p>
+      </div>
+
+      <div class="column-dropzone" id="dropzone-approved" data-stage="approved" role="region" aria-label="รายการในสถานะ Approved">
+        <!-- Cards inserted dynamically -->
+      </div>
+    </section>
+
+    <!-- Column 4: Ready for Production -->
+    <section class="kanban-column column-ready" data-stage-id="ready" aria-labelledby="col-title-ready">
+      <div class="column-header">
+        <div class="column-header-title-wrap">
+          <span class="column-accent-dot dot-ready" aria-hidden="true"></span>
+          <h2 id="col-title-ready" class="column-title">Ready for Production</h2>
+          <span class="column-count-badge" id="count-stage-ready">0</span>
+        </div>
+        <p class="column-desc">พร้อมถ่ายทำ เข้าคิวโปรดักชัน และส่งมอบ Director Brief สู่กองถ่าย</p>
+      </div>
+
+      <div class="column-dropzone" id="dropzone-ready" data-stage="ready" role="region" aria-label="รายการในสถานะ Ready for Production">
+        <!-- Cards inserted dynamically -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================================
+       S08: CONCEPT DETAIL & SCRIPT DRAFT DRAWER / MODAL
+       Creative Rationale, Outline, Hook/Dialogue, Scene & Sound Directions, Proof Checklist, CTA
+       ============================================================================ -->
+  <div class="board-drawer-overlay" id="concept-drawer-overlay" hidden aria-hidden="true">
+    <div class="board-drawer mew-offer-card" id="concept-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-concept-title">
+      
+      <!-- Drawer Header Bar -->
+      <div class="drawer-header">
+        <div class="drawer-header-meta">
+          <div class="drawer-stage-pill" id="drawer-stage-badge">
+            <span class="status-indicator-dot" id="drawer-stage-dot"></span>
+            <span id="drawer-stage-text">Draft</span>
+          </div>
+          <span class="drawer-revision-pill" id="drawer-revision-badge">
+            REV-DRAFT
+          </span>
+          <span class="drawer-time-pill" id="drawer-estimated-time">~90 วินาที</span>
+        </div>
+
+        <button type="button" class="btn-drawer-close" id="btn-close-drawer" aria-label="ปิดหน้าต่างรายละเอียด">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Drawer Content Scroll Area -->
+      <div class="drawer-scroll-body" id="drawer-scroll-body">
+        
+        <!-- Concept Title & Angle -->
+        <div class="drawer-title-section">
+          <div class="drawer-angle-tag" id="drawer-concept-angle">Angle: Perspective Shift</div>
+          <h2 class="drawer-title" id="drawer-concept-title">ชื่อคอนเซปต์</h2>
+          <div class="drawer-source-chips" id="drawer-source-chips">
+            <!-- Source attribution chips -->
+          </div>
+        </div>
+
+        <!-- 1. Creative Rationale (เหตุผลการสร้างสรรค์) -->
+        <section class="drawer-section" aria-labelledby="heading-rationale">
+          <div class="section-title-wrap">
+            <div class="section-icon-badge coral" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </div>
+            <h3 id="heading-rationale" class="section-title">Creative Rationale &amp; Strategic Intent</h3>
+          </div>
+          <div class="rationale-box" id="drawer-rationale-content">
+            <p class="rationale-text" id="drawer-rationale-text"></p>
+            <div class="target-audience-box">
+              <span class="field-kicker">Target Audience:</span>
+              <span id="drawer-audience-text"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Hook & Opening Dialogue (บทเปิดตัวคำต่อคำ) -->
+        <section class="drawer-section" aria-labelledby="heading-hook-dialogue">
+          <div class="section-title-wrap">
+            <div class="section-icon-badge violet" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <h3 id="heading-hook-dialogue" class="section-title">Hook &amp; Verbatim Dialogue</h3>
+          </div>
+          <div class="hook-dialogue-card">
+            <div class="hook-kicker-row">
+              <span class="hook-timecode-badge">0:00 - 0:04 (First 4 Seconds Retention)</span>
+              <button type="button" class="btn-copy-hook" id="btn-copy-hook" aria-label="คัดลอกประโยคเปิด">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Copy Hook</span>
+              </button>
+            </div>
+            <blockquote class="hook-quote" id="drawer-hook-text"></blockquote>
+            
+            <!-- Teleprompter / Full Script Accordion -->
+            <div class="full-script-box">
+              <div class="field-kicker">Script Dialogue Draft (Teleprompter Preview):</div>
+              <div class="teleprompter-content" id="drawer-teleprompter-text"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Outline & Narrative Story Beats (Beat 1-4) -->
+        <section class="drawer-section" aria-labelledby="heading-outline-beats">
+          <div class="section-title-wrap">
+            <div class="section-icon-badge ink" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+            </div>
+            <h3 id="heading-outline-beats" class="section-title">Narrative Outline &amp; Story Beats</h3>
+          </div>
+          <div class="beats-timeline" id="drawer-beats-timeline">
+            <!-- Beat items injected via JS -->
+          </div>
+        </section>
+
+        <!-- 4. Scene & Sound Directions (กำกับฉาก มุมกล้อง เสียง SFX) -->
+        <section class="drawer-section" aria-labelledby="heading-production-directions">
+          <div class="section-title-wrap">
+            <div class="section-icon-badge amber" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 7l-7 5 7 5V7z"></path>
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+              </svg>
+            </div>
+            <h3 id="heading-production-directions" class="section-title">Scene &amp; Sound Directions</h3>
+          </div>
+          <div class="production-directions-grid">
+            <div class="direction-card scene-dir">
+              <div class="direction-card-header">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                <span>Visual Cues &amp; Camera Framing</span>
+              </div>
+              <p class="direction-desc" id="drawer-scene-direction"></p>
+            </div>
+
+            <div class="direction-card sound-dir">
+              <div class="direction-card-header">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M9 18V5l12-2v13"></path>
+                  <circle cx="6" cy="18" r="3"></circle>
+                  <circle cx="18" cy="16" r="3"></circle>
+                </svg>
+                <span>Sound Design, Music &amp; Voice Tone</span>
+              </div>
+              <p class="direction-desc" id="drawer-sound-direction"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. Proof Checklist & Claim Verification (การตรวจสอบความถูกต้อง ไร้สถิติมโน) -->
+        <section class="drawer-section" aria-labelledby="heading-proof-checklist">
+          <div class="section-title-wrap">
+            <div class="section-icon-badge green" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <h3 id="heading-proof-checklist" class="section-title">Proof Checklist &amp; Claim Verification</h3>
+          </div>
+          <div class="proof-checklist-box">
+            <p class="proof-kicker">
+              มาตรฐาน V6 Non-Negotiable: ข้อมูลและข้ออ้างอิงทั้งหมดต้องมีที่มาที่ไปจริง ปราศจากการมโนตัวเลขสถิติหลอกตา 100%
+            </p>
+            <ul class="checklist-items-list" id="drawer-proof-list">
+              <li class="checklist-item">
+                <span class="check-box checked" aria-hidden="true">✓</span>
+                <span class="check-text" id="drawer-claim-verification-text">ตรวจสอบแล้ว: อิงจากประสบการณ์จริงของผู้ก่อตั้ง</span>
+              </li>
+              <li class="checklist-item">
+                <span class="check-box checked" aria-hidden="true">✓</span>
+                <span class="check-text">ปลอดสถิติสมมติ: ปราศจากตัวเลขลอยๆ และเปอร์เซ็นต์ที่ไม่มีที่มา</span>
+              </li>
+              <li class="checklist-item">
+                <span class="check-box checked" aria-hidden="true">✓</span>
+                <span class="check-text">Original Synthesis: แปลงวัตถุดิบ Content + Packaging เป็นคำพูดของผู้ก่อตั้งเอง</span>
+              </li>
+              <li class="checklist-item">
+                <span class="check-box checked" aria-hidden="true">✓</span>
+                <span class="check-text">สอดคล้องกับคุณค่าแท้จริงของ MEW CONTENT OS ไม่เคลมผลลัพธ์เกินจริง</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 6. Call to Action (CTA) -->
+        <section class="drawer-section" aria-labelledby="heading-cta">
+          <div class="section-title-wrap">
+            <div class="section-icon-badge coral" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+            <h3 id="heading-cta" class="section-title">Call to Action (CTA)</h3>
+          </div>
+          <div class="cta-banner-card">
+            <div class="cta-kicker">Organic &amp; High-Trust Action:</div>
+            <div class="cta-text-content" id="drawer-cta-text">
+              "ทดลองเริ่มจัดระเบียบสาระและวิธีเล่าด้วยตัวคุณเองวันนี้ แล้วดูผลลัพธ์จากความสม่ำเสมอ"
+            </div>
+          </div>
+        </section>
+
+        <!-- Revision History Stamp (If Approved) -->
+        <div class="approved-revision-stamp" id="drawer-revision-stamp-box" hidden>
+          <div class="stamp-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 14 14"></polyline>
+            </svg>
+          </div>
+          <div class="stamp-details">
+            <div class="stamp-title">IMMUTABLE APPROVED REVISION</div>
+            <div class="stamp-meta" id="drawer-stamp-meta">
+              Revision: REV-2026-001 · Signed by Mew Teetawat · Locked for Production
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Drawer Actions Footer Bar -->
+      <footer class="drawer-footer-actions">
+        <div class="drawer-footer-left">
+          <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-drawer-delete" aria-label="ลบการ์ดนี้">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            <span>Delete</span>
+          </button>
+        </div>
+
+        <div class="drawer-footer-right">
+          <!-- Button: Approve Concept -->
+          <button type="button" class="btn-pill btn-approve" id="btn-approve-concept" aria-label="อนุมัติแนวคิดและล็อกเวอร์ชัน">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+            <span>Approve Concept</span>
+          </button>
+
+          <!-- Button: Export Director Brief -->
+          <button type="button" class="btn-pill btn-primary" id="btn-export-director-brief" aria-label="ส่งออก Director Brief สู่การผลิต">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Export Director Brief</span>
+          </button>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       S09: EXPORT DIRECTOR BRIEF MODAL (Production Ready Cue Sheet & Specs)
+       ============================================================================ -->
+  <div class="board-modal-overlay" id="director-brief-modal-overlay" hidden aria-hidden="true">
+    <div class="director-brief-modal mew-offer-card" id="director-brief-modal" role="dialog" aria-modal="true" aria-labelledby="brief-modal-title">
+      
+      <!-- Modal Header -->
+      <header class="brief-modal-header">
+        <div class="brief-header-info">
+          <div class="brief-badges-row">
+            <span class="badge-pill coral">Official Production Hand-off</span>
+            <span class="badge-pill violet" id="brief-modal-rev-code">REV-2026-001</span>
+            <span class="badge-pill soft">Format: 9:16 Vertical Reel</span>
+          </div>
+          <h2 id="brief-modal-title" class="brief-modal-title">Director &amp; Production Brief</h2>
+          <p class="brief-modal-subtitle">
+            เอกสารสรุปคิวถ่ายทำ บันทึกฉาก เสียง สิทธิ์อ้างอิง และข้อกำหนดลิขสิทธิ์อย่างครบถ้วนสำหรับผู้กำกับ ตากล้อง และทีมตัดต่อ
+          </p>
+        </div>
+
+        <button type="button" class="btn-modal-close" id="btn-close-brief-modal" aria-label="ปิดหน้าต่าง Director Brief">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Printable Brief Content Body -->
+      <div class="brief-modal-body" id="brief-printable-area">
+        
+        <!-- Brief Metadata Grid -->
+        <div class="brief-meta-grid">
+          <div class="meta-item">
+            <span class="meta-label">Title / Subject:</span>
+            <span class="meta-val" id="brief-title-val">-</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Founder &amp; Host:</span>
+            <span class="meta-val">Mew Teetawat</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Target Runtime:</span>
+            <span class="meta-val" id="brief-runtime-val">~90 วินาที (1:30 นาที)</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Aspect Ratio &amp; Res:</span>
+            <span class="meta-val">9:16 Vertical (1080x1920) @ 24fps</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Approval Signature:</span>
+            <span class="meta-val text-green" id="brief-signature-val">Signed &amp; Approved (Immutable)</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Date Generated:</span>
+            <span class="meta-val" id="brief-date-val">-</span>
+          </div>
+        </div>
+
+        <!-- Section 1: Executive Creative Direction -->
+        <div class="brief-doc-section">
+          <h3 class="brief-section-heading">1. Executive Creative Intent &amp; Tone</h3>
+          <div class="brief-callout">
+            <p><strong>Strategic Tone:</strong> ถ่อมตน จริงใจ หนักแน่น ไม่สั่งสอนหรือโอ้อวด เปรียบเสมือนเพื่อนผู้ก่อตั้งแชร์ประสบการณ์จากโต๊ะทำงานจริง</p>
+            <p id="brief-creative-intent-text"></p>
+          </div>
+        </div>
+
+        <!-- Section 2: Production Shot List & Scene Cue Sheet -->
+        <div class="brief-doc-section">
+          <h3 class="brief-section-heading">2. Production Shot List &amp; Scene Cue Sheet</h3>
+          <div class="brief-table-container">
+            <table class="brief-cue-table">
+              <thead>
+                <tr>
+                  <th style="width: 14%;">Timecode</th>
+                  <th style="width: 20%;">Beat &amp; Visual Framing</th>
+                  <th style="width: 44%;">Dialogue &amp; Teleprompter Cues</th>
+                  <th style="width: 22%;">Audio &amp; SFX Direction</th>
+                </tr>
+              </thead>
+              <tbody id="brief-cue-table-body">
+                <!-- Rows injected dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Section 3: Camera, Lighting & Audio Setup Specifications -->
+        <div class="brief-doc-section">
+          <h3 class="brief-section-heading">3. Camera, Lighting &amp; Sound Specifications</h3>
+          <div class="specs-two-columns">
+            <div class="spec-card">
+              <h4 class="spec-card-title">Camera &amp; Lighting Setup</h4>
+              <ul class="spec-list">
+                <li><strong>Main Camera (A-Cam):</strong> Eye-level Medium Close-Up, 35mm / 50mm f/2.0</li>
+                <li><strong>Secondary Camera (B-Cam):</strong> 45-degree Profile Close-Up or Overhead Desk Shot</li>
+                <li><strong>Key Light:</strong> Softbox 45-degree angle @ 5600K Daylight, subtle fill</li>
+                <li><strong>Background &amp; Props:</strong> Clean warm wood desk, notebook, muted canvas tones (#fbfaf8 / #f4f2ee)</li>
+              </ul>
+            </div>
+
+            <div class="spec-card">
+              <h4 class="spec-card-title">Sound Design &amp; Voice Recording</h4>
+              <ul class="spec-list">
+                <li><strong>Microphone:</strong> Lav mic or boom condenser placed within 20cm, zero echo</li>
+                <li><strong>Voice Delivery:</strong> Measured, unhurried cadence (~130 words per minute)</li>
+                <li><strong>SFX Elements:</strong> Subtle tactile clock ticks, smooth whooshes on cuts, clean page flip</li>
+                <li><strong>Background Music:</strong> Ambient low-tempo instrumental ducked to -24dB under speech</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Reference Source Traceability & Copyright Compliance -->
+        <div class="brief-doc-section">
+          <h3 class="brief-section-heading">4. Reference Traceability &amp; Copyright Compliance</h3>
+          <div class="compliance-box">
+            <div class="compliance-row">
+              <strong>Source Reference Attribution:</strong>
+              <span id="brief-attribution-text">Original Founder Framework</span>
+            </div>
+            <div class="compliance-checklist">
+              <div class="compliance-item">
+                <span class="comp-icon">✓</span>
+                <span><strong>Zero Plagiarism:</strong> ถอดรหัสเฉพาะแก่นไอเดียและโครงสร้างจังหวะ (Synthesized Idea) ไม่มีข้อความหรือสคริปต์ที่ลอกเลียนแบบ</span>
+              </div>
+              <div class="compliance-item">
+                <span class="comp-icon">✓</span>
+                <span><strong>Zero Fake Metrics:</strong> ปราศจากตัวเลขสถิติหลอกตาและเปอร์เซ็นต์ลอยๆ 100% สอดคล้องกับข้อกำหนดระบบ V6</span>
+              </div>
+              <div class="compliance-item">
+                <span class="comp-icon">✓</span>
+                <span><strong>Audio &amp; Visual Rights:</strong> เพลงและซาวด์เอฟเฟกต์ทั้งหมดใช้ลิขสิทธิ์ Royalty-Free หรือสร้างขึ้นเองสำหรับ MEW CONTENT OS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer Action Bar -->
+      <footer class="brief-modal-footer">
+        <div class="footer-left-info">
+          <span class="footer-hint">Director Brief พร้อมสำหรับการพิมพ์หรือคัดลอกส่งทีม</span>
+        </div>
+        <div class="footer-action-buttons">
+          <button type="button" class="btn-pill btn-ghost" id="btn-copy-brief-markdown">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copy as Markdown</span>
+          </button>
+          <button type="button" class="btn-pill btn-primary" id="btn-print-brief">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>Print / Save PDF</span>
+          </button>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       QUICK CREATE DRAFT MODAL (Client-side fast entry)
+       ============================================================================ -->
+  <div class="board-modal-overlay" id="quick-create-modal-overlay" hidden aria-hidden="true">
+    <div class="quick-create-modal mew-offer-card" role="dialog" aria-modal="true" aria-labelledby="quick-create-title">
+      <header class="modal-mini-header">
+        <h3 id="quick-create-title" class="modal-mini-title">Create New Concept Draft</h3>
+        <button type="button" class="btn-modal-close" id="btn-close-create-modal" aria-label="ปิด">
+          &times;
+        </button>
+      </header>
+      <form id="quick-create-form" class="quick-create-form">
+        <div class="form-group">
+          <label for="create-concept-title" class="form-label">ชื่อเรื่อง / Concept Title <span class="required">*</span></label>
+          <input type="text" id="create-concept-title" class="form-input" placeholder="เช่น Post and forget it: กฎ 3 ข้อที่ทำให้เลิกแคร์ยอดวิว" required>
+        </div>
+        <div class="form-group">
+          <label for="create-concept-angle" class="form-label">มุมมอง / Creative Angle</label>
+          <input type="text" id="create-concept-angle" class="form-input" placeholder="เช่น Perspective Shift & Detachment" value="Perspective Shift &amp; Detachment">
+        </div>
+        <div class="form-group">
+          <label for="create-concept-hook" class="form-label">ประโยคเปิดคลิป / Hook (4 วินาทีแรก) <span class="required">*</span></label>
+          <textarea id="create-concept-hook" class="form-textarea" rows="3" placeholder="พิมพ์ประโยค Hook ที่ดึงความสนใจทันทีโดยไม่อิงสถิติมโน..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="create-concept-rationale" class="form-label">Creative Rationale (เหตุผลที่เลือกทำเรื่องนี้)</label>
+          <textarea id="create-concept-rationale" class="form-textarea" rows="2" placeholder="อธิบายคุณค่าที่คนดูจะได้รับและความสอดคล้องกับแบรนด์..."></textarea>
+        </div>
+        <div class="modal-form-actions">
+          <button type="button" class="btn-pill btn-ghost" id="btn-cancel-create">ยกเลิก</button>
+          <button type="submit" class="btn-pill btn-primary">สร้าง Concept Draft</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="board-toast-container" id="board-toast-container" aria-live="polite" aria-atomic="true"></div>
+
+</div>

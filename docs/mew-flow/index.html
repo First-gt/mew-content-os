@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEW Content OS — Interactive Master Flowchart & UX Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Prompt', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+            },
+            content: {
+              bg: '#eff6ff',
+              border: '#93c5fd',
+              text: '#1e40af',
+              accent: '#3b82f6'
+            },
+            packaging: {
+              bg: '#fff7ed',
+              border: '#fed7aa',
+              text: '#c2410c',
+              accent: '#f97316'
+            },
+            remix: {
+              bg: '#faf5ff',
+              border: '#e9d5ff',
+              text: '#7e22ce',
+              accent: '#a855f7'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Prompt', sans-serif; }
+    .code-font { font-family: 'JetBrains Mono', monospace; }
+    .node-active {
+      box-shadow: 0 0 0 3px #3b82f6, 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- TOP HEADER -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
+          M
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg font-bold text-slate-900 leading-tight">MEW Content OS — Interactive Flowchart</h1>
+            <span class="px-2 py-0.5 text-xs font-semibold bg-blue-100 text-blue-700 rounded-full">Founder UX Spec v1.0</span>
+          </div>
+          <p class="text-xs text-slate-500">Research &rarr; Human Save Gate &rarr; 2 Separate Vaults &rarr; Multi-Source Remix &rarr; Director Brief</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="setTab('flow')" id="tab-btn-flow" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-blue-600 text-white shadow-sm transition">
+          แผนผัง Flow ทั้งระบบ
+        </button>
+        <button onclick="setTab('screens')" id="tab-btn-screens" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+          เจาะลึก 10 หน้าจอ (S00–S09)
+        </button>
+        <button onclick="setTab('stories')" id="tab-btn-stories" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+          ตัวอย่างจริง 3 Scenarios
+        </button>
+        <button onclick="setTab('sketches')" id="tab-btn-sketches" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+          ภาพสเก็ตช์ Founder
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- BANNER: 4 NON-NEGOTIABLE FOUNDER RULES -->
+  <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white py-2 px-4 shadow-inner">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
+      <div class="font-bold flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        <span>กฎเหล็ก 4 ประโยคของ Founder (ห้ามตีความผิด):</span>
+      </div>
+      <div class="flex flex-wrap gap-x-4 gap-y-1 text-slate-100 text-[11px]">
+        <span><strong>1. RESEARCH</strong> = ศึกษาคลิปคนอื่นว่าดีตรงไหน ไม่ใช่ทำคลิปใหม่</span>
+        <span><strong>2. SAVE</strong> = Founder เลือกและเขียน WHY เอง AI ห้ามเซฟอัตโนมัติ</span>
+        <span><strong>3. REMIX</strong> = รวมสิ่งที่ชอบเป็น Original Concept ไม่ใช่ตัดต่อคลิปชนคลิป</span>
+        <span><strong>4. CREATE</strong> = ส่งไปถ่าย/ตัดต่อใน MEW EDIT เมื่อผ่านการอนุมัติ</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+
+    <!-- VIEW 1: FLOWCHART TAB -->
+    <section id="view-flow" class="space-y-6">
+      
+      <!-- Flow Overview Card -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between pb-5 border-b border-slate-100 gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <span>แผนผังภาพรวมการทำงาน (End-to-End Master Workflow)</span>
+            </h2>
+            <p class="text-sm text-slate-500 mt-1">
+              คลิกที่แต่ละขั้นตอน (Node) ในแผนผังด้านล่าง เพื่อเปิดดูรายละเอียดสเปก, ฟีเจอร์ที่ต้องมี, และตัวอย่างหน้าจอทางขวา
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+              <span class="w-2 h-2 rounded-full bg-blue-600"></span> 5 ขั้นตอนหลัก
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-700 border border-purple-200">
+              <span class="w-2 h-2 rounded-full bg-purple-600"></span> 10 หน้าจอ (S00–S09)
+            </span>
+          </div>
+        </div>
+
+        <!-- Flowchart Grid + Detail Inspector -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
+          
+          <!-- FLOW NODES CANVAS (LEFT 7 COLS) -->
+          <div class="lg:col-span-7 space-y-4">
+
+            <!-- STEP 0: Dashboard -->
+            <div onclick="selectNode('S00')" id="card-S00" class="node-card cursor-pointer p-4 rounded-xl border-2 border-slate-200 bg-white hover:border-blue-400 transition shadow-sm">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold flex items-center justify-center text-xs code-font">S00</span>
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-sm">Overview / Dashboard</h3>
+                    <p class="text-xs text-slate-500">ศูนย์รวมงาน: Recent Research, Vault Summary, Remix Drafts</p>
+                  </div>
+                </div>
+                <span class="text-xs text-blue-600 font-medium">จุดเริ่มต้น &rarr;</span>
+              </div>
+            </div>
+
+            <!-- Down Arrow -->
+            <div class="flex justify-center text-slate-300 font-bold text-sm my-0.5">&darr;</div>
+
+            <!-- STEP 1: Research Phase -->
+            <div class="p-4 rounded-xl border border-sky-200 bg-sky-50/50 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-sky-800 flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                  PHASE 1: RESEARCH (ศึกษาคลิปคนอื่น)
+                </span>
+                <span class="text-[11px] bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full font-medium">AI Decode WHAT & HOW</span>
+              </div>
+
+              <!-- Node S01 -->
+              <div onclick="selectNode('S01')" id="card-S01" class="node-card cursor-pointer p-3.5 rounded-lg border-2 border-white bg-white hover:border-sky-400 transition shadow-sm">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-7 h-7 rounded bg-sky-100 text-sky-700 font-bold flex items-center justify-center text-xs code-font">S01</span>
+                    <div>
+                      <h4 class="font-bold text-slate-900 text-xs">Research Entry & Inbox</h4>
+                      <p class="text-[11px] text-slate-500">วาง URL / Upload / Scan Feed &rarr; รับคลิปเข้าคิววิเคราะห์</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">Input</span>
+                </div>
+              </div>
+
+              <!-- Node S02 -->
+              <div onclick="selectNode('S02')" id="card-S02" class="node-card cursor-pointer p-3.5 rounded-lg border-2 border-white bg-white hover:border-sky-400 transition shadow-sm">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-7 h-7 rounded bg-sky-100 text-sky-700 font-bold flex items-center justify-center text-xs code-font">S02</span>
+                    <div>
+                      <h4 class="font-bold text-slate-900 text-xs">Research Detail / AI Analysis</h4>
+                      <p class="text-[11px] text-slate-500">แยก 2 แถบชัดเจน: [Content WHAT] vs [Packaging HOW]</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-medium">Not Saved Yet</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Down Arrow with Branch -->
+            <div class="flex items-center justify-center gap-6 my-1">
+              <div class="text-xs text-rose-500 font-medium bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-full">
+                &times; ไม่กด Save &rarr; ไม่เข้า Vault (จบที่ Inbox)
+              </div>
+              <div class="text-xs text-emerald-600 font-bold bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full flex items-center gap-1">
+                &check; กดปุ่ม "Save to Library" &darr;
+              </div>
+            </div>
+
+            <!-- STEP 2: HUMAN SAVE GATE (S03) -->
+            <div onclick="selectNode('S03')" id="card-S03" class="node-card cursor-pointer p-4 rounded-xl border-2 border-amber-300 bg-amber-50/70 hover:border-amber-500 transition shadow-sm">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-amber-200 text-amber-900 font-bold flex items-center justify-center text-xs code-font">S03</span>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-bold text-slate-900 text-sm">Human Save Gate (Modal / Drawer)</h3>
+                      <span class="text-[10px] bg-rose-600 text-white font-bold px-1.5 py-0.2 rounded">สำคัญที่สุด</span>
+                    </div>
+                    <p class="text-xs text-amber-900/80">Founder เลือกเก็บ [Content] / [Packaging] / [Both] + ต้องเขียน WHY</p>
+                  </div>
+                </div>
+                <span class="text-xs font-semibold text-amber-700">จุดแยก 2 คลัง &rarr;</span>
+              </div>
+            </div>
+
+            <!-- Down Arrow -->
+            <div class="flex justify-center text-slate-300 font-bold text-sm my-0.5">&darr; แยกจัดเก็บตามการตัดสินใจของมนุษย์</div>
+
+            <!-- STEP 3: TWO SEPARATE VAULTS (S04, S05) -->
+            <div class="p-4 rounded-xl border border-indigo-200 bg-indigo-50/40 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-900 flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                  PHASE 2: MY LIBRARY (2 VAULTS แยกกันเด็ดขาด)
+                </span>
+                <span class="text-[11px] text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded-full font-medium">Source เดียวผูก 2 เลนส์ได้</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <!-- Content Vault Card -->
+                <div onclick="selectNode('S04_C')" id="card-S04_C" class="node-card cursor-pointer p-3 rounded-lg border-2 border-blue-200 bg-blue-50/80 hover:border-blue-500 transition">
+                  <div class="text-xs font-bold text-blue-900 flex items-center gap-1">
+                    <span class="w-2 h-2 rounded-full bg-blue-600"></span> Content Vault (WHAT)
+                  </div>
+                  <p class="text-[11px] text-blue-800 mt-1">เก็บสิ่งที่พูด, ประเด็น, Mindset, ปัญหา, มุมมองที่จะเอามาเล่า</p>
+                </div>
+
+                <!-- Packaging Vault Card -->
+                <div onclick="selectNode('S04_P')" id="card-S04_P" class="node-card cursor-pointer p-3 rounded-lg border-2 border-orange-200 bg-orange-50/80 hover:border-orange-500 transition">
+                  <div class="text-xs font-bold text-orange-900 flex items-center gap-1">
+                    <span class="w-2 h-2 rounded-full bg-orange-600"></span> Packaging Vault (HOW)
+                  </div>
+                  <p class="text-[11px] text-orange-800 mt-1">เก็บวิธีเล่า, Hook Pattern, จังหวะตัดต่อ, SFX, Visual Framing</p>
+                </div>
+              </div>
+
+              <!-- Node S05 -->
+              <div onclick="selectNode('S05')" id="card-S05" class="node-card cursor-pointer p-3 rounded-lg border-2 border-white bg-white hover:border-indigo-400 transition shadow-sm">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-xs code-font">S05</span>
+                    <span class="font-bold text-xs text-slate-800">Saved Reference Detail & Note Editor</span>
+                  </div>
+                  <span class="text-[11px] text-indigo-600 font-medium">อ่าน/แก้ Founder WHY &rarr; กด "Use in Remix"</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Down Arrow -->
+            <div class="flex justify-center text-slate-300 font-bold text-sm my-0.5">&darr; หยิบวัตถุดิบเข้าสู่ห้องผสม</div>
+
+            <!-- STEP 4: REMIX STUDIO (S06, S07, S08) -->
+            <div class="p-4 rounded-xl border border-purple-200 bg-purple-50/40 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-purple-900 flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                  PHASE 3: REMIX STUDIO (สร้าง Original Concept)
+                </span>
+                <span class="text-[11px] text-purple-700 bg-purple-100 px-2 py-0.5 rounded-full font-medium">หยิบได้ N+N ชิ้น (ไม่ใช่ 1+1)</span>
+              </div>
+
+              <!-- Node S06 -->
+              <div onclick="selectNode('S06')" id="card-S06" class="node-card cursor-pointer p-3.5 rounded-lg border-2 border-white bg-white hover:border-purple-400 transition shadow-sm">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-7 h-7 rounded bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-xs code-font">S06</span>
+                    <div>
+                      <h4 class="font-bold text-slate-900 text-xs">Remix Reference Picker (Ingredients Basket)</h4>
+                      <p class="text-[11px] text-slate-500">เลือก Content &ge; 1 + Packaging &ge; 0 (เช่น C1+P1, C3+P2, หรือ Content-Only)</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded">Multi-Select</span>
+                </div>
+              </div>
+
+              <!-- Node S07 -->
+              <div onclick="selectNode('S07')" id="card-S07" class="node-card cursor-pointer p-3.5 rounded-lg border-2 border-white bg-white hover:border-purple-400 transition shadow-sm">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-7 h-7 rounded bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-xs code-font">S07</span>
+                    <div>
+                      <h4 class="font-bold text-slate-900 text-xs">Remix Workspace (3 โซนหลัก)</h4>
+                      <p class="text-[11px] text-slate-500">[1. Ingredients] &harr; [2. Brand DNA / Founder POV] &rarr; [3. 2–3 Original Concepts]</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded">Creative Core</span>
+                </div>
+              </div>
+
+              <!-- Node S08 -->
+              <div onclick="selectNode('S08')" id="card-S08" class="node-card cursor-pointer p-3.5 rounded-lg border-2 border-white bg-white hover:border-purple-400 transition shadow-sm">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-7 h-7 rounded bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-xs code-font">S08</span>
+                    <div>
+                      <h4 class="font-bold text-slate-900 text-xs">Concept Detail / Script Draft</h4>
+                      <p class="text-[11px] text-slate-500">Hook, Story Beats (Beat 1-4), Proof Check, Human Prompt Tuning</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded">Draft Recipe</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Down Arrow -->
+            <div class="flex justify-center text-slate-300 font-bold text-sm my-0.5">&darr; บันทึกดราฟต์เข้ากระดาน</div>
+
+            <!-- STEP 5: CONTENT BOARD / HANDOFF (S09) -->
+            <div onclick="selectNode('S09')" id="card-S09" class="node-card cursor-pointer p-4 rounded-xl border-2 border-emerald-200 bg-emerald-50/60 hover:border-emerald-500 transition shadow-sm">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-xs code-font">S09</span>
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-sm">Content Board & Director Brief Handoff</h3>
+                    <p class="text-xs text-emerald-900/80">Draft &rarr; Needs Review &rarr; Approved &rarr; Export Director Brief / Send to MEW EDIT</p>
+                  </div>
+                </div>
+                <span class="text-xs font-semibold text-emerald-700">Production Ready &check;</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- DETAIL INSPECTOR PANEL (RIGHT 5 COLS) -->
+          <div class="lg:col-span-5 bg-slate-50 rounded-xl border border-slate-200 p-5 flex flex-col h-[780px] custom-scrollbar overflow-y-auto sticky top-20">
+            <div id="inspector-content">
+              <!-- Dynamically populated by selectNode() -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: SCREEN-BY-SCREEN DICTIONARY -->
+    <section id="view-screens" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <h2 class="text-xl font-bold text-slate-900">เจาะลึกสเปก 10 หน้าจอ (Screen-by-Screen UX Contract)</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          ข้อกำหนดรายละเอียดสำหรับ Designer และ Developer ทุกปุ่ม, Input, Action และ Edge cases ที่ต้องรองรับ
+        </p>
+
+        <div class="mt-6 space-y-6" id="screen-list-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: FOUNDER REAL SCENARIOS -->
+    <section id="view-stories" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <h2 class="text-xl font-bold text-slate-900">ตัวอย่างจำลองสถานการณ์จริง (Founder Scenarios A, B, C, D)</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          ตัวอย่างจริงที่ Founder เขียนไว้เป็นโจทย์ เพื่อให้เห็นว่าข้อมูลไหลผ่านจาก Research &rarr; Save &rarr; Remix อย่างไร
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          
+          <!-- Story A -->
+          <div class="p-5 rounded-xl border border-blue-200 bg-blue-50/50 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-xs font-bold bg-blue-600 text-white">STORY A</span>
+              <span class="text-xs text-blue-700 font-semibold">Content Vault Only</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">คลิป "Post and forget it" (โพสต์แล้วอย่าเฝ้ายอด)</h3>
+            <p class="text-xs text-slate-600"><strong>คลิปต้นฉบับ:</strong> ครีเอเตอร์บอกว่า "โพสต์เสร็จอย่าคอยเปิดยอดทุกชั่วโมง เอาเวลาไปทำคอนเทนต์ใหม่"</p>
+            <div class="text-xs bg-white p-3 rounded-lg border border-blue-100 space-y-1.5">
+              <div class="text-blue-900 font-medium">&bull; AI Content Decode: Mindset ไม่หมกมุ่นกับ metrics / ปกป้องเวลาสร้างสรรค์</div>
+              <div class="text-slate-700"><strong>Founder Save Note:</strong> "ชอบสารหลัก อยากต่อยอดว่าเราไม่ควรต้องคอยนั่งตอบลูกค้า/เฝ้าคอมเมนต์ทุกชั่วโมง MEW มีระบบช่วยตอบอัตโนมัติ"</div>
+              <div class="text-emerald-700 font-semibold">&check; บันทึกเข้า: Content Vault เท่านั้น (ไม่เข้า Packaging)</div>
+            </div>
+          </div>
+
+          <!-- Story B -->
+          <div class="p-5 rounded-xl border border-orange-200 bg-orange-50/50 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-xs font-bold bg-orange-600 text-white">STORY B</span>
+              <span class="text-xs text-orange-700 font-semibold">Packaging Vault Only</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">คลิป "The Ticking Clock" (เสียงนาฬิกาบีบคั้น)</h3>
+            <p class="text-xs text-slate-600"><strong>คลิปต้นฉบับ:</strong> คลิปเล่าเรื่องลึกลับ/ระทึกขวัญ ใช้เสียงนาฬิกาเดิน ติ๊ก ๆ ๆ ตัดภาพเร็วขึ้นเรื่อย ๆ จนคนดูไม่กล้าปัดผ่าน</p>
+            <div class="text-xs bg-white p-3 rounded-lg border border-orange-100 space-y-1.5">
+              <div class="text-orange-900 font-medium">&bull; AI Packaging Decode: Suspense pacing + ticking SFX + gradual reveal structure</div>
+              <div class="text-slate-700"><strong>Founder Save Note:</strong> "เนื้อหาไม่เกี่ยวกับธุรกิจเราเลย แต่อยากยืมโครงสร้างเปิดเรื่องที่กดดันแบบนี้มาใช้กับเรื่องงาน ใช้ SFX ที่มีลิขสิทธิ์เราเอง"</div>
+              <div class="text-emerald-700 font-semibold">&check; บันทึกเข้า: Packaging Vault เท่านั้น (ไม่เข้า Content)</div>
+            </div>
+          </div>
+
+          <!-- Story C -->
+          <div class="p-5 rounded-xl border border-purple-200 bg-purple-50/50 space-y-3 md:col-span-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-xs font-bold bg-purple-600 text-white">STORY C</span>
+              <span class="text-xs text-purple-700 font-semibold">Remix C1 + P1 &rarr; Original Concept</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-base">การ Remix ข้ามคลัง: รวม Story A (Content) + Story B (Packaging)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div class="bg-white p-3 rounded-lg border border-slate-200">
+                <span class="font-bold text-blue-700">วัตถุดิบ (Ingredients):</span>
+                <p class="mt-1 text-slate-600">1. Content: Post and forget it (สาร: อย่าเฝ้ายอด/งานซ้ำ)</p>
+                <p class="text-slate-600">2. Packaging: The Ticking Clock (วิธี: Pacing บีบคั้น + reveal)</p>
+              </div>
+              <div class="bg-white p-3 rounded-lg border border-slate-200">
+                <span class="font-bold text-purple-700">ทิศทางของแบรนด์ (Brand POV):</span>
+                <p class="mt-1 text-slate-600">กลุ่มเป้าหมาย: ครีเอเตอร์/เจ้าของร้าน SME</p>
+                <p class="text-slate-600">มุมมอง: "คุณโพสต์เสร็จแต่งานคุณยังไม่จบ เพราะติดตอบแชท"</p>
+              </div>
+              <div class="bg-white p-3 rounded-lg border border-slate-200">
+                <span class="font-bold text-emerald-700">ผลลัพธ์ Original Concept:</span>
+                <p class="mt-1 font-semibold text-slate-900">Hook: "คุณโพสต์คลิปเสร็จแล้ว...แต่ทำไมงานคุณยังไม่จบ?"</p>
+                <p class="text-slate-600">Beat 1-4: เช็กแจ้งเตือน &rarr; เสียเวลา &rarr; เคลียร์คอมเมนต์ &rarr; ใช้ MEW Automation</p>
+              </div>
+            </div>
+            <div class="text-xs bg-amber-50 text-amber-900 p-2.5 rounded-lg border border-amber-200 font-medium">
+              &uarr; สังเกตว่าผลลัพธ์ที่ได้คือ <strong>"เรื่องใหม่ของ MEW"</strong> ไม่ใช่การก็อปปี้สคริปต์หรือตัดต่อคลิปของคนอื่นมาชนกัน!
+            </div>
+          </div>
+
+          <!-- Story D -->
+          <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 space-y-3 md:col-span-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-xs font-bold bg-slate-800 text-white">STORY D</span>
+              <span class="text-xs text-slate-600 font-semibold">Multi-Source Remix: C1 + C2 + C3 + P1 + P2</span>
+            </div>
+            <p class="text-xs text-slate-600">
+              ระบบของ MEW <strong>ไม่จำกัดการรีมิกซ์แค่ 1+1</strong> แต่รองรับการหยิบ 3 คอนเทนต์ (อย่าเฝ้ายอด + คำถามคอมเมนต์คือ market research + การทำ automate ตอบแชท) ผสมกับ 2 แพ็กเกจจิ้ง (เสียง ticking clock + โครงสร้าง numbered reveal) กลายเป็นคอนเทนต์ใหม่ <em>"3 งานหลังโพสต์ที่คุณไม่จำเป็นต้องเฝ้าเองทั้งหมด"</em>
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: FOUNDER ORIGINAL SKETCHES -->
+    <section id="sketches-view" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <h2 class="text-xl font-bold text-slate-900">ภาพสเก็ตช์ต้นฉบับจากลายมือ Founder</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          ภาพร่างจริงที่ Founder วาดไว้เพื่ออธิบายแก่นของ Flow ก่อนจะแปลงมาเป็นสเปกระบบฉบับนี้
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          
+          <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 space-y-2">
+            <h3 class="font-bold text-sm text-slate-900 flex items-center justify-between">
+              <span>1. การแยก 2 คลัง (Two Separate Vaults)</span>
+              <span class="text-xs text-blue-600 font-mono">sketch-1-vaults.png</span>
+            </h3>
+            <p class="text-xs text-slate-500">ภาพร่างแสดงการแยกชัดเจนระหว่าง Content Vault (WHAT) และ Packaging Vault (HOW) โดยคลิป 1 คลิปสามารถบันทึกเข้าทั้ง 2 คลังได้</p>
+            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden flex items-center justify-center p-2 min-h-[220px]">
+              <img src="assets/sketch-1-vaults.png" alt="Sketch 1 Vaults" class="max-h-72 object-contain rounded hover:scale-105 transition cursor-pointer" onclick="window.open(this.src)">
+            </div>
+          </div>
+
+          <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 space-y-2">
+            <h3 class="font-bold text-sm text-slate-900 flex items-center justify-between">
+              <span>2. Research Channel vs 1-Clip Scan</span>
+              <span class="text-xs text-blue-600 font-mono">sketch-2-research.png</span>
+            </h3>
+            <p class="text-xs text-slate-500">การศึกษาคลิปคู่แข่งในตลาด เพื่อดูว่าตลาดกำลังสนใจอะไร ไม่ใช่เพื่อก็อปปี้คลิปมาทำซ้ำ</p>
+            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden flex items-center justify-center p-2 min-h-[220px]">
+              <img src="assets/sketch-2-research.png" alt="Sketch 2 Research" class="max-h-72 object-contain rounded hover:scale-105 transition cursor-pointer" onclick="window.open(this.src)">
+            </div>
+          </div>
+
+          <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 space-y-2 md:col-span-2">
+            <h3 class="font-bold text-sm text-slate-900 flex items-center justify-between">
+              <span>3. Clip &rarr; AI &rarr; Human WHY &rarr; 2 Vaults &rarr; Remix</span>
+              <span class="text-xs text-blue-600 font-mono">sketch-3-save-remix.png</span>
+            </h3>
+            <p class="text-xs text-slate-500">สเก็ตช์สำคัญที่แสดงหัวใจของระบบ: วิดีโอผ่าน AI &rarr; มนุษย์เขียน "ชอบอะไร + จะเอาไปทำอะไร" &rarr; แยกเข้า 2 คลัง &rarr; ดึงมารวมใน Remix Workspace</p>
+            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden flex items-center justify-center p-2 min-h-[260px]">
+              <img src="assets/sketch-3-save-remix.png" alt="Sketch 3 Save Remix" class="max-h-96 object-contain rounded hover:scale-105 transition cursor-pointer" onclick="window.open(this.src)">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    const nodeDetails = {
+      'S00': {
+        code: 'S00',
+        title: 'Overview (Dashboard)',
+        role: 'ศูนย์ควบคุมและติดตามงานทั้งหมด (Home Hub)',
+        whatIsIt: 'หน้าแรกเมื่อเข้าสู่ MEW Content OS ผู้ใช้จะเห็นสถานะงาน Research ล่าสุด, จำนวนรายการในคลังทั้ง 2 คลัง, และดราฟต์ Remix ที่กำลังทำค้างอยู่',
+        inputs: ['เข้าสู่ระบบ / เปิดแอป'],
+        outputs: ['กด Research a Clip &rarr; S01', 'กด Open My Library &rarr; S04', 'กด Start Remix &rarr; S06', 'กด Continue Draft &rarr; S07/S08'],
+        features: [
+          'ปุ่ม Action หลัก: Research a Clip, Open Library, Start Remix',
+          'Recent Research Strip: แสดงคลิปที่เพิ่งตรวจ พร้อมสถานะ Not Saved หรือ Saved',
+          'Vault Counters: สรุปยอด Content References (WHAT) และ Packaging References (HOW)',
+          'Remix Drafts Card: แสดงงานไอเดียที่ผสมค้างไว้ สามารถกดทำต่อได้ทันที'
+        ],
+        nonNegotiable: 'ห้ามนำทั้ง AI Player, คลังวิดีโอ, และไทม์ไลน์ตัดต่อไปอัดรวมกันในหน้าเดียวจนรกสับสน'
+      },
+      'S01': {
+        code: 'S01',
+        title: 'Research Entry / Inbox',
+        role: 'ช่องทางนำเข้าคลิปเพื่อการศึกษา (Ingestion Gate)',
+        whatIsIt: 'หน้าสำหรับป้อนลิงก์ หรืออัปโหลดคลิปที่น่าสนใจจากภายนอกเข้าสู่ระบบ เพื่อให้ AI ถอดรหัสโครงสร้าง',
+        inputs: ['Paste Video URL (TikTok, IG Reels, YouTube Shorts)', 'Upload วิดีโอที่มีสิทธิ์', 'Scan Feed / Discover (ถ้ามี adapter)'],
+        outputs: ['คลิกคลิปเพื่อเปิดดูบทวิเคราะห์ละเอียด &rarr; S02'],
+        features: [
+          'URL Input Bar: รองรับลิงก์แพลตฟอร์มหลัก พร้อมตัวตรวจความถูกต้อง',
+          'Video Upload Area: สำหรับคลิปที่ดาวน์โหลดมาอย่างถูกลิขสิทธิ์',
+          'Research Status Tags: Waiting, Analyzing, Analyzed · Not Saved, Saved to Content, Saved to Packaging',
+          'Error Handling: หากไม่สามารถเข้าถึงเสียง/ภาพได้ ให้แจ้งผู้ใช้ตรงไปตรงมา ห้าม Fake ผลการวิเคราะห์'
+        ],
+        nonNegotiable: 'Research Inbox ไม่ใช่ Library! คลิปที่เข้า Inbox ห้ามถูกบันทึกเข้า Vault โดยอัตโนมัติเด็ดขาด'
+      },
+      'S02': {
+        code: 'S02',
+        title: 'Research Detail / AI Analysis',
+        role: 'การถอดรหัสคลิปออกเป็น 2 มิติ: WHAT และ HOW',
+        whatIsIt: 'หน้าจอคู่: ฝั่งซ้ายเล่นคลิปต้นฉบับ ฝั่งขวาแสดงผลการวิเคราะห์ของ AI โดยแยกเป็น 2 แถบชัดเจน เพื่อให้ Founder อ่านทำความเข้าใจก่อนตัดสินใจ',
+        inputs: ['คลิปจาก S01 ที่วิเคราะห์เสร็จแล้ว'],
+        outputs: ['กด "Save to Library" &rarr; เปิดหน้าต่าง S03', 'ปิดออกไป &rarr; จบการตรวจ (คลิปคงสถานะ Not Saved ไม่เข้า Vault)'],
+        features: [
+          'Video Player ด้านซ้าย: ดูเวลา Timestamp, ข้อมูลผู้สร้าง, ลิงก์ต้นฉบับ',
+          'Tab 1 [Content WHAT]: ถอดรหัสสารหลัก, กลุ่มเป้าหมาย, ประเด็นที่พูด, ข้ออ้างอิง, มุมมองที่ต่อยอดได้',
+          'Tab 2 [Packaging HOW]: ถอดรหัส Hook แรก 3 วินาที, โครงสร้างการเล่าเรื่อง, จังหวะตัดต่อ, เทคนิคเสียง SFX, Dynamic Framing',
+          'ปุ่มหลัก "Save to Library": ปุ่มสีเด่นเพื่อเรียกหน้าต่างตัดสินใจของมนุษย์'
+        ],
+        nonNegotiable: 'AI วิเคราะห์จบ = งานวิเคราะห์เสร็จสิ้น แต่คลิปยังไม่เข้าคลัง จนกว่ามนุษย์จะเป็นคนกดบันทึก'
+      },
+      'S03': {
+        code: 'S03',
+        title: 'Save to Library (Human Gate Modal)',
+        role: 'ประตูด่านตัดสินใจของ Founder (จุดสำคัญที่สุดของระบบ)',
+        whatIsIt: 'หน้าต่างป๊อปอัปที่จะบังคับให้ Founder เลือกว่าชอบอะไรจากคลิปนี้ และต้องพิมพ์อธิบาย "เหตุผล (WHY)" ด้วยภาษามนุษย์ก่อนบันทึกเสมอ',
+        inputs: ['คลิก Save to Library จาก S02'],
+        outputs: ['บันทึกสำเร็จ &rarr; ส่ง Reference ไปยัง Content Vault หรือ Packaging Vault หรือ Both'],
+        features: [
+          'Checkbox [✓] Content (WHAT): เก็บสิ่งที่พูด &rarr; ปรากฏช่องบังคับกรอก "ทำไมอยากเก็บเนื้อหานี้? จะเอาไปต่อยอดยังไง?"',
+          'Checkbox [✓] Packaging (HOW): เก็บวิธีเล่า &rarr; ปรากฏช่องบังคับกรอก "อยากนำเทคนิคการนำเสนอส่วนไหนไปใช้?"',
+          'กรณีเลือก Both (ทั้งคู่): ต้องกรอกเหตุผล 2 ช่องแยกกันอย่างอิสระ ห้ามรวมเป็นช่องเดียว',
+          'Tags / Collections: เพิ่มป้ายกำกับเพื่อช่วยในการค้นหาภายหลัง',
+          'ปุ่ม Confirm: ตรวจสอบความถูกต้องก่อนบันทึก'
+        ],
+        nonNegotiable: 'ห้ามมีฟีเจอร์ AI Auto-Save! และถ้าไม่กรอกเหตุผล ห้ามให้กดบันทึกผ่าน'
+      },
+      'S04_C': {
+        code: 'S04 (Content)',
+        title: 'Content Vault (คลังเนื้อหา - WHAT)',
+        role: 'คลังเก็บสะสมประเด็น ความคิด มุมมอง และแก่นเรื่อง',
+        whatIsIt: 'พื้นที่เก็บการ์ด Reference ที่ Founder ชอบในแง่ของ "สาระที่พูด" พร้อมแสดง Note ที่ Founder เคยเขียนไว้ตอนเซฟ',
+        inputs: ['การ์ดที่ถูกเซฟจาก S03 โดยเลือกเลนส์ Content'],
+        outputs: ['คลิกการ์ด &rarr; S05 (ดูรายละเอียด)', 'เลือกหลายการ์ด &rarr; S06 (Remix Picker)'],
+        features: [
+          'Filter ตามหัวข้อ (Topic), กลุ่มเป้าหมาย, สินค้าที่เกี่ยวข้อง',
+          'การ์ดแสดง Thumbnail, ช่องทางต้นทาง, Founder Note (WHAT)',
+          'ปุ่มลัด "Use in Remix" บนการ์ดแต่ละใบ'
+        ],
+        nonNegotiable: 'ข้อมูลในคลังนี้คือแก่นของเรื่อง ไม่ปะปนกับเทคนิคตัดต่อของ Packaging Vault'
+      },
+      'S04_P': {
+        code: 'S04 (Packaging)',
+        title: 'Packaging Vault (คลังโครงสร้าง - HOW)',
+        role: 'คลังเก็บรูปแบบการเล่าเรื่อง จังหวะ Hook และเทคนิคการตัดต่อ',
+        whatIsIt: 'พื้นที่เก็บการ์ด Reference ที่ Founder ชอบในแง่ของ "สไตล์การนำเสนอ" ไม่สนใจว่าคลิปนั้นจะพูดเรื่องอะไร',
+        inputs: ['การ์ดที่ถูกเซฟจาก S03 โดยเลือกเลนส์ Packaging'],
+        outputs: ['คลิกการ์ด &rarr; S05 (ดูรายละเอียด)', 'เลือกหลายการ์ด &rarr; S06 (Remix Picker)'],
+        features: [
+          'Filter ตาม Hook Type (คำถามชวนคิด, ดราม่า, ความเข้าใจผิด, ตัวเลขตกใจ)',
+          'Filter ตาม Pacing & SFX (ตัดเร็ว Fast Cut, บีบคั้น Suspense, ผ่อนคลาย Lifestyle)',
+          'การ์ดแสดงคลิปตัวอย่างและ Note วิธีเล่าที่ Founder อยากยืมไปใช้'
+        ],
+        nonNegotiable: 'แม้มาจากคลิปเดียวกันกับ Content Vault แต่ต้องเก็บโน้ตและฟิลเตอร์แยกกันอย่างอิสระ'
+      },
+      'S05': {
+        code: 'S05',
+        title: 'Saved Reference Detail & Note Editor',
+        role: 'ทบทวนและแก้ไขบันทึกความตั้งใจของตนเอง',
+        whatIsIt: 'หน้ารายละเอียดของ Reference ในคลัง แสดงวิดีโอตัวอย่าง, บทวิเคราะห์, และที่สำคัญที่สุดคือ Note ที่ Founder พิมพ์ไว้ ซึ่งสามารถแก้ไขเพิ่มเติมได้ตลอดเวลา',
+        inputs: ['คลิกการ์ดจาก S04 Content หรือ Packaging Vault'],
+        outputs: ['กด "Use in Remix" &rarr; พา Reference นี้เข้าสู่ Remix Basket ทันที', 'กด Edit Note &rarr; อัปเดตบันทึก'],
+        features: [
+          'Founder Note Box: อ่านเหตุผลที่เคยบันทึกไว้ และสามารถกดแก้ได้',
+          'Source Provenance: ลิงก์กลับไปดูคลิปต้นฉบับและเวลา Timestamp',
+          'ปุ่ม "Remove from This Vault": ลบออกจากคลังนี้โดยไม่กระทบอีกคลังหนึ่ง (กรณีเซฟไว้ทั้งคู่)'
+        ],
+        nonNegotiable: 'การแก้ไข Note หรือการลบ Reference ต้องไม่ทำลายชิ้นงาน Remix เดิมที่เคยอ้างอิงถึงคลิปนี้'
+      },
+      'S06': {
+        code: 'S06',
+        title: 'Remix Reference Picker (Ingredients Basket)',
+        role: 'การเลือกหยิบวัตถุดิบหลายชิ้นเข้าสู่ตะกร้าผสม',
+        whatIsIt: 'หน้าจอสำหรับเลือก Ingredients ก่อนเริ่มปรุงไอเดียใหม่ ผู้ใช้สามารถเลือก Content กี่ชิ้นก็ได้ และ Packaging กี่ชิ้นก็ได้',
+        inputs: ['กด "Start Remix" จาก Dashboard หรือกด "Use in Remix" จากคลัง'],
+        outputs: ['กด "Continue to Workspace" &rarr; S07 (เมื่อเลือก Content อย่างน้อย 1 ชิ้น)'],
+        features: [
+          'ฝั่งซ้าย: ค้นหาและติ๊กเลือกจาก Content Vault (เลือก C1, C2, C3...)',
+          'ฝั่งขวา: ค้นหาและติ๊กเลือกจาก Packaging Vault (เลือก P1, P2...)',
+          'Ingredient Basket แถบด้านล่าง: สรุปจำนวนชิ้นที่เลือก เช่น "Content (3) + Packaging (2)" พร้อมปุ่มลบหรือจัดลำดับ',
+          'เงื่อนไขผ่าน: ต้องมี Content &ge; 1 รายการ ส่วน Packaging จะมีกี่รายการหรือเป็น 0 ก็ได้'
+        ],
+        nonNegotiable: 'ห้ามจำกัดให้เลือกได้แค่ 1 ต่อ 1 (1+1) และห้ามระบบสุ่มคลิปมาแทนมนุษย์'
+      },
+      'S07': {
+        code: 'S07',
+        title: 'Remix Workspace / Creative Synthesis',
+        role: 'ห้องทดลองผสมไอเดียต้นฉบับ (The Synthesis Engine)',
+        whatIsIt: 'หัวใจของการสร้างสรรค์ ประกอบด้วย 3 โซนบนหน้าจอ: โซนวัตถุดิบ &harr; โซนทิศทางของแบรนด์ &rarr; โซนไอเดียใหม่ที่สังเคราะห์ออกมา',
+        inputs: ['Ingredients จาก S06 + ข้อมูล Brand Brain / จุดขายสินค้า MEW'],
+        outputs: ['กดเลือก Concept เพื่อเปิดดูสคริปต์ฉบับเต็ม &rarr; S08', 'กด "Remix Again" เพื่อสังเคราะห์มุมใหม่'],
+        features: [
+          'โซน 1 [Ingredients]: แสดงการ์ดที่เลือกไว้ พร้อมชี้ชัดว่ายืม "WHAT" และ "HOW" ส่วนไหนมา',
+          'โซน 2 [Founder Direction]: ป้อนกลุ่มเป้าหมาย, จุดยืนของแบรนด์ (POV), จุดขายจริงที่พิสูจน์ได้ (Proof), Tone of Voice',
+          'โซน 3 [AI Synthesis]: AI เสนอ 2–3 Original Concepts ที่แตกต่างกันอย่างแท้จริง ไม่ใช่แค่ก็อปคำพูดเดิมมาสลับคำ',
+          'Traceability: แต่ละ Concept สามารถคลิกดูได้ว่าต่อยอดมาจาก Reference ชิ้นใด'
+        ],
+        nonNegotiable: 'ผลลัพธ์ต้องเป็นเรื่องใหม่ของ MEW เท่านั้น! ห้ามเอาคลิปคนอื่นมาต่อกัน หรือเอาสคริปต์คนอื่นมาเปลี่ยนแค่ชื่อแบรนด์'
+      },
+      'S08': {
+        code: 'S08',
+        title: 'Concept Detail / Storyboard Script Draft',
+        role: 'การแปลงไอเดียเป็นบทสคริปต์พร้อมถ่ายทำจริง',
+        whatIsIt: 'หน้าแตกรายละเอียดของ Concept ที่เลือกเป็น Storyboard 4 ช่วง (Beat 1-4: Hook &rarr; Agitate &rarr; Solution &rarr; CTA) พร้อมสั่งปรับแต่งด้วยคำสั่งภาษาคน',
+        inputs: ['เลือก 1 Concept จาก S07'],
+        outputs: ['กด "Save as Draft" &rarr; S09 (ส่งเข้ากระดาน Content Board)'],
+        features: [
+          'Storyboard Breakdown: Beat 1 (Hook 0-3s), Beat 2 (Agitate ปัญหา), Beat 3 (Solution & Proof จุดขาย), Beat 4 (CTA ปิดการขาย)',
+          'ช่อง Visual Direction: กำกับมุมกล้อง, การแต่งภาพ, ตัวหนังสือบนจอ',
+          'ช่อง Audio Script: บทพูดจริงของตัวละคร',
+          'Human Prompt Tuning: พิมพ์สั่งปรับ เช่น "เพิ่มตัวอย่างธุรกิจจริง", "ลดความดราม่าลง", "เปลี่ยน Hook ให้กระชับขึ้น"',
+          'Claim Verification: ตรวจสอบว่าไม่มีตัวเลขลอย ๆ ที่ไม่มีผลวิจัยหรือความจริงรองรับ'
+        ],
+        nonNegotiable: 'การกด Save Draft ในหน้านี้เป็นเพียงการเก็บเข้ากระดานรอตรวจ ห้ามถือว่าเป็นการสั่ง Publish หรือ Render จริงโดยอัตโนมัติ'
+      },
+      'S09': {
+        code: 'S09',
+        title: 'Content Board & Director Brief Handoff',
+        role: 'ขั้นตอนการตรวจสอบ อนุมัติ และส่งมอบให้ทีมโปรดักชัน',
+        whatIsIt: 'กระดาน Kanban จัดการสถานะของสคริปต์ และสร้างเอกสาร Director Brief ที่สมบูรณ์เพื่อส่งต่อให้ทีมตัดต่อหรือโปรดิวเซอร์',
+        inputs: ['Draft จาก S08'],
+        outputs: ['Export Director Brief (PDF/Notion)', 'Send to MEW EDIT (เมื่อระบบเชื่อมต่อพร้อมจริง)'],
+        features: [
+          'กระดานสถานะ 4 ขั้น: Draft &rarr; Needs Review &rarr; Approved &rarr; Ready for Production',
+          'ปุ่ม Approve Concept: บันทึกเวอร์ชันที่อนุมัติเป็น Immutable Revision ป้องกันการแก้ไขย้อนหลัง',
+          'Director Brief Export: รวม Hook, Beat, Visual cue, SFX direction, สิทธิ์ลิขสิทธิ์ และแหล่งอ้างอิง ส่งต่อให้ตากล้อง/คนตัดต่อได้ทันที'
+        ],
+        nonNegotiable: 'ห้ามส่งคลิปไป Render หรือโพสต์ลง Social Media หากยังไม่ผ่านสถานะ Approved จาก Founder'
+      }
+    };
+
+    function setTab(tab) {
+      const views = ['flow', 'screens', 'stories', 'sketches'];
+      views.forEach(v => {
+        const el = document.getElementById(v === 'sketches' ? 'sketches-view' : 'view-' + v);
+        const btn = document.getElementById('tab-btn-' + v);
+        if (v === tab) {
+          el.classList.remove('hidden');
+          if (btn) {
+            btn.className = 'px-3 py-1.5 text-xs font-medium rounded-lg bg-blue-600 text-white shadow-sm transition';
+          }
+        } else {
+          el.classList.add('hidden');
+          if (btn) {
+            btn.className = 'px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+          }
+        }
+      });
+    }
+
+    function selectNode(id) {
+      // Highlight card
+      document.querySelectorAll('.node-card').forEach(c => c.classList.remove('node-active'));
+      const activeCard = document.getElementById('card-' + id);
+      if (activeCard) activeCard.classList.add('node-active');
+
+      const data = nodeDetails[id] || nodeDetails['S00'];
+      const inspector = document.getElementById('inspector-content');
+
+      inspector.innerHTML = `
+        <div class="space-y-4">
+          <div class="border-b border-slate-200 pb-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded text-xs font-bold code-font bg-blue-100 text-blue-800">${data.code}</span>
+              <span class="text-[11px] font-medium text-slate-500">Screen UX Contract</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mt-1">${data.title}</h3>
+            <p class="text-xs font-medium text-blue-600 mt-0.5">${data.role}</p>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">หน้านี้คืออะไร (Job To Be Done)</h4>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed bg-white p-3 rounded-lg border border-slate-200">${data.whatIsIt}</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <span class="font-bold text-sky-900 block mb-1">&darr; ขาเข้า (Inputs)</span>
+              <ul class="list-disc list-inside text-slate-600 space-y-0.5 text-[11px]">
+                ${data.inputs.map(i => `<li>${i}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="bg-emerald-50/70 p-2.5 rounded-lg border border-emerald-100">
+              <span class="font-bold text-emerald-900 block mb-1">&rarr; ขาออก (Outputs)</span>
+              <ul class="list-disc list-inside text-slate-600 space-y-0.5 text-[11px]">
+                ${data.outputs.map(o => `<li>${o}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">ฟีเจอร์หลักในหน้านี้ (Key Features)</h4>
+            <ul class="mt-1.5 space-y-1.5 text-xs text-slate-600">
+              ${data.features.map(f => `
+                <li class="flex items-start gap-1.5 bg-white p-2 rounded border border-slate-100">
+                  <span class="text-blue-500 mt-0.5 font-bold">&bull;</span>
+                  <span>${f}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <div class="bg-rose-50 border border-rose-200 p-3 rounded-lg">
+            <h4 class="text-xs font-bold text-rose-800 flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+              ข้อห้ามเด็ดขาด (Non-Negotiable)
+            </h4>
+            <p class="text-[11px] text-rose-700 mt-1 leading-snug">${data.nonNegotiable}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // Populate Screen List on Screen View
+    function renderScreenList() {
+      const container = document.getElementById('screen-list-container');
+      const keys = ['S00', 'S01', 'S02', 'S03', 'S04_C', 'S04_P', 'S05', 'S06', 'S07', 'S08', 'S09'];
+      let html = '';
+      keys.forEach(k => {
+        const item = nodeDetails[k];
+        html += `
+          <div class="border border-slate-200 rounded-xl p-5 bg-white hover:border-blue-300 transition space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <div class="flex items-center gap-2.5">
+                <span class="px-2.5 py-0.5 text-xs font-bold bg-slate-100 text-slate-800 code-font rounded">${item.code}</span>
+                <h3 class="font-bold text-slate-900 text-sm">${item.title}</h3>
+              </div>
+              <span class="text-xs font-medium text-blue-600">${item.role}</span>
+            </div>
+            <p class="text-xs text-slate-600">${item.whatIsIt}</p>
+            <div class="bg-slate-50 p-3 rounded-lg text-xs space-y-1">
+              <span class="font-bold text-slate-700">ฟีเจอร์เด่น:</span>
+              <ul class="list-disc list-inside text-slate-600 space-y-0.5">
+                ${item.features.map(f => `<li>${f}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="text-xs text-rose-700 bg-rose-50 p-2 rounded border border-rose-100">
+              <strong>ข้อห้าม:</strong> ${item.nonNegotiable}
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // Initial setup
+    window.addEventListener('DOMContentLoaded', () => {
+      selectNode('S00');
+      renderScreenList();
+    });
+  </script>
+</body>
+</html>

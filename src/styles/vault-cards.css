@@ -1,0 +1,592 @@
+/**
+ * ==============================================================================
+ * MEW CONTENT OS — Vault Cards & Filters Styles (Topic T16)
+ * Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+ * 100% Pure CSS3 · Zero Server Dependencies · Responsive & Accessible
+ * ==============================================================================
+ */
+
+:root {
+  --v6-paper: #fbfaf8;
+  --v6-surface: #ffffff;
+  --v6-soft: #f4f2ee;
+  --v6-line: #e7e3de;
+  --v6-line-dashed: #cfc9c1;
+  --v6-ink: #11110f;
+  --v6-ink-hover: #2a2a28;
+  --v6-muted: #6b6762;
+  --v6-coral: #ed765b;
+  --v6-coral-dark: #ae4f3a;
+  --v6-coral-bg: #fff1ec;
+  --v6-violet: #8a76ff;
+  --v6-violet-dark: #6e56e8;
+  --v6-violet-bg: #f6f4ff;
+  --card-radius: 12px;
+  --pill-radius: 9999px;
+  --font-sans: 'Inter', 'Prompt', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+  --card-shadow: 0 18px 50px rgba(17, 17, 15, 0.05);
+  --card-shadow-hover: 0 24px 60px rgba(17, 17, 15, 0.09);
+  --focus-ring: 0 0 0 3px rgba(237, 118, 91, 0.35);
+}
+
+/* Accessibility: Screen-reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Section Wrapper */
+.vault-library-section {
+  width: 100%;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  color: var(--v6-ink);
+}
+
+/* Toolbar & Filter Bar */
+.vault-filter-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+  background: var(--v6-surface);
+  border: 1px solid var(--v6-line);
+  border-radius: var(--card-radius);
+  padding: 18px 20px;
+  box-shadow: 0 4px 20px rgba(17, 17, 15, 0.03);
+}
+
+.search-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--v6-muted);
+  pointer-events: none;
+}
+
+.vault-search-input {
+  width: 100%;
+  padding: 12px 16px 12px 42px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--v6-ink);
+  background: var(--v6-soft);
+  border: 1px solid var(--v6-line);
+  border-radius: var(--pill-radius);
+  outline: none;
+  transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.vault-search-input:focus {
+  border-color: var(--v6-ink);
+  background: var(--v6-surface);
+  box-shadow: 0 0 0 2px rgba(17, 17, 15, 0.12);
+}
+
+.vault-filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 180px;
+}
+
+.filter-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--v6-muted);
+  letter-spacing: 0.02em;
+}
+
+.vault-select {
+  padding: 9px 12px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--v6-ink);
+  background: var(--v6-surface);
+  border: 1px solid var(--v6-line);
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.vault-select:focus {
+  border-color: var(--v6-ink);
+  box-shadow: 0 0 0 2px rgba(17, 17, 15, 0.1);
+}
+
+.btn-pill {
+  border-radius: var(--pill-radius);
+}
+
+.btn-clear {
+  align-self: flex-end;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--v6-muted);
+  background: var(--v6-surface);
+  border: 1px solid var(--v6-line);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn-clear:hover {
+  color: var(--v6-ink);
+  border-color: var(--v6-ink);
+  background: var(--v6-soft);
+}
+
+.btn-clear:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.packaging-extra-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--v6-line-dashed);
+}
+
+/* Vault Cards Grid */
+.vault-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* .mew-offer-card Signature Style */
+.mew-offer-card,
+.vault-card {
+  position: relative;
+  background: var(--v6-surface);
+  border: 1px solid var(--v6-line);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.vault-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: #d8d3cc;
+}
+
+.vault-card:focus-visible {
+  outline: none;
+  box-shadow: var(--card-shadow-hover), var(--focus-ring);
+}
+
+/* 4px Top Accent Bar */
+.card-accent-strip {
+  height: 4px;
+  width: 100%;
+  background: var(--v6-coral);
+}
+
+.vault-card.coral-accent .card-accent-strip,
+.vault-card[data-vault="content"] .card-accent-strip {
+  background: var(--v6-coral);
+}
+
+.vault-card.violet-accent .card-accent-strip,
+.vault-card[data-vault="packaging"] .card-accent-strip {
+  background: var(--v6-violet);
+}
+
+.card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 14px;
+}
+
+/* Media Header */
+.card-media-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.thumbnail-wrapper {
+  position: relative;
+  width: 96px;
+  height: 64px;
+  border-radius: 8px;
+  background: var(--v6-soft);
+  border: 1px solid var(--v6-line);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.card-thumbnail,
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-duration {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  padding: 2px 5px;
+  font-size: 0.7rem;
+  background: rgba(17, 17, 15, 0.78);
+  color: #ffffff;
+  border-radius: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.creator-badge,
+.creator {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.creator-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--v6-soft);
+  border: 1px solid var(--v6-line);
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--v6-ink);
+}
+
+.creator-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--v6-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saved-date {
+  font-size: 0.76rem;
+  color: var(--v6-muted);
+}
+
+/* Titles */
+.card-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--v6-ink);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.card-subtitle {
+  font-size: 0.88rem;
+  color: var(--v6-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Tags */
+.card-tags-list,
+.topic-tags,
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-pill {
+  padding: 3px 9px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--v6-soft);
+  color: var(--v6-ink);
+  border: 1px solid var(--v6-line);
+  border-radius: var(--pill-radius);
+}
+
+/* ==============================================================================
+   FOUNDER WHY BOX (Prominent Primary Element - Human Rationale Given Priority)
+   ============================================================================== */
+.founder-why-box,
+.founder-why {
+  background: var(--v6-soft);
+  border-left: 3.5px solid var(--v6-coral);
+  padding: 13px 15px;
+  border-radius: 0 8px 8px 0;
+  margin: 2px 0;
+  box-shadow: 0 2px 6px rgba(17, 17, 15, 0.02);
+}
+
+.vault-card.violet-accent .founder-why-box,
+.vault-card[data-vault="packaging"] .founder-why-box {
+  border-left-color: var(--v6-violet);
+}
+
+.why-label-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  color: var(--v6-ink);
+}
+
+.why-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.why-badge {
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--v6-coral-dark);
+  background: var(--v6-coral-bg);
+  padding: 2px 7px;
+  border-radius: var(--pill-radius);
+  border: 1px solid rgba(237, 118, 91, 0.2);
+}
+
+.vault-card.violet-accent .why-badge,
+.vault-card[data-vault="packaging"] .why-badge {
+  color: var(--v6-violet-dark);
+  background: var(--v6-violet-bg);
+  border-color: rgba(138, 118, 255, 0.25);
+}
+
+.founder-why-text {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--v6-ink);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ==============================================================================
+   AI INSIGHT BOX (Subtle Supporting Summary - Secondary Muted Visual Weight)
+   ============================================================================== */
+.ai-insight-box,
+.ai-insight {
+  background: var(--v6-surface);
+  border: 1px dashed var(--v6-line-dashed);
+  border-radius: 6px;
+  padding: 8px 11px;
+  margin: 0;
+}
+
+.ai-insight-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--v6-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.ai-insight-text {
+  font-size: 0.8rem;
+  color: var(--v6-muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Footer Actions */
+.card-footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--v6-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.link-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--v6-muted);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.link-source:hover {
+  color: var(--v6-ink);
+}
+
+.link-source:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: 4px;
+}
+
+/* Primary CTA: Deep Ink Pill Button */
+.btn-primary,
+.btn-use-in-remix {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--v6-ink);
+  border: none;
+  border-radius: var(--pill-radius);
+  cursor: pointer;
+  transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn-use-in-remix:hover {
+  transform: translateY(-2px);
+  background: var(--v6-ink-hover);
+  box-shadow: 0 4px 14px rgba(17, 17, 15, 0.15);
+}
+
+.btn-use-in-remix:active {
+  transform: translateY(0);
+}
+
+.btn-use-in-remix:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Toast: Added to Selection Notification */
+.toast-selection {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: var(--v6-surface);
+  border: 1px solid var(--v6-line);
+  border-radius: var(--card-radius);
+  padding: 14px 18px;
+  box-shadow: 0 16px 40px rgba(17, 17, 15, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  animation: subtleSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.toast-icon.coral {
+  background: var(--v6-coral-bg);
+  color: var(--v6-coral);
+}
+
+.toast-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toast-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--v6-ink);
+}
+
+.toast-desc {
+  font-size: 0.78rem;
+  color: var(--v6-muted);
+}
+
+/* Animations */
+@keyframes subtleSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .vault-card,
+  .btn-use-in-remix,
+  .btn-clear,
+  .vault-search-input,
+  .toast-selection {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .vault-filter-toolbar {
+    padding: 14px 16px;
+  }
+
+  .vault-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toast-selection {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+}

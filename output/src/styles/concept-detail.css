@@ -1,0 +1,677 @@
+/**
+ * ==============================================================================
+ * MEW CONTENT OS — S08 Concept Detail & Script Draft Styles (Topic T27)
+ * Theme: mewteetawat.com V6.3
+ * 100% Pure CSS3 · Modern Custom Properties · Responsive & Accessible
+ * ==============================================================================
+ */
+
+:root {
+  --canvas-bg: #fbfaf8;
+  --surface-soft: #f4f2ee;
+  --stone-line: #e7e3de;
+  --deep-ink: #11110f;
+  --muted-text: #6b6762;
+  --accent-coral: #ed765b;
+  --kicker-coral: #ae4f3a;
+  --electric-violet: #8a76ff;
+  --success-green: #059669;
+  --success-bg: #ecfdf5;
+  --shadow-subtle: 0 18px 50px rgba(17, 17, 15, 0.05);
+  --shadow-card: 0 4px 20px rgba(17, 17, 15, 0.04);
+}
+
+.concept-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 8px 0 60px 0;
+  font-family: 'Inter', 'Prompt', 'Noto Sans Thai', sans-serif;
+  color: var(--deep-ink);
+  background-color: transparent;
+  animation: subtleSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes subtleSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==============================================================================
+   Header Navigation & Actions
+   ============================================================================== */
+.detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detail-top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.detail-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge-pill.coral {
+  background: rgba(237, 118, 91, 0.12);
+  color: var(--kicker-coral);
+  border: 1px solid rgba(237, 118, 91, 0.25);
+}
+
+.badge-pill.violet {
+  background: rgba(138, 118, 255, 0.12);
+  color: #5841d8;
+  border: 1px solid rgba(138, 118, 255, 0.25);
+}
+
+.badge-pill.soft {
+  background: var(--surface-soft);
+  color: var(--muted-text);
+  border: 1px solid var(--stone-line);
+}
+
+.detail-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.title-and-save-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.concept-meta-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.concept-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--deep-ink);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.concept-subtags-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.concept-subtag {
+  font-size: 0.85rem;
+  color: var(--muted-text);
+}
+
+.subtag-divider {
+  color: var(--stone-line);
+}
+
+.concept-stage-indicator {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--kicker-coral);
+  background: rgba(237, 118, 91, 0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ==============================================================================
+   Buttons (mewteetawat.com V6.3 Design System)
+   ============================================================================== */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 9999px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  min-height: 42px;
+}
+
+.btn-pill:focus-visible {
+  outline: 2px solid var(--deep-ink);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--deep-ink);
+  color: #ffffff;
+  border: 1px solid var(--deep-ink);
+  box-shadow: 0 4px 14px rgba(17, 17, 15, 0.15);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: #232320;
+  box-shadow: 0 6px 20px rgba(17, 17, 15, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--surface-soft);
+  color: var(--deep-ink);
+  border: 1px solid var(--stone-line);
+}
+
+.btn-secondary:hover {
+  background: #ffffff;
+  border-color: var(--deep-ink);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: #ffffff;
+  color: var(--deep-ink);
+  border: 1px solid var(--stone-line);
+}
+
+.btn-ghost:hover {
+  background: var(--surface-soft);
+  transform: translateY(-2px);
+}
+
+/* ==============================================================================
+   Cards (.mew-offer-card)
+   ============================================================================== */
+.mew-offer-card {
+  background: #ffffff;
+  border: 1px solid var(--stone-line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-subtle);
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mew-offer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 60px rgba(17, 17, 15, 0.08);
+}
+
+.mew-offer-card.accent-coral {
+  border-top: 4px solid var(--accent-coral);
+}
+
+.mew-offer-card.accent-violet {
+  border-top: 4px solid var(--electric-violet);
+}
+
+/* ==============================================================================
+   Grid Layout: Blueprint vs Editor
+   ============================================================================== */
+.cd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .cd-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Column: Blueprint Overview */
+.cd-blueprint-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cd-box {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cd-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cd-box-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted-text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cd-box-pill {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--muted-text);
+  background: var(--surface-soft);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  border: 1px solid var(--stone-line);
+}
+
+.cd-text {
+  font-size: 0.94rem;
+  color: var(--deep-ink);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.cd-outline-list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.92rem;
+  color: var(--deep-ink);
+  line-height: 1.65;
+}
+
+.cd-outline-list li {
+  margin-bottom: 4px;
+}
+
+.cd-meta-description {
+  font-size: 0.85rem;
+  color: var(--muted-text);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cd-snapshot-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.snapshot-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--deep-ink);
+  background: var(--surface-soft);
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--stone-line);
+}
+
+/* Right Column: Editor & Instruction */
+.cd-editor-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.editor-card {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--stone-line);
+}
+
+.editor-label-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--deep-ink);
+}
+
+.editor-heading {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.editor-autosave-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--success-green);
+  background: var(--success-bg);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+.editor-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.editor-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.editor-field-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--deep-ink);
+}
+
+.field-hint {
+  font-size: 0.78rem;
+  color: var(--muted-text);
+}
+
+.editor-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  border: 1px solid var(--stone-line);
+  border-radius: 10px;
+  background: var(--surface-soft);
+  outline: none;
+  resize: vertical;
+  transition: all 0.2s ease;
+  color: var(--deep-ink);
+}
+
+.editor-textarea:focus {
+  border-color: var(--deep-ink);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(17, 17, 15, 0.08);
+}
+
+.editor-textarea::placeholder {
+  color: #9c9790;
+}
+
+/* ==============================================================================
+   Natural Language Edit Instruction Card
+   ============================================================================== */
+.instruction-card {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.instruction-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.instruction-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--kicker-coral);
+}
+
+.instruction-heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--deep-ink);
+}
+
+.instruction-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--kicker-coral);
+  background: rgba(237, 118, 91, 0.12);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(237, 118, 91, 0.2);
+}
+
+.instruction-guide {
+  font-size: 0.88rem;
+  color: var(--muted-text);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.instruction-chips-wrap {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chips-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted-text);
+}
+
+.quick-chip-btn {
+  background: #ffffff;
+  border: 1px solid var(--stone-line);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--deep-ink);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 32px;
+}
+
+.quick-chip-btn:hover {
+  background: var(--surface-soft);
+  border-color: var(--deep-ink);
+  transform: translateY(-1px);
+}
+
+.quick-chip-btn:focus-visible {
+  outline: 2px solid var(--deep-ink);
+  outline-offset: 1px;
+}
+
+.instruction-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.instruction-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.edit-status-feedback {
+  font-size: 0.82rem;
+  color: var(--success-green);
+  font-weight: 600;
+}
+
+/* ==============================================================================
+   Toast Notification: Draft Saved to Content Board
+   ============================================================================== */
+.toast-draft-saved {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  max-width: 480px;
+  width: calc(100% - 48px);
+  z-index: 1000;
+  background: #11110f;
+  color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 20px;
+  animation: toastSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes toastSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.toast-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.toast-icon-wrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(5, 150, 105, 0.25);
+  color: #34d399;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.toast-text-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.toast-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.toast-message {
+  font-size: 0.84rem;
+  color: #d1cfc7;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.toast-highlight {
+  color: #fca5a5;
+  font-weight: 700;
+}
+
+.toast-action-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.toast-board-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #ed765b;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+.toast-board-link:hover {
+  color: #ff9f87;
+}
+
+.toast-close-btn {
+  background: transparent;
+  border: none;
+  color: #a8a29e;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.toast-close-btn:hover {
+  color: #ffffff;
+}
+
+/* ==============================================================================
+   Screen Readers and Accessibility
+   ============================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .concept-detail-container,
+  .toast-draft-saved,
+  .btn-pill,
+  .mew-offer-card,
+  .quick-chip-btn {
+    animation: none !important;
+    transition: none !important;
+  }
+}

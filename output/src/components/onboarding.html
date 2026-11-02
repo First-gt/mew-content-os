@@ -1,0 +1,327 @@
+<!-- ==============================================================================
+     MEW CONTENT OS — Component: S-ONBOARD (Fullscreen Scanfeed Experience)
+     Reference: https://app.scanfeed.co/
+     Features:
+       - Fullscreen Dedicated Onboarding Experience (100vw x 100vh)
+       - Dynamic Typing Animation for Welcome Headlines (Typewriter Effect)
+       - Step-by-Step Screen Transitions (Welcome -> Role -> Niche -> Channel Spy -> Launch)
+       - 1-Tap Auto-Advance & Zero-Typing Friction
+       - V6.3 Theme: Warm Stone (#FBF9F5), Coral (#FF5733), Violet (#6C5CE7), Deep Ink (#1E1E1E)
+     ============================================================================== -->
+
+<div class="onboarding-fullscreen" id="onboarding-modal" role="dialog" aria-modal="true" aria-labelledby="ob-typewriter-text" style="display: none;">
+  <!-- Background Glow Accents -->
+  <div class="ob-bg-glow ob-glow-1" aria-hidden="true"></div>
+  <div class="ob-bg-glow ob-glow-2" aria-hidden="true"></div>
+
+  <!-- Top Navigation Bar -->
+  <header class="ob-top-nav">
+    <div class="ob-brand-badge">
+      <span class="ob-brand-icon">⚡</span>
+      <span class="ob-brand-name">MEW CONTENT OS</span>
+      <span class="ob-brand-tag">Brand Brain V6.3</span>
+    </div>
+
+    <!-- Segmented Step Indicators (Scanfeed Style) -->
+    <div class="ob-step-indicator" id="ob-steps-tracker" aria-label="ขั้นตอนการตั้งค่า">
+      <div class="ob-step-dot active" data-step="0" title="หน้าต้อนรับ">
+        <span class="dot-num">1</span>
+        <span class="dot-label">ต้อนรับ</span>
+      </div>
+      <div class="ob-step-connector"></div>
+      <div class="ob-step-dot" data-step="1" title="บทบาท">
+        <span class="dot-num">2</span>
+        <span class="dot-label">บทบาท</span>
+      </div>
+      <div class="ob-step-connector"></div>
+      <div class="ob-step-dot" data-step="2" title="หมวดหมู่">
+        <span class="dot-num">3</span>
+        <span class="dot-label">หมวดหมู่</span>
+      </div>
+      <div class="ob-step-connector"></div>
+      <div class="ob-step-dot" data-step="3" title="ช่องคู่แข่ง">
+        <span class="dot-num">4</span>
+        <span class="dot-label">ส่องช่อง</span>
+      </div>
+      <div class="ob-step-connector"></div>
+      <div class="ob-step-dot" data-step="4" title="พร้อมใช้งาน">
+        <span class="dot-num">5</span>
+        <span class="dot-label">เริ่มต้น</span>
+      </div>
+    </div>
+
+    <!-- Skip Button -->
+    <div class="ob-top-actions">
+      <button type="button" class="btn-ob-skip" id="ob-btn-skip">
+        <span>ข้ามไปหน้าแดชบอร์ด</span>
+        <span class="skip-arrow">➔</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Viewport Container -->
+  <main class="ob-viewport">
+    
+    <!-- ======================================================================
+         SCREEN 0: FULLSCREEN WELCOME HERO WITH DYNAMIC TYPING ANIMATION
+         ====================================================================== -->
+    <section class="ob-screen ob-screen-active" id="ob-screen-0" aria-label="ยินดีต้อนรับ">
+      <div class="ob-hero-wrapper">
+        <div class="ob-pill-badge">
+          <span class="badge-dot"></span>
+          <span>CREATOR INTELLIGENCE • MEW CONTENT OS</span>
+        </div>
+
+        <!-- Dynamic Typing Animation Headline -->
+        <h1 class="ob-typing-container">
+          <span class="ob-typewriter-text" id="ob-typewriter-text">ยินดีต้อนรับสู่ MEW Content OS</span><span class="ob-typewriter-cursor" aria-hidden="true">|</span>
+        </h1>
+
+        <p class="ob-hero-sub">
+          ระบบ AI แกะรอยโครงสร้างคลิปไวรัล แปลงเป็นบทคอนเทนต์และสคริปต์สไตล์ Mew Teetawat<br class="sub-break">
+          ตั้งค่า Brand Brain สั้นๆ เพื่อให้ AI แนะนำแนวทางที่เหมาะกับช่องของคุณที่สุด
+        </p>
+
+        <!-- Quick Name Input Box -->
+        <div class="ob-hero-input-box">
+          <label for="ob-user-name" class="ob-input-label">ชื่อของคุณ หรือชื่อช่อง / แบรนด์</label>
+          <div class="ob-input-wrapper">
+            <span class="ob-input-icon">👤</span>
+            <input type="text" id="ob-user-name" class="ob-input-hero" placeholder="เช่น Mew Teetawat หรือ ช่องรีวิวเทค" autocomplete="off" value="Creator">
+          </div>
+        </div>
+
+        <div class="ob-hero-actions">
+          <button type="button" class="btn-ob-hero-primary" id="ob-btn-start">
+            <span>เริ่มต้นตั้งค่า Brand Brain</span>
+            <span class="btn-icon">➔</span>
+          </button>
+        </div>
+
+        <p class="ob-hero-note">⚡ ใช้เวลาไม่ถึง 1 นาที • สามารถกลับมาปรับแต่งใหม่ได้ตลอดเวลา</p>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SCREEN 1: ROLE SELECTION (4 BIG SCANFEED CARDS)
+         ====================================================================== -->
+    <section class="ob-screen" id="ob-screen-1" aria-label="เลือกบทบาท">
+      <div class="ob-content-wrapper">
+        <div class="ob-screen-header">
+          <span class="ob-step-badge">ขั้นตอนที่ 2 จาก 5</span>
+          <h2 class="ob-screen-title">บทบาทหลักในการทำคอนเทนต์ของคุณคืออะไร?</h2>
+          <p class="ob-screen-sub">เลือก 1 ข้อเพื่อให้ AI ปรับน้ำเสียง (Tone of Voice) และมุมมองสคริปต์ให้ตรงกับกลุ่มเป้าหมาย</p>
+        </div>
+
+        <div class="ob-role-grid" role="radiogroup" aria-label="เลือกบทบาท">
+          <!-- Card 1: Creator -->
+          <button type="button" class="ob-role-card" data-role="creator" role="radio" aria-checked="false">
+            <div class="role-icon-box">🎬</div>
+            <div class="role-info">
+              <h3 class="role-title">Creator & Influencer</h3>
+              <p class="role-desc">ผลิตคลิปสั้น สร้างตัวตน ขยายฐานคนดู และเพิ่มยอดวิวด้วยคอนเทนต์ที่ดึงดูด</p>
+            </div>
+            <div class="role-check" aria-hidden="true">✓</div>
+          </button>
+
+          <!-- Card 2: Brand Founder -->
+          <button type="button" class="ob-role-card" data-role="founder" role="radio" aria-checked="false">
+            <div class="role-icon-box">💼</div>
+            <div class="role-info">
+              <h3 class="role-title">เจ้าของธุรกิจ (Brand Founder)</h3>
+              <p class="role-desc">สร้างคอนเทนต์ขายสินค้า ดึงดูดลูกค้าตรงกลุ่ม และเปลี่ยนยอดวิวเป็นยอดขายจริง</p>
+            </div>
+            <div class="role-check" aria-hidden="true">✓</div>
+          </button>
+
+          <!-- Card 3: Marketer -->
+          <button type="button" class="ob-role-card" data-role="marketer" role="radio" aria-checked="false">
+            <div class="role-icon-box">📊</div>
+            <div class="role-info">
+              <h3 class="role-title">นักการตลาด (Marketer)</h3>
+              <p class="role-desc">วางกลยุทธ์คอนเทนต์ ทำแคมเปญ คุมทิศทางแบรนด์ และทดลองโครงสร้าง Hook ใหม่ๆ</p>
+            </div>
+            <div class="role-check" aria-hidden="true">✓</div>
+          </button>
+
+          <!-- Card 4: Agency -->
+          <button type="button" class="ob-role-card" data-role="agency" role="radio" aria-checked="false">
+            <div class="role-icon-box">🚀</div>
+            <div class="role-info">
+              <h3 class="role-title">Agency / Freelance Creator</h3>
+              <p class="role-desc">รับงานลูกค้า ผลิตสคริปต์และสตอรี่บอร์ดแบบมืออาชีพ รวดเร็ว ไม่ตันไอเดีย</p>
+            </div>
+            <div class="role-check" aria-hidden="true">✓</div>
+          </button>
+        </div>
+
+        <footer class="ob-screen-footer">
+          <button type="button" class="btn-ob-secondary" id="ob-back-1">ย้อนกลับ</button>
+          <button type="button" class="btn-ob-primary" id="ob-next-1" disabled>
+            <span>ถัดไป</span>
+            <span>➔</span>
+          </button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SCREEN 2: CONTENT NICHE (INTERACTIVE CHIPS)
+         ====================================================================== -->
+    <section class="ob-screen" id="ob-screen-2" aria-label="เลือกหมวดหมู่เนื้อหา">
+      <div class="ob-content-wrapper">
+        <div class="ob-screen-header">
+          <span class="ob-step-badge">ขั้นตอนที่ 3 จาก 5</span>
+          <h2 class="ob-screen-title">เลือกหมวดหมู่เนื้อหาที่คุณโฟกัส</h2>
+          <p class="ob-screen-sub">เลือกได้สูงสุด 3 หมวด เพื่อดึงคลังคลิปตัวอย่างและแพทเทิร์นการพูดที่เข้ากับสายงานของคุณ</p>
+        </div>
+
+        <div class="ob-niche-chips" role="group" aria-label="หมวดหมู่เนื้อหา">
+          <button type="button" class="ob-chip" data-niche="business" aria-pressed="false">
+            <span class="chip-icon">💼</span>
+            <span class="chip-name">ธุรกิจ & การเงิน</span>
+          </button>
+          <button type="button" class="ob-chip" data-niche="tech" aria-pressed="false">
+            <span class="chip-icon">🤖</span>
+            <span class="chip-name">Tech & AI</span>
+          </button>
+          <button type="button" class="ob-chip" data-niche="health" aria-pressed="false">
+            <span class="chip-icon">🧠</span>
+            <span class="chip-name">สุขภาพ & พัฒนาตนเอง</span>
+          </button>
+          <button type="button" class="ob-chip" data-niche="lifestyle" aria-pressed="false">
+            <span class="chip-icon">✈️</span>
+            <span class="chip-name">ไลฟ์สไตล์ & ท่องเที่ยว</span>
+          </button>
+          <button type="button" class="ob-chip" data-niche="entertainment" aria-pressed="false">
+            <span class="chip-icon">🎭</span>
+            <span class="chip-name">บันเทิง & มีม</span>
+          </button>
+          <button type="button" class="ob-chip" data-niche="education" aria-pressed="false">
+            <span class="chip-icon">📚</span>
+            <span class="chip-name">การศึกษา & ความรู้</span>
+          </button>
+          <button type="button" class="ob-chip" data-niche="food" aria-pressed="false">
+            <span class="chip-icon">🍔</span>
+            <span class="chip-name">อาหาร & รีวิวสินค้า</span>
+          </button>
+          <button type="button" class="ob-chip" data-niche="marketing" aria-pressed="false">
+            <span class="chip-icon">📈</span>
+            <span class="chip-name">ข่าวสาร & การตลาด</span>
+          </button>
+        </div>
+
+        <div class="ob-counter-bar">
+          <span id="ob-niche-counter">เลือกแล้ว 0 จาก 3 หมวด</span>
+        </div>
+
+        <footer class="ob-screen-footer">
+          <button type="button" class="btn-ob-secondary" id="ob-back-2">ย้อนกลับ</button>
+          <button type="button" class="btn-ob-primary" id="ob-next-2" disabled>
+            <span>ถัดไป</span>
+            <span>➔</span>
+          </button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SCREEN 3: CHANNEL SPY & BENCHMARK PICKER
+         ====================================================================== -->
+    <section class="ob-screen" id="ob-screen-3" aria-label="ช่องคู่แข่งหรือต้นแบบ">
+      <div class="ob-content-wrapper">
+        <div class="ob-screen-header">
+          <span class="ob-step-badge">ขั้นตอนที่ 4 จาก 5</span>
+          <h2 class="ob-screen-title">ช่องต้นแบบที่คุณชื่นชอบ หรือคู่แข่งที่ต้องการแกะรอย</h2>
+          <p class="ob-screen-sub">ระบบจะนำช่องนี้ไปเตรียมไว้ใน Research Studio เพื่อให้คุณสแกน 400+ คลิปได้ทันที</p>
+        </div>
+
+        <div class="ob-spy-input-box">
+          <label for="ob-channel-input" class="ob-input-label">ชื่อช่องหรือ Handle (@channel)</label>
+          <div class="ob-input-wrapper">
+            <span class="ob-input-prefix">@</span>
+            <input type="text" id="ob-channel-input" class="ob-input-hero" placeholder="mewteetawat หรือ borntodev" value="mewteetawat">
+          </div>
+        </div>
+
+        <!-- Curated Preset Picks (Scanfeed Style) -->
+        <div class="ob-presets-container">
+          <p class="ob-presets-label">หรือคลิกเลือกช่องแนะนำยอดนิยม:</p>
+          <div class="ob-presets-grid">
+            <button type="button" class="ob-preset-card active" data-handle="@mewteetawat">
+              <span class="preset-avatar">🎯</span>
+              <div class="preset-text">
+                <span class="preset-handle">@mewteetawat</span>
+                <span class="preset-desc">Creator OS & Personal Branding • 400+ Clips</span>
+              </div>
+            </button>
+            <button type="button" class="ob-preset-card" data-handle="@borntodev">
+              <span class="preset-avatar">💻</span>
+              <div class="preset-text">
+                <span class="preset-handle">@borntodev</span>
+                <span class="preset-desc">Tech, Coding & Engineering • 350+ Clips</span>
+              </div>
+            </button>
+            <button type="button" class="ob-preset-card" data-handle="@beautydaily">
+              <span class="preset-avatar">✨</span>
+              <div class="preset-text">
+                <span class="preset-handle">@beautydaily</span>
+                <span class="preset-desc">Lifestyle, Beauty & Short Reviews • 280+ Clips</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <footer class="ob-screen-footer">
+          <button type="button" class="btn-ob-secondary" id="ob-back-3">ย้อนกลับ</button>
+          <button type="button" class="btn-ob-primary" id="ob-next-3">
+            <span>ดูสรุปโปรไฟล์</span>
+            <span>➔</span>
+          </button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SCREEN 4: LAUNCH READINESS (SUMMARY CARD)
+         ====================================================================== -->
+    <section class="ob-screen" id="ob-screen-4" aria-label="สรุปความพร้อม">
+      <div class="ob-content-wrapper">
+        <div class="ob-launch-card">
+          <div class="launch-icon-badge">🎉</div>
+          <h2 class="launch-title">Brand Brain ของคุณพร้อมทำงานแล้ว!</h2>
+          <p class="launch-sub">เราได้บันทึกข้อมูลและปรับแต่ง MEW Content OS ให้เข้ากับสไตล์ของคุณเรียบร้อยแล้ว</p>
+
+          <!-- Summary Matrix -->
+          <div class="ob-summary-matrix">
+            <div class="summary-item">
+              <span class="summary-label">ผู้ใช้งาน</span>
+              <span class="summary-val" id="sum-name">Creator</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">บทบาท</span>
+              <span class="summary-val" id="sum-role">Creator & Influencer</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">หมวดหมู่</span>
+              <span class="summary-val" id="sum-niches">Tech & AI, ธุรกิจ & การเงิน</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">ช่องต้นแบบ</span>
+              <span class="summary-val" id="sum-channel">@mewteetawat</span>
+            </div>
+          </div>
+
+          <div class="launch-actions">
+            <button type="button" class="btn-ob-launch" id="ob-btn-launch">
+              <span>🚀 เริ่มต้นใช้งาน MEW Content OS</span>
+            </button>
+          </div>
+
+          <p class="launch-tip">Tip: คุณสามารถคลิกปุ่ม <strong>🧠 Brand Brain</strong> ที่แถบด้านบนเพื่ออัปเดตข้อมูลได้ตลอดเวลา</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>

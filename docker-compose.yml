@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  # Service 1: Real-time Live Web & Mobile Dashboard
+  mew-dashboard:
+    build: .
+    container_name: mew-live-dashboard
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  # Service 2: Secure Public Gateway (Cloudflare Tunnel for 4G/5G Remote Mobile Access)
+  # Allows mobile monitoring anywhere outside the house without being on the same Wi-Fi
+  mew-gateway:
+    image: cloudflare/cloudflared:latest
+    container_name: mew-live-gateway
+    restart: unless-stopped
+    command: tunnel --url http://mew-dashboard:4000 --no-autoupdate
+    depends_on:
+      - mew-dashboard

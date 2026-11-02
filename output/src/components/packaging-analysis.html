@@ -1,0 +1,418 @@
+<!-- ==============================================================================
+     MEW CONTENT OS — S02 Packaging Analysis Panel (HOW) (Topic T10)
+     Pure Client-Side Frontend · Zero Server Dependencies
+     Theme: mewteetawat.com V6.3 (Paper Canvas, Warm Stone, Electric Violet & Deep Ink)
+
+     Definition of Done (DOD) Checklist:
+     - HTML sections:
+       1. pa-hook: ประโยคเปิดสะกดคนดู (The Hook)
+       2. pa-opening-pattern: โครงสร้างฉากเปิด (Opening Pattern)
+       3. pa-narrative-beats: จังหวะลำดับเรื่องเล่า (Narrative Beats)
+       4. pa-pacing: จังหวะและความเร็วในการเล่า (Pacing)
+       5. pa-music-sfx: ดนตรีและเสียงประกอบ (Music & SFX)
+       6. pa-editing-mechanics: กลเม็ดงานตัดต่อ (Editing Mechanics)
+       7. pa-tension-emotion: การไต่ระดับอารมณ์และความตึงเครียด (Tension & Emotion)
+       8. pa-timestamp-highlights: ไทม์โค้ดจุดสำคัญ (Timestamp Highlights)
+       9. pa-what-is-good: คำถาม "เล่าได้ดีอย่างไร?" (What is Good)
+     - JS: คลิก timestamp highlight แล้ว video-player seek ไปเวลานั้น
+     - JS: ข้อสังเกตจาก metrics (ยอดวิวสูง) แสดงเป็น "ข้อสังเกต" และมีข้อความ pa-no-causation-note ห้ามฟันธงว่า Hook/เสียงเป็นสาเหตุไวรัล (A22)
+     - JS: เมื่อ source เป็น Analysis unavailable แท็บนี้แสดงเฉพาะ state-unavailable (T07)
+     - CSS: ใช้โทนสีต่างจากแท็บ Content ให้แยกสองคลังออกด้วยสายตา (โทน Electric Violet #8a76ff เหมือน Vault ใน T15)
+     - Fields ที่ว่างแสดง "ไม่ทราบ" โดยไม่ซ่อนทั้ง section
+     - ถ้าไม่มี timestamp ซ่อน timecode หรือแสดง "ไม่ทราบเวลา" ห้ามแต่งเลขเวลา
+     - STRICT NEGATIVE CONSTRAINT: Zero fake/arbitrary statistics.
+     ============================================================================== -->
+
+<div 
+  class="packaging-analysis-panel mew-offer-card violet-bar" 
+  id="packaging-analysis-panel" 
+  data-testid="packaging-analysis-panel"
+  role="region" 
+  aria-label="แผงผลวิเคราะห์รูปแบบการนำเสนอ Packaging Analysis (HOW)"
+>
+
+  <!-- ==========================================================================
+       PANEL HEADER & PHILOSOPHY NOTICE
+       ========================================================================== -->
+  <header class="packaging-panel-header">
+    <div class="packaging-header-main">
+      <div class="header-badge-row">
+        <span class="badge-pill violet-accent">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          Packaging Lens (HOW)
+        </span>
+        <span class="panel-kicker-tag font-num">Deconstruction 02</span>
+      </div>
+
+      <h2 class="packaging-panel-title">
+        ลีลา โครงสร้าง &amp; เทคนิคการนำเสนอ
+      </h2>
+      <p class="packaging-panel-desc">
+        ถอดรหัสวิธีการนำเสนอ รูปแบบการเล่า การเปิดคลิป จังหวะ และการตัดต่อ (<strong>HOW</strong>) โดยแยกขาดจากสาระ (<strong>WHAT</strong>) เพื่อเก็บเป็นสูตรลีลาเข้า Packaging Vault ได้อย่างอิสระ
+      </p>
+    </div>
+
+    <!-- Independent Human Choice Callout -->
+    <aside class="founder-agency-callout violet-agency-callout" aria-label="หลักการอิสระในการตัดสินใจของ Founder">
+      <div class="callout-icon" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+      </div>
+      <div class="callout-content">
+        <strong class="callout-title">Independent Vault Save</strong>
+        <span class="callout-text">คุณมีสิทธิ์ Save เฉพาะ Packaging เข้าคลังลีลา แม้เนื้อหาสาระของคลิปจะไม่เกี่ยวกับธุรกิจของเราเลยก็ตาม (Story B) ปราศจากการบังคับใดๆ</span>
+      </div>
+    </aside>
+
+    <!-- ========================================================================
+         SPEC A22 GUARDRAIL: pa-no-causation-note
+         ข้อสังเกตจาก metrics (ยอดวิวสูง) แสดงเป็น "ข้อสังเกต" 
+         ห้ามฟันธงว่า Hook/เสียงเป็นสาเหตุไวรัล (Correlation is not causation)
+         ======================================================================== -->
+    <aside 
+      class="pa-no-causation-note" 
+      id="pa-no-causation-note" 
+      data-testid="pa-no-causation-note"
+      role="note" 
+      aria-label="ข้อสังเกตเชิงโครงสร้างและข้อควรระวังเรื่องความสัมพันธ์ไม่ใช่สาเหตุ (A22)"
+    >
+      <div class="causation-icon-box" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <div class="causation-content">
+        <div class="causation-header-row">
+          <strong class="causation-title">ข้อสังเกตเชิงลีลา (ไม่ใช่ข้อสรุปเชิงสาเหตุ)</strong>
+          <span class="badge-pill causation-spec-badge">Spec A22</span>
+        </div>
+        <p class="causation-text" id="pa-causation-text">
+          <span class="observation-highlight">ข้อสังเกต:</span> คลิปต้นทางมียอดรับชมสูง อย่างไรก็ตาม ลีลา Hook รูปแบบการตัดต่อ หรือเสียงดนตรีที่พบ เป็นเพียง <em>"ข้อสังเกตเชิงโครงสร้าง"</em> เท่านั้น <strong>ห้ามฟันธงว่า Hook หรือเสียงเป็นสาเหตุที่ทำให้คลิปไวรัล</strong> (Correlation does not imply causation) ปัจจัยความสำเร็จขึ้นกับบริบทภายนอกและอัลกอริทึมที่ไม่อาจชี้ชัดได้
+        </p>
+      </div>
+    </aside>
+  </header>
+
+  <!-- ==========================================================================
+       CONTAINER FOR ALL 9 PACKAGING ANALYSIS SECTIONS
+       ========================================================================== -->
+  <div class="packaging-sections-body" id="packaging-sections-body">
+
+    <!-- ========================================================================
+         SECTION 1: pa-hook (ประโยคเปิดสะกดคนดู)
+         ======================================================================== -->
+    <section 
+      class="analysis-section pa-hook" 
+      id="pa-hook" 
+      data-testid="pa-hook" 
+      aria-labelledby="heading-pa-hook"
+    >
+      <div class="section-header-row">
+        <h3 class="section-badge-title violet-kicker" id="heading-pa-hook">
+          <span class="section-step-num font-num">01</span>
+          <span>The Hook (ประโยคเปิดสะกดคนดู)</span>
+        </h3>
+        <span class="section-caption-label">3-5 วินาทีแรกที่หยุดนิ้วโป้งผู้ชม</span>
+      </div>
+
+      <div 
+        class="analysis-card-box hook-quote-box" 
+        id="packaging-hook" 
+        data-testid="packaging-hook"
+        role="region"
+        aria-live="polite"
+      >
+        <span class="empty-field-text">ไม่ทราบ</span>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 2: pa-opening-pattern (โครงสร้างฉากเปิด)
+         ======================================================================== -->
+    <section 
+      class="analysis-section pa-opening-pattern" 
+      id="pa-opening-pattern" 
+      data-testid="pa-opening-pattern" 
+      aria-labelledby="heading-pa-opening-pattern"
+    >
+      <div class="section-header-row">
+        <h3 class="section-badge-title violet-kicker" id="heading-pa-opening-pattern">
+          <span class="section-step-num font-num">02</span>
+          <span>Opening Pattern (โครงสร้างฉากเปิด)</span>
+        </h3>
+        <span class="section-caption-label">รูปแบบและเทคนิคการวางเฟรมแรกของวิดีโอ</span>
+      </div>
+
+      <div 
+        class="analysis-card-box" 
+        id="packaging-opening-pattern" 
+        data-testid="packaging-opening-pattern"
+        role="region"
+        aria-live="polite"
+      >
+        <span class="empty-field-text">ไม่ทราบ</span>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 3: pa-narrative-beats (จังหวะลำดับเรื่องเล่า)
+         ======================================================================== -->
+    <section 
+      class="analysis-section pa-narrative-beats" 
+      id="pa-narrative-beats" 
+      data-testid="pa-narrative-beats" 
+      aria-labelledby="heading-pa-narrative-beats"
+    >
+      <div class="section-header-row">
+        <h3 class="section-badge-title violet-kicker" id="heading-pa-narrative-beats">
+          <span class="section-step-num font-num">03</span>
+          <span>Narrative Beats (จังหวะลำดับเรื่องเล่า)</span>
+        </h3>
+        <span class="section-caption-label">เส้นเรื่องและลำดับการพาคนดูจากจุดเริ่มต้นสู่บทสรุป</span>
+      </div>
+
+      <ol 
+        class="beats-step-timeline" 
+        id="packaging-narrative-beats" 
+        data-testid="packaging-narrative-beats"
+        role="list"
+        aria-live="polite"
+      >
+        <li class="empty-list-item">
+          <span class="empty-field-text">ไม่ทราบ</span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 4: pa-pacing (จังหวะและความเร็วในการเล่า)
+         ======================================================================== -->
+    <section 
+      class="analysis-section pa-pacing" 
+      id="pa-pacing" 
+      data-testid="pa-pacing" 
+      aria-labelledby="heading-pa-pacing"
+    >
+      <div class="section-header-row">
+        <h3 class="section-badge-title violet-kicker" id="heading-pa-pacing">
+          <span class="section-step-num font-num">04</span>
+          <span>Pacing (จังหวะและความเร็วในการเล่า)</span>
+        </h3>
+        <span class="section-caption-label">ความเร็วของการตัด การเว้นวรรค และอัตราการป้อนข้อมูล</span>
+      </div>
+
+      <div 
+        class="analysis-card-box" 
+        id="packaging-pacing" 
+        data-testid="packaging-pacing"
+        role="region"
+        aria-live="polite"
+      >
+        <span class="empty-field-text">ไม่ทราบ</span>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 5: pa-music-sfx (ดนตรีและเสียงประกอบ)
+         ======================================================================== -->
+    <section 
+      class="analysis-section pa-music-sfx" 
+      id="pa-music-sfx" 
+      data-testid="pa-music-sfx" 
+      aria-labelledby="heading-pa-music-sfx"
+    >
+      <div class="section-header-row">
+        <h3 class="section-badge-title violet-kicker" id="heading-pa-music-sfx">
+          <span class="section-step-num font-num">05</span>
+          <span>Music &amp; Sound Design (ดนตรีและเสียงประกอบ)</span>
+        </h3>
+        <span class="section-caption-label">เสียงบรรยากาศ ดนตรีคลอ และ SFX ที่ขับเคลื่อนอารมณ์</span>
+      </div>
+
+      <div 
+        class="analysis-card-box muted-bg" 
+        id="packaging-music-sfx" 
+        data-testid="packaging-music-sfx"
+        role="region"
+        aria-live="polite"
+      >
+        <span class="empty-field-text">ไม่ทราบ</span>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 6: pa-editing-mechanics (กลเม็ดงานตัดต่อ)
+         ======================================================================== -->
+    <section 
+      class="analysis-section pa-editing-mechanics" 
+      id="pa-editing-mechanics" 
+      data-testid="pa-editing-mechanics" 
+      aria-labelledby="heading-pa-editing-mechanics"
+    >
+      <div class="section-header-row">
+        <h3 class="section-badge-title violet-kicker" id="heading-pa-editing-mechanics">
+          <span class="section-step-num font-num">06</span>
+          <span>Editing Mechanics (กลเม็ดงานตัดต่อ)</span>
+        </h3>
+        <span class="section-caption-label">เทคนิค Jump Cut, Punch Zoom, Overlay หรือ Split Screen</span>
+      </div>
+
+      <div 
+        class="analysis-card-box" 
+        id="packaging-editing-mechanics" 
+        data-testid="packaging-editing-mechanics"
+        role="region"
+        aria-live="polite"
+      >
+        <span class="empty-field-text">ไม่ทราบ</span>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 7: pa-tension-emotion (การไต่ระดับอารมณ์และความตึงเครียด)
+         ======================================================================== -->
+    <section 
+      class="analysis-section pa-tension-emotion" 
+      id="pa-tension-emotion" 
+      data-testid="pa-tension-emotion" 
+      aria-labelledby="heading-pa-tension-emotion"
+    >
+      <div class="section-header-row">
+        <h3 class="section-badge-title violet-kicker" id="heading-pa-tension-emotion">
+          <span class="section-step-num font-num">07</span>
+          <span>Tension &amp; Emotion (การไต่ระดับอารมณ์)</span>
+        </h3>
+        <span class="section-caption-label">กราฟอารมณ์ การสร้างความสงสัย ความขัดแย้ง และจุดคลี่คลาย</span>
+      </div>
+
+      <div 
+        class="analysis-card-box tension-box" 
+        id="packaging-tension-emotion" 
+        data-testid="packaging-tension-emotion"
+        role="region"
+        aria-live="polite"
+      >
+        <span class="empty-field-text">ไม่ทราบ</span>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 8: pa-timestamp-highlights (ไทม์โค้ดจุดสำคัญ - คลิกเพื่อ Seek)
+         ======================================================================== -->
+    <section 
+      class="analysis-section pa-timestamp-highlights" 
+      id="pa-timestamp-highlights" 
+      data-testid="pa-timestamp-highlights" 
+      aria-labelledby="heading-pa-timestamp-highlights"
+    >
+      <div class="section-header-row">
+        <h3 class="section-badge-title violet-kicker" id="heading-pa-timestamp-highlights">
+          <span class="section-step-num font-num">08</span>
+          <span>Timestamp Highlights (ไทม์โค้ดจุดสำคัญ)</span>
+        </h3>
+        <span class="section-caption-label">คลิกปุ่มเพื่อกระโดดไปยังช่วงเวลานั้นบน Video Player ทันที</span>
+      </div>
+
+      <div 
+        class="timestamp-chips-list" 
+        id="packaging-timestamp-highlights" 
+        data-testid="packaging-timestamp-highlights"
+        role="region"
+        aria-label="รายการไทม์โค้ดจุดสำคัญ คลิกเพื่อกระโดดวิดีโอ"
+        aria-live="polite"
+      >
+        <span class="empty-field-text">ไม่ทราบ</span>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 9: pa-what-is-good (คำถาม "เล่าได้ดีอย่างไร?")
+         ======================================================================== -->
+    <section 
+      class="analysis-section pa-what-is-good" 
+      id="pa-what-is-good" 
+      data-testid="pa-what-is-good" 
+      aria-labelledby="heading-pa-what-is-good"
+    >
+      <div class="section-header-row">
+        <h3 class="section-badge-title good-kicker" id="heading-pa-what-is-good">
+          <span class="section-step-num font-num">09</span>
+          <span class="question-primary">What is Good? (เล่าได้ดีอย่างไร?)</span>
+        </h3>
+        <span class="section-caption-label">คำถามหลัก: ทำไมลีลาและกลวิธีนำเสนอนี้ถึงมีคุณค่าควรแก่การเก็บเข้าคลัง Packaging</span>
+      </div>
+
+      <div 
+        class="good-insight-box violet-tint" 
+        id="packaging-what-is-good" 
+        data-testid="packaging-what-is-good"
+        role="region"
+        aria-live="polite"
+      >
+        <span class="empty-field-text">ไม่ทราบ</span>
+      </div>
+    </section>
+
+  </div> <!-- /packaging-sections-body -->
+
+
+  <!-- ==========================================================================
+       UNAVAILABLE MEDIA STATE (state-unavailable)
+       A15 & T07 Requirement: When source media cannot be accessed.
+       Strictly displays state-unavailable only without fake packaging analysis.
+       ========================================================================== -->
+  <section 
+    class="packaging-state-unavailable is-hidden" 
+    id="state-unavailable" 
+    data-testid="state-unavailable" 
+    aria-labelledby="heading-state-unavailable"
+    role="region"
+    hidden
+  >
+    <div class="state-card-inner">
+      <div class="state-badge-row">
+        <span class="status-badge status-unavailable" data-testid="status-badge-unavailable">
+          <span class="badge-icon-box" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+            </svg>
+          </span>
+          <span class="badge-text">Analysis unavailable</span>
+          <span class="badge-sub-th">(วิเคราะห์ไม่ได้)</span>
+        </span>
+        <span class="badge-spec-callout">Spec A15 &amp; T07 Honesty Protection</span>
+      </div>
+
+      <div class="state-headline-block">
+        <div class="state-icon-large" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            <line x1="2" y1="2" x2="22" y2="22" stroke-width="2.2"></line>
+          </svg>
+        </div>
+        <div class="state-copy-group">
+          <h3 id="heading-state-unavailable" class="state-title">
+            วิเคราะห์ไม่ได้ &mdash; เข้าถึงไฟล์ภาพหรือเสียงต้นฉบับไม่ได้
+          </h3>
+          <p class="state-desc">
+            แท็บ Packaging แสดงสถานะเป็น <code>Analysis unavailable</code> และระบุข้อความ "วิเคราะห์ไม่ได้" เนื่องจากไม่มีสัญญาณภาพหรือเสียงสำหรับถอดรหัส The Hook, Narrative Beats, Pacing หรือ Sound Effects
+          </p>
+          <p class="state-subdesc">
+            ตามหลักความซื่อสัตย์ทางข้อมูลของ MEW Content OS ระบบจะไม่สร้างผลวิเคราะห์ลีลาหรือคลื่นเสียงปลอมขึ้นมาเองโดยไม่มีหลักฐานจริง
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

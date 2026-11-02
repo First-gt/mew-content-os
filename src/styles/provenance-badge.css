@@ -1,0 +1,363 @@
+/**
+ * ==============================================================================
+ * MEW CONTENT OS — Provenance Snapshot Badge Styles (Topic T30)
+ * Theme: mewteetawat.com V6.3
+ * Pure Frontend CSS · Responsive & Accessible (WCAG AA/AAA)
+ * ==============================================================================
+ */
+
+:root {
+  --canvas-bg: #fbfaf8;
+  --surface-soft: #f4f2ee;
+  --surface-white: #ffffff;
+  --stone-line: #e7e3de;
+  --deep-ink: #11110f;
+  --muted-text: #6b6762;
+  --accent-coral: #ed765b;
+  --kicker-coral: #ae4f3a;
+  --electric-violet: #8a76ff;
+  --amber-bg: #fffbeb;
+  --amber-border: #fde68a;
+  --amber-text: #92400e;
+  --amber-pill: #fef3c7;
+  --amber-accent: #b45309;
+}
+
+@keyframes subtleSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.provenance-snapshot-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  animation: subtleSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Global / Inline Unavailable Badge */
+.provenance-badge-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.provenance-badge,
+.badge-source-unavailable {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background-color: var(--amber-bg);
+  color: var(--amber-text);
+  border: 1px solid var(--amber-border);
+  box-shadow: 0 2px 6px rgba(180, 83, 9, 0.08);
+  transition: transform 0.15s ease;
+}
+
+.provenance-badge:hover,
+.badge-source-unavailable:hover {
+  transform: translateY(-1px);
+}
+
+.provenance-badge svg,
+.badge-source-unavailable svg {
+  flex-shrink: 0;
+  stroke: var(--amber-text);
+}
+
+/* Notice Banner */
+.provenance-notice-card {
+  position: relative;
+  background: var(--surface-white);
+  border: 1px solid var(--stone-line);
+  border-radius: 12px;
+  padding: 16px 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(17, 17, 15, 0.03);
+}
+
+.provenance-notice-card .notice-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-coral), var(--electric-violet));
+}
+
+.notice-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.notice-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #fdf2f0;
+  color: var(--accent-coral);
+  flex-shrink: 0;
+}
+
+.notice-title {
+  margin: 0 0 4px 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--deep-ink);
+}
+
+.notice-desc {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--muted-text);
+}
+
+/* Trace Viewer Section */
+.provenance-trace-viewer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.trace-viewer-header .section-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--kicker-coral);
+  text-transform: uppercase;
+}
+
+.trace-viewer-header .section-title {
+  margin: 4px 0 0 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--deep-ink);
+}
+
+/* Trace list and cards */
+.c-source-trace {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* mew-offer-card style for Snapshot Card */
+.provenance-card {
+  position: relative;
+  background: var(--surface-white);
+  border: 1px solid var(--stone-line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  box-shadow: 0 18px 50px rgba(17, 17, 15, 0.05);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+
+.provenance-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 48px rgba(17, 17, 15, 0.08);
+}
+
+.provenance-card .card-accent-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--accent-coral);
+}
+
+.provenance-card[data-lens="packaging"] .card-accent-bar {
+  background: var(--electric-violet);
+}
+
+.provenance-card.is-unavailable .card-accent-bar {
+  background: var(--amber-accent);
+}
+
+.provenance-card.is-unavailable {
+  border-color: var(--amber-border);
+  background: #fffdfa;
+}
+
+.provenance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lens-badge-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prov-lens-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  background: var(--surface-soft);
+  color: var(--deep-ink);
+  border: 1px solid var(--stone-line);
+}
+
+.badge-source-unavailable-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--amber-accent);
+  background: var(--amber-pill);
+  border: 1px solid var(--amber-border);
+  padding: 3px 8px;
+  border-radius: 9999px;
+}
+
+.prov-version {
+  font-size: 0.75rem;
+  color: var(--muted-text);
+  font-weight: 500;
+}
+
+.prov-source-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--deep-ink);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.prov-why-box {
+  background: var(--surface-soft);
+  border-radius: 8px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent-coral);
+}
+
+.provenance-card[data-lens="packaging"] .prov-why-box {
+  border-left-color: var(--electric-violet);
+}
+
+.provenance-card.is-unavailable .prov-why-box {
+  border-left-color: var(--amber-accent);
+}
+
+.why-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted-text);
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.prov-why-snippet {
+  font-size: 0.84rem;
+  color: var(--deep-ink);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.prov-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--muted-text);
+  padding-top: 4px;
+  border-top: 1px solid var(--stone-line);
+}
+
+.prov-source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--deep-ink);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.prov-source-link:hover {
+  color: var(--accent-coral);
+  text-decoration: underline;
+}
+
+.prov-source-link:focus-visible {
+  outline: 2px solid var(--accent-coral);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Integration inside existing c-source-trace items */
+.source-trace-item.is-source-deleted {
+  background: #fffdfa;
+  border-color: var(--amber-border);
+}
+
+.source-trace-item .trace-unavailable-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--amber-accent);
+  background: var(--amber-pill);
+  border: 1px solid var(--amber-border);
+  padding: 2px 7px;
+  border-radius: 9999px;
+  margin-left: 6px;
+}
+
+/* Reduced Motion & Responsive Queries */
+@media (prefers-reduced-motion: reduce) {
+  .provenance-snapshot-container {
+    animation: none;
+  }
+  .provenance-card,
+  .provenance-badge,
+  .badge-source-unavailable {
+    transition: none;
+  }
+  .provenance-card:hover,
+  .provenance-badge:hover,
+  .badge-source-unavailable:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .provenance-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .prov-meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}

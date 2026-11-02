@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Sensitive Credentials & Tokens
+credentials/
+*.token
+*.key
+*.pem
+.env
+.env.*
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Test Results & Artifacts
+test-results/
+playwright-report/
+blob-report/
+coverage/
+
+# OS / Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local Runtime / Scratch State
+scratch/
+.live_state.json
+.loop_status.json

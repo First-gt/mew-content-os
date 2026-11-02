@@ -1,0 +1,154 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T28: S09 Content Board — 4 Stages
+     Theme: mewteetawat.com V6.3
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="content-board-container" id="content-board-root" data-testid="content-board-root" role="region" aria-label="บอร์ดบริหารจัดการคอนเทนต์">
+
+  <!-- Board Header -->
+  <header class="board-header">
+    <div class="board-header-main">
+      <div class="board-badges-row">
+        <span class="badge-pill coral">S09 Content Board</span>
+        <span class="badge-pill soft">4-Stage Governance Kanban</span>
+      </div>
+      <div class="board-title-row">
+        <div>
+          <h2 class="board-title">Content Pipeline Board</h2>
+          <p class="board-subtitle">
+            ขั้นตอนบริหารงานคอนเทนต์ 4 ลำดับขั้น: ป้องกันการปล่อยงานที่ยังไม่ได้ตรวจสอบข้ออ้างและสิทธิอย่างเข้มงวด
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Governance Policy Notice -->
+    <div class="board-governance-notice" role="note">
+      <div class="notice-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <p class="notice-text">
+        <strong>Governance Gating Rule:</strong> การเลื่อนสถานะสู่ <em>Approved</em> และ <em>Ready for Production</em> ถูกควบคุมผ่านขั้นตอนตรวจสอบสิทธิและข้อเท็จจริง (T29 Claims &amp; Rights Audit) เท่านั้น เพื่อรับประกันความถูกต้องตามหลัก Transformative Work
+      </p>
+    </div>
+  </header>
+
+  <!-- 4 Columns Kanban Grid -->
+  <div class="kanban-grid" role="region" aria-label="คอลัมน์ขั้นตอนการผลิต 4 ลำดับขั้น">
+
+    <!-- Column 1: Draft -->
+    <section class="kanban-column" id="col-draft" data-testid="col-draft" data-stage="draft" aria-labelledby="heading-stage-draft">
+      <div class="kanban-column-header">
+        <div class="col-indicator-bar neutral" aria-hidden="true"></div>
+        <div class="col-title-wrap">
+          <h3 class="col-title" id="heading-stage-draft">Draft</h3>
+          <span class="col-count font-num" id="count-stage-draft" data-testid="count-stage-draft" aria-label="จำนวนคอนเทนต์ในขั้นตอน Draft">0</span>
+        </div>
+      </div>
+      <div class="kanban-cards-list" id="list-stage-draft" data-testid="list-stage-draft" role="list" aria-label="รายการคอนเทนต์ในสถานะ Draft">
+        <!-- Rendered by content-board.js -->
+      </div>
+    </section>
+
+    <!-- Column 2: Needs Review -->
+    <section class="kanban-column" id="col-needs-review" data-testid="col-needs-review" data-stage="needs-review" aria-labelledby="heading-stage-review">
+      <div class="kanban-column-header">
+        <div class="col-indicator-bar amber" aria-hidden="true"></div>
+        <div class="col-title-wrap">
+          <h3 class="col-title" id="heading-stage-review">Needs Review</h3>
+          <span class="col-count font-num" id="count-stage-review" data-testid="count-stage-review" aria-label="จำนวนคอนเทนต์ในขั้นตอน Needs Review">0</span>
+        </div>
+      </div>
+      <div class="kanban-cards-list" id="list-stage-review" data-testid="list-stage-review" role="list" aria-label="รายการคอนเทนต์ในสถานะ Needs Review">
+        <!-- Rendered by content-board.js -->
+      </div>
+    </section>
+
+    <!-- Column 3: Approved -->
+    <section class="kanban-column col-gated" id="col-approved" data-testid="col-approved" data-stage="approved" aria-labelledby="heading-stage-approved">
+      <div class="kanban-column-header">
+        <div class="col-indicator-bar coral" aria-hidden="true"></div>
+        <div class="col-title-wrap">
+          <div class="col-title-group">
+            <h3 class="col-title" id="heading-stage-approved">Approved</h3>
+            <span class="col-gated-tag" title="ต้องผ่าน T29 Gating">T29 Gated</span>
+          </div>
+          <span class="col-count font-num" id="count-stage-approved" data-testid="count-stage-approved" aria-label="จำนวนคอนเทนต์ในขั้นตอน Approved">0</span>
+        </div>
+      </div>
+      <div class="kanban-cards-list" id="list-stage-approved" data-testid="list-stage-approved" role="list" aria-label="รายการคอนเทนต์ในสถานะ Approved">
+        <!-- Rendered by content-board.js -->
+      </div>
+    </section>
+
+    <!-- Column 4: Ready for Production -->
+    <section class="kanban-column col-gated" id="col-ready-for-production" data-testid="col-ready-for-production" data-stage="ready-for-production" aria-labelledby="heading-stage-production">
+      <div class="kanban-column-header">
+        <div class="col-indicator-bar violet" aria-hidden="true"></div>
+        <div class="col-title-wrap">
+          <div class="col-title-group">
+            <h3 class="col-title" id="heading-stage-production">Ready for Production</h3>
+            <span class="col-gated-tag" title="ต้องผ่าน T29 Gating">T29 Gated</span>
+          </div>
+          <span class="col-count font-num" id="count-stage-production" data-testid="count-stage-production" aria-label="จำนวนคอนเทนต์ในขั้นตอน Ready for Production">0</span>
+        </div>
+      </div>
+      <div class="kanban-cards-list" id="list-stage-production" data-testid="list-stage-production" role="list" aria-label="รายการคอนเทนต์ในสถานะ Ready for Production">
+        <!-- Rendered by content-board.js -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Card Template -->
+  <template id="tmpl-board-card">
+    <article class="board-card mew-offer-card" id="" data-card-id="" data-stage="" role="listitem" tabindex="0">
+      <div class="card-accent-bar" aria-hidden="true"></div>
+
+      <div class="card-header-row">
+        <span class="card-stage-pill font-num"></span>
+        <div class="claim-flag claim-flag-wrap font-num" data-testid="claim-flag" title="จำนวนข้ออ้างที่รอตรวจสอบ">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+            <line x1="4" y1="22" x2="4" y2="15"></line>
+          </svg>
+          <span class="claim-flag-count">0</span>
+        </div>
+      </div>
+
+      <h4 class="card-title"></h4>
+
+      <div class="card-source-trace">
+        <span class="trace-label">Source Trace:</span>
+        <span class="trace-summary"></span>
+      </div>
+
+      <div class="card-actions-row">
+        <button type="button" class="btn-pill btn-ghost btn-sm btn-submit-review" data-testid="btn-submit-review" data-action="submit-review" aria-label="ส่งตรวจไปยังขั้นตอน Needs Review">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+          <span>ส่งตรวจ (Submit Review)</span>
+        </button>
+        <button type="button" class="btn-pill btn-ghost btn-sm btn-back-to-draft" data-testid="btn-back-to-draft" data-action="back-to-draft" aria-label="ส่งกลับไปแก้ไขในขั้นตอน Draft" hidden>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>ส่งกลับแก้ไข (Draft)</span>
+        </button>
+        <div class="stage-governance-badge" hidden aria-hidden="true">
+          <span class="badge-text"></span>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <!-- Accessible Toast Feedback Container -->
+  <div class="board-toast-container" id="board-toast-container" aria-live="polite" aria-atomic="true"></div>
+
+</div>

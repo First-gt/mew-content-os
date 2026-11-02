@@ -1,0 +1,217 @@
+{
+  "system_title": "MEW Content OS — Research → Save → Remix → Create System",
+  "version": "1.1.0",
+  "description": "Founder-locked UX handoff specification for MEW Content OS with official mewteetawat.com V6.3 Design System (Warm Stone, Coral, Violet & Deep Ink from index.html). Zero fake metrics allowed.",
+  "design_system": {
+    "theme_source": "D:/project/index.html (mewteetawat.com V6.3 Theme)",
+    "colors": {
+      "paper_canvas": "#fbfaf8",
+      "surface_soft": "#f4f2ee",
+      "surface_white": "#ffffff",
+      "line_stone": "#e7e3de",
+      "ink_primary": "#11110f",
+      "ink_muted": "#6b6762",
+      "coral_accent": "#ed765b",
+      "coral_kicker": "#ae4f3a",
+      "violet_accent": "#8a76ff",
+      "gradient_text": "linear-gradient(90deg, #ef8a68, #8f7cff, #6fa1ff)"
+    },
+    "typography": "Google Fonts: Inter, Prompt, Noto Sans Thai ('Inter', 'Prompt', 'Noto Sans Thai', sans-serif)",
+    "card_style": ".mew-offer-card (white bg #ffffff, 1px border #e7e3de, 4px top accent bar in coral #ed765b or violet #8a76ff, soft shadow 0 18px 50px rgba(17, 17, 15, 0.05), hover translateY(-2px))",
+    "buttons": "Primary CTA: Deep Ink #11110f, white text, pill rounded 9999px. Ghost button: white bg, border #e7e3de, text #11110f.",
+    "animations": "subtleSlideUp (@keyframes subtleSlideUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }), smooth hover transitions.",
+    "negative_constraints": [
+      "ห้ามใส่ตัวเลขสถิติสมมติ เช่น '12 สัปดาห์', '+12 สัปดาห์นี้', '12 สัปดาห์วิเคราะห์แล้ว' หรือเปอร์เซ็นต์หลอกตาใดๆ ทั้งสิ้น",
+      "การ์ดสรุปข้อมูลให้แสดงเฉพาะสถานะงานจริง หรือจำนวนคลิปในคลังจริง (เช่น 0 รายการ หรือตามข้อมูลจริง)",
+      "เน้น UI สวยงาม เรียบหรู ใช้งานง่าย ตรงตามสเปก Founder หน้าแรก"
+    ]
+  },
+  "topics": [
+    {
+      "topic_id": 1,
+      "title": "App Shell, Navigation & Overview Dashboard (S00) with mewteetawat.com V6.3 Theme",
+      "description": "สร้างโครงร่างระบบหลัก (App Shell), Navigation Bar ที่เชื่อมต่อครบทุกหน้า และ Overview Dashboard (S00) ตามโทนสี mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink) โดยไม่มีสถิติสมมติหลอกตา",
+      "target_files": [
+        "src/index.html",
+        "src/styles/main.css"
+      ],
+      "requirements": [
+        "ใช้โทนสีและ Design System ตาม D:/project/index.html: พื้นหลังแคนวาส --v6-paper (#fbfaf8), เส้นขอบ --v6-line (#e7e3de), ข้อความหลัก --v6-ink (#11110f), สีเน้นส้มคอรัล --v6-coral (#ed765b), และม่วง --v6-violet (#8a76ff)",
+        "โหลด Google Fonts: Inter, Prompt, Noto Sans Thai และใช้ฟอนต์ 'Inter', 'Prompt', 'Noto Sans Thai', sans-serif",
+        "การ์ดสรุปและกล่องคอนเทนต์ใช้สไตล์ .mew-offer-card: พื้นหลังสีขาว, เส้นขอบหิน 1px (#e7e3de), แถบสีเน้นด้านบนหนา 4px (Top Accent Bar ในสี #ed765b หรือ #8a76ff), และเงาละมุน 0 18px 50px rgba(17,17,15,0.05)",
+        "Header แสดงแบรนด์ 'MEW CONTENT OS' พร้อม Navigation bar สไตล์มินิมอลที่เชื่อมครบทุกหน้า: Overview, Research, My Library, Remix Studio, Content Board",
+        "ปุ่ม Quick Action หลัก 3 ปุ่ม สไตล์ Pill Rounded: 'Research a Clip' (ไป S01), 'Open My Library' (ไป S04), 'Start Remix' (ไป S06)",
+        "Summary Cards แสดงข้อมูลงานจริง: Recent Research, จำนวนคลิปใน Content Vault, จำนวนคลิปใน Packaging Vault, และ Remix Drafts",
+        "คำสั่งห้ามเด็ดขาด (Negative Constraint): ห้ามใส่ข้อความสถิติหลอกตา เช่น '12 สัปดาห์', '+12 สัปดาห์นี้', '12 สัปดาห์วิเคราะห์แล้ว' หรือตัวเลขเปอร์เซ็นต์ปลอม ให้แสดงเฉพาะจำนวนจริงที่เรียบหรูและสบายตา",
+        "ใส่แอนิเมชัน subtleSlideUp และไมโครอินเตอร์แอ็กชัน hover translateY(-2px)"
+      ],
+      "acceptance_criteria": [
+        "ไฟล์ src/index.html และ src/styles/main.css มีอยู่จริงและไม่ว่างเปล่า",
+        "โค้ดใช้สี --v6-paper (#fbfaf8) และฟอนต์ Inter / Prompt / Noto Sans Thai",
+        "ไม่มีคำว่า '12 สัปดาห์' ในไฟล์เด็ดขาด",
+        "มีการ์ดสไตล์ .mew-offer-card พร้อมแถบสีด้านบน 4px และเงาละมุน",
+        "มีปุ่มลัด 3 ปุ่มหลัก และแถบ Navigation ชัดเจน"
+      ],
+      "test_commands": [
+        "python -c \"import pathlib; p = pathlib.Path('output/src/index.html'); assert p.exists(), 'index.html missing'; c = p.read_text(encoding='utf-8'); assert '12 สัปดาห์' not in c, 'Found forbidden fake metric: 12 สัปดาห์'; assert 'fbfaf8' in c or 'v6' in c or 'Inter' in c, 'Missing V6 theme palette or fonts'; print('Topic 1 V6 Theme & Metric Cleanliness validation passed!')\""
+      ]
+    },
+    {
+      "topic_id": 2,
+      "title": "Dual-Mode Research Engine: Single Clip & Creator Lab Channel Scan (S01, S02) - V6 Theme",
+      "description": "ระบบรีเสิร์ช 2 โหมดครบวงจร: (1) โหมด Single Clip วิเคราะห์เจาะลึก 1 คลิปแบบ Dual-Lens (WHAT/HOW) และ (2) โหมด Creator Lab Channel Scan ใส่โปรไฟล์ช่อง สแกน 400+ คลิป พล็อตกราฟกระจายแกน X-Y (Views vs Likes) แบ่งกรอบสีตาม Tier และ Bar Chart วิเคราะห์ Script Structure ในสไตล์ mewteetawat.com V6.3",
+      "target_files": [
+        "src/components/research.html",
+        "src/styles/research.css",
+        "src/modules/research.js"
+      ],
+      "requirements": [
+        "ใช้โทนสีทางการ mewteetawat.com V6.3: พื้นหลัง #fbfaf8, การ์ดสีขาวขอบหิน #e7e3de, ข้อความสีหมึก #11110f, สีส้มคอรัล #ed765b, ม่วง #8a76ff",
+        "ปุ่มสลับโหมดหลักด้านบน (Mode Toggle Pills): 'Single Clip Research (วิเคราะห์ 1 คลิป)' vs 'Creator Lab Channel Scan (สแกนทั้งช่อง & วิเคราะห์ Performance Matrix)'",
+        "--- โหมด 1: Single Clip Research ---",
+        "  - 3 ช่องทางนำเข้า (Paste Link, Upload Video with permission, Quick Preset)",
+        "  - Video Player Layout 2 คอลัมน์: ฝั่งซ้ายตัวเล่นวิดีโอ + ไทม์โค้ด, ฝั่งขวา Dual-Lens Tabs: 'Content (WHAT) - สาระสำคัญ/ประเด็น/Claims' และ 'Packaging (HOW) - วิธีเล่า/Hook/จังหวะ/SFX'",
+        "  - สถานะ Non-negotiable: 'Analyzed · Not saved' และปุ่ม Save to Library เพื่อส่งต่อเข้า S03 Modal",
+        "--- โหมด 2: Creator Lab Channel Scan (ระบบสแกนทั้งช่อง) ---",
+        "  - แถบป้อนโปรไฟล์ช่อง: ใส่ @username หรือ Profile URL พร้อมปุ่ม 'Start Channel Scan' และ Preset ช่องตัวอย่าง (เช่น @jev_creator, @mewteetawat, @artem_nov)",
+        "  - กล่องสถิติภาพรวมช่องจริง: จำนวนคลิปทั้งหมด (เช่น 440 คลิป), ยอดวิวเฉลี่ยต่อคลิป (Median 358K), จำนวนคลิปไวรัลดัง (Viral Outliers), และ Engagement Rate เฉลี่ย",
+        "  - กราฟกระจายแกน X-Y (Performance Matrix Scatter Plot):",
+        "    * แกน X: ยอดคนดู (Views / Reach จาก 10K ถึง 1M+)",
+        "    * แกน Y: การมีส่วนร่วม/ยอดไลก์ (Likes per 1k)",
+        "    * แต่ละจุดคือ 1 คลิปในช่อง พร้อมกรอบสี (Color-Coded Border) แยกตาม Tier: สีเขียว (Viral Outlier ยอดวิวพุ่ง), สีม่วง (High Engagement แฟนพันธุ์แท้), สีส้มคอรัล (Solid Performer), สีเทาหิน (Baseline)",
+        "    * ระบบ Tooltip เมื่อ Hover: แสดงภาพคลิป, ประโยค Hook, ยอดวิว, ยอดไลก์, และโครงสร้างสคริปต์",
+        "    * 1-Click Action: คลิกที่จุดคลิปใดๆ ในกราฟ จะโหลดเข้าสู่ Dual-Lens Analysis (WHAT/HOW) เพื่อเจาะลึกได้ทันที",
+        "  - แผนภูมิแท่งโครงสร้างสคริปต์ (Script Structure Bar Chart ตาม Creator Lab):",
+        "    * แสดงผลลัพธ์การจัดกลุ่มโครงสร้างคลิปของช่อง: Steps (n=31, Median 612.5K), Story (n=33, Median 494.1K), Q&A (n=76, Median 397.8K), Comparison (n=21, Median 373.7K), Opinion (n=53, Median 356.5K), Explanation (n=41, Median 349.2K), Problem → Solution (n=172, Median 315K)",
+        "    * คลิกที่แท่งสถิติเพื่อกรอง (Filter) คลิปในกราฟและตารางตามหมวดหมู่ได้ทันที",
+        "คำสั่งห้ามเด็ดขาด (Negative Constraint): ห้ามใส่ข้อความหลอกตา เช่น '12 สัปดาห์' เด็ดขาด",
+        "การทำงานทั้งหมดต้องเป็น Pure Client-Side Frontend (HTML5, Modern CSS, Vanilla ES6+ JS) พร้อมใช้งานบนเบราว์เซอร์ทันที"
+      ],
+      "acceptance_criteria": [
+        "ไฟล์ src/components/research.html, src/styles/research.css, src/modules/research.js มีอยู่จริง",
+        "มีทั้งโหมด Single Clip Research และ Creator Lab Channel Scan สลับไปมาได้",
+        "มีกราฟกระจายแกน X-Y (Scatter Matrix) ที่พล็อตตาม Views และ Likes พร้อมกรอบสีแยก Tier",
+        "มี Bar Chart แสดง Script Structure (Steps, Story, Q&A, Comparison, Opinion, etc.) พร้อมตัวเลข Median",
+        "คลิกคลิปจากกราฟเพื่อส่งต่อไปยัง Dual-Lens Analysis (WHAT & HOW) ได้",
+        "ไม่มีคำว่า '12 สัปดาห์' ในไฟล์"
+      ],
+      "test_commands": [
+        "python -c \"import pathlib; h = pathlib.Path('output/src/components/research.html'); assert h.exists(), 'research.html missing'; c = h.read_text(encoding='utf-8'); assert '12 สัปดาห์' not in c, 'Found forbidden metric: 12 สัปดาห์'; assert 'Creator Lab' in c or 'channel' in c.lower() or 'scatter' in c.lower() or 'matrix' in c.lower(), 'Missing Channel Scan / Matrix features'; assert 'WHAT' in c and 'HOW' in c, 'Missing Dual-Lens WHAT/HOW tabs'; print('Topic 2 Dual-Mode Research Engine validation passed!')\""
+      ]
+    },
+    {
+      "topic_id": 3,
+      "title": "Human Save Decision Modal with Dual-Lens Reasoning (S03) - V6 Theme",
+      "description": "Modal ตัดสินใจเลือกเก็บคลิปเข้าคลัง (S03) สไตล์การ์ดโค้งมน V6 มินิมอล บังคับให้ผู้ใช้ระบุเหตุผล (Founder WHY) แยกกันตามคลังที่เลือก (Content / Packaging / Both)",
+      "target_files": [
+        "src/components/save_modal.html",
+        "src/styles/save_modal.css",
+        "src/modules/save_modal.js"
+      ],
+      "requirements": [
+        "หน้าต่าง Modal กึ่งกลางจอ สไตล์ Card Pop-up: พื้นหลังขาว, เส้นขอบหิน #e7e3de, แถบสีส้มคอรัลด้านบน #ed765b",
+        "หัวข้อ: 'Save this reference' (คุณอยากเก็บอะไรจากคลิปนี้ไว้ใช้ต่อ?)",
+        "ตัวเลือก Checkboxes ดีไซน์สวยงาม: 'Content — เก็บเรื่องที่เขาพูด / ไอเดีย' และ 'Packaging — เก็บวิธีที่เขาเล่า / Hook / SFX'",
+        "Dynamic Form Fields:",
+        "  - หากเลือก Content: แสดงช่องกรอก 'ทำไมอยากเก็บเนื้อหานี้? จะต่อยอดอย่างไร?' (Required)",
+        "  - หากเลือก Packaging: แสดงช่องกรอก 'อยากนำเทคนิคการนำเสนอส่วนไหนไปใช้?' (Required)",
+        "  - หากเลือก Both: ต้องแสดง 2 ช่องกรอกเหตุผลแยกกันอิสระ ห้ามรวมเป็นช่องเดียวเด็ดขาด",
+        "ปุ่มบันทึก: 'Save to Library' (สีดำ Ink #11110f) และปุ่ม 'Cancel'",
+        "Toast Notification แสดงผลสำเร็จ: 'Saved to Content' / 'Saved to Packaging' / 'Saved to Both' พร้อมปุ่มลัด 'View in Library' และ 'Use in Remix'"
+      ],
+      "acceptance_criteria": [
+        "ไฟล์ src/components/save_modal.html, src/styles/save_modal.css, src/modules/save_modal.js มีอยู่จริง",
+        "มี Checkbox ให้เลือก Content และ Packaging",
+        "มี 2 ช่องกรอกเหตุผลแยกกันเมื่อเลือก Both",
+        "ดีไซน์ตรงตามโทนสี V6 (ส้มคอรัล #ed765b และดำ Ink #11110f)"
+      ],
+      "test_commands": [
+        "python -c \"import pathlib; h = pathlib.Path('output/src/components/save_modal.html'); assert h.exists(), 'save_modal.html missing'; c = h.read_text(encoding='utf-8'); assert 'Content' in c and 'Packaging' in c, 'Missing vault choices'; assert 'textarea' in c.lower() or 'input' in c.lower(), 'Missing reason inputs'; print('Topic 3 Save Modal validation passed!')\""
+      ]
+    },
+    {
+      "topic_id": 4,
+      "title": "Dual-Vault Reference Library & Saved Detail (S04, S05) - V6 Theme",
+      "description": "หน้าคลังอ้างอิง 2 คลัง (Content Vault vs Packaging Vault) (S04) และหน้ารายละเอียดทบทวนเหตุผล (S05) สไตล์การ์ด V6 เรียบหรู ไม่มีตัวเลขสถิติหลอกตา",
+      "target_files": [
+        "src/components/library.html",
+        "src/styles/library.css",
+        "src/modules/library.js"
+      ],
+      "requirements": [
+        "2 Tabs สลับคลัง: 'Content Vault' (สำหรับเก็บประเด็น/ไอเดีย) และ 'Packaging Vault' (สำหรับเก็บวิธีเล่า/จังหวะ/Hook)",
+        "Reference Card ในแต่ละคลัง ใช้สไตล์ .mew-offer-card: แสดง Thumbnail, Creator, Topic Tags, Founder WHY Note ที่ผู้ใช้พิมพ์ไว้, AI insight สรุปย่อ, วันที่บันทึก, และปุ่ม 'Use in Remix'",
+        "ห้ามมีสถิติสมมติ เช่น '12 สัปดาห์' หรือตัวเลขเปอร์เซ็นต์หลอกตา",
+        "Empty State สะอาดตา สบายตา เมื่อยังไม่มีข้อมูล พร้อมปุ่มพากลับไปหน้า Research",
+        "หน้ารายละเอียด Reference (S05 Drawer): ทบทวนสิ่งที่เซฟไว้ พร้อมปุ่ม 'Edit My Note' และปุ่ม 'Use in Remix'",
+        "Sample Data ของ Founder: บรรจุตัวอย่าง Story A ('Post and forget it' ใน Content Vault) และ Story B ('The Ticking Clock' ใน Packaging Vault)"
+      ],
+      "acceptance_criteria": [
+        "ไฟล์ src/components/library.html, src/styles/library.css, src/modules/library.js มีอยู่จริง",
+        "ไม่มีคำว่า '12 สัปดาห์' ในไฟล์",
+        "มีแท็บสลับ Content Vault และ Packaging Vault ชัดเจน",
+        "การ์ดอ้างอิงแสดง Founder Why Note และปุ่ม Use in Remix"
+      ],
+      "test_commands": [
+        "python -c \"import pathlib; h = pathlib.Path('output/src/components/library.html'); assert h.exists(), 'library.html missing'; c = h.read_text(encoding='utf-8'); assert '12 สัปดาห์' not in c, 'Found forbidden fake metric: 12 สัปดาห์'; assert 'Content Vault' in c and 'Packaging Vault' in c, 'Missing dual vault tabs'; print('Topic 4 Library validation passed!')\""
+      ]
+    },
+    {
+      "topic_id": 5,
+      "title": "Remix Studio - Multi-Ingredient Picker & Creative Synthesis (S06, S07) - V6 Theme",
+      "description": "ห้องทดลองความคิดสร้างสรรค์ (Remix Studio): เลือกวัตถุดิบได้หลายชิ้น C(N) + P(N) (S06) และกำหนดทิศทาง Founder Direction เพื่อให้ AI สังเคราะห์แนวคิดต้นฉบับใหม่ 2-3 แบบ (S07) ในสไตล์ V6 Editorial",
+      "target_files": [
+        "src/components/remix.html",
+        "src/styles/remix.css",
+        "src/modules/remix.js"
+      ],
+      "requirements": [
+        "S06 Ingredient Basket Bar: เลือก Content >= 1 รายการ และ Packaging >= 0 รายการ (รองรับ C1+P1, C3+P2 หรือ Content-only ก็ได้)",
+        "แถบ Selected Ingredients Bar สรุปจำนวนชิ้นที่เลือกแบบเรียบหรู พร้อมปุ่ม Remove / Reorder",
+        "S07 3-Column Workspace Layout (ตามธีม V6 Warm Canvas & Soft Cards):",
+        "  1. คอลัมน์ซ้าย (Ingredients): การ์ดวัตถุดิบที่เลือก แสดง 'What to borrow' และ 'How to borrow' จาก Founder Note",
+        "  2. คอลัมน์กลาง (Direction): กล่องฟอร์มกรอก Target Audience, Our Point of View, Brand Truth / Offer, Goal, และ Constraints",
+        "  3. คอลัมน์ขวา (Original Concepts): ผลลัพธ์ AI สังเคราะห์ Original Concepts 2-3 แบบ (Concept A, Concept B, Concept C) ในการ์ด .mew-offer-card",
+        "แต่ละ Concept ต้องมี: Original Hook, Story Beats (Beat 1-4), Claim Verification (ห้ามมโนตัวเลข), Visual/Sound direction, และ Reference Source Traceability",
+        "ปุ่ม Actions สไตล์ V6 Pill: 'Generate Concepts', 'Refine This Angle', 'Compare Concepts', 'Save as Draft'",
+        "ไม่มีข้อความสถิติสมมติ เช่น '12 สัปดาห์' ใดๆ ทั้งสิ้น"
+      ],
+      "acceptance_criteria": [
+        "ไฟล์ src/components/remix.html, src/styles/remix.css, src/modules/remix.js มีอยู่จริง",
+        "ไม่มีคำว่า '12 สัปดาห์' ในไฟล์",
+        "มีส่วนเลือก Ingredient ที่รองรับหลายชิ้น (Multi-select)",
+        "มีช่องกรอก Founder Direction และส่วนแสดง 2-3 Original Concepts พร้อม Hook และ Story Beats"
+      ],
+      "test_commands": [
+        "python -c \"import pathlib; h = pathlib.Path('output/src/components/remix.html'); assert h.exists(), 'remix.html missing'; c = h.read_text(encoding='utf-8'); assert '12 สัปดาห์' not in c, 'Found forbidden fake metric: 12 สัปดาห์'; assert 'Ingredients' in c or 'วัตถุดิบ' in c, 'Missing ingredients panel'; assert 'Direction' in c or 'ทิศทาง' in c, 'Missing direction panel'; print('Topic 5 Remix Studio validation passed!')\""
+      ]
+    },
+    {
+      "topic_id": 6,
+      "title": "Content Board, Script Outline & Production Director Brief (S08, S09) - V6 Theme",
+      "description": "บอร์ดติดตามสถานะงาน (Content Board) สำหรับ Concept Detail / Script Draft (S08) และการส่งมอบ Director Brief สู่การผลิต (S09) ตามมาตรฐาน V6 สะอาดตาและใช้งานง่าย",
+      "target_files": [
+        "src/components/content_board.html",
+        "src/styles/content_board.css",
+        "src/modules/content_board.js"
+      ],
+      "requirements": [
+        "S08 Concept Detail & Script Draft: แสดง Creative Rationale, Outline, Hook/Dialogue, Scene & Sound Directions, Proof Checklist, และ CTA",
+        "S09 Content Board (Kanban 4 Stages): 'Draft' -> 'Needs Review' -> 'Approved' -> 'Ready for Production'",
+        "การ์ดงานในแต่ละคอลัมน์ใช้สไตล์ .mew-offer-card สวยงาม สะอาดตา",
+        "Action ปุ่ม 'Approve Concept': สร้าง Immutable Approved Revision สำหรับใช้งานจริง",
+        "Action ปุ่ม 'Export Director Brief': ส่งออกเอกสารสรุปคิวถ่ายทำ บันทึกฉาก เสียง สิทธิ์อ้างอิง และข้อกำหนดลิขสิทธิ์อย่างครบถ้วน",
+        "ไม่มีข้อความสถิติสมมติ เช่น '12 สัปดาห์' ในไฟล์เด็ดขาด"
+      ],
+      "acceptance_criteria": [
+        "ไฟล์ src/components/content_board.html, src/styles/content_board.css, src/modules/content_board.js มีอยู่จริง",
+        "ไม่มีคำว่า '12 สัปดาห์' ในไฟล์",
+        "มีคอลัมน์สถานะ Draft, Needs Review, Approved, Ready for Production",
+        "มีปุ่ม Approve Concept และ Export Director Brief"
+      ],
+      "test_commands": [
+        "python -c \"import pathlib; h = pathlib.Path('output/src/components/content_board.html'); assert h.exists(), 'content_board.html missing'; c = h.read_text(encoding='utf-8'); assert '12 สัปดาห์' not in c, 'Found forbidden fake metric: 12 สัปดาห์'; assert 'Draft' in c and 'Approved' in c, 'Missing board stages'; print('Topic 6 Content Board validation passed!')\""
+      ]
+    }
+  ]
+}

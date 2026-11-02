@@ -1,0 +1,299 @@
+<!-- ==============================================================================
+     MEW CONTENT OS — S03 Save Modal (UI Chooser) Component (Topic T12)
+     Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+     Pure Client-Side HTML5 · Accessible WCAG Modal Dialog · Zero Fake Metrics
+     ============================================================================== -->
+
+<div 
+  id="save-modal" 
+  class="save-modal-backdrop" 
+  data-testid="save-modal"
+  role="dialog" 
+  aria-modal="true" 
+  aria-labelledby="save-modal-title" 
+  aria-describedby="save-modal-description"
+  hidden
+>
+  <div class="save-modal-card mew-offer-card coral-accent">
+    <!-- 4px Top Accent Bar (Coral #ed765b) -->
+    <div class="save-modal-accent-bar" aria-hidden="true"></div>
+
+    <!-- Modal Header -->
+    <div class="save-modal-header">
+      <div class="save-modal-title-group">
+        <div class="save-modal-pill-row">
+          <span class="badge-pill coral">Human Decision Gate · S03</span>
+          <span class="badge-pill soft">Dual-Lens Vault</span>
+        </div>
+        <h2 id="save-modal-title" class="save-modal-title" data-testid="save-modal-title">Save this reference</h2>
+        <p id="save-modal-description" class="save-modal-description">
+          เลือกจัดเก็บคลิปเข้าคลัง Content (แก่นความคิด) หรือ Packaging (วิธีเล่า) พร้อมระบุเหตุผลเพื่อใช้เป็นขุมพลังในการ Remix
+        </p>
+      </div>
+
+      <button 
+        type="button" 
+        class="btn-close-modal" 
+        id="btn-close-save-modal" 
+        data-testid="btn-close-save-modal"
+        aria-label="ปิดหน้าต่าง Save Modal"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Clip Context Card (Source Reference Summary) -->
+    <div class="save-modal-clip-summary" id="save-clip-summary" data-testid="save-clip-summary">
+      <div class="clip-avatar" id="save-clip-avatar" aria-hidden="true">CR</div>
+      <div class="clip-info">
+        <div class="clip-meta-row">
+          <span class="clip-creator" id="save-clip-creator">Alex Hormozi</span>
+          <span class="meta-dot" aria-hidden="true">·</span>
+          <span class="clip-duration" id="save-clip-duration">0:48 นาที</span>
+        </div>
+        <div class="clip-title" id="save-clip-title">"Stop selling features, start selling transformation"</div>
+      </div>
+    </div>
+
+    <!-- Save Modal Form -->
+    <form id="save-modal-form" class="save-modal-form" novalidate>
+      
+      <!-- Vault Lens Chooser (Wireframe 2) -->
+      <fieldset class="vault-chooser-fieldset">
+        <legend class="vault-chooser-legend">
+          <span>เลือกคลังจัดเก็บ (เลือกได้ทั้งสองคลัง):</span>
+          <span class="legend-note">แยกแก่นเนื้อหาออกจากวิธีการเล่า</span>
+        </legend>
+
+        <div class="vault-checkbox-grid">
+          <!-- Checkbox 1: Content Vault -->
+          <label class="vault-choice-card choice-content" for="chk-save-content">
+            <input 
+              type="checkbox" 
+              id="chk-save-content" 
+              name="chk-save-content" 
+              class="chk-save-content vault-checkbox-native"
+              data-testid="chk-save-content"
+            />
+            <div class="vault-choice-body">
+              <div class="vault-choice-top">
+                <span class="custom-checkbox-indicator" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+                <span class="badge-pill coral">Content Vault</span>
+              </div>
+              <strong class="vault-choice-title">Content — เก็บเรื่องที่เขาพูด / ไอเดีย</strong>
+              <p class="vault-choice-desc">
+                แก่นสาระ (WHAT), ประเด็นคม, สถิติ, ปรัชญา หรือมุมมองที่ต้องการนำไปแตกประเด็นเนื้อหาใหม่
+              </p>
+            </div>
+          </label>
+
+          <!-- Checkbox 2: Packaging Vault -->
+          <label class="vault-choice-card choice-packaging" for="chk-save-packaging">
+            <input 
+              type="checkbox" 
+              id="chk-save-packaging" 
+              name="chk-save-packaging" 
+              class="chk-save-packaging vault-checkbox-native"
+              data-testid="chk-save-packaging"
+            />
+            <div class="vault-choice-body">
+              <div class="vault-choice-top">
+                <span class="custom-checkbox-indicator" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+                <span class="badge-pill violet">Packaging Vault</span>
+              </div>
+              <strong class="vault-choice-title">Packaging — เก็บวิธีที่เขาเล่า / Hook / SFX</strong>
+              <p class="vault-choice-desc">
+                ศิลปะการเล่า (HOW), Hook เปิดคลิป, ซาวด์เอฟเฟกต์, จังหวะ Pacing หรือ Motion ที่ชวนติดตาม
+              </p>
+            </div>
+          </label>
+        </div>
+
+        <div id="vault-selection-error" class="vault-selection-error" role="alert" hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span id="vault-selection-error-text">กรุณาเลือกคลังอย่างน้อย 1 แห่ง (Content หรือ Packaging) ก่อนบันทึก</span>
+        </div>
+      </fieldset>
+
+      <!-- Dynamic Founder WHY Reasoning Sections (Wireframe 2: 2 Separate textareas when both checked) -->
+      <div class="reasoning-containers-wrap" id="reasoning-containers-wrap">
+        
+        <!-- Field 1: WHY Content Textarea (Hidden until chk-save-content is checked) -->
+        <div class="reasoning-card content-reason-card" id="wrap-why-content" hidden>
+          <div class="reasoning-card-header">
+            <label for="why-content" class="reasoning-label">
+              <span class="lens-tag coral">WHAT</span>
+              <span class="reasoning-label-text">ทำไมอยากเก็บเนื้อหานี้? จะต่อยอดอย่างไร?</span>
+              <span class="required-indicator" aria-label="จำเป็น">*</span>
+            </label>
+            <span class="reasoning-counter" id="counter-why-content">0 ตัวอักษร</span>
+          </div>
+          <div class="textarea-field-wrap">
+            <textarea 
+              id="why-content" 
+              name="why-content" 
+              class="why-content mew-textarea" 
+              data-testid="why-content"
+              rows="3" 
+              placeholder="ระบุแก่นความคิดที่ชอบ และแนวทางที่จะนำไปต่อยอด เช่น: นำมุมมอง transformation ไปเล่าเปรียบเทียบในมุม creator ไทย..."
+            ></textarea>
+          </div>
+          <p class="field-feedback error" id="error-why-content" role="alert" hidden>
+            กรุณาระบุ Founder WHY สำหรับ Content Vault ก่อนบันทึก
+          </p>
+        </div>
+
+        <!-- Field 2: WHY Packaging Textarea (Hidden until chk-save-packaging is checked) -->
+        <div class="reasoning-card packaging-reason-card" id="wrap-why-packaging" hidden>
+          <div class="reasoning-card-header">
+            <label for="why-packaging" class="reasoning-label">
+              <span class="lens-tag violet">HOW</span>
+              <span class="reasoning-label-text">อยากนำเทคนิคการนำเสนอส่วนไหนไปใช้?</span>
+              <span class="required-indicator" aria-label="จำเป็น">*</span>
+            </label>
+            <span class="reasoning-counter" id="counter-why-packaging">0 ตัวอักษร</span>
+          </div>
+          <div class="textarea-field-wrap">
+            <textarea 
+              id="why-packaging" 
+              name="why-packaging" 
+              class="why-packaging mew-textarea" 
+              data-testid="why-packaging"
+              rows="3" 
+              placeholder="ระบุเทคนิคการนำเสนอ เช่น: จังหวะ hook ทุบโต๊ะในวินาทีที่ 0:01 สลับตัวหนังสือใหญ่และเสียง whoosh..."
+            ></textarea>
+          </div>
+          <p class="field-feedback error" id="error-why-packaging" role="alert" hidden>
+            กรุณาระบุ Founder WHY สำหรับ Packaging Vault ก่อนบันทึก
+          </p>
+        </div>
+
+        <!-- Distinct Separation Callout When Both Are Checked -->
+        <div class="dual-vault-callout" id="dual-vault-callout" hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>โหมด Dual-Vault: ระบบจัดเก็บ Founder WHY แยก 2 กล่องข้อความอิสระตามสเปก Wireframe 2 เพื่อคงคุณภาพข้อมูล</span>
+        </div>
+
+      </div>
+
+      <!-- Optional Fields Accordion / Group: tags, timestamp, label, collection -->
+      <details class="optional-metadata-section" id="optional-metadata-details">
+        <summary class="optional-metadata-summary">
+          <span class="summary-left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <strong>ข้อมูลเสริม (Optional Metadata)</strong>
+          </span>
+          <span class="summary-hint">Tags, Timestamp, Label, Collection</span>
+        </summary>
+
+        <div class="optional-fields-grid">
+          <!-- Optional Field 1: Tags -->
+          <div class="optional-field-group">
+            <label for="tags" class="optional-field-label">Tags (คั่นด้วยเครื่องหมายจุลภาค)</label>
+            <input 
+              type="text" 
+              id="tags" 
+              name="tags" 
+              class="tags mew-input" 
+              data-testid="tags" 
+              placeholder="เช่น Sales Hook, Transformation, Mindset" 
+            />
+          </div>
+
+          <!-- Optional Field 2: Timestamp -->
+          <div class="optional-field-group">
+            <label for="timestamp" class="optional-field-label">Timestamp / Timecode</label>
+            <input 
+              type="text" 
+              id="timestamp" 
+              name="timestamp" 
+              class="timestamp mew-input" 
+              data-testid="timestamp" 
+              placeholder="เช่น 00:15 หรือ 0:48" 
+            />
+          </div>
+
+          <!-- Optional Field 3: Label -->
+          <div class="optional-field-group">
+            <label for="label" class="optional-field-label">Label / หมวดหมู่อ้างอิง</label>
+            <input 
+              type="text" 
+              id="label" 
+              name="label" 
+              class="label mew-input" 
+              data-testid="label" 
+              placeholder="เช่น Key Takeaway, Hook Ref, B-Roll Idea" 
+            />
+          </div>
+
+          <!-- Optional Field 4: Collection -->
+          <div class="optional-field-group">
+            <label for="collection" class="optional-field-label">Collection / แฟ้มสะสม</label>
+            <input 
+              type="text" 
+              id="collection" 
+              name="collection" 
+              class="collection mew-input" 
+              data-testid="collection" 
+              placeholder="เช่น Business Strategy, Short-Form Mastery" 
+              list="collection-datalist"
+            />
+            <datalist id="collection-datalist">
+              <option value="Business Strategy"></option>
+              <option value="Short-Form Mastery"></option>
+              <option value="Viral Hooks"></option>
+              <option value="Storytelling Formulas"></option>
+            </datalist>
+          </div>
+        </div>
+      </details>
+
+      <!-- Action Buttons Footer -->
+      <div class="save-modal-actions">
+        <button 
+          type="button" 
+          id="btn-cancel-save" 
+          class="btn-cancel-save btn-mew-ghost" 
+          data-testid="btn-cancel-save"
+        >
+          Cancel
+        </button>
+
+        <button 
+          type="submit" 
+          id="btn-confirm-save" 
+          class="btn-confirm-save btn-mew-pill btn-primary-ink" 
+          data-testid="btn-confirm-save"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          <span id="btn-confirm-save-text">Save to Library</span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

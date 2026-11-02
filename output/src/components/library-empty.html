@@ -1,0 +1,180 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T17: Library Empty States (S04)
+     Theme: mewteetawat.com V6.3
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="library-empty-states-container" id="library-empty-states-root" role="region" aria-live="polite">
+
+  <!-- 1. Empty Content Vault State (WHAT) -->
+  <section 
+    id="empty-content-vault" 
+    data-testid="empty-content-vault"
+    class="empty-vault-card mew-offer-card content-empty" 
+    aria-label="คลัง Content Vault ยังไม่มีข้อมูล"
+    hidden
+  >
+    <div class="empty-accent-bar coral" aria-hidden="true"></div>
+
+    <div class="empty-vault-badge-pill coral">
+      <span class="badge-dot coral" aria-hidden="true"></span>
+      <span class="badge-text">Content Vault · แก่นสาระ (WHAT)</span>
+    </div>
+
+    <div class="empty-icon-bubble coral" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+      </svg>
+    </div>
+
+    <div class="empty-text-group">
+      <h3 class="empty-title">ยังไม่มี Content Reference</h3>
+      <p class="empty-description">
+        คลังนี้จัดเก็บมุมมอง สาระ หรือแก่นเนื้อหา (WHAT) ที่คุณชื่นชอบและใส่เหตุผลส่วนตัว (Founder's Why) เอาไว้เพื่อใช้นำไปสังเคราะห์คอนเทนต์ใหม่
+      </p>
+    </div>
+
+    <div class="empty-actions-row">
+      <button 
+        type="button" 
+        class="btn-pill btn-primary btn-empty-research" 
+        data-testid="btn-empty-research"
+        data-action="go-research" 
+        aria-label="ไปหน้าค้นคว้า (S01) เพื่อบันทึกคลิปแรก"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <span>ไปหน้าค้นคว้า (S01)</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="btn-pill btn-ghost btn-empty-sample" 
+        data-testid="btn-empty-sample"
+        data-action="load-sample" 
+        aria-label="โหลดตัวอย่าง Content Reference เพื่อเรียนรู้วิธี Save"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        <span>โหลดตัวอย่างเพื่อเรียนรู้วิธี Save</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- 2. Empty Packaging Vault State (HOW) -->
+  <section 
+    id="empty-packaging-vault" 
+    data-testid="empty-packaging-vault"
+    class="empty-vault-card mew-offer-card packaging-empty" 
+    aria-label="คลัง Packaging Vault ยังไม่มีข้อมูล"
+    hidden
+  >
+    <div class="empty-accent-bar violet" aria-hidden="true"></div>
+
+    <div class="empty-vault-badge-pill violet">
+      <span class="badge-dot violet" aria-hidden="true"></span>
+      <span class="badge-text">Packaging Vault · เทคนิคการนำเสนอ (HOW)</span>
+    </div>
+
+    <div class="empty-icon-bubble violet" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+        <line x1="7" y1="2" x2="7" y2="22"></line>
+        <line x1="17" y1="2" x2="17" y2="22"></line>
+        <line x1="2" y1="12" x2="22" y2="12"></line>
+        <line x1="2" y1="7" x2="7" y2="7"></line>
+        <line x1="2" y1="17" x2="7" y2="17"></line>
+        <line x1="17" y1="17" x2="22" y2="17"></line>
+        <line x1="17" y1="7" x2="22" y2="7"></line>
+      </svg>
+    </div>
+
+    <div class="empty-text-group">
+      <h3 class="empty-title">ยังไม่มี Packaging Reference</h3>
+      <p class="empty-description">
+        คลังนี้จัดเก็บเทคนิคการเล่า โครงสร้าง Hook จังหวะการตัดต่อ หรือ Visual Metaphor (HOW) เพื่อนำไปประกบกับแก่นสาระในการ Remix
+      </p>
+    </div>
+
+    <div class="empty-actions-row">
+      <button 
+        type="button" 
+        class="btn-pill btn-primary btn-empty-research" 
+        data-testid="btn-empty-research"
+        data-action="go-research" 
+        aria-label="ไปหน้าค้นคว้า (S01) เพื่อบันทึก Packaging แรก"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <span>ไปหน้าค้นคว้า (S01)</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="btn-pill btn-ghost btn-empty-sample" 
+        data-testid="btn-empty-sample"
+        data-action="load-sample" 
+        aria-label="โหลดตัวอย่าง Packaging Reference เพื่อเรียนรู้วิธี Save"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        <span>โหลดตัวอย่างเพื่อเรียนรู้วิธี Save</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- 3. Empty Search / Filter Results State -->
+  <section 
+    id="empty-no-results" 
+    data-testid="empty-no-results"
+    class="empty-vault-card mew-offer-card no-results-empty" 
+    aria-label="ไม่พบข้อมูลตามคำค้นหาหรือตัวกรอง"
+    hidden
+  >
+    <div class="empty-accent-bar stone" aria-hidden="true"></div>
+
+    <div class="empty-icon-bubble neutral" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        <line x1="8" y1="11" x2="14" y2="11"></line>
+      </svg>
+    </div>
+
+    <div class="empty-text-group">
+      <h3 class="empty-title">ไม่พบรายการที่ตรงกับเงื่อนไขการค้นหา</h3>
+      <p class="empty-description">
+        ลองปรับเปลี่ยนคำค้นหา หรือล้างตัวกรองแท็กที่เลือกไว้เพื่อกลับมาแสดงผลรายการทั้งหมดในแท็บนี้
+      </p>
+    </div>
+
+    <div class="empty-actions-row">
+      <button 
+        type="button" 
+        id="btn-clear-empty-filter" 
+        data-testid="btn-clear-filters"
+        class="btn-pill btn-primary btn-clear-filter" 
+        data-action="clear-filters" 
+        aria-label="ล้างตัวกรองและคำค้นหาทั้งหมด"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+        <span>ล้างตัวกรองทั้งหมด</span>
+      </button>
+    </div>
+  </section>
+
+</div>

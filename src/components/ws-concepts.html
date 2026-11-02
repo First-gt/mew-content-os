@@ -1,0 +1,149 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T24: S07 Remix Workspace — Concept Results + Source Trace
+     Theme: mewteetawat.com V6.3
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="ws-concepts-container" id="ws-concepts" data-testid="ws-concepts" role="region" aria-label="ผลลัพธ์ Original Concepts และการตรวจสอบที่มา">
+  
+  <div class="concepts-header">
+    <div class="concepts-badges-row">
+      <span class="badge-pill coral">Synthesized Concepts</span>
+      <span class="badge-pill soft">Source Attribution Trace</span>
+    </div>
+    <h3 class="concepts-heading">Original Content Concepts (ผลลัพธ์การสังเคราะห์)</h3>
+    <p class="concepts-subheading">
+      ผลงานที่ผ่านการหลอมรวมแก่นคิด (WHAT), จังหวะเล่า (HOW) เข้ากับ Our Unique POV เพื่อสร้างไอเดียใหม่ที่มีสไตล์แตกต่างกัน
+    </p>
+  </div>
+
+  <!-- Loading State -->
+  <div class="concepts-loading" id="concepts-loading" hidden aria-live="polite">
+    <div class="spinner-ring" aria-hidden="true"></div>
+    <span>กำลังผสานวัตถุดิบและสังเคราะห์ Original Concepts...</span>
+  </div>
+
+  <!-- Empty State -->
+  <div class="concepts-empty-state" id="concepts-empty" hidden>
+    <div class="empty-icon-wrap" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="12" y1="18" x2="12" y2="12"></line>
+        <line x1="9" y1="15" x2="15" y2="15"></line>
+      </svg>
+    </div>
+    <h4 class="empty-heading">ยังไม่มี Original Concepts</h4>
+    <p class="empty-text">เลือกวัตถุดิบในตะกร้าและระบุ Direction ให้พร้อม จากนั้นกด Create Original Concepts</p>
+  </div>
+
+  <!-- Concepts Grid / List -->
+  <div class="concepts-grid" id="concepts-list" role="list" aria-label="รายการ Original Concepts">
+    <!-- Populated dynamically by ws-concepts.js -->
+  </div>
+
+  <!-- Concept Card Template -->
+  <template id="tmpl-concept-card">
+    <article class="concept-card mew-offer-card" id="" data-concept-id="" data-testid="concept-{id}" role="listitem">
+      
+      <!-- Header Row -->
+      <div class="concept-top-row">
+        <div class="concept-title-group">
+          <span class="concept-number font-num"></span>
+          <h4 class="concept-name"></h4>
+        </div>
+        <div class="concept-tags-group">
+          <span class="concept-style-tag"></span>
+          <!-- Copy Risk Flag Badge -->
+          <span class="flag-copy-risk badge-pill warning" id="flag-copy-risk" data-testid="flag-copy-risk" hidden aria-live="assertive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span class="copy-risk-label">flag-copy-risk</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Hook Point (3 วินาทีแรก) -->
+      <div class="concept-section c-hook-box">
+        <span class="section-label">Hook Point (3 วินาทีแรก)</span>
+        <p class="c-hook" data-testid="c-hook" tabindex="0"></p>
+      </div>
+
+      <!-- Story Beats -->
+      <div class="concept-section c-beats-box">
+        <span class="section-label">โครงสร้างการเล่า (Story Beats)</span>
+        <ol class="c-story-beats" data-testid="c-story-beats"></ol>
+      </div>
+
+      <!-- Claim Check & Transformative Verification -->
+      <div class="concept-section c-claim-check-box">
+        <span class="section-label">Claim Check &amp; ความโปร่งใสของข้ออ้าง</span>
+        <div class="c-claim-check" data-testid="c-claim-check">
+          <div class="claim-check-meta">
+            <span class="claim-badge-status verified">Transformative Fair Use</span>
+            <span class="claim-badge-evidence">Founder POV (มุมมองตรง)</span>
+          </div>
+          <p class="claim-check-summary">ผ่านเกณฑ์ตรวจสอบ: ใช้โครงสร้างสังเคราะห์ใหม่ ไม่คัดลอกถ้อยคำตรง และไม่มีข้ออ้างลอย ๆ</p>
+        </div>
+      </div>
+
+      <!-- Visual & Sound Cue -->
+      <div class="concept-section c-visual-sound-box">
+        <span class="section-label">จังหวะภาพและเสียง (Visual &amp; Sound Cue)</span>
+        <p class="c-visual-sound" data-testid="c-visual-sound"></p>
+      </div>
+
+      <!-- Our Original Contribution -->
+      <div class="concept-section c-contribution-box">
+        <span class="section-label">สิ่งใหม่ที่เราต่อยอด (Our Original Contribution)</span>
+        <p class="c-original-contribution" data-testid="c-original-contribution"></p>
+      </div>
+
+      <!-- Source Trace (Attribution to C?, P?, New Original Value) -->
+      <div class="concept-section c-source-trace-box">
+        <span class="section-label">Source Trace (ที่มาวัตถุดิบที่หยิบยืม)</span>
+        <div class="c-source-trace" data-testid="c-source-trace" role="list" aria-label="รายการอ้างอิงที่มา">
+          <!-- Populated dynamically with C?, P?, and New Original Value -->
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="concept-section c-cta-box">
+        <span class="section-label">Call to Action (CTA)</span>
+        <p class="c-cta" data-testid="c-cta"></p>
+      </div>
+
+      <!-- Card Action Buttons -->
+      <div class="concept-actions-row">
+        <button type="button" class="btn-pill btn-ghost btn-sm btn-refine" data-action="refine" aria-label="ปรับแต่ง Concept">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          <span>Refine Concept</span>
+        </button>
+
+        <button type="button" class="btn-pill btn-ghost btn-sm btn-save-concept" data-action="save" aria-label="บันทึก Concept">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          <span>Save Concept</span>
+        </button>
+
+        <button type="button" class="btn-pill btn-primary btn-sm btn-select-for-board" data-action="send-to-board" aria-label="ส่ง Concept ไปยัง Content Board">
+          <span>ส่งไปบอร์ด (Send to Board)</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </article>
+  </template>
+
+</div>

@@ -1,0 +1,620 @@
+/* ==============================================================================
+   MEW CONTENT OS — Content Analysis Panel (WHAT) Stylesheet (Topic T09)
+   Pure Modern CSS · Zero Build Steps · Zero Server Dependencies
+   Theme: mewteetawat.com V6.3 (Paper Canvas, Warm Stone, Accent Coral & Deep Ink)
+
+   Key Highlights:
+   - Palette: Paper #fbfaf8, Soft #f4f2ee, Stone #e7e3de, Ink #11110f, Muted #6b6762, Coral #ed765b, Kicker #ae4f3a
+   - Section badges with numeric steps (01-07)
+   - Claims & Evidence clear distinction: "มีหลักฐาน" (verified) vs "ไม่มีหลักฐาน" (.evidence-missing)
+   - Transparent handling of timecodes: shows "ไม่ทราบเวลา" or hidden when absent
+   - "What is Good" (คำถาม "อะไรดี?") prominently highlighted in coral tint
+   - Fluid typography, WCAG AA/AAA compliant contrast ratios & focus outlines
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   1. DESIGN TOKENS & SYSTEM VARIABLES
+   ------------------------------------------------------------------------------ */
+:root {
+  --ca-paper: #fbfaf8;
+  --ca-soft: #f4f2ee;
+  --ca-white: #ffffff;
+  --ca-line: #e7e3de;
+  --ca-line-subtle: #eeebe5;
+  --ca-line-dashed: #d4cfc7;
+  --ca-ink: #11110f;
+  --ca-ink-deep: #09090b;
+  --ca-muted: #6b6762;
+  --ca-muted-light: #948f88;
+  
+  /* Coral Content Lens Theme */
+  --ca-coral: #ed765b;
+  --ca-coral-hover: #e06044;
+  --ca-coral-kicker: #ae4f3a;
+  --ca-coral-subtle: rgba(237, 118, 91, 0.10);
+  --ca-coral-soft: rgba(237, 118, 91, 0.16);
+  --ca-coral-border: rgba(237, 118, 91, 0.28);
+  
+  /* Evidence States */
+  --ca-evidence-verified-bg: rgba(16, 185, 129, 0.12);
+  --ca-evidence-verified-text: #065f46;
+  --ca-evidence-verified-border: rgba(16, 185, 129, 0.32);
+
+  --ca-evidence-missing-bg: rgba(237, 118, 91, 0.15);
+  --ca-evidence-missing-text: #ae4f3a;
+  --ca-evidence-missing-border: rgba(237, 118, 91, 0.45);
+
+  --ca-shadow-card: 0 18px 50px rgba(17, 17, 15, 0.05);
+  --ca-shadow-hover: 0 22px 55px rgba(17, 17, 15, 0.08);
+  --ca-shadow-subtle: 0 2px 8px rgba(17, 17, 15, 0.03);
+
+  --ca-radius-card: 16px;
+  --ca-radius-box: 12px;
+  --ca-radius-sm: 8px;
+  --ca-radius-pill: 9999px;
+
+  --ca-font-sans: 'Inter', 'Prompt', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ca-font-num: 'Inter', sans-serif;
+}
+
+/* ------------------------------------------------------------------------------
+   2. CONTENT ANALYSIS PANEL CONTAINER (.content-analysis-panel)
+   ------------------------------------------------------------------------------ */
+.content-analysis-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  background: var(--ca-white);
+  border: 1px solid var(--ca-line);
+  border-radius: var(--ca-radius-card);
+  padding: 1.75rem 2rem 2.25rem 2rem;
+  box-sizing: border-box;
+  box-shadow: var(--ca-shadow-card);
+  position: relative;
+  overflow: hidden;
+  font-family: var(--ca-font-sans);
+  color: var(--ca-ink);
+  animation: caSubtleSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 4px Top Accent Bar (Signature mew-offer-card style) */
+.content-analysis-panel.coral-bar::before,
+.mew-offer-card.coral-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--ca-coral);
+  border-top-left-radius: var(--ca-radius-card);
+  border-top-right-radius: var(--ca-radius-card);
+}
+
+@keyframes caSubtleSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------------------------
+   3. PANEL HEADER & INDEPENDENT AGENCY CALLOUT
+   ------------------------------------------------------------------------------ */
+.content-panel-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--ca-line-subtle);
+}
+
+.content-header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.header-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.badge-pill.coral-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--ca-coral-subtle);
+  color: var(--ca-coral-kicker);
+  border: 1px solid var(--ca-coral-border);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--ca-radius-pill);
+  font-size: 0.775rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.panel-kicker-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ca-muted);
+  background: var(--ca-soft);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--ca-radius-pill);
+  border: 1px solid var(--ca-line);
+}
+
+.content-panel-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--ca-ink);
+  line-height: 1.25;
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+.content-panel-desc {
+  font-size: 0.925rem;
+  color: var(--ca-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.content-panel-desc strong {
+  color: var(--ca-coral-kicker);
+  font-weight: 700;
+}
+
+/* Independent Human Choice Callout */
+.founder-agency-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: var(--ca-soft);
+  border: 1px solid var(--ca-line);
+  border-left: 3px solid var(--ca-coral);
+  padding: 0.75rem 1rem;
+  border-radius: var(--ca-radius-sm);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.founder-agency-callout .callout-icon {
+  color: var(--ca-coral-kicker);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.founder-agency-callout .callout-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.founder-agency-callout .callout-title {
+  color: var(--ca-ink);
+  font-weight: 700;
+  font-size: 0.825rem;
+}
+
+.founder-agency-callout .callout-text {
+  color: var(--ca-muted);
+}
+
+/* ------------------------------------------------------------------------------
+   4. ANALYSIS SECTION WRAPPERS (ca-*)
+   ------------------------------------------------------------------------------ */
+.analysis-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.15rem 1.25rem;
+  background: var(--ca-white);
+  border: 1px solid var(--ca-line);
+  border-radius: var(--ca-radius-box);
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  position: relative;
+}
+
+.analysis-section:hover {
+  border-color: #d8d3cb;
+  transform: translateY(-2px);
+  box-shadow: var(--ca-shadow-subtle);
+}
+
+.section-header-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.section-badge-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ca-ink);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.section-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--ca-radius-pill);
+  background: var(--ca-soft);
+  color: var(--ca-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  border: 1px solid var(--ca-line);
+}
+
+.coral-kicker .section-step-num {
+  background: var(--ca-coral-subtle);
+  color: var(--ca-coral-kicker);
+  border-color: var(--ca-coral-border);
+}
+
+.section-caption-label {
+  font-size: 0.8rem;
+  color: var(--ca-muted-light);
+  line-height: 1.35;
+  padding-left: 2rem;
+}
+
+/* Empty Field State Indicator */
+.empty-field-text {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ca-muted-light);
+  font-style: italic;
+  font-size: 0.875rem;
+}
+
+.empty-list-item,
+.empty-claim-box {
+  color: var(--ca-muted-light);
+}
+
+/* ------------------------------------------------------------------------------
+   5. GENERAL CARD BOXES & LISTS
+   ------------------------------------------------------------------------------ */
+.analysis-card-box {
+  background: var(--ca-soft);
+  border: 1px solid var(--ca-line);
+  border-radius: var(--ca-radius-sm);
+  padding: 0.85rem 1.05rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ca-ink);
+}
+
+.analysis-card-box.muted-bg {
+  background: #f7f6f3;
+}
+
+/* 01: Core Idea Box */
+.analysis-card-box.core-idea-box {
+  background: #fffdfb;
+  border: 1px solid var(--ca-coral-border);
+  border-left: 3px solid var(--ca-coral);
+  font-size: 1.025rem;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--ca-ink);
+}
+
+/* Bullet Lists (Key Points, Extendable Angles) */
+.analysis-bullet-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.analysis-bullet-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 0.925rem;
+  line-height: 1.55;
+  color: var(--ca-ink);
+}
+
+.analysis-bullet-list li::before {
+  content: '';
+  position: absolute;
+  left: 0.25rem;
+  top: 0.55rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ca-coral);
+}
+
+.analysis-bullet-list.highlight-list li {
+  background: var(--ca-soft);
+  border: 1px solid var(--ca-line);
+  border-radius: var(--ca-radius-sm);
+  padding: 0.65rem 0.85rem 0.65rem 2rem;
+  margin-bottom: 0.1rem;
+}
+
+.analysis-bullet-list.highlight-list li::before {
+  left: 0.75rem;
+  top: 0.95rem;
+  background: var(--ca-coral-kicker);
+}
+
+/* ------------------------------------------------------------------------------
+   6. SECTION 04: CLAIMS & EVIDENCE (.ca-claims-evidence)
+   Strict DOD Requirements:
+   - Separate "มีหลักฐาน" vs "ไม่มีหลักฐาน" (badge .evidence-missing)
+   - If no timestamp: hide timecode or display "ไม่ทราบเวลา" (never fake numbers)
+   ------------------------------------------------------------------------------ */
+.claims-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.claim-item-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  background: var(--ca-soft);
+  border: 1px solid var(--ca-line);
+  border-radius: var(--ca-radius-sm);
+  padding: 0.95rem 1.15rem;
+  transition: all 0.18s ease;
+}
+
+.claim-item-card:hover {
+  background: #f1efeb;
+  border-color: #dcd8d0;
+}
+
+/* State when evidence is missing */
+.claim-item-card.has-missing-evidence {
+  border-left: 3px solid var(--ca-coral);
+  background: #fdfaf8;
+}
+
+/* Claim Statement Row */
+.claim-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.claim-meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.claim-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ca-ink);
+  background: var(--ca-white);
+  border: 1px solid var(--ca-line);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--ca-radius-pill);
+}
+
+/* Timecode Display (No Fake Timestamps) */
+.claim-timecode,
+.item-timecode {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ca-muted);
+  background: var(--ca-white);
+  border: 1px solid var(--ca-line);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--ca-radius-pill);
+  font-family: var(--ca-font-num);
+}
+
+.claim-timecode.timecode-unknown,
+.item-timecode.timecode-unknown {
+  color: var(--ca-muted-light);
+  font-style: italic;
+  background: transparent;
+  border-style: dashed;
+}
+
+.claim-timecode.timecode-hidden,
+.item-timecode.timecode-hidden {
+  display: none !important;
+}
+
+.claim-statement {
+  margin: 0;
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--ca-ink);
+  line-height: 1.5;
+}
+
+/* Evidence Row */
+.evidence-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.55rem;
+  border-top: 1px dashed var(--ca-line-dashed);
+}
+
+.evidence-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* BASE EVIDENCE TAG */
+.evidence-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.725rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--ca-radius-pill);
+  transition: all 0.15s ease;
+}
+
+/* 1. VERIFIED EVIDENCE BADGE (มีหลักฐาน) */
+.evidence-tag.evidence-verified,
+.evidence-tag.evidence-present {
+  background: var(--ca-evidence-verified-bg);
+  color: var(--ca-evidence-verified-text);
+  border: 1px solid var(--ca-evidence-verified-border);
+}
+
+.evidence-tag.evidence-verified::before,
+.evidence-tag.evidence-present::before {
+  content: '✓';
+  font-weight: 800;
+  font-size: 0.75rem;
+}
+
+/* 2. MISSING EVIDENCE BADGE (ไม่มีหลักฐาน) */
+.evidence-tag.evidence-missing {
+  background: var(--ca-evidence-missing-bg);
+  color: var(--ca-evidence-missing-text);
+  border: 1px solid var(--ca-evidence-missing-border);
+  font-weight: 800;
+}
+
+.evidence-tag.evidence-missing::before {
+  content: '!';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--ca-coral-kicker);
+  color: var(--ca-white);
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.evidence-statement {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ca-muted);
+}
+
+.evidence-statement.missing-text {
+  color: var(--ca-coral-kicker);
+}
+
+/* ------------------------------------------------------------------------------
+   7. SECTION 07: WHAT IS GOOD? (.ca-what-is-good)
+   DOD Requirement: Clear prompt for "อะไรดี?"
+   ------------------------------------------------------------------------------ */
+.ca-what-is-good {
+  background: #fffdfb;
+  border-color: var(--ca-coral-border);
+}
+
+.good-kicker .section-step-num {
+  background: var(--ca-coral);
+  color: var(--ca-white);
+  border-color: var(--ca-coral);
+}
+
+.good-kicker .question-primary {
+  color: var(--ca-coral-kicker);
+  font-weight: 800;
+}
+
+.good-insight-box.coral-tint {
+  background: var(--ca-coral-subtle);
+  border: 1px solid var(--ca-coral-border);
+  border-left: 4px solid var(--ca-coral);
+  border-radius: var(--ca-radius-sm);
+  padding: 1rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--ca-ink);
+}
+
+/* ------------------------------------------------------------------------------
+   8. ACCESSIBILITY, FOCUS STATES & REDUCED MOTION
+   ------------------------------------------------------------------------------ */
+.analysis-section:focus-within,
+.analysis-card-box:focus-within,
+.claim-item-card:focus-within {
+  outline: 2px solid var(--ca-coral);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content-analysis-panel,
+  .analysis-section,
+  .claim-item-card {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------------------
+   9. RESPONSIVE DESIGN (FLUID MEDIA QUERIES)
+   ------------------------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .content-analysis-panel {
+    padding: 1.25rem 1rem 1.5rem 1rem;
+    gap: 1.15rem;
+  }
+
+  .content-panel-title {
+    font-size: 1.25rem;
+  }
+
+  .analysis-section {
+    padding: 0.95rem 1rem;
+  }
+
+  .section-caption-label {
+    padding-left: 0;
+    margin-top: 0.15rem;
+  }
+
+  .claim-meta-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

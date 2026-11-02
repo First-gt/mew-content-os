@@ -1,0 +1,625 @@
+/**
+ * ==============================================================================
+ * MEW CONTENT OS — Mobile Stepper & Sticky Summary Styles (Topic T31)
+ * Theme: mewteetawat.com V6.3 (Stone, Coral, Violet, Deep Ink)
+ * 
+ * Breakpoint <= 768px: 3-step Stepper + Sticky Summary + Single Active Column
+ * Desktop > 768px: Stepper and Sticky Bar hidden, Full 3-Column Grid visible
+ * Zero Horizontal Scroll at 375px · Pure Client-Side CSS
+ * ==============================================================================
+ */
+
+:root {
+  --canvas-bg: #fbfaf8;
+  --surface-soft: #f4f2ee;
+  --surface-card: #ffffff;
+  --stone-line: #e7e3de;
+  --stone-line-dark: #d8d4cd;
+  --deep-ink: #11110f;
+  --muted-text: #6b6762;
+  --coral-accent: #ed765b;
+  --kicker-coral: #ae4f3a;
+  --electric-violet: #8a76ff;
+  --card-shadow: 0 18px 50px rgba(17, 17, 15, 0.05);
+  --sheet-shadow: 0 -12px 36px rgba(17, 17, 15, 0.16);
+}
+
+/* ==============================================================================
+   Mobile Container Layout & Desktop Gating
+   ============================================================================== */
+
+.remix-mobile-container {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .remix-mobile-container {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+}
+
+/* ==============================================================================
+   1. 3-Step Stepper Header (Breakpoint <= 768px)
+   ============================================================================== */
+
+.remix-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface-card, #ffffff);
+  border: 1px solid var(--stone-line, #e7e3de);
+  border-radius: 14px;
+  padding: 8px 10px;
+  box-shadow: 0 4px 14px rgba(17, 17, 15, 0.03);
+  margin-bottom: 12px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.stepper-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: all 0.18s ease;
+  min-height: 44px;
+  touch-action: manipulation;
+  color: var(--muted-text, #6b6762);
+  font-family: inherit;
+  outline: none;
+}
+
+.stepper-step:hover {
+  background: var(--surface-soft, #f4f2ee);
+}
+
+.stepper-step:focus-visible {
+  outline: 2px solid var(--deep-ink, #11110f);
+  outline-offset: 2px;
+}
+
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--surface-soft, #f4f2ee);
+  border: 1px solid var(--stone-line, #e7e3de);
+  color: var(--muted-text, #6b6762);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.step-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted-text, #6b6762);
+  white-space: nowrap;
+}
+
+/* Active Step Styling */
+.stepper-step.active {
+  color: var(--deep-ink, #11110f);
+}
+
+.stepper-step.active .step-num {
+  background: var(--deep-ink, #11110f);
+  border-color: var(--deep-ink, #11110f);
+  color: #ffffff;
+}
+
+.stepper-step.active .step-title {
+  color: var(--deep-ink, #11110f);
+  font-weight: 700;
+}
+
+/* Stepper Inter-Step Divider */
+.stepper-divider {
+  flex: 1;
+  height: 1px;
+  min-width: 8px;
+  background: var(--stone-line, #e7e3de);
+  margin: 0 4px;
+}
+
+/* ==============================================================================
+   2. Mobile Step Navigation Bar (Prev / Current / Next)
+   ============================================================================== */
+
+.mobile-step-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 4px 2px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mobile-step-indicator {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted-text, #6b6762);
+  text-align: center;
+  flex: 1;
+}
+
+.mobile-step-nav .btn-pill {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.mobile-step-nav .btn-ghost {
+  background: #ffffff;
+  border: 1px solid var(--stone-line, #e7e3de);
+  color: var(--deep-ink, #11110f);
+}
+
+.mobile-step-nav .btn-ghost:hover {
+  background: var(--surface-soft, #f4f2ee);
+}
+
+.mobile-step-nav .btn-ink {
+  background: var(--deep-ink, #11110f);
+  border: 1px solid var(--deep-ink, #11110f);
+  color: #ffffff;
+}
+
+.mobile-step-nav .btn-ink:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* ==============================================================================
+   3. Sticky Summary Bar (Always Visible on Mobile <= 768px)
+   ============================================================================== */
+
+.sticky-summary {
+  display: none;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(251, 250, 248, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--stone-line, #e7e3de);
+  padding: 10px 16px;
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+  z-index: 90;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -4px 18px rgba(17, 17, 15, 0.04);
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .sticky-summary {
+    display: flex;
+  }
+}
+
+.sticky-summary:focus-visible {
+  outline: 2px solid var(--deep-ink, #11110f);
+  outline-offset: -2px;
+}
+
+.summary-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.summary-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(237, 118, 91, 0.12);
+  color: var(--coral-accent, #ed765b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.summary-text-wrap {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.summary-caption {
+  font-size: 0.7rem;
+  color: var(--muted-text, #6b6762);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.summary-pills {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--deep-ink, #11110f);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-sheet-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #ffffff;
+  border: 1px solid var(--stone-line, #e7e3de);
+  border-radius: 9999px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--deep-ink, #11110f);
+  cursor: pointer;
+  flex-shrink: 0;
+  min-height: 36px;
+}
+
+.btn-sheet-trigger:hover {
+  background: var(--surface-soft, #f4f2ee);
+}
+
+/* ==============================================================================
+   4. Mobile Bottom Sheet Drawer (Title + WHY for all Ingredients)
+   ============================================================================== */
+
+.mobile-ingredients-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-sizing: border-box;
+}
+
+.mobile-ingredients-sheet[hidden] {
+  display: none !important;
+}
+
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 17, 15, 0.52);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  transition: opacity 0.2s ease;
+}
+
+.sheet-content {
+  position: relative;
+  background: #ffffff;
+  border-radius: 20px 20px 0 0;
+  padding: 16px 20px 24px;
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--sheet-shadow);
+  animation: slideSheetUp 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@keyframes slideSheetUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.sheet-drag-handle {
+  width: 44px;
+  height: 4px;
+  background: var(--stone-line, #e7e3de);
+  border-radius: 9999px;
+  margin: 0 auto;
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--stone-line, #e7e3de);
+  padding-bottom: 12px;
+}
+
+.sheet-header-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sheet-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--deep-ink, #11110f);
+}
+
+.sheet-count-tag {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--coral-accent, #ed765b);
+}
+
+.btn-close-sheet {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  color: var(--muted-text, #6b6762);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.btn-close-sheet:hover {
+  background: var(--surface-soft, #f4f2ee);
+  color: var(--deep-ink, #11110f);
+}
+
+.btn-close-sheet:focus-visible {
+  outline: 2px solid var(--deep-ink, #11110f);
+}
+
+.sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  max-height: 52vh;
+  padding-right: 4px;
+  box-sizing: border-box;
+}
+
+/* Ingredient Item Card inside Sheet */
+.sheet-ingredient-item {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--stone-line, #e7e3de);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(17, 17, 15, 0.03);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.sheet-ingredient-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--stone-line, #e7e3de);
+}
+
+.sheet-ingredient-item.content-item::before {
+  background: var(--coral-accent, #ed765b);
+}
+
+.sheet-ingredient-item.packaging-item::before {
+  background: var(--electric-violet, #8a76ff);
+}
+
+.sheet-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+}
+
+.sheet-lens-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.sheet-lens-tag.content {
+  background: rgba(237, 118, 91, 0.12);
+  color: var(--kicker-coral, #ae4f3a);
+}
+
+.sheet-lens-tag.packaging {
+  background: rgba(138, 118, 255, 0.12);
+  color: var(--electric-violet, #8a76ff);
+}
+
+.sheet-creator {
+  color: var(--muted-text, #6b6762);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.sheet-item-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--deep-ink, #11110f);
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+.sheet-why {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--muted-text, #6b6762);
+  margin: 0;
+  background: var(--surface-soft, #f4f2ee);
+  padding: 8px 10px;
+  border-radius: 8px;
+  overflow-wrap: break-word;
+}
+
+.sheet-why strong {
+  color: var(--deep-ink, #11110f);
+}
+
+.sheet-borrow-tip {
+  font-size: 0.75rem;
+  color: var(--deep-ink, #11110f);
+  margin: 0;
+}
+
+.empty-hint {
+  font-size: 0.85rem;
+  color: var(--muted-text, #6b6762);
+  text-align: center;
+  padding: 24px 0;
+  margin: 0;
+}
+
+.sheet-footer {
+  padding-top: 8px;
+}
+
+.sheet-footer .btn-block {
+  width: 100%;
+  justify-content: center;
+  min-height: 44px;
+}
+
+/* ==============================================================================
+   5. Breakpoint <= 768px Workspace Stepper Logic (3 Columns -> 1 Step Visible)
+   ============================================================================== */
+
+@media (max-width: 768px) {
+  /* Workspace grid resets from desktop columns to single-column view */
+  .remix-workspace-grid,
+  #remix-workspace {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Step 1: Show Ingredients Column only */
+  .remix-workspace-grid[data-mobile-step="1"] .col-ingredients,
+  #remix-workspace[data-mobile-step="1"] .col-ingredients {
+    display: block !important;
+  }
+  .remix-workspace-grid[data-mobile-step="1"] .col-direction,
+  .remix-workspace-grid[data-mobile-step="1"] .col-concepts,
+  #remix-workspace[data-mobile-step="1"] .col-direction,
+  #remix-workspace[data-mobile-step="1"] .col-concepts {
+    display: none !important;
+  }
+
+  /* Step 2: Show Direction Column only */
+  .remix-workspace-grid[data-mobile-step="2"] .col-direction,
+  #remix-workspace[data-mobile-step="2"] .col-direction {
+    display: block !important;
+  }
+  .remix-workspace-grid[data-mobile-step="2"] .col-ingredients,
+  .remix-workspace-grid[data-mobile-step="2"] .col-concepts,
+  #remix-workspace[data-mobile-step="2"] .col-ingredients,
+  #remix-workspace[data-mobile-step="2"] .col-concepts {
+    display: none !important;
+  }
+
+  /* Step 3: Show Concepts/Results Column only */
+  .remix-workspace-grid[data-mobile-step="3"] .col-concepts,
+  #remix-workspace[data-mobile-step="3"] .col-concepts {
+    display: block !important;
+  }
+  .remix-workspace-grid[data-mobile-step="3"] .col-ingredients,
+  .remix-workspace-grid[data-mobile-step="3"] .col-direction,
+  #remix-workspace[data-mobile-step="3"] .col-ingredients,
+  #remix-workspace[data-mobile-step="3"] .col-direction {
+    display: none !important;
+  }
+}
+
+/* ==============================================================================
+   6. 375px Viewport Width Zero Horizontal Scroll Guarantee
+   ============================================================================== */
+
+@media (max-width: 768px) {
+  html,
+  body,
+  .app-shell,
+  .app-main,
+  .remix-workspace-grid,
+  .remix-col,
+  .mew-offer-card,
+  .direction-form,
+  .concept-cards-stack {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Prevent oversized form controls from pushing page wider than 375px */
+  input,
+  textarea,
+  select,
+  button {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  .sheet-content,
+  .stepper-step,
+  .btn-pill {
+    animation: none !important;
+    transition: none !important;
+  }
+}

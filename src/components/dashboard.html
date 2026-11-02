@@ -1,0 +1,306 @@
+<!-- ==============================================================================
+     MEW CONTENT OS — S00 OVERVIEW / DASHBOARD (Topic T04)
+     Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+     Pure Client-Side Frontend Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="dashboard-container" id="dashboard-root" data-testid="dashboard-root">
+
+  <!-- ============================================================================
+       HERO BANNER & PRIMARY WORKFLOW ACTIONS
+       ============================================================================ -->
+  <section class="dashboard-hero mew-hero-bg" aria-labelledby="overview-heading">
+    <div class="hero-content">
+      
+      <div class="hero-eyebrow-row">
+        <span class="badge-kicker">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          S00 OVERVIEW · CREATIVE ENGINE V6.3
+        </span>
+        <span class="badge-pill soft">Zero Fake Metrics · 100% Real Vault Data</span>
+      </div>
+
+      <h1 id="overview-heading" class="hero-title">
+        Turn Raw Clips into <span class="mew-gradient-text">Actionable DNA</span>
+      </h1>
+      
+      <p class="hero-subtitle">
+        วิจัยคลิปต้นฉบับ แยกสาระ (<strong>WHAT</strong>) และลีลา (<strong>HOW</strong>) ด้วย AI สองเลนส์ ผ่าน Human Save Gate สู่คลังวัตถุดิบ 2 คลัง ก่อนนำไปสังเคราะห์ใน Remix Studio สู่ไอเดียสดใหม่ที่เป็นคุณ
+      </p>
+
+      <!-- 3 Primary Action Buttons (Defined in copy.js / Router TRANSITIONS) -->
+      <div class="hero-actions" role="toolbar" aria-label="คำสั่งหลักสำหรับเริ่มงาน">
+        
+        <!-- Button 1: btn-research-a-clip -> S01 -->
+        <button type="button" 
+                class="btn-pill btn-primary btn-action-research" 
+                id="btn-research-a-clip" 
+                data-testid="btn-research-a-clip" 
+                data-action="btn-research-a-clip" 
+                data-target="S01"
+                aria-label="Research a Clip: เริ่มต้นวิจัยคลิปต้นฉบับ (S01)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="btn-text">Research a Clip</span>
+          <span class="btn-action-badge" aria-hidden="true">S01</span>
+        </button>
+
+        <!-- Button 2: btn-open-library -> S04 -->
+        <button type="button" 
+                class="btn-pill btn-ghost btn-action-library" 
+                id="btn-open-library" 
+                data-testid="btn-open-library" 
+                data-action="btn-open-library" 
+                data-target="S04"
+                aria-label="Open My Library: เปิดคลังวัตถุดิบ 2 คลัง (S04)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span class="btn-text">Open My Library</span>
+          <span class="btn-action-badge" aria-hidden="true">S04</span>
+        </button>
+
+        <!-- Button 3: btn-start-remix -> S06 -->
+        <button type="button" 
+                class="btn-pill btn-violet btn-action-remix" 
+                id="btn-start-remix" 
+                data-testid="btn-start-remix" 
+                data-action="btn-start-remix" 
+                data-target="S06"
+                aria-label="Start Remix: เริ่มต้นกระบวนการรีมิกซ์วัตถุดิบ (S06)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <span class="btn-text">Start Remix</span>
+          <span class="btn-action-badge" aria-hidden="true">S06</span>
+        </button>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================================
+       4 CORE OPERATIONAL CARDS (NO FAKE CHARTS / NO GENERATOR / NO TIMELINE)
+       1. recent-research
+       2. vault-summary (Shows Saved Content and Saved Packaging separately)
+       3. remix-drafts
+       4. continue-work
+       ============================================================================ -->
+  <section class="summary-grid" role="region" aria-label="สรุปข้อมูล 4 ส่วนหลักของระบบ">
+
+    <!-- ------------------------------------------------------------------------
+         CARD 1: recent-research
+         ------------------------------------------------------------------------ -->
+    <article class="mew-offer-card summary-card card-recent-research coral-accent" 
+             id="card-recent-research" 
+             data-testid="recent-research" 
+             tabindex="0" 
+             role="button" 
+             aria-label="การ์ดวิจัยล่าสุด: เปิดดูรายการวิจัยและผลการวิเคราะห์">
+      <div class="summary-card-inner">
+        <div class="summary-card-header">
+          <div class="summary-icon-wrap" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <span class="badge-pill coral">Dual-Lens · S01</span>
+        </div>
+
+        <div class="summary-metric-row">
+          <span class="summary-metric-number font-num" id="recent-research-count" data-testid="count-recent-research">0</span>
+          <span class="summary-metric-unit">คลิปใน Inbox</span>
+        </div>
+
+        <h2 class="summary-card-title">Recent Research</h2>
+        <p class="summary-card-desc">
+          คลิปต้นฉบับที่นำเข้าเพื่อวิเคราะห์แก่นคิด (WHAT) และโครงสร้างลีลา (HOW) ตรวจสอบและบันทึก
+        </p>
+
+        <!-- Preview snippet of the latest research item -->
+        <div class="card-preview-box" id="recent-research-preview" data-testid="recent-research-preview">
+          <div class="preview-item-meta">
+            <span class="preview-badge" id="recent-research-status">รอเริ่มวิจัย</span>
+            <span class="preview-date" id="recent-research-date">-</span>
+          </div>
+          <div class="preview-item-title" id="recent-research-title">ยังไม่มีคลิปที่กำลังวิจัย</div>
+        </div>
+
+        <div class="summary-card-footer">
+          <span class="footer-action-label">Review Research</span>
+          <span class="footer-arrow" aria-hidden="true">&rarr;</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- ------------------------------------------------------------------------
+         CARD 2: vault-summary (Shows Saved Content and Saved Packaging separately)
+         ------------------------------------------------------------------------ -->
+    <article class="mew-offer-card summary-card card-vault-summary violet-bar" 
+             id="card-vault-summary" 
+             data-testid="vault-summary" 
+             tabindex="0" 
+             role="button" 
+             aria-label="การ์ดสรุปคลังวัตถุดิบ: แสดงจำนวน Saved Content และ Saved Packaging แยกกัน">
+      <div class="summary-card-inner">
+        <div class="summary-card-header">
+          <div class="summary-icon-wrap" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <span class="badge-pill violet">Dual-Vault · S04</span>
+        </div>
+
+        <h2 class="summary-card-title">Vault Summary</h2>
+        <p class="summary-card-desc">
+          วัตถุดิบที่ผ่าน Human Save Gate บันทึกแยก 2 คลังตามการตัดสินใจของ Founder
+        </p>
+
+        <!-- Breakdown: Saved Content and Saved Packaging separately -->
+        <div class="vault-breakdown-container">
+          
+          <!-- Content Vault (WHAT) -->
+          <div class="vault-sub-stat content-stat" data-testid="stat-saved-content">
+            <div class="vault-sub-header">
+              <span class="vault-stat-dot coral" aria-hidden="true"></span>
+              <span class="vault-stat-label">Saved Content</span>
+              <span class="vault-stat-tag">WHAT</span>
+            </div>
+            <div class="vault-stat-metric">
+              <span class="vault-stat-number font-num" id="vault-count-content" data-testid="count-saved-content">0</span>
+              <span class="vault-stat-unit">สาระ / มุมคิด</span>
+            </div>
+          </div>
+
+          <!-- Packaging Vault (HOW) -->
+          <div class="vault-sub-stat packaging-stat" data-testid="stat-saved-packaging">
+            <div class="vault-sub-header">
+              <span class="vault-stat-dot violet" aria-hidden="true"></span>
+              <span class="vault-stat-label">Saved Packaging</span>
+              <span class="vault-stat-tag">HOW</span>
+            </div>
+            <div class="vault-stat-metric">
+              <span class="vault-stat-number font-num" id="vault-count-packaging" data-testid="count-saved-packaging">0</span>
+              <span class="vault-stat-unit">ลีลา / ลูกเล่น</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="summary-card-footer">
+          <span class="footer-action-label">Open My Library</span>
+          <span class="footer-arrow" aria-hidden="true">&rarr;</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- ------------------------------------------------------------------------
+         CARD 3: remix-drafts
+         ------------------------------------------------------------------------ -->
+    <article class="mew-offer-card summary-card card-remix-drafts violet-bar violet-accent" 
+             id="card-remix-drafts" 
+             data-testid="remix-drafts" 
+             tabindex="0" 
+             role="button" 
+             aria-label="การ์ดดราฟต์รีมิกซ์: ดูแนวคิดที่สังเคราะห์จากวัตถุดิบ">
+      <div class="summary-card-inner">
+        <div class="summary-card-header">
+          <div class="summary-icon-wrap" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <span class="badge-pill violet">C(N)+P(N) · S08</span>
+        </div>
+
+        <div class="summary-metric-row">
+          <span class="summary-metric-number font-num" id="remix-drafts-count" data-testid="count-remix-drafts">0</span>
+          <span class="summary-metric-unit">ร่างแนวคิด</span>
+        </div>
+
+        <h2 class="summary-card-title">Remix Drafts</h2>
+        <p class="summary-card-desc">
+          แนวคิดสดใหม่ที่ผสมผสานจากวัตถุดิบหลายแหล่งในคลัง เตรียมพัฒนาเป็นสคริปต์
+        </p>
+
+        <!-- Preview snippet of latest draft concept -->
+        <div class="card-preview-box" id="remix-drafts-preview" data-testid="remix-drafts-preview">
+          <div class="preview-item-meta">
+            <span class="preview-badge violet" id="remix-drafts-status">Original Concept</span>
+            <span class="preview-date" id="remix-drafts-date">-</span>
+          </div>
+          <div class="preview-item-title" id="remix-drafts-title">ยังไม่มีร่างแนวคิดที่บันทึกไว้</div>
+        </div>
+
+        <div class="summary-card-footer">
+          <span class="footer-action-label">View Remix Drafts</span>
+          <span class="footer-arrow" aria-hidden="true">&rarr;</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- ------------------------------------------------------------------------
+         CARD 4: continue-work (Resumes preserved state)
+         ------------------------------------------------------------------------ -->
+    <article class="mew-offer-card summary-card card-continue-work ink-accent" 
+             id="card-continue-work" 
+             data-testid="continue-work" 
+             tabindex="0" 
+             role="button" 
+             aria-label="การ์ดทำงานต่อ: กลับไปทำงานค้างต่อจากสเตทเดิม">
+      <div class="summary-card-inner">
+        <div class="summary-card-header">
+          <div class="summary-icon-wrap" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <span class="badge-pill ink">Preserved State</span>
+        </div>
+
+        <div class="summary-metric-row">
+          <span class="summary-status-pill" id="continue-work-stage-badge">
+            <span class="status-dot green" aria-hidden="true"></span>
+            <span id="continue-work-stage-name">พร้อมทำงานต่อ</span>
+          </span>
+        </div>
+
+        <h2 class="summary-card-title">Continue Work</h2>
+        <p class="summary-card-desc" id="continue-work-desc">
+          กลับไปทำงานค้างต่อจากจุดเดิม รักษารายการวัตถุดิบและสเตทที่เลือกไว้ใน Store
+        </p>
+
+        <!-- Dynamic Context Snippet -->
+        <div class="card-preview-box continue-box" id="continue-work-context" data-testid="continue-work-context">
+          <div class="continue-context-headline" id="continue-work-title">กลับสู่ขั้นตอนที่ค้างไว้</div>
+          <div class="continue-context-sub" id="continue-work-sub">เลือกไว้: 0 วัตถุดิบในตะกร้า</div>
+        </div>
+
+        <div class="summary-card-footer continue-footer">
+          <button type="button" 
+                  class="btn-pill btn-primary btn-continue-work" 
+                  id="btn-continue-work" 
+                  data-testid="btn-continue-work" 
+                  data-action="continue-work"
+                  aria-label="ทำงานต่อจากสเตทเดิม">
+            <span>Continue work</span>
+            <span class="footer-arrow" aria-hidden="true">&rarr;</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+</div>

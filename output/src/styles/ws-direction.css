@@ -1,0 +1,492 @@
+/**
+ * ==============================================================================
+ * MEW CONTENT OS — S07 Remix Workspace Direction Panel Styles (Topic T23)
+ * Theme: mewteetawat.com V6.3
+ * Palette: Canvas #fbfaf8, Surface #f4f2ee, Stone #e7e3de, Deep Ink #11110f,
+ *          Muted #6b6762, Coral #ed765b, Kicker Coral #ae4f3a, Violet #8a76ff
+ * ==============================================================================
+ */
+
+:root {
+  --canvas-paper: #fbfaf8;
+  --surface-soft: #f4f2ee;
+  --surface-white: #ffffff;
+  --stone-line: #e7e3de;
+  --stone-line-dark: #d5d0c8;
+  --deep-ink: #11110f;
+  --muted-text: #6b6762;
+  --coral-accent: #ed765b;
+  --coral-kicker: #ae4f3a;
+  --coral-subtle: rgba(237, 118, 91, 0.1);
+  --violet-accent: #8a76ff;
+  --violet-subtle: rgba(138, 118, 255, 0.1);
+  --font-stack: 'Inter', 'Prompt', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+  --card-radius: 12px;
+  --pill-radius: 9999px;
+  --shadow-soft: 0 18px 50px rgba(17, 17, 15, 0.05);
+  --shadow-hover: 0 22px 60px rgba(17, 17, 15, 0.08);
+}
+
+/* Container & Animation */
+.ws-direction-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: var(--font-stack);
+  color: var(--deep-ink);
+  animation: subtleSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes subtleSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header Area */
+.direction-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.direction-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--pill-radius);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.badge-pill.badge-coral {
+  background: var(--coral-subtle);
+  color: var(--coral-kicker);
+  border: 1px solid rgba(237, 118, 91, 0.25);
+}
+
+.badge-pill.badge-soft {
+  background: var(--surface-soft);
+  color: var(--deep-ink);
+  border: 1px solid var(--stone-line);
+}
+
+.direction-heading {
+  font-size: 1.28rem;
+  font-weight: 700;
+  color: var(--deep-ink);
+  margin: 0;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+
+.direction-subheading {
+  font-size: 0.9rem;
+  color: var(--muted-text);
+  margin: 0;
+  line-height: 1.5;
+  max-width: 720px;
+}
+
+/* Form Container (.mew-offer-card style) */
+.direction-form.mew-offer-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  background: var(--surface-white);
+  border: 1px solid var(--stone-line);
+  border-radius: var(--card-radius);
+  padding: 26px 28px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease;
+  overflow: hidden;
+}
+
+.direction-form.mew-offer-card:hover {
+  border-color: var(--stone-line-dark);
+}
+
+/* 4px top accent bar in coral or violet */
+.direction-form.mew-offer-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--coral-accent) 0%, var(--violet-accent) 100%);
+  border-radius: var(--card-radius) var(--card-radius) 0 0;
+}
+
+/* Form Grid Rows */
+.form-row {
+  display: grid;
+  gap: 18px;
+}
+
+.form-row.two-cols {
+  grid-template-columns: 1fr 1fr;
+}
+
+.form-row.three-cols {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+  .form-row.two-cols,
+  .form-row.three-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Form Group & Labels */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--deep-ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: -0.01em;
+}
+
+.req-star {
+  color: var(--coral-accent);
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.pov-badge-founder {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--coral-kicker);
+  background: var(--coral-subtle);
+  border: 1px solid rgba(237, 118, 91, 0.2);
+  padding: 2px 8px;
+  border-radius: var(--pill-radius);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Form Controls */
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 11px 14px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--deep-ink);
+  background: var(--surface-soft);
+  border: 1px solid var(--stone-line);
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #9c9790;
+  font-size: 0.86rem;
+}
+
+.form-input:hover,
+.form-select:hover,
+.form-textarea:hover {
+  background: #fbfaf8;
+  border-color: var(--stone-line-dark);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  background: var(--surface-white);
+  border-color: var(--deep-ink);
+  box-shadow: 0 0 0 3px rgba(17, 17, 15, 0.08);
+}
+
+/* Select Dropdown */
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select-wrapper .form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.select-chevron {
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+  color: var(--muted-text);
+}
+
+/* Textarea & Counter */
+.form-textarea {
+  resize: vertical;
+  line-height: 1.55;
+  min-height: 84px;
+}
+
+.field-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.field-hint {
+  font-size: 0.77rem;
+  color: var(--muted-text);
+  line-height: 1.4;
+}
+
+.char-counter {
+  font-size: 0.74rem;
+  color: var(--muted-text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Brand Brain Context Box */
+.brand-brain-box {
+  background: var(--surface-soft);
+  border: 1px dashed var(--stone-line);
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.brand-brain-box:hover {
+  border-color: var(--stone-line-dark);
+}
+
+.brain-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.brain-title-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--deep-ink);
+}
+
+.brain-icon {
+  color: var(--violet-accent);
+  flex-shrink: 0;
+}
+
+.brain-title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--deep-ink);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.brain-sync-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.73rem;
+  color: var(--muted-text);
+  font-weight: 500;
+}
+
+.sync-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.brain-pills-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
+
+.brain-pill {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 12px;
+  background: var(--surface-white);
+  border: 1px solid var(--stone-line);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(17, 17, 15, 0.02);
+}
+
+.brain-pill-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--muted-text);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.brain-pill-val {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--deep-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Actions & Gating Row */
+.direction-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 18px;
+  border-top: 1px solid var(--stone-line);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 680px) {
+  .direction-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.gating-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.83rem;
+  color: #b45309;
+  padding: 6px 10px;
+  background: rgba(245, 158, 11, 0.08);
+  border-radius: 6px;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  transition: all 0.2s ease;
+  line-height: 1.4;
+}
+
+.gating-hint.ready {
+  color: #065f46;
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.gating-icon {
+  flex-shrink: 0;
+}
+
+/* Buttons */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--pill-radius);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.18s ease;
+}
+
+/* Primary CTA deep ink #11110f with white text and pill rounded shape */
+.btn-pill.btn-primary {
+  background: var(--deep-ink);
+  color: #ffffff;
+  padding: 12px 26px;
+  box-shadow: 0 4px 14px rgba(17, 17, 15, 0.12);
+}
+
+.btn-pill.btn-primary:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(17, 17, 15, 0.2);
+  background: #232320;
+}
+
+.btn-pill.btn-primary:not(:disabled):active {
+  transform: translateY(0);
+}
+
+/* Disabled State */
+.btn-pill:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Focus States (WCAG AA/AAA) */
+.btn-pill:focus-visible,
+.form-input:focus-visible,
+.form-select:focus-visible,
+.form-textarea:focus-visible {
+  outline: 2px solid var(--deep-ink);
+  outline-offset: 2px;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .ws-direction-panel,
+  .direction-form.mew-offer-card,
+  .btn-pill,
+  .form-input,
+  .form-select,
+  .form-textarea {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

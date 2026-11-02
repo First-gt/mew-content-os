@@ -1,0 +1,663 @@
+<!-- ==============================================================================
+     MEW CONTENT OS — S01 RESEARCH INBOX COMPONENT (Topic T06)
+     Reference Intake Pipeline & 7-Status Tracking Workspace
+     Design Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+     Pure Frontend UI/UX — Zero Server Dependencies — Zero Fake Metrics
+
+     Definition of Done (DOD) Checklist:
+     - HTML: รายการ inbox-list แต่ละแถว inbox-row-{id} มี badge status-badge
+     - JS: รองรับ 7 สถานะ: Waiting for analysis, Analyzing, Analyzed · Not saved,
+           Saved to Content, Saved to Packaging, Saved to Both, Analysis unavailable
+     - JS: สถานะ Saved คำนวณจาก savedNotes ของ source นั้น (ไม่เก็บซ้ำ)
+           Save Content อย่างเดียว = Saved to Content; เพิ่ม Packaging ภายหลัง = Saved to Both (A05)
+     - CSS: แต่ละสถานะมีสี/ไอคอนต่างกัน และ Analyzed · Not saved ต้องไม่ดูเหมือนอยู่ใน Library
+     - ข้อความบนหน้าบอกชัดว่า Inbox ไม่ใช่ Vault; นับ Inbox ไม่รวมในตัวเลข Vault ที่ Dashboard (A01, A07)
+     ============================================================================== -->
+
+<div class="research-inbox-container" id="research-inbox-root" data-testid="research-inbox-root">
+
+  <!-- ============================================================================
+       1. HEADER & NAVIGATION BREADCRUMBS
+       ============================================================================ -->
+  <header class="inbox-header-section" aria-labelledby="research-inbox-heading">
+    <div class="header-breadcrumbs">
+      <button type="button" class="crumb-link" id="btn-inbox-to-overview" data-action="btn-back-overview" data-target="S00" aria-label="กลับสู่หน้า Overview Dashboard">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>Overview</span>
+      </button>
+      <span class="crumb-separator" aria-hidden="true">/</span>
+      <button type="button" class="crumb-link" id="btn-inbox-to-entry" data-target="S01" aria-label="ไปที่หน้า Research Entry">
+        <span>S01 Research</span>
+      </button>
+      <span class="crumb-separator" aria-hidden="true">/</span>
+      <span class="crumb-current">Research Inbox</span>
+    </div>
+
+    <div class="inbox-headline-row">
+      <div class="headline-copy">
+        <div class="inbox-eyebrow-row">
+          <span class="badge-kicker">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            S01 RESEARCH INBOX · TRACKING PIPELINE
+          </span>
+          <span class="badge-pill soft">7 Canonical Statuses</span>
+        </div>
+        <h1 id="research-inbox-heading" class="inbox-main-title">
+          Research Inbox &amp; <span class="mew-gradient-text">Status Pipeline</span>
+        </h1>
+        <p class="inbox-main-desc">
+          ติดตามประวัติคลิปอ้างอิงทั้งหมดที่ส่งเข้ากระบวนการวิเคราะห์ ตรวจสอบสถานะการถอดรหัสทั้ง 7 ขั้นตอน และแยกแยะคลิปที่ยังไม่ได้จัดเก็บออกจากคลัง Vault อย่างเด็ดขาด
+        </p>
+      </div>
+
+      <!-- Quick Action: Ingest New Clip -->
+      <div class="header-action-wrap">
+        <button type="button" class="btn-pill btn-primary" id="btn-go-to-entry" data-target="S01">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>นำเข้าคลิปใหม่ (S01)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================================
+       2. CRITICAL UX CONTRACT: INBOX IS NOT VAULT (Spec Section 2, A01 & A07)
+       ============================================================================ -->
+  <section 
+    class="inbox-vault-notice-card" 
+    id="inbox-vault-notice" 
+    data-testid="inbox-vault-notice"
+    aria-labelledby="notice-heading"
+  >
+    <div class="notice-grid">
+      
+      <div class="notice-copy-block">
+        <div class="notice-header-row">
+          <span class="notice-icon-box" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </span>
+          <h2 id="notice-heading" class="notice-title">
+            Research Inbox ไม่ใช่ Vault — กฎความโปร่งใส (A01, A07)
+          </h2>
+        </div>
+
+        <p class="notice-paragraph">
+          การวิเคราะห์คลิปเสร็จสิ้น (<code>Analyzed · Not saved</code>) <strong>จะไม่ทำให้คลิปกลายเป็นรายการใน Library โดยพลการ</strong> 
+          ระบบไม่มี AI Auto-Save; การนับจำนวนคลิปใน Inbox จะ <strong>ไม่ถูกนำไปรวมกับตัวเลข Saved Reference บนหน้า Dashboard</strong>
+        </p>
+
+        <ul class="notice-rules-list">
+          <li class="notice-rule-item">
+            <span class="rule-badge">A01</span>
+            <span>วิเคราะห์จบแล้วปิดหน้าต่าง = คลิปค้างอยู่ใน Inbox เท่านั้น <em>ไม่เข้า Vault เด็ดขาด</em></span>
+          </li>
+          <li class="notice-rule-item">
+            <span class="rule-badge">A07</span>
+            <span>สแกนหรือนำเข้าหลายคลิป = เฉพาะคลิปที่ Founder กดบันทึกพร้อมระบุ WHY เท่านั้นที่จะเข้าสู่ 2 คลัง</span>
+          </li>
+          <li class="notice-rule-item">
+            <span class="rule-badge">A05</span>
+            <span>Save Content อย่างเดียว = <code>Saved to Content</code>; หากกลับมาเพิ่ม Packaging ภายหลัง = ปรับเป็น <code>Saved to Both</code> อัตโนมัติ</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Comparative Metric Tally (Demonstrating Separation) -->
+      <aside class="notice-comparison-box" aria-label="เปรียบเทียบจำนวนคลิปใน Inbox กับจำนวนใน Vault">
+        <div class="comparison-column">
+          <span class="comparison-label">Inbox Total</span>
+          <div class="comparison-count-wrap">
+            <span class="comparison-number" data-tally="total">7</span>
+            <span class="comparison-unit">คลิป</span>
+          </div>
+          <span class="comparison-subtext">ประวัติในไปป์ไลน์วิจัย</span>
+        </div>
+
+        <div class="comparison-divider" aria-hidden="true"></div>
+
+        <div class="comparison-column">
+          <span class="comparison-label">Content Vault</span>
+          <div class="comparison-count-wrap">
+            <span class="comparison-number" data-tally="vault-content">4</span>
+            <span class="comparison-unit">Notes</span>
+          </div>
+          <span class="comparison-subtext">สาระที่ Founder เลือกเก็บ</span>
+        </div>
+
+        <div class="comparison-divider" aria-hidden="true"></div>
+
+        <div class="comparison-column">
+          <span class="comparison-label">Packaging Vault</span>
+          <div class="comparison-count-wrap">
+            <span class="comparison-number" data-tally="vault-packaging">3</span>
+            <span class="comparison-unit">Notes</span>
+          </div>
+          <span class="comparison-subtext">ลีลาที่ Founder เลือกเก็บ</span>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ============================================================================
+       3. CONTROLS BAR: STATUS FILTER PILLS & SEARCH TOOLBAR
+       ============================================================================ -->
+  <section class="inbox-controls-card" aria-label="ตัวกรองและแถบค้นหา Inbox">
+    
+    <!-- 7 Status Filters + All -->
+    <div class="inbox-filter-tablist" role="tablist" data-testid="inbox-filter-tablist" aria-label="กรองรายการตามสถานะ 7 แบบ">
+      <button 
+        type="button" 
+        class="filter-tab-pill active" 
+        role="tab" 
+        aria-selected="true" 
+        data-inbox-filter="all"
+      >
+        <span>ทั้งหมด</span>
+        <span class="tab-tally-badge" data-tally="total">7</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="filter-tab-pill" 
+        role="tab" 
+        aria-selected="false" 
+        data-inbox-filter="Waiting for analysis"
+      >
+        <span>Waiting for analysis</span>
+        <span class="tab-tally-badge" data-tally="waiting">0</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="filter-tab-pill" 
+        role="tab" 
+        aria-selected="false" 
+        data-inbox-filter="Analyzing"
+      >
+        <span>Analyzing</span>
+        <span class="tab-tally-badge" data-tally="analyzing">0</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="filter-tab-pill" 
+        role="tab" 
+        aria-selected="false" 
+        data-inbox-filter="Analyzed · Not saved"
+      >
+        <span>Analyzed · Not saved</span>
+        <span class="tab-tally-badge" data-tally="analyzed-not-saved">1</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="filter-tab-pill" 
+        role="tab" 
+        aria-selected="false" 
+        data-inbox-filter="Saved to Content"
+      >
+        <span>Saved to Content</span>
+        <span class="tab-tally-badge" data-tally="saved-content">3</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="filter-tab-pill" 
+        role="tab" 
+        aria-selected="false" 
+        data-inbox-filter="Saved to Packaging"
+      >
+        <span>Saved to Packaging</span>
+        <span class="tab-tally-badge" data-tally="saved-packaging">2</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="filter-tab-pill" 
+        role="tab" 
+        aria-selected="false" 
+        data-inbox-filter="Saved to Both"
+      >
+        <span>Saved to Both</span>
+        <span class="tab-tally-badge" data-tally="saved-both">1</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="filter-tab-pill" 
+        role="tab" 
+        aria-selected="false" 
+        data-inbox-filter="Analysis unavailable"
+      >
+        <span>Analysis unavailable</span>
+        <span class="tab-tally-badge" data-tally="unavailable">0</span>
+      </button>
+    </div>
+
+    <!-- Search Toolbar & Interactive Test Sequence -->
+    <div class="inbox-toolbar-row">
+      <div class="search-input-wrap">
+        <span class="search-icon" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </span>
+        <input 
+          type="search" 
+          id="input-inbox-search" 
+          data-testid="input-inbox-search" 
+          class="v6-search-input" 
+          placeholder="ค้นหาชื่อคลิป, Creator, URL หรือ Tag..."
+          aria-label="ค้นหารายการใน Research Inbox"
+        />
+        <button type="button" class="btn-clear-search" id="btn-clear-search" aria-label="ล้างคำค้นหา">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="toolbar-action-buttons">
+        <button 
+          type="button" 
+          class="btn-pill btn-ghost btn-sm" 
+          id="btn-demo-a05" 
+          title="คลิกเพื่อทดสอบจำลองกระบวนการ A05: สลับสถานะ Saved ผ่าน Store"
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+          <span>ทดสอบ A05 Scenario</span>
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============================================================================
+       4. INBOX LIST OF RESEARCH ITEMS
+       DOD Strict Requirements:
+       - <ul> id="inbox-list" data-testid="inbox-list"
+       - <li> id="inbox-row-{id}" data-testid="inbox-row-{id}"
+       - badge: class="status-badge" data-testid="status-badge"
+       ============================================================================ -->
+  <section class="inbox-list-section" aria-label="รายการคลิปใน Research Inbox">
+    <ul class="inbox-list" id="inbox-list" data-testid="inbox-list">
+      
+      <!-- Row 1: Source A (Saved to Content - Story A) -->
+      <li 
+        class="inbox-row row-status-saved-content" 
+        id="inbox-row-item-source-a" 
+        data-testid="inbox-row-item-source-a"
+        data-item-id="item-source-a"
+        data-source-id="source-a"
+      >
+        <div class="row-main-wrap">
+          <div class="row-media-col">
+            <div class="row-thumbnail-box">
+              <img src="assets/video_preview.png" alt="Post and forget it (อย่าเฝ้ายอด)" class="row-thumb-img" />
+              <span class="row-duration-pill">02:15</span>
+              <span class="thumb-watermark-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="row-info-col">
+            <div class="row-header-meta">
+              <span class="row-creator-name">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Creator A
+              </span>
+              <span class="row-date-badge">28 ต.ค.</span>
+            </div>
+            <h3 class="row-title">
+              <button type="button" class="row-title-btn btn-open-inbox-row" data-action="btn-open-inbox-row" data-target="S02" data-source-id="source-a">
+                Post and forget it (อย่าเฝ้ายอด)
+              </button>
+            </h3>
+            <div class="row-footer-meta">
+              <a href="https://example.com/watch?v=post-and-forget" target="_blank" rel="noopener noreferrer" class="row-url-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <span>Original Link</span>
+              </a>
+              <div class="row-tags-wrap">
+                <span class="row-tag">#Mindset</span>
+                <span class="row-tag">#Workflow</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row-status-col">
+            <div class="status-badge-container">
+              <span class="status-badge status-saved-content" data-testid="status-badge" data-status="Saved to Content">
+                <span class="badge-icon-box" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </span>
+                <span class="badge-text">Saved to Content</span>
+                <span class="badge-sub-th" aria-hidden="true">(บันทึกเข้า Content Vault)</span>
+              </span>
+            </div>
+            <div class="vault-indicators-wrap">
+              <span class="vault-lens-chip content-chip"><span class="chip-dot"></span><span>Content Vault</span></span>
+            </div>
+          </div>
+
+          <div class="row-actions-col">
+            <button type="button" class="btn-row-action btn-open-inbox-row" data-action="btn-open-inbox-row" data-target="S02" data-source-id="source-a">
+              <span>Open S02</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <button type="button" class="btn-row-ghost btn-simulate-a05" data-action="simulate-a05" data-source-id="source-a" title="ทดสอบ A05: เพิ่ม Packaging สู่ Saved to Both">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+              <span>Toggle Lens (A05)</span>
+            </button>
+          </div>
+        </div>
+      </li>
+
+      <!-- Row 2: Source B (Saved to Packaging - Story B) -->
+      <li 
+        class="inbox-row row-status-saved-packaging" 
+        id="inbox-row-item-source-b" 
+        data-testid="inbox-row-item-source-b"
+        data-item-id="item-source-b"
+        data-source-id="source-b"
+      >
+        <div class="row-main-wrap">
+          <div class="row-media-col">
+            <div class="row-thumbnail-box">
+              <img src="assets/video_preview.png" alt="The Ticking Clock" class="row-thumb-img" />
+              <span class="row-duration-pill">01:10</span>
+              <span class="thumb-watermark-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="row-info-col">
+            <div class="row-header-meta">
+              <span class="row-creator-name">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Creator B
+              </span>
+              <span class="row-date-badge">29 ต.ค.</span>
+            </div>
+            <h3 class="row-title">
+              <button type="button" class="row-title-btn btn-open-inbox-row" data-action="btn-open-inbox-row" data-target="S02" data-source-id="source-b">
+                The Ticking Clock (โครงสร้างนาฬิกากดดัน)
+              </button>
+            </h3>
+            <div class="row-footer-meta">
+              <a href="https://example.com/watch?v=the-ticking-clock" target="_blank" rel="noopener noreferrer" class="row-url-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <span>Original Link</span>
+              </a>
+              <div class="row-tags-wrap">
+                <span class="row-tag">#Pacing</span>
+                <span class="row-tag">#SoundDesign</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row-status-col">
+            <div class="status-badge-container">
+              <span class="status-badge status-saved-packaging" data-testid="status-badge" data-status="Saved to Packaging">
+                <span class="badge-icon-box" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                </span>
+                <span class="badge-text">Saved to Packaging</span>
+                <span class="badge-sub-th" aria-hidden="true">(บันทึกเข้า Packaging Vault)</span>
+              </span>
+            </div>
+            <div class="vault-indicators-wrap">
+              <span class="vault-lens-chip packaging-chip"><span class="chip-dot"></span><span>Packaging Vault</span></span>
+            </div>
+          </div>
+
+          <div class="row-actions-col">
+            <button type="button" class="btn-row-action btn-open-inbox-row" data-action="btn-open-inbox-row" data-target="S02" data-source-id="source-b">
+              <span>Open S02</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <button type="button" class="btn-row-ghost btn-simulate-a05" data-action="simulate-a05" data-source-id="source-b">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+              <span>Toggle Lens (A05)</span>
+            </button>
+          </div>
+        </div>
+      </li>
+
+      <!-- Row 3: Source E (Saved to Both - Story E) -->
+      <li 
+        class="inbox-row row-status-saved-both" 
+        id="inbox-row-item-source-e" 
+        data-testid="inbox-row-item-source-e"
+        data-item-id="item-source-e"
+        data-source-id="source-e"
+      >
+        <div class="row-main-wrap">
+          <div class="row-media-col">
+            <div class="row-thumbnail-box">
+              <img src="assets/video_preview.png" alt="Myth vs Reality" class="row-thumb-img" />
+              <span class="row-duration-pill">02:40</span>
+              <span class="thumb-watermark-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="row-info-col">
+            <div class="row-header-meta">
+              <span class="row-creator-name">Creator E</span>
+              <span class="row-date-badge">30 ต.ค.</span>
+            </div>
+            <h3 class="row-title">
+              <button type="button" class="row-title-btn btn-open-inbox-row" data-action="btn-open-inbox-row" data-target="S02" data-source-id="source-e">
+                Myth vs Reality: การสร้างแบรนด์ที่แท้จริง (Story E: Single Source &rarr; Both Vaults)
+              </button>
+            </h3>
+            <div class="row-footer-meta">
+              <a href="https://example.com/watch?v=brand-myth-vs-reality" target="_blank" rel="noopener noreferrer" class="row-url-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <span>Original Link</span>
+              </a>
+              <div class="row-tags-wrap">
+                <span class="row-tag">#BrandStrategy</span>
+                <span class="row-tag">#Mythbusting</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row-status-col">
+            <div class="status-badge-container">
+              <span class="status-badge status-saved-both" data-testid="status-badge" data-status="Saved to Both">
+                <span class="badge-icon-box" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </span>
+                <span class="badge-text">Saved to Both</span>
+                <span class="badge-sub-th" aria-hidden="true">(บันทึกเข้าทั้ง 2 คลัง)</span>
+              </span>
+            </div>
+            <div class="vault-indicators-wrap">
+              <span class="vault-lens-chip content-chip"><span class="chip-dot"></span><span>Content</span></span>
+              <span class="vault-lens-chip packaging-chip"><span class="chip-dot"></span><span>Packaging</span></span>
+            </div>
+          </div>
+
+          <div class="row-actions-col">
+            <button type="button" class="btn-row-action btn-open-inbox-row" data-action="btn-open-inbox-row" data-target="S02" data-source-id="source-e">
+              <span>Open S02</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <button type="button" class="btn-row-ghost btn-simulate-a05" data-action="simulate-a05" data-source-id="source-e">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+              <span>Toggle Lens (A05)</span>
+            </button>
+          </div>
+        </div>
+      </li>
+
+      <!-- Row 4: Source X (Analyzed · Not saved - Demonstrates Spec A01) -->
+      <li 
+        class="inbox-row row-status-analyzed-not-saved" 
+        id="inbox-row-item-source-x" 
+        data-testid="inbox-row-item-source-x"
+        data-item-id="item-source-x"
+        data-source-id="source-x"
+      >
+        <div class="row-main-wrap">
+          <div class="row-media-col">
+            <div class="row-thumbnail-box">
+              <img src="assets/video_preview.png" alt="Fast Editing Workflow" class="row-thumb-img" />
+              <span class="row-duration-pill">01:30</span>
+              <span class="thumb-watermark-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="row-info-col">
+            <div class="row-header-meta">
+              <span class="row-creator-name">Creator X</span>
+              <span class="row-date-badge">31 ต.ค.</span>
+            </div>
+            <h3 class="row-title">
+              <button type="button" class="row-title-btn btn-open-inbox-row" data-action="btn-open-inbox-row" data-target="S02" data-source-id="source-x">
+                Fast Editing Workflow (Analyzed · Not saved Demonstration)
+              </button>
+            </h3>
+            <div class="row-footer-meta">
+              <a href="https://example.com/watch?v=fast-editing-demo" target="_blank" rel="noopener noreferrer" class="row-url-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <span>Original Link</span>
+              </a>
+              <div class="row-tags-wrap">
+                <span class="row-tag">#Editing</span>
+                <span class="row-tag">#Workflow</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Status Badge: Crucial DOD requirement: Analyzed · Not saved MUST NOT look like it's in Library -->
+          <div class="row-status-col">
+            <div class="status-badge-container">
+              <span class="status-badge status-analyzed-not-saved" data-testid="status-badge" data-status="Analyzed · Not saved">
+                <span class="badge-icon-box" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/><circle cx="12" cy="12" r="2"/></svg>
+                </span>
+                <span class="badge-text">Analyzed · Not saved</span>
+                <span class="badge-sub-th" aria-hidden="true">(วิเคราะห์แล้ว · ยังไม่บันทึก)</span>
+              </span>
+            </div>
+            <div class="vault-indicators-wrap">
+              <span class="vault-lens-chip not-saved-chip">
+                <span class="chip-dot"></span>
+                <span>Not in Library / Inbox Only</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="row-actions-col">
+            <button type="button" class="btn-row-action btn-open-inbox-row" data-action="btn-open-inbox-row" data-target="S02" data-source-id="source-x">
+              <span>Open S02</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <button type="button" class="btn-row-ghost btn-simulate-a05" data-action="simulate-a05" data-source-id="source-x">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+              <span>Save Content (A05)</span>
+            </button>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+  <!-- ============================================================================
+       5. REFERENCE GUIDE CARD: 7 CANONICAL STATUS DEFINITIONS
+       ============================================================================ -->
+  <section class="inbox-guide-card" aria-labelledby="guide-heading">
+    <div class="guide-header">
+      <h2 id="guide-heading" class="guide-title">คู่มือสถานะทั้ง 7 ของ MEW Content OS (Canonical Statuses)</h2>
+      <p class="guide-subtitle">ถอดรหัสความหมายของ Badge แต่ละสถานะตาม Founder UX Spec</p>
+    </div>
+
+    <div class="guide-grid">
+      
+      <!-- 1 -->
+      <div class="guide-item">
+        <span class="status-badge status-waiting">
+          <span class="badge-text">Waiting for analysis</span>
+        </span>
+        <p class="guide-desc">คลิปถูกนำเข้าผ่าน URL/Upload/Feed แล้ว กำลังอยู่ในคิวรอส่งเข้าประมวลผล Dual-Lens</p>
+      </div>
+
+      <!-- 2 -->
+      <div class="guide-item">
+        <span class="status-badge status-analyzing">
+          <span class="badge-text">Analyzing</span>
+        </span>
+        <p class="guide-desc">ระบบกำลังถอดรหัสสองเลนส์แยกสาระ (WHAT) ออกจากวิธีเล่า (HOW)</p>
+      </div>
+
+      <!-- 3 -->
+      <div class="guide-item">
+        <span class="status-badge status-analyzed-not-saved">
+          <span class="badge-text">Analyzed · Not saved</span>
+        </span>
+        <p class="guide-desc"><strong>ไม่อยู่ใน Library:</strong> วิเคราะห์เสร็จแล้วแต่ผู้ใช้ยังไม่ได้กดบันทึกเข้า Vault จะไม่ถูกนับรวมในตัวเลข Dashboard (A01)</p>
+      </div>
+
+      <!-- 4 -->
+      <div class="guide-item">
+        <span class="status-badge status-saved-content">
+          <span class="badge-text">Saved to Content</span>
+        </span>
+        <p class="guide-desc">ผู้ใช้บันทึกเฉพาะแก่นสาระ (WHAT) เข้า Content Vault พร้อมระบุเหตุผล WHY เรียบร้อย</p>
+      </div>
+
+      <!-- 5 -->
+      <div class="guide-item">
+        <span class="status-badge status-saved-packaging">
+          <span class="badge-text">Saved to Packaging</span>
+        </span>
+        <p class="guide-desc">ผู้ใช้บันทึกเฉพาะลีลา/Hook/SFX (HOW) เข้า Packaging Vault พร้อมระบุเหตุผล WHY เรียบร้อย</p>
+      </div>
+
+      <!-- 6 -->
+      <div class="guide-item">
+        <span class="status-badge status-saved-both">
+          <span class="badge-text">Saved to Both</span>
+        </span>
+        <p class="guide-desc">บันทึกทั้งสองด้านเข้า 2 คลัง โดยเชื่อมโยง 1 Source เดียว ไม่ทำสำเนาวิดีโอซ้ำ (A04, A05)</p>
+      </div>
+
+      <!-- 7 -->
+      <div class="guide-item">
+        <span class="status-badge status-unavailable">
+          <span class="badge-text">Analysis unavailable</span>
+        </span>
+        <p class="guide-desc">เข้าถึงสื่อไม่ได้ ไม่สร้างข้อมูลวิเคราะห์ภาพ/เสียงปลอมโดยเด็ดขาดตามหลักความซื่อสัตย์ (A15)</p>
+      </div>
+
+    </div>
+  </section>
+
+</div>

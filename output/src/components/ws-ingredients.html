@@ -1,0 +1,255 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T22: S07 Remix Workspace — Ingredients Panel
+     Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     ============================================================================== -->
+
+<div class="ws-ingredients-panel" id="ws-ingredients" data-testid="ws-ingredients" role="region" aria-label="แผงวัตถุดิบและมุมคิดที่จะยืมมา">
+  
+  <!-- Panel Header -->
+  <header class="panel-header-row">
+    <div class="panel-title-group">
+      <div class="panel-badge-row">
+        <span class="badge-pill coral">Remix Recipe</span>
+        <span class="badge-pill soft font-num" id="ingredient-total-badge">วัตถุดิบทั้งหมด 0 ชิ้น</span>
+      </div>
+      <h3 class="panel-heading">วัตถุดิบที่ใช้ปรุง (Selected Ingredients)</h3>
+      <p class="panel-desc">
+        กำหนดเจาะจงว่าต้องการหยิบยืมสาระอะไร (<strong>What to borrow</strong>) หรือเทคนิคการเล่าแบบไหน (<strong>How to borrow</strong>) จากแต่ละชิ้น โดยชื่อและเหตุผล (WHY) ของคลิปต้นทางจะปรากฏให้เห็นตลอดเวลา
+      </p>
+    </div>
+  </header>
+
+  <!-- Mobile Sticky / Collapsible Summary Indicator (Inspired by T31) -->
+  <div class="ws-mobile-summary-bar" id="ws-ingredients-summary" role="region" aria-label="สรุปวัตถุดิบที่กำลังผสม">
+    <div class="summary-meta-left">
+      <span class="summary-status-dot" aria-hidden="true"></span>
+      <span class="summary-status-text">กำลังผสมวัตถุดิบ:</span>
+      <span class="summary-pills-text font-num" id="ws-summary-mix-label">Content (0) + Packaging (0)</span>
+    </div>
+    <div class="summary-controls-right">
+      <button type="button" class="btn-toggle-group-view" id="btn-toggle-all-groups" aria-expanded="true">
+        <span class="toggle-text">ย่อ/ขยายกลุ่ม</span>
+        <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Warning when 0 Content items remain -->
+  <div class="ws-warn-box" id="warn-no-content" role="alert" hidden>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <span>ต้องมีอย่างน้อย 1 Content Ingredient จึงจะสามารถสร้าง Concept ได้</span>
+  </div>
+
+  <!-- Ingredients Vault Groups (Content & Packaging separated with vault colors) -->
+  <div class="ingredients-vault-groups">
+    
+    <!-- 1. Content Group (Coral Theme) -->
+    <section class="ingredient-group group-content" id="section-group-content" aria-labelledby="heading-group-content">
+      <details class="ingredient-group-details" id="details-content" open>
+        <summary class="group-header group-header-content">
+          <div class="group-title-wrap">
+            <span class="group-badge badge-content">Content Vault</span>
+            <h4 class="group-title" id="heading-group-content">สาระ & ปรัชญา (What to Borrow)</h4>
+            <span class="group-count font-num" id="content-count-badge">0 รายการ</span>
+          </div>
+          <span class="group-accordion-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+        </summary>
+        <div class="group-cards-list" id="content-ingredients-list" role="list">
+          <!-- Rendered dynamically by ws-ingredients.js -->
+        </div>
+      </details>
+    </section>
+
+    <!-- 2. Packaging Group (Violet Theme) -->
+    <section class="ingredient-group group-packaging" id="section-group-packaging" aria-labelledby="heading-group-packaging">
+      <details class="ingredient-group-details" id="details-packaging" open>
+        <summary class="group-header group-header-packaging">
+          <div class="group-title-wrap">
+            <span class="group-badge badge-packaging">Packaging Vault</span>
+            <h4 class="group-title" id="heading-group-packaging">เทคนิค & จังหวะการเล่า (How to Borrow)</h4>
+            <span class="group-count font-num" id="packaging-count-badge">0 รายการ</span>
+          </div>
+          <span class="group-accordion-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+        </summary>
+        <div class="group-cards-list" id="packaging-ingredients-list" role="list">
+          <!-- Rendered dynamically by ws-ingredients.js -->
+        </div>
+      </details>
+    </section>
+
+  </div>
+
+  <!-- Unified List Fallback Container -->
+  <div class="ingredients-list" id="ws-ingredients-list" role="list">
+    <!-- Maintained for backwards-compatibility with existing selectors -->
+  </div>
+
+  <!-- Template: Ingredient Card (mew-offer-card style) -->
+  <template id="tmpl-ws-ingredient-card">
+    <article class="ws-ingredient-card mew-offer-card" data-note-id="" data-lens="" role="listitem">
+      
+      <!-- Top Row: Badge, Creator & Action Buttons -->
+      <div class="card-top-row">
+        <div class="lens-indicator">
+          <span class="lens-badge"></span>
+          <span class="ingredient-creator"></span>
+        </div>
+        <div class="card-top-actions">
+          <button type="button" class="btn-card-source" data-action="view-source" aria-label="ดูที่มาและบันทึกเหตุผลต้นฉบับ">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>ดูที่มา & WHY</span>
+          </button>
+          <button type="button" class="btn-remove-ingredient" data-action="remove" aria-label="ลบวัตถุดิบนี้ออกจากห้องปรุง">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Ingredient Source Title (Always visible - Never hidden) -->
+      <div class="ingredient-title-row">
+        <h4 class="ingredient-title"></h4>
+        <span class="ingredient-duration font-num"></span>
+      </div>
+
+      <!-- Founder Note Snippet (Saved reason - Always visible) -->
+      <div class="founder-note-box founder-note" data-testid="founder-note">
+        <div class="founder-note-header">
+          <svg class="founder-note-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          <span class="founder-note-title">Founder Note จากตอน Save (ทำไมถึงบันทึกชิ้นนี้):</span>
+        </div>
+        <p class="founder-note-text"></p>
+      </div>
+
+      <!-- Borrow Field (What to borrow for Content, How to borrow for Packaging) -->
+      <div class="borrow-field-wrap">
+        <label class="borrow-label" for=""></label>
+        <textarea class="borrow-textarea" id="" rows="3" placeholder=""></textarea>
+        <div class="borrow-field-footer">
+          <span class="borrow-field-hint"></span>
+          <span class="borrow-save-status">บันทึกอัตโนมัติใน Remix Session</span>
+        </div>
+      </div>
+
+      <!-- Card Bottom Footer Link to View Source -->
+      <div class="card-bottom-row">
+        <button type="button" class="btn-inline-source-link" data-action="view-source">
+          <span>ตรวจสอบที่มาของคลิปต้นฉบับและบทวิเคราะห์</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+    </article>
+  </template>
+
+  <!-- In-Workspace Source & WHY Modal Dialog (Accessible & Stays in Workspace) -->
+  <div class="ws-source-modal-overlay" id="ws-source-preview-modal" role="dialog" aria-modal="true" aria-labelledby="modal-source-title" hidden>
+    <div class="source-modal-backdrop" id="modal-source-backdrop"></div>
+    <div class="source-modal-dialog">
+      
+      <!-- Modal Header -->
+      <div class="source-modal-header">
+        <div class="modal-badge-row">
+          <span class="lens-badge" id="modal-source-lens">Content Vault</span>
+          <span class="modal-creator-tag" id="modal-source-creator"></span>
+        </div>
+        <button type="button" class="btn-close-source-modal" id="btn-close-source-modal" aria-label="ปิดหน้ารายละเอียดที่มา">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="source-modal-body">
+        <h3 class="modal-source-title" id="modal-source-title"></h3>
+        <p class="modal-source-subtitle" id="modal-source-subtitle"></p>
+
+        <!-- Section 1: Founder WHY Note (Primary Emphasis) -->
+        <div class="modal-detail-section modal-section-why">
+          <div class="modal-section-heading">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+            <h5>ทำไมถึงบันทึกชิ้นนี้ (Founder WHY จากตอน Save)</h5>
+          </div>
+          <p class="modal-why-content" id="modal-source-why"></p>
+        </div>
+
+        <!-- Section 2: External Source Link -->
+        <div class="modal-detail-section modal-section-link">
+          <div class="modal-section-heading">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+            <h5>ลิงก์ต้นทางของเนื้อหา (Source Link)</h5>
+          </div>
+          <div class="source-link-action-box">
+            <a href="#" id="modal-source-link" class="modal-external-link" target="_blank" rel="noopener noreferrer">
+              <span id="modal-source-link-text">เปิดคลิปต้นฉบับบน YouTube</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <span class="source-link-disclaimer">เปิดในแท็บใหม่โดยไม่ออกจากหน้าต่าง Remix Workspace</span>
+          </div>
+        </div>
+
+        <!-- Section 3: Tags / Metadata -->
+        <div class="modal-detail-section modal-section-meta" id="modal-tags-container">
+          <div class="modal-section-heading">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
+            <h5>แท็กและหมวดหมู่ (Tags)</h5>
+          </div>
+          <div class="modal-tags-list" id="modal-source-tags"></div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="source-modal-footer">
+        <button type="button" class="btn-pill btn-primary" id="btn-modal-dismiss">
+          <span>กลับสู่ห้องปรุง (Remix Workspace)</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

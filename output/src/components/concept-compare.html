@@ -1,0 +1,156 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T26: Refine / Compare Concepts
+     Theme: mewteetawat.com V6.3
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     WCAG 2.1 AA Compliant · Accessible Responsive Side-by-Side Comparison Matrix
+     ============================================================================== -->
+
+<section class="concept-compare-container" id="concept-compare-root" data-testid="concept-compare-root" aria-label="เปรียบเทียบและปรับแต่งคอนเซปต์">
+
+  <!-- Compare & Refine Toolbar -->
+  <header class="compare-toolbar">
+    <div class="toolbar-title-group">
+      <div class="toolbar-badges-row">
+        <span class="toolbar-pill-badge coral">Topic T26 · Concept Refinement</span>
+        <span class="toolbar-pill-badge soft">A18 Non-Destructive Refine</span>
+      </div>
+      <h3 class="compare-heading">เปรียบเทียบ &amp; ปรับแต่งคอนเซปต์ (Compare &amp; Refine)</h3>
+      <p class="compare-subheading">
+        เปรียบเทียบโครงสร้าง Hook, Story Beats และ Source Attribution ของ 2–3 คอนเซปต์เคียงข้างกัน หรือระบุคำสั่งปรับมุมมองเฉพาะเจาะจงโดยไม่ทำลายไอเดียเดิมและไม่ต้องเริ่มค้นคว้าใหม่
+      </p>
+    </div>
+
+    <div class="toolbar-actions">
+      <button type="button" id="btn-compare-concepts" data-testid="btn-compare-concepts" class="btn-pill btn-ghost" aria-pressed="true" title="สลับมุมมองระหว่างแบบตารางเปรียบเทียบและแบบการ์ดเดี่ยว">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="3" width="20" height="18" rx="2"></rect>
+          <line x1="12" y1="3" x2="12" y2="21"></line>
+        </svg>
+        <span>สลับมุมมองเปรียบเทียบ</span>
+      </button>
+
+      <button type="button" id="btn-remix-again" data-testid="btn-remix-again" class="btn-pill btn-primary" title="สังเคราะห์ไอเดียชุดใหม่จากวัตถุดิบเดิม">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        </svg>
+        <span>Remix ใหม่อีกครั้ง</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- User Selection Notice (Strict Rule: ผู้ใช้เลือกเอง ไม่มี auto-select/auto-approve) -->
+  <div class="compare-user-select-notice" role="note" aria-live="polite">
+    <div class="notice-icon-box" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+    </div>
+    <div class="notice-text">
+      <strong>ผู้ใช้เลือกคอนเซปต์ด้วยตนเอง (Manual Selection)</strong>: ระบบไม่มีการ Auto-select หรือ Auto-approve โดยพลการ ให้คุณกดปุ่ม <em>"เลือกคอนเซปต์นี้"</em> เพื่อตัดสินใจนำไปใช้งานต่อ
+    </div>
+  </div>
+
+  <!-- Mobile Segmented Navigation Switcher (ปรากฏเฉพาะบนมือถือเพื่อสลับดูทีละคอลัมน์) -->
+  <nav class="compare-mobile-nav" id="compare-mobile-nav" aria-label="สลับดูคอนเซปต์บนหน้าจอมือถือ">
+    <span class="mobile-nav-caption">สลับดูคอนเซปต์:</span>
+    <div class="mobile-nav-pills" id="compare-mobile-pills" role="tablist">
+      <!-- Populated dynamically: Concept 1, Concept 2, Concept 3 -->
+    </div>
+  </nav>
+
+  <!-- Comparison Matrix View (2–3 concepts side-by-side) -->
+  <div class="compare-view-wrapper">
+    <div class="compare-view" id="compare-view" data-testid="compare-view" role="region" aria-label="ตารางเปรียบเทียบคอนเซปต์ 2–3 คอนเซปต์เคียงข้างกัน">
+      <!-- Populated dynamically by concept-refine.js with 2-3 side-by-side columns -->
+    </div>
+  </div>
+
+  <!-- Refine Dialog / Modal (Accessible HTML5 Dialog) -->
+  <dialog class="refine-dialog" id="refine-dialog" data-testid="refine-dialog" aria-labelledby="refine-dialog-title" aria-describedby="refine-dialog-desc" aria-modal="true">
+    <div class="dialog-card">
+      <div class="dialog-header">
+        <div class="dialog-header-pill">
+          <span class="badge-pill coral">Refine Angle (A18 Non-Destructive)</span>
+        </div>
+        <h4 id="refine-dialog-title" class="dialog-title">ปรับแต่งคอนเซปต์เฉพาะมุมมอง (Refine Angle)</h4>
+        <p id="refine-dialog-desc" class="dialog-description">
+          ระบบจะสร้างคอนเซปต์เวอร์ชันปรับปรุงขึ้นใหม่เป็นอีกทางเลือก โดย<strong>ไม่ทับคอนเซปต์เดิม</strong> และ<strong>ไม่ต้องย้อนกลับไป Research ใหม่</strong>
+        </p>
+        <div class="dialog-target-badge">
+          <span class="target-label">กำลังปรับแต่งคอนเซปต์:</span>
+          <span class="dialog-concept-name font-bold" id="refine-target-concept-name">The Counter-Intuitive Truth</span>
+        </div>
+      </div>
+
+      <div class="dialog-body">
+        <label for="refine-instruction" class="dialog-label">
+          <span>คำสั่งปรับแต่ง / ระบุมุมมองที่ต้องการเพิ่ม (Refine Instruction)</span>
+          <span class="label-required">*</span>
+        </label>
+        
+        <textarea 
+          id="refine-instruction" 
+          data-testid="refine-instruction"
+          class="dialog-textarea" 
+          rows="4" 
+          placeholder="เช่น 'ขอ Hook ที่ดุดันขึ้นใน 2 วินาทีแรก และเน้นย้ำ Founder POV ให้เห็นภาพการลงมือทำชัดเจน'"
+          aria-required="true"
+        ></textarea>
+
+        <!-- Quick Suggestion Chips for Fast Founder Tweaks -->
+        <div class="quick-chips-group">
+          <span class="quick-chips-title">ตัวอย่างคำสั่งด่วน:</span>
+          <div class="chips-list">
+            <button type="button" class="btn-refine-chip" data-chip="เร่งจังหวะ Hook ให้ดึงความสนใจใน 2 วินาทีแรก">
+              + เร่งจังหวะ Hook (2 วิแรก)
+            </button>
+            <button type="button" class="btn-refine-chip" data-chip="ตอกย้ำ Founder POV ให้เด็ดขาดและตรงไปตรงมา">
+              + ตอกย้ำ Founder POV
+            </button>
+            <button type="button" class="btn-refine-chip" data-chip="ปรับ Story Beats ให้กระชับ สรุปจบใน 45 วินาที">
+              + ปรับ Beats ให้กระชับ
+            </button>
+            <button type="button" class="btn-refine-chip" data-chip="เปลี่ยน Call to Action เป็นคำถามชวนคอมเมนต์แลกเปลี่ยน">
+              + CTA ชวนสนทนา
+            </button>
+          </div>
+        </div>
+
+        <div class="dialog-guarantee-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>รับประกัน A18: คอนเซปต์ต้นฉบับจะยังคงอยู่เคียงข้างเวอร์ชันปรับปรุงในตารางเปรียบเทียบเสมอ</span>
+        </div>
+      </div>
+
+      <div class="dialog-footer">
+        <button type="button" class="btn-pill btn-danger-ghost btn-sm" id="btn-reject-concept" data-testid="btn-reject-concept" title="คัดคอนเซปต์นี้ออกจากตารางโดยไม่ต้องค้นคว้าใหม่">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+          <span>ปฏิเสธคอนเซปต์นี้ (Reject)</span>
+        </button>
+
+        <div class="footer-primary-group">
+          <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-cancel-refine">
+            <span>ยกเลิก</span>
+          </button>
+          <button type="button" class="btn-pill btn-primary btn-sm" id="btn-refine-angle" data-testid="btn-refine-angle">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            <span>สร้างเวอร์ชันปรับปรุง (Refine)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+</section>

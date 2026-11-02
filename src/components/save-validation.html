@@ -1,0 +1,403 @@
+<!-- ==============================================================================
+     MEW CONTENT OS — Save Validation + Commit Logic Component (Topic T13)
+     Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+     Pure Client-Side HTML5 · Accessible Form Controls · Atomic Integrity Inspector
+     Strict Negative Constraint: Zero Fake Metrics & Zero Statistical Badges
+     ============================================================================== -->
+
+<section 
+  id="save-validation-panel" 
+  class="save-validation-panel mew-offer-card coral-accent" 
+  data-testid="save-validation-panel"
+  aria-labelledby="save-validation-title"
+>
+  <!-- 4px Top Accent Bar (Coral #ed765b / Violet #8a76ff) -->
+  <div class="save-validation-accent-bar" aria-hidden="true"></div>
+
+  <!-- Header & Topic Description -->
+  <header class="save-validation-header">
+    <div class="header-badges-row">
+      <span class="badge-pill coral">Topic T13</span>
+      <span class="badge-pill soft">Atomic Save Commit</span>
+      <span class="badge-pill violet">Dual-Lens Validation</span>
+    </div>
+    <h2 id="save-validation-title" class="save-validation-title" data-testid="save-validation-title">
+      Save Validation &amp; Commit Controller
+    </h2>
+    <p class="save-validation-desc">
+      ระบบตรวจสอบความถูกต้องของการบันทึกตามข้อกำหนด Founder: บังคับให้มนุษย์เลือกคลังอย่างน้อย 1 แห่งและระบุเหตุผล (Founder WHY) ที่ชัดเจน พร้อมกลไก Atomic Transaction เพื่อรับประกันว่าจะไม่มีข้อมูลค้างครึ่งคลังหากเกิดข้อผิดพลาด
+    </p>
+  </header>
+
+  <!-- Interactive Test Scenario Presets (D2, D3, D4 & Atomic Error Rollback) -->
+  <div class="preset-scenarios-bar" aria-label="ชุดทดสอบจำลอง (Scenario Presets)">
+    <span class="presets-label">ทดสอบตามสเปก:</span>
+    <div class="presets-button-group">
+      <button 
+        type="button" 
+        id="btn-preset-d2" 
+        class="preset-pill-btn" 
+        data-testid="btn-preset-d2"
+        title="ทดสอบ D2: Save Content-only พร้อม Founder WHY"
+      >
+        <span class="dot-indicator coral"></span>
+        <span>D2: Content-only</span>
+      </button>
+
+      <button 
+        type="button" 
+        id="btn-preset-d3" 
+        class="preset-pill-btn" 
+        data-testid="btn-preset-d3"
+        title="ทดสอบ D3: Save Packaging-only พร้อม Founder WHY"
+      >
+        <span class="dot-indicator violet"></span>
+        <span>D3: Packaging-only</span>
+      </button>
+
+      <button 
+        type="button" 
+        id="btn-preset-d4" 
+        class="preset-pill-btn" 
+        data-testid="btn-preset-d4"
+        title="ทดสอบ D4: Save Both พร้อม 2 WHYs อิสระ (1 Source ผูก 2 Notes)"
+      >
+        <span class="dot-indicator dual"></span>
+        <span>D4: Both Lenses</span>
+      </button>
+
+      <button 
+        type="button" 
+        id="btn-simulate-fail" 
+        class="preset-pill-btn danger" 
+        data-testid="btn-simulate-fail"
+        title="ทดสอบ Atomic Rollback: จำลองข้อผิดพลาดเพื่อดู Store คืนค่า"
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>Simulate Error</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Atomic Error Banner (Displayed when commit fails and rollback triggers) -->
+  <div 
+    id="err-save-failed" 
+    class="err-save-failed alert-box error-alert" 
+    data-testid="err-save-failed" 
+    role="alert" 
+    hidden
+  >
+    <div class="alert-icon-wrap" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="15" y1="9" x2="9" y2="15"></line>
+        <line x1="9" y1="9" x2="15" y2="15"></line>
+      </svg>
+    </div>
+    <div class="alert-content">
+      <strong class="alert-title">err-save-failed: การบันทึกไม่สำเร็จ</strong>
+      <p class="alert-desc">
+        เกิดข้อผิดพลาดระหว่างบันทึก ระบบสั่งทำ Atomic Rollback คืนสถานะ Store กลับสู่จุดเริ่มต้นอย่างสมบูรณ์ ไม่มี note ใดถูกสร้างค้างไว้
+      </p>
+    </div>
+  </div>
+
+  <!-- Interactive Save Form -->
+  <form id="save-validation-form" class="save-validation-form" novalidate>
+    
+    <!-- Lens Selection Section -->
+    <fieldset class="lens-chooser-fieldset">
+      <legend class="lens-chooser-legend">
+        <strong>1. เลือกคลังจัดเก็บ (Vault Lenses)</strong>
+        <span class="legend-hint">ต้องเลือกอย่างน้อย 1 คลังเพื่อระบุทิศทางการนำไปใช้</span>
+      </legend>
+
+      <div class="lens-checkbox-cards-grid">
+        <!-- Lens 1: Content -->
+        <label class="lens-checkbox-card" for="chk-save-content">
+          <input 
+            type="checkbox" 
+            id="chk-save-content" 
+            name="chk-save-content" 
+            class="chk-save-content custom-checkbox-native" 
+            data-testid="chk-save-content"
+          />
+          <div class="lens-card-inner">
+            <div class="lens-card-header">
+              <span class="custom-check-box" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span class="badge-pill coral">Content Vault</span>
+            </div>
+            <strong class="lens-card-title">Content (WHAT) — แก่นเรื่อง</strong>
+            <p class="lens-card-desc">จัดเก็บไอเดีย สาระ มุมมอง หรือสถิติที่ต้องการต่อยอด</p>
+          </div>
+        </label>
+
+        <!-- Lens 2: Packaging -->
+        <label class="lens-checkbox-card" for="chk-save-packaging">
+          <input 
+            type="checkbox" 
+            id="chk-save-packaging" 
+            name="chk-save-packaging" 
+            class="chk-save-packaging custom-checkbox-native" 
+            data-testid="chk-save-packaging"
+          />
+          <div class="lens-card-inner">
+            <div class="lens-card-header">
+              <span class="custom-check-box" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span class="badge-pill violet">Packaging Vault</span>
+            </div>
+            <strong class="lens-card-title">Packaging (HOW) — วิธีเล่า</strong>
+            <p class="lens-card-desc">จัดเก็บ Hook จังหวะตัดต่อ Motion กราฟิก หรือ Sound SFX</p>
+          </div>
+        </label>
+      </div>
+
+      <!-- Error Element: err-no-lens -->
+      <div 
+        id="err-no-lens" 
+        class="err-no-lens field-error-alert" 
+        data-testid="err-no-lens" 
+        role="alert" 
+        hidden
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="err-no-lens-message">err-no-lens: กรุณาเลือกคลังอย่างน้อย 1 แห่ง (Content หรือ Packaging) ก่อนบันทึก</span>
+      </div>
+    </fieldset>
+
+    <!-- Dynamic Reason Containers -->
+    <div class="reasons-wrapper" id="reasons-wrapper">
+      
+      <!-- Content WHY Field Container -->
+      <div 
+        id="wrap-why-content" 
+        class="reason-field-container content-container" 
+        data-testid="wrap-why-content" 
+        hidden
+      >
+        <div class="reason-field-header">
+          <label for="why-content" class="reason-label">
+            <span class="tag-pill coral">WHAT</span>
+            <span class="reason-label-text">Founder WHY — Content (ทำไมถึงอยากเก็บเนื้อหานี้?)</span>
+            <span class="required-star" aria-label="จำเป็น">*</span>
+          </label>
+          <span class="counter-text" id="counter-why-content">0 ตัวอักษร</span>
+        </div>
+
+        <textarea 
+          id="why-content" 
+          name="why-content" 
+          class="why-content form-textarea" 
+          data-testid="why-content" 
+          rows="3" 
+          placeholder="ระบุเหตุผลของ Founder เช่น: ชอบมุมมองแก้ปัญหาความเชื่อเดิมเรื่องการขาย สามารถนำมาแตกเป็นบทความหรือคลิปสั้น..."
+        ></textarea>
+
+        <!-- Error Element: err-why-content -->
+        <div 
+          id="err-why-content" 
+          class="err-why-content field-error-alert" 
+          data-testid="err-why-content" 
+          role="alert" 
+          hidden
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span id="err-why-content-message">err-why-content: ติ๊ก Content แต่ WHY ว่างหรือมีเพียงเว้นวรรค</span>
+        </div>
+      </div>
+
+      <!-- Packaging WHY Field Container -->
+      <div 
+        id="wrap-why-packaging" 
+        class="reason-field-container packaging-container" 
+        data-testid="wrap-why-packaging" 
+        hidden
+      >
+        <div class="reason-field-header">
+          <label for="why-packaging" class="reason-label">
+            <span class="tag-pill violet">HOW</span>
+            <span class="reason-label-text">Founder WHY — Packaging (เทคนิคการนำเสนออะไรที่โดดเด่น?)</span>
+            <span class="required-star" aria-label="จำเป็น">*</span>
+          </label>
+          <span class="counter-text" id="counter-why-packaging">0 ตัวอักษร</span>
+        </div>
+
+        <textarea 
+          id="why-packaging" 
+          name="why-packaging" 
+          class="why-packaging form-textarea" 
+          data-testid="why-packaging" 
+          rows="3" 
+          placeholder="ระบุเทคนิคการนำเสนอ เช่น: จังหวะ Hook ตะโกนประโยคเปิดในวินาทีที่ 0:01 สลับภาพเร็วพร้อม Whoosh SFX..."
+        ></textarea>
+
+        <!-- Error Element: err-why-packaging -->
+        <div 
+          id="err-why-packaging" 
+          class="err-why-packaging field-error-alert" 
+          data-testid="err-why-packaging" 
+          role="alert" 
+          hidden
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span id="err-why-packaging-message">err-why-packaging: ติ๊ก Packaging แต่ WHY ว่างหรือมีเพียงเว้นวรรค</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Optional Metadata Fields Collapsible -->
+    <details class="optional-metadata-details" id="optional-metadata-details">
+      <summary class="optional-summary">
+        <span class="summary-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <strong>ข้อมูลเสริม (Optional Metadata)</strong>
+        </span>
+        <span class="summary-sub">Tags, Timestamp, Label, Collection</span>
+      </summary>
+
+      <div class="optional-inputs-grid">
+        <div class="input-field-group">
+          <label for="tags" class="field-label">Tags</label>
+          <input 
+            type="text" 
+            id="tags" 
+            name="tags" 
+            class="tags form-input" 
+            data-testid="tags" 
+            placeholder="เช่น Transformation, Hook Ref" 
+          />
+        </div>
+
+        <div class="input-field-group">
+          <label for="timestamp" class="field-label">Timestamp</label>
+          <input 
+            type="text" 
+            id="timestamp" 
+            name="timestamp" 
+            class="timestamp form-input" 
+            data-testid="timestamp" 
+            placeholder="เช่น 00:15" 
+          />
+        </div>
+
+        <div class="input-field-group">
+          <label for="label" class="field-label">Label</label>
+          <input 
+            type="text" 
+            id="label" 
+            name="label" 
+            class="label form-input" 
+            data-testid="label" 
+            placeholder="เช่น Key Takeaway" 
+          />
+        </div>
+
+        <div class="input-field-group">
+          <label for="collection" class="field-label">Collection</label>
+          <input 
+            type="text" 
+            id="collection" 
+            name="collection" 
+            class="collection form-input" 
+            data-testid="collection" 
+            placeholder="เช่น Short-Form Mastery" 
+          />
+        </div>
+      </div>
+    </details>
+
+    <!-- Action Buttons -->
+    <div class="validation-action-buttons">
+      <button 
+        type="button" 
+        id="btn-reset-form" 
+        class="btn-mew-ghost" 
+        data-testid="btn-reset-form"
+      >
+        Reset Form
+      </button>
+
+      <button 
+        type="button" 
+        id="btn-validate-save" 
+        class="btn-mew-secondary" 
+        data-testid="btn-validate-save"
+      >
+        Check Validation
+      </button>
+
+      <button 
+        type="submit" 
+        id="btn-commit-save" 
+        class="btn-mew-pill btn-primary-ink" 
+        data-testid="btn-commit-save"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+          <polyline points="17 21 17 13 7 13 7 21"></polyline>
+          <polyline points="7 3 7 8 15 8"></polyline>
+        </svg>
+        <span>Commit to Library</span>
+      </button>
+    </div>
+
+  </form>
+
+  <!-- Live Central Store Audit / Atomic Inspector -->
+  <footer class="save-validation-inspector">
+    <div class="inspector-header">
+      <div class="inspector-title-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+        </svg>
+        <strong>Store Atomic Inspector (Live Notes Audit)</strong>
+      </div>
+      <div class="inspector-meta-row">
+        <span class="status-badge" id="commit-status-badge">Ready</span>
+        <span class="canonical-tag">
+          Canonical Status: <strong id="canonical-source-status">Analyzed · Not saved</strong>
+        </span>
+      </div>
+    </div>
+
+    <ul class="commit-notes-list" id="commit-notes-list" aria-live="polite">
+      <li class="empty-note-item">ยังไม่มี note ที่บันทึกสำหรับ Source นี้</li>
+    </ul>
+
+    <div class="inspector-footer-note">
+      <span class="note-bullet" aria-hidden="true">✓</span>
+      <span>รับประกันความถูกต้อง: 1 คลิป = 1 Canonical Source เดียวกันเสมอ (ไม่คัดลอก Source/Video ใน Store)</span>
+    </div>
+  </footer>
+
+</section>

@@ -1,0 +1,629 @@
+/**
+ * ==============================================================================
+ * MEW CONTENT OS — Save Success State + Re-save / Add Lens Stylesheet (Topic T14)
+ * Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+ * Pure CSS3 · Responsive Design · Accessible WCAG AAA Contrast
+ * 
+ * Strict Negative Constraint:
+ * Absolutely NO fake or arbitrary statistics or fake percentage badges.
+ * ==============================================================================
+ */
+
+/* ------------------------------------------------------------------------------
+ * 1. DESIGN TOKENS & CSS CUSTOM PROPERTIES
+ * ------------------------------------------------------------------------------ */
+:root {
+  --mew-paper: #fbfaf8;
+  --mew-surface: #ffffff;
+  --mew-soft-surface: #f4f2ee;
+  --mew-stone-line: #e7e3de;
+  --mew-stone-line-dark: #d3cec6;
+  --mew-deep-ink: #11110f;
+  --mew-muted: #6b6762;
+  --mew-muted-light: #8e8a84;
+
+  /* Vault Theme Accents */
+  --mew-coral: #ed765b;
+  --mew-coral-kicker: #ae4f3a;
+  --mew-coral-surface: rgba(237, 118, 91, 0.08);
+  --mew-coral-glow: rgba(237, 118, 91, 0.22);
+
+  --mew-violet: #8a76ff;
+  --mew-violet-dark: #6852e6;
+  --mew-violet-surface: rgba(138, 118, 255, 0.08);
+  --mew-violet-glow: rgba(138, 118, 255, 0.22);
+
+  --mew-dual-gradient: linear-gradient(135deg, #ed765b 0%, #8a76ff 100%);
+  --mew-dual-surface: linear-gradient(135deg, rgba(237, 118, 91, 0.07) 0%, rgba(138, 118, 255, 0.07) 100%);
+
+  /* Elevations & Transitions */
+  --mew-shadow-card: 0 18px 50px rgba(17, 17, 15, 0.05), 0 4px 12px rgba(17, 17, 15, 0.03);
+  --mew-shadow-hover: 0 24px 60px rgba(17, 17, 15, 0.09), 0 8px 18px rgba(17, 17, 15, 0.05);
+  --mew-transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  --mew-radius-pill: 9999px;
+  --mew-radius-card: 20px;
+  --mew-radius-sm: 10px;
+}
+
+/* ------------------------------------------------------------------------------
+ * 2. CORE SAVE SUCCESS CARD & CONTAINER
+ * ------------------------------------------------------------------------------ */
+.save-success,
+.save-success-card {
+  position: relative;
+  display: block;
+  background-color: var(--mew-surface);
+  border: 1px solid var(--mew-stone-line);
+  border-radius: var(--mew-radius-card);
+  box-shadow: var(--mew-shadow-card);
+  overflow: hidden;
+  max-width: 680px;
+  margin: 0 auto;
+  transition: var(--mew-transition);
+  animation: subtleSlideUp 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.save-success:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--mew-shadow-hover);
+}
+
+@keyframes subtleSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 4px Top Accent Bar */
+.save-success-accent-bar {
+  height: 4px;
+  width: 100%;
+  background-color: var(--mew-coral);
+  transition: background-color 0.3s ease;
+}
+
+.save-success.coral-vault .save-success-accent-bar,
+.save-success.content-vault .save-success-accent-bar {
+  background-color: var(--mew-coral);
+}
+
+.save-success.packaging-vault .save-success-accent-bar,
+.save-success.violet-vault .save-success-accent-bar {
+  background-color: var(--mew-violet);
+}
+
+.save-success.both-vault .save-success-accent-bar,
+.save-success.dual-vault .save-success-accent-bar {
+  background: var(--mew-dual-gradient);
+}
+
+.save-success-inner {
+  padding: 32px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ------------------------------------------------------------------------------
+ * 3. HEADER & CONFIRMATION ICON SEPARATED BY VAULT
+ * ------------------------------------------------------------------------------ */
+.save-success-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* Success Confirmation Icon */
+.save-success-icon-wrap {
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--mew-transition);
+}
+
+/* Content Vault Icon: Coral */
+.save-success-icon-wrap.coral-vault,
+.save-success-icon-wrap.content-vault {
+  background: var(--mew-coral-surface);
+  color: var(--mew-coral);
+  border: 1.5px solid rgba(237, 118, 91, 0.35);
+  box-shadow: 0 0 20px var(--mew-coral-glow);
+}
+
+/* Packaging Vault Icon: Violet */
+.save-success-icon-wrap.packaging-vault,
+.save-success-icon-wrap.violet-vault {
+  background: var(--mew-violet-surface);
+  color: var(--mew-violet);
+  border: 1.5px solid rgba(138, 118, 255, 0.35);
+  box-shadow: 0 0 20px var(--mew-violet-glow);
+}
+
+/* Both Vaults Icon: Dual Gradient */
+.save-success-icon-wrap.both-vault,
+.save-success-icon-wrap.dual-vault {
+  background: var(--mew-dual-surface);
+  color: var(--mew-deep-ink);
+  border: 1.5px solid rgba(138, 118, 255, 0.4);
+  box-shadow: 0 0 24px rgba(237, 118, 91, 0.25);
+}
+
+.success-check-svg {
+  animation: checkPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(0.6) rotate(-15deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15) rotate(4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Title & Pill Row */
+.save-success-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.save-success-pill-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--mew-radius-pill);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.badge-pill.coral {
+  background-color: var(--mew-coral-surface);
+  color: var(--mew-coral-kicker);
+  border: 1px solid rgba(237, 118, 91, 0.28);
+}
+
+.badge-pill.violet {
+  background-color: var(--mew-violet-surface);
+  color: var(--mew-violet-dark);
+  border: 1px solid rgba(138, 118, 255, 0.28);
+}
+
+.badge-pill.dual {
+  background: var(--mew-dual-surface);
+  color: var(--mew-deep-ink);
+  border: 1px solid rgba(138, 118, 255, 0.35);
+}
+
+.badge-pill.soft {
+  background-color: var(--mew-soft-surface);
+  color: var(--mew-muted);
+  border: 1px solid var(--mew-stone-line);
+}
+
+/* Exact Required Success Heading */
+.save-success-title {
+  font-family: 'Prompt', 'Inter', 'Noto Sans Thai', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--mew-deep-ink);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.save-success-desc {
+  font-size: 0.92rem;
+  color: var(--mew-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------------------
+ * 4. SOURCE CLIP SUMMARY CARD
+ * ------------------------------------------------------------------------------ */
+.save-success-clip-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background-color: var(--mew-soft-surface);
+  border: 1px solid var(--mew-stone-line);
+  border-radius: 14px;
+}
+
+.clip-avatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background-color: var(--mew-deep-ink);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.clip-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.clip-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--mew-muted);
+}
+
+.clip-creator {
+  font-weight: 600;
+  color: var(--mew-deep-ink);
+}
+
+.meta-dot {
+  color: var(--mew-stone-line-dark);
+}
+
+.clip-title {
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--mew-deep-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ------------------------------------------------------------------------------
+ * 5. FOUNDER WHY RECORDED PREVIEW
+ * ------------------------------------------------------------------------------ */
+.save-success-why-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.why-preview-item {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--mew-stone-line);
+  background: var(--mew-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.why-content-item {
+  border-left: 3px solid var(--mew-coral);
+}
+
+.why-packaging-item {
+  border-left: 3px solid var(--mew-violet);
+}
+
+.why-preview-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--mew-deep-ink);
+}
+
+.lens-tag {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.lens-tag.coral {
+  background: var(--mew-coral-surface);
+  color: var(--mew-coral-kicker);
+}
+
+.lens-tag.violet {
+  background: var(--mew-violet-surface);
+  color: var(--mew-violet-dark);
+}
+
+.why-preview-text {
+  font-size: 0.9rem;
+  color: var(--mew-deep-ink);
+  line-height: 1.5;
+  margin: 0;
+  font-style: italic;
+}
+
+/* ------------------------------------------------------------------------------
+ * 6. RE-SAVE / ADD LENS (A05) & DUPLICATE CALLOUTS
+ * ------------------------------------------------------------------------------ */
+/* A05 Non-Destructive Update Banner */
+.save-success-a05-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  background-color: rgba(138, 118, 255, 0.06);
+  border: 1px solid rgba(138, 118, 255, 0.28);
+  border-radius: 12px;
+  color: var(--mew-deep-ink);
+}
+
+.save-success-a05-callout .callout-icon {
+  color: var(--mew-violet-dark);
+  margin-top: 2px;
+}
+
+.save-success-a05-callout .callout-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+/* Duplicate Prevention Notice */
+.save-duplicate-notice {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 20px;
+  background-color: #fff9f6;
+  border: 1px solid rgba(237, 118, 91, 0.35);
+  border-radius: 14px;
+}
+
+.duplicate-notice-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--mew-coral-kicker);
+  font-size: 0.96rem;
+}
+
+.duplicate-notice-desc {
+  font-size: 0.88rem;
+  color: var(--mew-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.duplicate-notice-actions {
+  margin-top: 4px;
+}
+
+.btn-link-s05,
+.btn-edit-existing-why {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--mew-coral-kicker);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: var(--mew-transition);
+}
+
+.btn-link-s05:hover,
+.btn-edit-existing-why:hover {
+  color: var(--mew-deep-ink);
+  transform: translateX(2px);
+}
+
+/* ------------------------------------------------------------------------------
+ * 7. ALREADY SAVED ("เก็บไว้แล้ว") BADGES & DISABLED STATE
+ * ------------------------------------------------------------------------------ */
+.badge-already-saved {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  background-color: var(--mew-soft-surface);
+  border: 1px solid var(--mew-stone-line-dark);
+  border-radius: var(--mew-radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--mew-muted);
+}
+
+.badge-already-saved::before {
+  content: '✓';
+  font-weight: 700;
+  color: var(--mew-coral-kicker);
+}
+
+.badge-already-saved.violet::before {
+  color: var(--mew-violet-dark);
+}
+
+/* Disabled Choice in Chooser */
+.vault-choice-card.is-already-saved,
+.resave-lens-item.is-already-saved {
+  background-color: #faf9f7;
+  border-color: var(--mew-stone-line);
+  opacity: 0.85;
+}
+
+.vault-choice-card.is-already-saved input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ------------------------------------------------------------------------------
+ * 8. ACTION BUTTONS: btn-view-in-library & btn-use-in-remix
+ * ------------------------------------------------------------------------------ */
+.save-success-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--mew-stone-line);
+}
+
+/* Ghost Button: View in Library */
+.btn-mew-ghost,
+.btn-view-in-library {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--mew-radius-pill);
+  background-color: var(--mew-surface);
+  border: 1px solid var(--mew-stone-line-dark);
+  color: var(--mew-deep-ink);
+  font-family: 'Prompt', 'Inter', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--mew-transition);
+  text-decoration: none;
+}
+
+.btn-mew-ghost:hover,
+.btn-view-in-library:hover {
+  background-color: var(--mew-soft-surface);
+  border-color: var(--mew-deep-ink);
+  transform: translateY(-2px);
+}
+
+.btn-mew-ghost:focus-visible,
+.btn-view-in-library:focus-visible {
+  outline: 2px solid var(--mew-deep-ink);
+  outline-offset: 3px;
+}
+
+/* Primary Pill CTA: Use in Remix */
+.btn-mew-pill,
+.btn-primary-ink,
+.btn-use-in-remix {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 26px;
+  border-radius: var(--mew-radius-pill);
+  background-color: var(--mew-deep-ink);
+  color: #ffffff;
+  border: 1px solid var(--mew-deep-ink);
+  font-family: 'Prompt', 'Inter', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--mew-transition);
+  box-shadow: 0 4px 14px rgba(17, 17, 15, 0.15);
+  text-decoration: none;
+}
+
+.btn-mew-pill:hover,
+.btn-primary-ink:hover,
+.btn-use-in-remix:hover {
+  background-color: #262624;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(17, 17, 15, 0.22);
+}
+
+.btn-mew-pill:focus-visible,
+.btn-primary-ink:focus-visible,
+.btn-use-in-remix:focus-visible {
+  outline: 2px solid var(--mew-coral);
+  outline-offset: 3px;
+}
+
+/* Secondary Sub-links */
+.save-success-sub-links {
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.btn-text-subtle {
+  background: none;
+  border: none;
+  font-size: 0.82rem;
+  color: var(--mew-muted);
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.2s ease;
+}
+
+.btn-text-subtle:hover {
+  color: var(--mew-deep-ink);
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------------------
+ * 9. RESPONSIVE DESIGN & ACCESSIBILITY
+ * ------------------------------------------------------------------------------ */
+@media (max-width: 640px) {
+  .save-success-inner {
+    padding: 24px 20px 28px;
+    gap: 20px;
+  }
+
+  .save-success-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .save-success-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .btn-view-in-library,
+  .btn-use-in-remix {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .save-success,
+  .success-check-svg,
+  .btn-mew-ghost,
+  .btn-mew-pill {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

@@ -1,0 +1,523 @@
+<!-- ==============================================================================
+     MEW CONTENT OS — Research States & Media Availability Component (Topic T07)
+     Pure Frontend UI/UX · Zero Server Dependencies · 100% Client-Side
+     Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+
+     Components Included:
+       1) banner-duplicate-source: A16 Canonical duplicate banner
+       2) state-unavailable: Honesty state when media/audio is inaccessible (A15)
+       3) state-partial: Partial media extraction state (Content extracted / Packaging blocked)
+       4) packaging-unavailable-notice: Packaging tab fallback ("วิเคราะห์ไม่ได้" / Analysis unavailable)
+       5) modal-request-transcript: Accessible modal dialog with btn-request-transcript
+
+     Strict Rule: No Fake Statistics / Zero Fake Waveforms / Honest Data States
+     ============================================================================== -->
+
+<div class="research-states-wrapper" id="research-states-container">
+
+  <!-- ============================================================================
+       1. A16 CANONICAL DUPLICATE SOURCE BANNER (banner-duplicate-source)
+       Displayed when user enters a URL that already exists in the system.
+       Does NOT create a duplicate source; points directly to existing record.
+       ============================================================================ -->
+  <div 
+    id="banner-duplicate-source" 
+    data-testid="banner-duplicate-source" 
+    class="mew-offer-card banner-duplicate-source violet-accent" 
+    role="alert" 
+    aria-live="polite"
+    tabindex="0"
+  >
+    <div class="banner-duplicate-inner">
+      
+      <!-- Top Meta Row -->
+      <div class="banner-header-row">
+        <div class="banner-badge-group">
+          <span class="badge-pill violet-accent">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+            A16 Canonical Duplicate
+          </span>
+          <span class="badge-status-inline">พบ URL ซ้ำในระบบ</span>
+        </div>
+
+        <button 
+          type="button" 
+          class="btn-dismiss-duplicate" 
+          id="btn-dismiss-duplicate-banner" 
+          data-testid="btn-dismiss-duplicate-banner" 
+          aria-label="ปิดการแจ้งเตือน URL ซ้ำ"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Main Notification Body -->
+      <div class="banner-body-content">
+        <div class="banner-icon-box" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
+        </div>
+        <div class="banner-text-group">
+          <h3 class="banner-title">ลิงก์นี้มีอยู่ในคลังอ้างอิงแล้ว &mdash; เปิดข้อมูลเดิมให้อัตโนมัติ</h3>
+          <p class="banner-desc">
+            ระบบป้องกันการบันทึก source ซ้ำซ้อนตามหลักความซื่อสัตย์ของข้อมูล (Spec A16) ข้อมูลที่คุณเคยวิเคราะห์ไว้จะถูกเปิดขึ้นมาใช้งานต่อโดยตรง
+          </p>
+          <div class="banner-meta-pill-box" id="duplicate-source-meta">
+            <span class="meta-tag" id="duplicate-source-title"><strong>คลิปเดิม:</strong> Post and forget it</span>
+            <span class="meta-tag" id="duplicate-source-creator"><strong>ผู้สร้าง:</strong> Creator A</span>
+            <span class="meta-tag" id="duplicate-source-version"><strong>Version ที่มี:</strong> v1</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions: Open Existing vs Re-analyze -->
+      <div class="banner-actions-row">
+        <button 
+          type="button" 
+          class="btn-pill btn-primary btn-open-existing-source" 
+          id="btn-open-existing-source" 
+          data-testid="btn-open-existing-source"
+          aria-label="เปิดดูข้อมูลต้นฉบับเดิมในหน้า S02"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <polyline points="9 21 3 21 3 15"></polyline>
+            <line x1="21" y1="3" x2="14" y2="10"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
+          </svg>
+          <span>เปิดดูข้อมูลเดิม &rarr; S02</span>
+        </button>
+
+        <button 
+          type="button" 
+          class="btn-pill btn-ghost btn-reanalyze-source" 
+          id="btn-reanalyze-source" 
+          data-testid="btn-reanalyze-source"
+          aria-label="วิเคราะห์ใหม่ โดยสร้าง Analysis Version ใหม่และไม่ลบ Version เก่า"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          <span>วิเคราะห์ใหม่ (สร้าง Version ถัดไป)</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ============================================================================
+       2. UNAVAILABLE MEDIA STATE (state-unavailable)
+       A15 Honesty Requirement: When original media/audio cannot be accessed.
+       Strictly distinct Crimson/Rose colorway to alert the user clearly.
+       ============================================================================ -->
+  <section 
+    id="state-unavailable" 
+    data-testid="state-unavailable" 
+    class="research-state-card state-unavailable crimson-accent" 
+    aria-labelledby="heading-state-unavailable"
+    tabindex="0"
+  >
+    <div class="state-card-inner">
+      
+      <!-- State Header -->
+      <div class="state-badge-row">
+        <span class="status-badge status-unavailable" data-testid="status-badge-unavailable">
+          <span class="badge-icon-box" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+            </svg>
+          </span>
+          <span class="badge-text">Analysis unavailable</span>
+          <span class="badge-sub-th">(วิเคราะห์ไม่ได้)</span>
+        </span>
+        <span class="badge-spec-callout">Spec A15 &amp; D9 Media Access Safeguard</span>
+      </div>
+
+      <!-- Main Headline & Explanation -->
+      <div class="state-headline-block">
+        <div class="state-icon-large" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            <line x1="2" y1="2" x2="22" y2="22" stroke-width="2.2"></line>
+          </svg>
+        </div>
+        <div class="state-copy-group">
+          <h2 id="heading-state-unavailable" class="state-title">
+            เข้าถึงสื่อต้นฉบับไม่ได้ &mdash; ไม่สามารถวิเคราะห์ลีลาและเสียงได้
+          </h2>
+          <p class="state-desc">
+            ลิงก์ต้นทางเสีย ถูกจำกัดสิทธิ์ความเป็นส่วนตัว หรือแพลตฟอร์มไม่อนุญาตให้ดึงข้อมูลแทร็กเสียงและภาพ ตามหลักความซื่อสัตย์ทางข้อมูล (Spec ข้อ 0 &amp; A15) <strong>ระบบจะไม่สร้างผลวิเคราะห์ภาพหรือเสียงปลอม</strong> โดยไม่มีหลักฐานจริง
+          </p>
+        </div>
+      </div>
+
+      <!-- Packaging Lens Integrity Callout (No fake graphs/waveforms) -->
+      <div class="packaging-integrity-box">
+        <div class="integrity-header">
+          <div class="integrity-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <span class="integrity-title">สถานะแท็บ Packaging: <strong>วิเคราะห์ไม่ได้</strong></span>
+        </div>
+        <p class="integrity-text">
+          แท็บ Packaging แสดงสถานะเป็น <code>Analysis unavailable</code> และระบุข้อความ "วิเคราะห์ไม่ได้" เนื่องจากไม่มีสัญญาณเสียงต้นฉบับสำหรับถอด Hook, Pacing หรือ Sound Effects
+        </p>
+      </div>
+
+      <!-- Action Group with REQUIRED btn-request-transcript -->
+      <div class="state-action-bar">
+        <button 
+          type="button" 
+          class="btn-pill btn-primary btn-request-transcript" 
+          id="btn-request-transcript" 
+          data-testid="btn-request-transcript" 
+          data-action="btn-request-transcript"
+          aria-label="ขอไฟล์ต้นฉบับ หรือส่ง Transcript ที่มีสิทธิ์ใช้งาน"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>ขอไฟล์/Transcript ที่มีสิทธิ์</span>
+        </button>
+
+        <button 
+          type="button" 
+          class="btn-pill btn-ghost btn-upload-owned-alt" 
+          id="btn-upload-owned-alt"
+          data-testid="btn-upload-owned-alt"
+          aria-label="สลับไปอัปโหลดไฟล์วิดีโอที่คุณมีสิทธิ์"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <span>อัปโหลดคลิปที่คุณมีสิทธิ์แทน</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================================
+       3. PARTIAL MEDIA ACCESS STATE (state-partial)
+       A15 Honesty Requirement: When partial content/transcript is accessible,
+       but packaging/audio waveform cannot be safely decoded.
+       Distinct Warm Amber / Golden Ochre colorway to separate from Normal & Unavailable.
+       ============================================================================ -->
+  <section 
+    id="state-partial" 
+    data-testid="state-partial" 
+    class="research-state-card state-partial amber-accent" 
+    aria-labelledby="heading-state-partial"
+    tabindex="0"
+  >
+    <div class="state-card-inner">
+      
+      <!-- State Header -->
+      <div class="state-badge-row">
+        <span class="status-badge status-partial" data-testid="status-badge-partial">
+          <span class="badge-icon-box" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a10 10 0 0 1 0 20z"></path>
+            </svg>
+          </span>
+          <span class="badge-text">Partial Media Access</span>
+          <span class="badge-sub-th">(ได้ข้อมูลบางส่วน)</span>
+        </span>
+        <span class="badge-spec-callout">Dual-Lens Partial Extraction</span>
+      </div>
+
+      <!-- Main Headline & Explanation -->
+      <div class="state-headline-block">
+        <div class="state-icon-large" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" opacity="0.2"></path>
+            <line x1="12" y1="6" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <div class="state-copy-group">
+          <h2 id="heading-state-partial" class="state-title">
+            เข้าถึงข้อมูลได้บางส่วน &mdash; ถอดสาระได้ แต่ขาดแทร็กเสียง/ภาพสำหรับ Packaging
+          </h2>
+          <p class="state-desc">
+            ระบบสามารถดึงข้อความคำบรรยายหรือสาระหลัก (WHAT) ได้ แต่ไม่สามารถเข้าถึงไฟล์เสียงหรือวิดีโอระดับสมบูรณ์เพื่อประเมินลีลาวิธีเล่า (HOW) ได้อย่างแม่นยำ
+          </p>
+        </div>
+      </div>
+
+      <!-- Lens Breakdown Grid -->
+      <div class="partial-lenses-grid">
+        <!-- Lens 1: Content (Available) -->
+        <div class="lens-status-box available">
+          <div class="lens-status-header">
+            <span class="lens-name">Content Lens (WHAT)</span>
+            <span class="lens-indicator tag-green">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              สกัดสาระได้บางส่วน
+            </span>
+          </div>
+          <p class="lens-desc">
+            มีข้อความถอดเสียงหรือเนื้อหาแก่นไอเดียพื้นฐาน สามารถบันทึกเข้า Content Vault ได้เมื่อกรอก WHY
+          </p>
+        </div>
+
+        <!-- Lens 2: Packaging (Blocked) -->
+        <div class="lens-status-box blocked">
+          <div class="lens-status-header">
+            <span class="lens-name">Packaging Lens (HOW)</span>
+            <span class="lens-indicator tag-unavailable">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+              </svg>
+              วิเคราะห์ไม่ได้
+            </span>
+          </div>
+          <p class="lens-desc">
+            ขาดสัญญาณภาพ/เสียงสำหรับถอดรหัส Hook, Pacing, Sound Effects จำเป็นต้องใช้ Transcript ละเอียดหรือไฟล์ต้นฉบับ
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Group with REQUIRED btn-request-transcript -->
+      <div class="state-action-bar">
+        <button 
+          type="button" 
+          class="btn-pill btn-primary btn-request-transcript" 
+          id="btn-request-transcript-partial" 
+          data-testid="btn-request-transcript" 
+          data-action="btn-request-transcript"
+          aria-label="ขอไฟล์ต้นฉบับ หรือส่ง Transcript ที่มีสิทธิ์เพื่อเติมเต็มการวิเคราะห์"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>ขอไฟล์/Transcript ที่มีสิทธิ์</span>
+        </button>
+
+        <button 
+          type="button" 
+          class="btn-pill btn-ghost btn-proceed-content-only" 
+          id="btn-proceed-content-only"
+          data-testid="btn-proceed-content-only"
+          aria-label="ดำเนินการต่อเฉพาะส่วน Content ที่สกัดได้"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+          <span>ดูเฉพาะสาระ Content ที่สกัดได้</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================================
+       4. STANDALONE PACKAGING TAB FALLBACK (packaging-unavailable-notice)
+       Rendered directly inside the Packaging Tab in S02 when media is inaccessible.
+       Guarantees: Shows "วิเคราะห์ไม่ได้" and status "Analysis unavailable" (A15).
+       ============================================================================ -->
+  <div 
+    class="packaging-unavailable-notice mew-offer-card" 
+    id="packaging-unavailable-notice" 
+    data-testid="packaging-unavailable-notice" 
+    role="region" 
+    aria-label="แท็บ Packaging: วิเคราะห์ไม่ได้"
+  >
+    <div class="notice-badge-row">
+      <span class="status-badge status-unavailable" data-testid="status-badge-unavailable">
+        <span class="badge-icon-box" aria-hidden="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+          </svg>
+        </span>
+        <span class="badge-text">Analysis unavailable</span>
+        <span class="badge-sub-th">(วิเคราะห์ไม่ได้)</span>
+      </span>
+      <span class="badge-kicker-coral">A15 Honesty Protection</span>
+    </div>
+
+    <div class="notice-headline-group">
+      <h3 class="notice-title">วิเคราะห์ไม่ได้</h3>
+      <p class="notice-desc">
+        แท็บ Packaging แสดงข้อความ "วิเคราะห์ไม่ได้" เนื่องจากระบบไม่สามารถเข้าถึงไฟล์ภาพหรือเสียงต้นฉบับได้
+      </p>
+      <p class="notice-subdesc">
+        ตามหลักความซื่อสัตย์ทางข้อมูลของ MEW Content OS ระบบจะไม่แกล้งทำเสมือนว่าวิเคราะห์จังหวะหรือ Hook ได้จริง และไม่สุ่มสร้าง waveform หรือตัวเลขขึ้นมาเองโดยไม่มีหลักฐาน
+      </p>
+    </div>
+
+    <div class="notice-actions-group">
+      <button 
+        type="button" 
+        class="btn-pill btn-primary btn-request-transcript" 
+        data-testid="btn-request-transcript"
+        aria-label="ขอไฟล์ต้นฉบับ หรือส่ง Transcript ที่มีสิทธิ์ใช้งาน"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        <span>ขอไฟล์/Transcript ที่มีสิทธิ์</span>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ============================================================================
+       5. ACCESSIBLE TRANSCRIPT / MEDIA REQUEST MODAL (modal-request-transcript)
+       Allows founder to paste transcript, upload .txt/.srt file, or request owned file.
+       Keyboard accessible with ESC to close, focus trap, and ARIA modal support.
+       ============================================================================ -->
+  <div 
+    id="modal-request-transcript" 
+    data-testid="modal-request-transcript" 
+    class="mew-modal-overlay" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-labelledby="modal-transcript-title" 
+    hidden
+  >
+    <div class="mew-modal-card" role="document">
+      
+      <!-- Modal Header -->
+      <div class="modal-card-header">
+        <div class="modal-title-group">
+          <div class="modal-eyebrow">
+            <span class="badge-pill soft">Media Access Remedy</span>
+            <span class="badge-step-code">A15 Resolution</span>
+          </div>
+          <h2 id="modal-transcript-title" class="modal-main-title">
+            ขอไฟล์ต้นฉบับ / แนบ Transcript ที่มีสิทธิ์
+          </h2>
+          <p class="modal-main-desc">
+            เพื่อให้ระบบสามารถวิเคราะห์สาระ (WHAT) และลีลา (HOW) ได้อย่างถูกต้องตามข้อเท็จจริง กรุณาเลือกวิธีแนบข้อมูลที่มีสิทธิ์
+          </p>
+        </div>
+
+        <button 
+          type="button" 
+          class="modal-btn-close" 
+          id="btn-close-transcript-modal" 
+          data-testid="btn-close-transcript-modal" 
+          aria-label="ปิดหน้าต่างขอ Transcript"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Hidden Source ID Tracker -->
+      <input type="hidden" id="transcript-modal-source-id" value="" />
+
+      <!-- Modal Body Options -->
+      <div class="modal-card-body">
+        
+        <!-- Option 1: Paste Transcript Text -->
+        <div class="transcript-input-group">
+          <label for="textarea-transcript-text" class="modal-field-label">
+            <span class="label-primary-text">1. วางข้อความ Transcript หรือคำบรรยาย</span>
+            <span class="label-optional-badge">เร็วที่สุด</span>
+          </label>
+          <textarea 
+            id="textarea-transcript-text" 
+            class="v6-textarea" 
+            rows="5" 
+            placeholder="วางคำพูดหรือบทบรรยายจากวิดีโอที่นี่... เช่น 'โพสต์เสร็จอย่าคอยเปิดยอดทุกชั่วโมง...'"
+            spellcheck="false"
+          ></textarea>
+        </div>
+
+        <!-- Option 2: Upload File (.txt, .srt, .vtt) -->
+        <div class="transcript-upload-group">
+          <label class="modal-field-label">
+            <span class="label-primary-text">2. หรืออัปโหลดไฟล์บทบรรยาย (.txt, .srt, .vtt)</span>
+          </label>
+          <div class="upload-dropzone-box" id="dropzone-transcript-file">
+            <input type="file" id="file-input-transcript" accept=".txt,.srt,.vtt" class="sr-only" aria-label="เลือกไฟล์ Transcript" />
+            <div class="dropzone-content">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <span class="dropzone-text">ลากไฟล์มาวางที่นี่ หรือ <strong>คลิกเพื่อเลือกไฟล์</strong></span>
+              <span class="dropzone-hint">รองรับไฟล์ .txt, .srt, .vtt ขนาดไม่เกิน 5MB</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Honesty & Rights Affirmation -->
+        <div class="rights-affirmation-row">
+          <input type="checkbox" id="check-transcript-permission" class="custom-checkbox" checked />
+          <label for="check-transcript-permission" class="checkbox-label">
+            ฉันยืนยันว่าฉันเป็นเจ้าของไฟล์หรือมีสิทธิ์ในการใช้วิดีโอ/คำบรรยายนี้ตามกฎหมาย
+          </label>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer Actions -->
+      <div class="modal-card-footer">
+        <button 
+          type="button" 
+          class="btn-pill btn-ghost" 
+          id="btn-cancel-transcript-modal"
+        >
+          ยกเลิก
+        </button>
+
+        <button 
+          type="button" 
+          class="btn-pill btn-primary btn-submit-transcript" 
+          id="btn-submit-transcript" 
+          data-testid="btn-submit-transcript"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>ส่งข้อมูล &amp; เริ่มวิเคราะห์ใหม่</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

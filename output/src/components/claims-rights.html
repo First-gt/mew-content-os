@@ -1,0 +1,196 @@
+<!-- ==============================================================================
+     MEW CONTENT OS - Topic T25: Claims & Rights Checker
+     Theme: mewteetawat.com V6.3
+     Pure Client-Side Component · Zero Server Dependencies · Zero Fake Metrics
+     WCAG AA/AAA Compliant · Semantic HTML5
+     ============================================================================== -->
+
+<div class="claims-rights-panel mew-offer-card" id="claims-rights-panel" data-testid="claims-rights-panel" role="region" aria-label="ตรวจสอบข้ออ้างและความปลอดภัยทางลิขสิทธิ์">
+
+  <!-- Header Section -->
+  <div class="cr-header-row">
+    <div class="cr-title-group">
+      <div class="cr-badges-row">
+        <span class="badge-pill coral">Rights & Evidence Guard</span>
+        <span class="rights-status-badge transformative font-bold" id="rights-badge" role="status">Transformative Remix (ปลอดภัย)</span>
+      </div>
+      <h3 class="cr-heading">การตรวจสอบข้ออ้าง & ความปลอดภัยทางลิขสิทธิ์ (Claims & Rights)</h3>
+      <p class="cr-desc">
+        แยกแยะระหว่างข้อเท็จจริง (Claim vs Evidence) ตรวจสอบตัวเลขที่ไม่มีที่มา และป้องกันการละเมิดลิขสิทธิ์ภาพหรือเสียง
+      </p>
+    </div>
+  </div>
+
+  <!-- Copy Risk Warning Flag (Verbatim copy alert) -->
+  <div class="flag-copy-risk-banner" id="flag-copy-risk" data-testid="flag-copy-risk" role="alert" hidden>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+      <line x1="12" y1="9" x2="12" y2="13"></line>
+      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+    </svg>
+    <div class="risk-content">
+      <strong>ตรวจพบประโยคที่มีความคล้ายคลึงกับต้นฉบับสูง:</strong>
+      <span id="risk-details-text">ข้อความ Hook มีส่วนคล้ายต้นทาง แนะนำให้ปรับเป็นถ้อยคำเฉพาะตัวของคุณ</span>
+    </div>
+  </div>
+
+  <!-- A14: Unverified Claim Flag Banner -->
+  <div class="claim-flag-banner" id="claim-flag-banner" data-testid="claim-flag" role="alert" hidden>
+    <div class="claim-flag-header">
+      <div class="claim-flag-title-wrap">
+        <span class="claim-flag-icon" aria-hidden="true">⚠️</span>
+        <strong class="claim-flag-title">พบข้ออ้างหรือตัวเลขที่ยังไม่มีแหล่งอ้างอิง (Claim Flag)</strong>
+      </div>
+      <span class="claim-flag-count-badge" id="claim-flag-count-badge">1 รายการ</span>
+    </div>
+    <p class="claim-flag-desc">
+      ตามหลักการ A14 คอนเซปต์ที่มี Claim Flag ค้างอยู่จะ<strong>ถูกระงับการส่งต่อไป Approve</strong> จนกว่าจะลบข้ออ้างออกหรือเพิ่มแหล่งอ้างอิงยืนยัน
+    </p>
+    <div class="claim-flag-list" id="claim-flag-list">
+      <!-- Flag items rendered dynamically by claims-rights.js -->
+      <div class="claim-flag-item" data-claim-id="default-flag">
+        <div class="claim-flag-item-content">
+          <span class="claim-flag-badge">Claim Flag</span>
+          <span class="claim-flag-text" id="flagged-claim-sample">"3 ชั่วโมง/วัน" (ไม่มีข้อมูลอ้างอิงรองรับ)</span>
+        </div>
+        <div class="claim-flag-actions">
+          <button type="button" class="btn-claim-remove" id="btn-claim-remove" data-testid="btn-claim-remove" aria-label="ลบข้ออ้างนี้ออกจากคอนเซปต์">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            ลบข้ออ้างนี้ (Remove)
+          </button>
+          <button type="button" class="btn-claim-add-source" id="btn-claim-add-source" data-testid="btn-claim-add-source" aria-label="ขอหลักฐานหรือระบุแหล่งอ้างอิง">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+            ระบุแหล่งอ้างอิง (Add Source)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inline Add Source Form (Toggled by btn-claim-add-source) -->
+    <div class="claim-source-form" id="claim-source-form" hidden>
+      <label for="claim-source-input" class="claim-source-label">ระบุแหล่งข้อมูลอ้างอิง / งานวิจัย / แหล่งที่มา:</label>
+      <div class="claim-source-input-row">
+        <input type="text" id="claim-source-input" class="claim-source-input" placeholder="เช่น รายงานประจำปี 2024, บทสัมภาษณ์ผู้ก่อตั้ง, งานวิจัยทางการแพทย์">
+        <button type="button" class="btn-confirm-source" id="btn-confirm-source">บันทึกแหล่งอ้างอิง</button>
+        <button type="button" class="btn-cancel-source" id="btn-cancel-source">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- A14: Approval Gate Blocking Status -->
+  <div class="approval-gate-banner blocked" id="claim-approval-gate" role="note" hidden>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+    </svg>
+    <span class="gate-status-text" id="gate-status-text">
+      สถานะ: <strong>ระงับการส่งต่อไป Approve</strong> เนื่องจากมี Claim Flag ค้างอยู่
+    </span>
+  </div>
+
+  <!-- Claims Table (Claims vs Evidence Audit) -->
+  <div class="claims-table-wrapper">
+    <table class="claims-table" id="claims-table" aria-label="ตารางตรวจสอบข้ออ้าง">
+      <thead>
+        <tr>
+          <th scope="col" class="th-claim">ข้ออ้างที่ใช้ใน Concept (Claim)</th>
+          <th scope="col" class="th-evidence">หลักฐานรองรับ (Evidence Basis)</th>
+          <th scope="col" class="th-status">สถานะ</th>
+        </tr>
+      </thead>
+      <tbody id="claims-table-body">
+        <!-- Rendered dynamically by claims-rights.js -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Transformative Breakdown (WHAT vs HOW) -->
+  <div class="transformative-breakdown" id="transformative-breakdown">
+    <div class="breakdown-item">
+      <span class="breakdown-label">WHAT (สาระ):</span>
+      <span class="breakdown-val" id="bd-what">ต่อยอดจากแก่นคิดเดิม แต่ปรับมุมมองใหม่</span>
+    </div>
+    <div class="breakdown-item">
+      <span class="breakdown-label">HOW (จังหวะ):</span>
+      <span class="breakdown-val" id="bd-how">ยืมเฉพาะโครงสร้าง ไม่คัดลอกซาวด์หรือสคริปต์</span>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       A13: RIGHTS PANEL (ลิขสิทธิ์เพลง/วิดีโอ/เสียง และ Reaction/Stitch Flow)
+       ========================================================================== -->
+  <div class="rights-panel mew-offer-card" id="rights-panel" data-testid="rights-panel" role="region" aria-label="ข้อกำหนดการใช้ฟุตเทจและลิขสิทธิ์">
+    <div class="rights-panel-header">
+      <div class="rights-panel-title-wrap">
+        <svg class="rights-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+        </svg>
+        <h4 class="rights-panel-title">ข้อกำหนดลิขสิทธิ์: ห้ามใช้เพลง/วิดีโอ/เสียงของคนอื่นโดยไม่มีสิทธิ์</h4>
+      </div>
+      <span class="rights-policy-tag">Strict Copyright Policy</span>
+    </div>
+
+    <p class="rights-panel-warning-text">
+      การนำเสียง เพลง หรือคลิปวิดีโอของผู้สร้างคนอื่นมาใช้โดยไม่ได้รับอนุญาต ถือเป็นความเสี่ยงทางกฎหมายและอาจทำให้เนื้อหาถูกปิดกั้น กรุณาเลือกแนวทางการทำงานที่ปลอดภัย:
+    </p>
+
+    <!-- Rights Options (A13) -->
+    <fieldset class="rights-options-group" id="rights-options-group">
+      <legend class="sr-only">เลือกรูปแบบการจัดการลิขสิทธิ์</legend>
+
+      <!-- Option 1: Reaction / Stitch (Requires verification before Save Draft) -->
+      <label class="rights-option-card opt-reaction-stitch" for="opt-reaction-stitch">
+        <input type="radio" name="rights-mode" id="opt-reaction-stitch" data-testid="opt-reaction-stitch" class="opt-reaction-stitch-input" value="reaction-stitch">
+        <div class="rights-option-body">
+          <div class="rights-option-head">
+            <strong class="rights-option-name">Reaction / Stitch (ต้องตรวจสิทธิ์ก่อน)</strong>
+            <span class="rights-guard-badge warning">ต้องมีใบอนุญาต</span>
+          </div>
+          <p class="rights-option-desc">
+            ใช้คลิปบางส่วนเพื่อวิพากษ์วิจารณ์หรือสนทนาต่อยอด นำเข้าสู่ขั้นตอนตรวจสิทธิ์และการอ้างอิงลิขสิทธิ์อย่างเป็นทางการ
+          </p>
+        </div>
+      </label>
+
+      <!-- Option 2: New Angle No Footage (Recommended Safe Path) -->
+      <label class="rights-option-card opt-new-angle-no-footage selected" for="opt-new-angle-no-footage">
+        <input type="radio" name="rights-mode" id="opt-new-angle-no-footage" data-testid="opt-new-angle-no-footage" class="opt-new-angle-no-footage-input" value="new-angle-no-footage" checked>
+        <div class="rights-option-body">
+          <div class="rights-option-head">
+            <strong class="rights-option-name">พูดประเด็นใหม่โดยไม่ใช้ภาพต้นฉบับ (New Angle — No Footage)</strong>
+            <span class="rights-guard-badge safe">ปลอดภัยสูงสุด (แนะนำ)</span>
+          </div>
+          <p class="rights-option-desc">
+            สกัดเฉพาะแก่นคิด (WHAT) และวิธีเล่า (HOW) มาถ่ายทอดใหม่ด้วยเสียงและภาพถ่ายทำของตัวเอง 100% ไม่ต้องขอสิทธิ์บุคคลภายนอก
+          </p>
+        </div>
+      </label>
+    </fieldset>
+
+    <!-- Rights Confirmation Container (Active when opt-reaction-stitch is chosen) -->
+    <div class="rights-confirm-container" id="rights-confirm-container" hidden>
+      <div class="rights-confirm-box">
+        <div class="rights-confirm-checkbox-row">
+          <input type="checkbox" id="rights-confirm" data-testid="rights-confirm" class="rights-confirm" name="rights-confirm" aria-describedby="rights-confirm-hint">
+          <label for="rights-confirm" class="rights-confirm-label">
+            ข้าพเจ้ายืนยันว่าได้รับอนุญาตหรือมีสิทธิ์ตามกฎหมายในการใช้คลิป/เสียงต้นฉบับนี้ (Rights Confirmed)
+          </label>
+        </div>
+        <p class="rights-confirm-hint" id="rights-confirm-hint">
+          * ต้องทำเครื่องหมายยืนยันสิทธิ์ก่อนจึงจะสามารถกด <strong>Save Draft</strong> ได้
+        </p>
+        <div class="rights-license-input-wrap">
+          <label for="rights-license-source" class="rights-license-label">หลักฐานการขออนุญาตหรือเครดิตที่ได้รับสิทธิ์:</label>
+          <input type="text" id="rights-license-source" class="rights-license-source" placeholder="เช่น หนังสืออนุญาตจาก Creator หรือหลักฐาน Creative Commons">
+        </div>
+      </div>
+    </div>
+
+    <!-- Rights Feedback & Validation Message -->
+    <div class="rights-feedback" id="rights-feedback" role="status" aria-live="polite">
+      <!-- Status message managed by claims-rights.js -->
+    </div>
+  </div>
+
+</div>

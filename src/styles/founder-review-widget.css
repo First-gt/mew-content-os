@@ -1,0 +1,361 @@
+/* ==============================================================================
+   MEW CONTENT OS — Founder Review & Pinpoint Fix Widget
+   Theme: mewteetawat.com V6.3 Warm Stone & Accent Coral
+   Allows the Founder to visually inspect, pinpoint, and submit targeted feedback
+   for specific UI areas without breaking other sections.
+   ============================================================================== */
+
+/* Floating Trigger Button */
+.founder-review-trigger {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 99999;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--v6-ink, #11110f);
+  color: var(--v6-paper, #fbfaf8);
+  border: 1.5px solid var(--v6-coral, #ed765b);
+  border-radius: 9999px;
+  font-family: var(--v6-font-sans, inherit);
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(17, 17, 15, 0.25);
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.founder-review-trigger:hover {
+  transform: translateY(-2px);
+  background: var(--v6-coral-text, #ae4f3a);
+  box-shadow: 0 14px 30px rgba(237, 118, 91, 0.35);
+}
+
+.founder-review-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--v6-coral, #ed765b);
+  color: #ffffff;
+  border-radius: 9999px;
+}
+
+/* Pinpoint Inspector Highlight Outline */
+.founder-pinpoint-active body,
+body.founder-inspect-mode {
+  cursor: crosshair !important;
+}
+
+.founder-inspect-hover {
+  outline: 2.5px dashed var(--v6-coral, #ed765b) !important;
+  outline-offset: 4px !important;
+  background-color: rgba(237, 118, 91, 0.05) !important;
+  transition: outline 0.1s ease, background-color 0.1s ease;
+}
+
+/* Pin Badges Dropped on Components */
+.founder-dropped-pin {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--v6-coral, #ed765b);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(237, 118, 91, 0.4);
+  cursor: pointer;
+}
+
+/* Review Drawer / Modal */
+.founder-review-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 440px;
+  max-width: 92vw;
+  background: var(--v6-white, #ffffff);
+  border-left: 1.5px solid var(--v6-line, #e7e3de);
+  box-shadow: -15px 0 45px rgba(17, 17, 15, 0.12);
+  z-index: 100000;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.founder-review-drawer.is-open {
+  transform: translateX(0);
+}
+
+.founder-review-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1.5px solid var(--v6-line, #e7e3de);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--v6-paper, #fbfaf8);
+}
+
+.founder-review-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--v6-ink, #11110f);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.founder-review-close {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--v6-muted, #6b6762);
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.founder-review-close:hover {
+  color: var(--v6-ink, #11110f);
+}
+
+/* Tab Bar */
+.founder-review-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--v6-line, #e7e3de);
+  background: var(--v6-soft, #f4f2ee);
+}
+
+.founder-review-tab {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--v6-muted, #6b6762);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.founder-review-tab.is-active {
+  background: var(--v6-white, #ffffff);
+  color: var(--v6-coral-text, #ae4f3a);
+  border-bottom: 2px solid var(--v6-coral, #ed765b);
+}
+
+/* Body / Form */
+.founder-review-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.founder-form-group {
+  margin-bottom: 1.25rem;
+}
+
+.founder-form-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--v6-muted, #6b6762);
+  margin-bottom: 0.4rem;
+}
+
+.founder-target-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(237, 118, 91, 0.12);
+  color: var(--v6-coral-text, #ae4f3a);
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: 100%;
+  box-sizing: border-box;
+  word-break: break-all;
+}
+
+.founder-input,
+.founder-select,
+.founder-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--v6-ink, #11110f);
+  background: var(--v6-soft, #f4f2ee);
+  border: 1.5px solid var(--v6-line, #e7e3de);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.founder-input:focus,
+.founder-select:focus,
+.founder-textarea:focus {
+  background: #ffffff;
+  border-color: var(--v6-coral, #ed765b);
+  box-shadow: 0 0 0 3px rgba(237, 118, 91, 0.15);
+}
+
+.founder-textarea {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.5;
+}
+
+.founder-btn-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.founder-btn-primary {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: var(--v6-coral, #ed765b);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+
+.founder-btn-primary:hover {
+  background: var(--v6-coral-hover, #e0684d);
+}
+
+.founder-btn-secondary {
+  padding: 0.75rem 1rem;
+  background: var(--v6-soft, #f4f2ee);
+  color: var(--v6-ink, #11110f);
+  border: 1.5px solid var(--v6-line, #e7e3de);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.founder-btn-inspect {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem;
+  background: rgba(138, 118, 255, 0.1);
+  color: var(--v6-violet-text, #5a46c9);
+  border: 1.5px dashed var(--v6-violet, #8a76ff);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+  transition: all 0.15s ease;
+}
+
+.founder-btn-inspect:hover,
+.founder-btn-inspect.is-active {
+  background: var(--v6-violet, #8a76ff);
+  color: #ffffff;
+}
+
+/* History Cards */
+.founder-review-card {
+  background: var(--v6-soft, #f4f2ee);
+  border: 1px solid var(--v6-line, #e7e3de);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.founder-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.founder-type-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: #ffffff;
+  border: 1px solid var(--v6-line, #e7e3de);
+}
+
+.founder-time-tag {
+  font-size: 0.75rem;
+  color: var(--v6-muted, #6b6762);
+}
+
+.founder-target-name {
+  font-size: 0.825rem;
+  font-weight: 700;
+  color: var(--v6-coral-text, #ae4f3a);
+  margin-bottom: 0.4rem;
+}
+
+.founder-comment-text {
+  font-size: 0.875rem;
+  color: var(--v6-ink, #11110f);
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+  white-space: pre-wrap;
+}
+
+.founder-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.founder-copy-ai-btn {
+  background: transparent;
+  border: 1px solid var(--v6-line, #e7e3de);
+  color: var(--v6-ink, #11110f);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.founder-copy-ai-btn:hover {
+  background: #ffffff;
+  border-color: var(--v6-coral, #ed765b);
+}
+
+.founder-delete-btn {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
