@@ -732,6 +732,10 @@
       if (this.modal) {
         if (stepIndex === 4) {
           this.modal.classList.add('ob-mode-zen');
+          this.modal.scrollTop = 0;
+          if (typeof window !== 'undefined') window.scrollTo(0, 0);
+          if (document.documentElement) document.documentElement.scrollTop = 0;
+          if (document.body) document.body.scrollTop = 0;
         } else {
           this.modal.classList.remove('ob-mode-zen');
         }
