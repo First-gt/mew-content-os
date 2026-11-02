@@ -171,30 +171,35 @@
       <span class="ob-brand-tag">Brand Brain V6.3</span>
     </div>
 
-    <!-- Segmented Step Indicators (Scanfeed Style) -->
+    <!-- Segmented Step Indicators (Scanfeed Style - 6 Steps) -->
     <div class="ob-step-indicator" id="ob-steps-tracker" aria-label="ขั้นตอนการตั้งค่า">
       <div class="ob-step-dot active" data-step="0" title="หน้าต้อนรับ">
         <span class="dot-num">1</span>
         <span class="dot-label">ต้อนรับ</span>
       </div>
       <div class="ob-step-connector"></div>
-      <div class="ob-step-dot" data-step="1" title="บทบาท">
+      <div class="ob-step-dot" data-step="1" title="ข้อมูลธุรกิจ">
         <span class="dot-num">2</span>
+        <span class="dot-label">ธุรกิจคุณ</span>
+      </div>
+      <div class="ob-step-connector"></div>
+      <div class="ob-step-dot" data-step="2" title="บทบาท">
+        <span class="dot-num">3</span>
         <span class="dot-label">บทบาท</span>
       </div>
       <div class="ob-step-connector"></div>
-      <div class="ob-step-dot" data-step="2" title="หมวดหมู่">
-        <span class="dot-num">3</span>
+      <div class="ob-step-dot" data-step="3" title="หมวดหมู่">
+        <span class="dot-num">4</span>
         <span class="dot-label">หมวดหมู่</span>
       </div>
       <div class="ob-step-connector"></div>
-      <div class="ob-step-dot" data-step="3" title="ช่องคู่แข่ง">
-        <span class="dot-num">4</span>
+      <div class="ob-step-dot" data-step="4" title="ช่องคู่แข่ง">
+        <span class="dot-num">5</span>
         <span class="dot-label">ส่องช่อง</span>
       </div>
       <div class="ob-step-connector"></div>
-      <div class="ob-step-dot" data-step="4" title="พร้อมใช้งาน">
-        <span class="dot-num">5</span>
+      <div class="ob-step-dot" data-step="5" title="พร้อมใช้งาน">
+        <span class="dot-num">6</span>
         <span class="dot-label">เริ่มต้น</span>
       </div>
     </div>
@@ -256,12 +261,115 @@
     </section>
 
     <!-- ======================================================================
-         SCREEN 1: ROLE SELECTION (4 BIG SCANFEED CARDS)
+         SCREEN 1: BUSINESS PROFILE & VALUE PROPOSITION (FROSTED GLASS CARD)
+         ====================================================================== -->
+    <section class="ob-screen" id="ob-screen-biz" aria-label="ข้อมูลธุรกิจและสินค้า">
+      <div class="ob-content-wrapper ob-biz-wrapper">
+        <div class="ob-screen-header">
+          <span class="ob-step-badge">ขั้นตอนที่ 2 จาก 6 • ฐานข้อมูลธุรกิจ Brand Brain</span>
+          <h2 class="ob-screen-title">ธุรกิจหรือสินค้าของคุณทำเกี่ยวกับอะไร?</h2>
+          
+          <!-- Frosted Glass Dynamic Typing Banner -->
+          <div class="ob-biz-typing-banner">
+            <span class="banner-sparkle">✨</span>
+            <span class="banner-static-lead">AI ต้องการฐานข้อมูลเพื่อปรับแต่งสคริปต์ให้ตรงกับธุรกิจของคุณ:</span>
+            <span class="mew-gradient-text ob-biz-dynamic-typed" id="ob-biz-typewriter-text">บอกเล่าสินค้าหรือบริการหลัก</span><span class="typewriter-cursor ob-biz-cursor" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <!-- Frosted Glass Main Card -->
+        <div class="ob-glass-card">
+          <!-- Quick One-Tap Templates -->
+          <div class="ob-biz-templates-section">
+            <span class="templates-label">⚡ แตะเลือกตัวอย่างธุรกิจของคุณเพื่อกรอกข้อมูลด่วน (หรือพิมพ์ปรับแต่งเองได้อิสระ):</span>
+            <div class="ob-biz-template-chips">
+              <button type="button" class="ob-biz-chip" data-desc="แบรนด์สกินแคร์ออร์แกนิก สำหรับคนเป็นสิว ผิวแพ้ง่าย ปราศจากน้ำหอม เน้นสารสกัดธรรมชาติ ผลวิจัยรับรอง" data-aud="คนวัยทำงานอายุ 22-38 ปี ที่ต้องการแก้ปัญหาสิวและผิวแพ้ง่ายอย่างปลอดภัย" data-usp="สารสกัดธรรมชาติ 100% มีผลวิจัยรับรอง ปราศจากสารระคายเคือง 8 ชนิด">
+                💄 สกินแคร์ &amp; บิวตี้
+              </button>
+              <button type="button" class="ob-biz-chip" data-desc="ซอฟต์แวร์ AI ช่วยตอบแชท ดึงดูดลูกค้า และปิดการขายอัตโนมัติ 24 ชม. สำหรับร้านค้าออนไลน์และธุรกิจ SME" data-aud="เจ้าของธุรกิจออนไลน์, แม่ค้าออนไลน์ และทีมแอดมินที่ต้องการประหยัดเวลาปิดการขาย" data-usp="ตอบไวใน 2 วินาที เพิ่มยอดขายเฉลี่ย 35% เชื่อมต่อง่ายไม่ต้องเขียนโค้ด">
+                💻 เทค &amp; ซอฟต์แวร์ AI
+              </button>
+              <button type="button" class="ob-biz-chip" data-desc="วิตามินและอาหารเสริมเพื่อสุขภาพ ชะลอวัย เสริมภูมิคุ้มกัน สกัดจากพืช 100% มาตรฐานการผลิตระดับสากล" data-aud="คนรักสุขภาพ วัยทำงานและผู้สูงอายุที่ต้องการดูแลร่างกายจากภายใน" data-usp="วัตถุดิบนำเข้าพรีเมียม ดูดซึมไวกว่าทั่วไป 3 เท่า ผ่านมาตรฐาน อย. และ GMP">
+                🥗 สุขภาพ &amp; อาหารเสริม
+              </button>
+              <button type="button" class="ob-biz-chip" data-desc="ตัวแทนนายหน้าอสังหาริมทรัพย์ บ้านเดี่ยวและคอนโดพรีเมียม ใกล้รถไฟฟ้า วิเคราะห์ทำเลและการลงทุนปล่อยเช่า" data-aud="คนซื้อบ้านหลังแรก และนักลงทุนอสังหาฯ ที่มองหาผลตอบแทน Passive Income คุ้มค่า" data-usp="บริการเปรียบเทียบทำเลเชิงลึก ดอกเบี้ยพิเศษ และดูแลเอกสารกู้ธนาคารจนจบขั้นตอน">
+                🏠 อสังหาฯ &amp; ที่อยู่อาศัย
+              </button>
+              <button type="button" class="ob-biz-chip" data-desc="สถาบันสอนและเวิร์กชอปพัฒนาทักษะธุรกิจ การตลาดดิจิทัล และการประยุกต์ใช้ AI สร้างรายได้สำหรับผู้เริ่มต้น" data-aud="ผู้ประกอบการ ฟรีแลนซ์ และคนที่อยากสร้างอาชีพเสริมหรือเพิ่มรายได้ทางที่สอง" data-usp="หลักสูตรจับมือทำจริง เนื้อหาอัปเดต 2026 พร้อม Template ใช้งานได้ทันที">
+                🎓 คอร์สเรียน &amp; ให้คำปรึกษา
+              </button>
+              <button type="button" class="ob-biz-chip" data-desc="แบรนด์เสื้อผ้าและแฟชั่นมินิมอล ใส่ทำงานและเที่ยวได้ในชุดเดียว เนื้อผ้าระบายอากาศดี ไม่ต้องรีด" data-aud="คนรุ่นใหม่และคนวัยทำงานที่ชอบความเรียบง่าย คล่องตัว ดูดีแบบ Effortless" data-usp="เทคโนโลยีเนื้อผ้า Easy-Care ยับยาก ระบายอากาศเยี่ยม ทนทานซักเครื่องได้">
+                👕 แฟชั่น &amp; ไลฟ์สไตล์
+              </button>
+            </div>
+          </div>
+
+          <!-- Business Fields Group -->
+          <div class="ob-biz-fields">
+            <!-- Field 1: Core Business & Products -->
+            <div class="ob-field-group">
+              <label for="ob-biz-desc" class="ob-field-label">
+                <span class="label-badge">สำคัญที่สุด</span>
+                <span>ธุรกิจของคุณทำเกี่ยวกับอะไร หรือขายสินค้า/บริการอะไร?</span>
+              </label>
+              <textarea 
+                id="ob-biz-desc" 
+                class="ob-textarea-glass" 
+                rows="3" 
+                placeholder="เช่น ขายสกินแคร์ออร์แกนิกสำหรับคนเป็นสิว ผิวแพ้ง่าย หรือ ให้บริการสอนทำธุรกิจออนไลน์สำหรับคนเริ่มต้น..."
+                required
+              >แบรนด์สกินแคร์ออร์แกนิก สำหรับคนเป็นสิว ผิวแพ้ง่าย ปราศจากน้ำหอม เน้นสารสกัดธรรมชาติ ผลวิจัยรับรอง</textarea>
+              <span class="field-hint">💡 ข้อมูลนี้จะถูกใช้เป็นแก่นเนื้อหา (WHAT) เพื่อให้ AI คิดไอเดียและเขียนสคริปต์ที่ตรงกับสินค้าของคุณ</span>
+            </div>
+
+            <!-- 2 Columns: Target Audience & Brand USP -->
+            <div class="ob-fields-row">
+              <div class="ob-field-group">
+                <label for="ob-biz-audience" class="ob-field-label">
+                  <span>กลุ่มลูกค้าเป้าหมายคือใคร?</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="ob-biz-audience" 
+                  class="ob-input-glass" 
+                  placeholder="เช่น คนทำงานอายุ 22-38 ปี ที่มีเวลาน้อยและอยากดูแลผิว"
+                  value="คนวัยทำงานอายุ 22-38 ปี ที่ต้องการแก้ปัญหาสิวและผิวแพ้ง่ายอย่างปลอดภัย"
+                />
+              </div>
+
+              <div class="ob-field-group">
+                <label for="ob-biz-usp" class="ob-field-label">
+                  <span>จุดเด่น / ข้อพิสูจน์ (Brand USP)</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="ob-biz-usp" 
+                  class="ob-input-glass" 
+                  placeholder="เช่น สารสกัดธรรมชาติ 100% มีผลวิจัยรับรอง"
+                  value="สารสกัดธรรมชาติ 100% มีผลวิจัยรับรอง ปราศจากสารระคายเคือง 8 ชนิด"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="ob-screen-footer">
+          <button type="button" class="btn-ob-secondary" id="ob-back-biz">ย้อนกลับ</button>
+          <button type="button" class="btn-ob-primary" id="ob-next-biz">
+            <span>ถัดไป: เลือกบทบาท</span>
+            <span>➔</span>
+          </button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SCREEN 2: ROLE SELECTION (4 BIG SCANFEED CARDS)
          ====================================================================== -->
     <section class="ob-screen" id="ob-screen-1" aria-label="เลือกบทบาท">
       <div class="ob-content-wrapper">
         <div class="ob-screen-header">
-          <span class="ob-step-badge">ขั้นตอนที่ 2 จาก 5</span>
+          <span class="ob-step-badge">ขั้นตอนที่ 3 จาก 6</span>
           <h2 class="ob-screen-title">บทบาทหลักในการทำคอนเทนต์ของคุณคืออะไร?</h2>
           <p class="ob-screen-sub">เลือก 1 ข้อเพื่อให้ AI ปรับน้ำเสียง (Tone of Voice) และมุมมองสคริปต์ให้ตรงกับกลุ่มเป้าหมาย</p>
         </div>
@@ -324,7 +432,7 @@
     <section class="ob-screen" id="ob-screen-2" aria-label="เลือกหมวดหมู่เนื้อหา">
       <div class="ob-content-wrapper">
         <div class="ob-screen-header">
-          <span class="ob-step-badge">ขั้นตอนที่ 3 จาก 5</span>
+          <span class="ob-step-badge">ขั้นตอนที่ 4 จาก 6</span>
           <h2 class="ob-screen-title">เลือกหมวดหมู่เนื้อหาที่คุณโฟกัส</h2>
           <p class="ob-screen-sub">เลือกได้สูงสุด 3 หมวด เพื่อดึงคลังคลิปตัวอย่างและแพทเทิร์นการพูดที่เข้ากับสายงานของคุณ</p>
         </div>
@@ -384,7 +492,7 @@
     <section class="ob-screen" id="ob-screen-3" aria-label="ช่องคู่แข่งหรือต้นแบบ">
       <div class="ob-content-wrapper">
         <div class="ob-screen-header">
-          <span class="ob-step-badge">ขั้นตอนที่ 4 จาก 5</span>
+          <span class="ob-step-badge">ขั้นตอนที่ 5 จาก 6</span>
           <h2 class="ob-screen-title">ช่องต้นแบบที่คุณชื่นชอบ หรือคู่แข่งที่ต้องการแกะรอย</h2>
           <p class="ob-screen-sub">ระบบจะนำช่องนี้ไปเตรียมไว้ใน Research Studio เพื่อให้คุณสแกน 400+ คลิปได้ทันที</p>
         </div>
@@ -450,6 +558,10 @@
             <div class="summary-item">
               <span class="summary-label">ผู้ใช้งาน</span>
               <span class="summary-val" id="sum-name">Creator</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">ธุรกิจ / สินค้า</span>
+              <span class="summary-val" id="sum-business">สกินแคร์ &amp; บิวตี้</span>
             </div>
             <div class="summary-item">
               <span class="summary-label">บทบาท</span>

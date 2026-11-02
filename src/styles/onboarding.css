@@ -735,3 +735,178 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ==============================================================================
+   SCREEN 1: FROSTED GLASS BUSINESS PROFILE CARD STYLES
+   ============================================================================== */
+.ob-biz-wrapper {
+  max-width: 860px;
+}
+
+.ob-biz-typing-banner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(237, 118, 91, 0.22);
+  border-radius: 999px;
+  padding: 0.45rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #4A4642;
+  margin-top: 0.75rem;
+  box-shadow: 0 4px 16px rgba(237, 118, 91, 0.08);
+}
+
+.banner-sparkle {
+  color: var(--v6-coral, #ed765b);
+}
+
+.ob-biz-dynamic-typed {
+  background: linear-gradient(135deg, var(--v6-coral, #ed765b) 0%, var(--v6-violet, #8a76ff) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  font-weight: 800;
+}
+
+.ob-biz-cursor {
+  display: inline-block !important;
+  width: 3px !important;
+  height: 1.15em !important;
+  background-color: var(--v6-coral, #ed765b) !important;
+  margin-left: 2px !important;
+  vertical-align: middle !important;
+  animation: obCursorBlink 0.9s infinite !important;
+}
+
+/* Glassmorphism Frosted Container */
+.ob-glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  border-radius: 24px;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.ob-biz-templates-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(30, 30, 30, 0.06);
+}
+
+.templates-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--v6-muted, #6B6762);
+  margin-bottom: 0.75rem;
+}
+
+.ob-biz-template-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ob-biz-chip {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(30, 30, 30, 0.1);
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #3A3A3C;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ob-biz-chip:hover {
+  border-color: var(--v6-coral, #ed765b);
+  background: #FFF5F2;
+  color: var(--v6-coral-text, #ae4f3a);
+  transform: translateY(-1px);
+}
+
+.ob-biz-chip.active {
+  border-color: var(--v6-coral, #ed765b);
+  background: var(--v6-coral-subtle, rgba(237, 118, 91, 0.14));
+  color: var(--v6-coral-text, #ae4f3a);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(237, 118, 91, 0.2);
+}
+
+.ob-field-group {
+  margin-bottom: 1.25rem;
+}
+
+.ob-field-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--v6-ink, #11110F);
+  margin-bottom: 0.5rem;
+}
+
+.label-badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: var(--v6-coral-subtle, rgba(237, 118, 91, 0.12));
+  color: var(--v6-coral-text, #ae4f3a);
+  text-transform: uppercase;
+}
+
+.ob-textarea-glass,
+.ob-input-glass {
+  width: 100%;
+  background: rgba(248, 246, 241, 0.7);
+  border: 1.5px solid rgba(30, 30, 30, 0.08);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: var(--v6-ink, #11110F);
+  line-height: 1.5;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.ob-textarea-glass:focus,
+.ob-input-glass:focus {
+  outline: none;
+  background: #FFFFFF;
+  border-color: var(--v6-coral, #ed765b);
+  box-shadow: 0 0 0 3px rgba(237, 118, 91, 0.15);
+}
+
+.field-hint {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--v6-muted, #6B6762);
+  margin-top: 0.35rem;
+}
+
+.ob-fields-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .ob-fields-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
