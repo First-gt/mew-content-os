@@ -37,15 +37,9 @@
     'AI จะใช้ข้อมูลนี้สร้างสคริปต์ที่ขายได้จริง'
   ];
 
-  // Inspiring Motivation Quotes for Creators & Founders (Bottom quote types and deletes)
-  const INSPIRE_QUOTES = [
-    'การทำคอนเทนต์ที่ดี ไม่ใช่การเดา แต่คือการถอดรหัสสิ่งที่เวิร์ก',
-    'ไอเดียร้อยล้าน เริ่มต้นจากคลิปแรกที่คุณกล้าลงมือทำ',
-    'ระบบนี้พร้อมเป็นสมองที่สอง ให้คุณประหยัดเวลาและโฟกัสกับคุณค่าที่แท้จริง',
-    'ไม่ต้องกังวลเรื่องตันไอเดีย เพราะ AI และคลังความรู้พร้อมซัพพอร์ตคุณ 24 ชม.',
-    'มาสร้างตัวตนและเปลี่ยนยอดวิวให้เป็นยอดขายจริงไปด้วยกัน',
-    'คุณไม่ได้กำลังสร้างแค่วิดีโอ แต่คุณกำลังสร้างสินทรัพย์ของแบรนด์'
-  ];
+  // Inspiring Motivation Message for Creators & Founders (types once and finishes/stops)
+  const INSPIRE_MESSAGE = 'คุณไม่ต้องเริ่มจากศูนย์อีกต่อไป ทุกคลิปไวรัลและไอเดียสคริปต์พร้อมให้คุณต่อยอดได้ทันที';
+  const INSPIRE_QUOTES = [INSPIRE_MESSAGE];
 
   class ScanfeedOnboarding {
     constructor() {
@@ -152,9 +146,12 @@
       this.transProgressFill = document.getElementById('trans-progress-fill');
       this.btnTransNext = document.getElementById('ob-btn-trans-next');
 
-      // Step 4: Inspiring Motivation Screen
+      // Step 4: Inspiring Motivation Screen (Scanfeed Zen)
+      this.inspireScreen = document.getElementById('ob-screen-inspire');
+      this.inspireZenBox = document.getElementById('scanfeed-zen-box');
       this.inspireUserName = document.getElementById('ob-inspire-user-name');
       this.inspireTypewriterEl = document.getElementById('ob-inspire-typewriter-text');
+      this.inspireHint = document.getElementById('ob-inspire-hint');
       this.btnInspireNext = document.getElementById('ob-btn-inspire-next');
       this.btnBackInspire = document.getElementById('ob-back-inspire');
 
@@ -340,6 +337,30 @@
           this.goToStep(3);
         });
       }
+      // Click anywhere on Step 4 screen/container to advance
+      if (this.inspireZenBox) {
+        this.inspireZenBox.addEventListener('click', () => {
+          if (this.currentStep === 4) {
+            this.goToStep(5);
+          }
+        });
+      } else if (this.inspireScreen) {
+        this.inspireScreen.addEventListener('click', () => {
+          if (this.currentStep === 4) {
+            this.goToStep(5);
+          }
+        });
+      }
+
+      // Spacebar or Enter anywhere to advance from Step 4
+      document.addEventListener('keydown', (e) => {
+        if (this.currentStep === 4) {
+          if (e.code === 'Space' || e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            this.goToStep(5);
+          }
+        }
+      });
 
       // Step 5: Roles (Auto-advance to Step 6)
       this.roleCards.forEach(card => {
@@ -606,21 +627,20 @@
       }
     }
 
-    // Inspiring Motivation Typewriter (Top Name stays fixed, only bottom quote types & deletes)
+    // Inspiring Motivation Typewriter (Top Name stays fixed, bottom quote types once and finishes/stops)
     startInspireTypewriter() {
       // 1. Static User Name on top (never deleted)
       if (this.inspireUserName) {
         this.inspireUserName.textContent = this.profile.name || 'Creator';
       }
 
-      // 2. Dynamic Rotating Quote at the bottom
+      // 2. Dynamic Typed Message at the bottom (types to completion and stops)
       if (!this.inspireTypewriterEl) return;
       this.inspireTypewriterActive = true;
       this.inspireCharIndex = 0;
-      this.inspireIsDeleting = false;
       this.inspireTypewriterEl.textContent = '';
       if (this.inspireTimer) clearTimeout(this.inspireTimer);
-      this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 200);
+      this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 220);
     }
 
     stopInspireTypewriter() {
@@ -633,33 +653,20 @@
 
     tickInspireTypewriter() {
       if (!this.inspireTypewriterActive || !this.inspireTypewriterEl) return;
-      const currentQuote = INSPIRE_QUOTES[this.inspireQuoteIndex % INSPIRE_QUOTES.length];
+      const targetMessage = typeof INSPIRE_MESSAGE !== 'undefined' ? INSPIRE_MESSAGE : (INSPIRE_QUOTES[0] || '');
 
-      if (!this.inspireIsDeleting) {
+      if (this.inspireCharIndex < targetMessage.length) {
         this.inspireCharIndex++;
-        this.inspireTypewriterEl.textContent = currentQuote.substring(0, this.inspireCharIndex);
-
-        if (this.inspireCharIndex >= currentQuote.length) {
-          this.inspireIsDeleting = true;
-          this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 2600); // Pause on quote
-          return;
-        }
-
-        const speed = 40 + Math.random() * 25;
+        this.inspireTypewriterEl.textContent = targetMessage.substring(0, this.inspireCharIndex);
+        const speed = 35 + Math.random() * 20;
         this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), speed);
       } else {
-        // Deleting characters (only the quote at the bottom!)
-        this.inspireCharIndex--;
-        this.inspireTypewriterEl.textContent = currentQuote.substring(0, this.inspireCharIndex);
-
-        if (this.inspireCharIndex <= 0) {
-          this.inspireIsDeleting = false;
-          this.inspireQuoteIndex++;
-          this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 450);
-          return;
+        // Typing finished! Stop typing, keep message displayed on screen, do NOT delete or loop.
+        this.inspireTypewriterActive = false;
+        if (this.inspireTimer) {
+          clearTimeout(this.inspireTimer);
+          this.inspireTimer = null;
         }
-
-        this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 18);
       }
     }
 

@@ -1342,6 +1342,15 @@
 /* ==============================================================================
    SCREEN 4: SCANFEED PURE MINIMALIST ZEN TEXT (NO BLOCKS, NO BUTTONS)
    ============================================================================== */
+#ob-screen-inspire.ob-screen-active {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 60vh !important;
+  width: 100% !important;
+}
+
 .scanfeed-zen-container {
   display: flex;
   flex-direction: column;
@@ -1349,16 +1358,17 @@
   justify-content: center;
   text-align: center;
   width: 100%;
-  max-width: 840px;
-  margin: auto;
-  padding: 3.5rem 1.5rem;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+  cursor: pointer;
 }
 
 .scanfeed-zen-title {
-  font-size: 2.125rem;
+  font-size: 2.25rem;
   font-weight: 800;
   color: var(--v6-ink, #11110F);
   margin: 0 0 1.5rem 0;
@@ -1373,14 +1383,14 @@
 .scanfeed-zen-typewriter-row {
   font-size: 1.625rem;
   font-weight: 700;
-  line-height: 1.55;
-  min-height: 3.6em;
+  line-height: 1.6;
+  min-height: 3.8em;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-bottom: 2.75rem;
-  max-width: 720px;
+  margin-bottom: 2.5rem;
+  max-width: 760px;
 }
 
 .scanfeed-zen-typed {
@@ -1391,57 +1401,46 @@
 .scanfeed-zen-cursor {
   display: inline-block !important;
   width: 3px !important;
-  height: 1.2em !important;
+  height: 1.25em !important;
   background-color: var(--v6-coral, #ed765b) !important;
   margin-left: 4px !important;
   vertical-align: -2px !important;
   animation: cursorBlink 0.9s infinite !important;
 }
 
-.scanfeed-zen-nav {
-  display: flex;
+.scanfeed-zen-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #8E8E93;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+  opacity: 0.85;
+}
+
+.scanfeed-kbd {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.85rem;
+  padding: 0.15rem 0.5rem;
+  font-family: inherit;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #636366;
+  background: rgba(30, 30, 30, 0.06);
+  border: 1px solid rgba(30, 30, 30, 0.12);
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.scanfeed-zen-link {
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0.25rem 0.5rem !important;
-  font-size: 0.875rem !important;
-  font-weight: 500 !important;
-  color: #8E8E93 !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
-  text-decoration: none !important;
-  border-radius: 4px !important;
-}
-
-.scanfeed-zen-link:hover {
-  color: var(--v6-ink, #11110F) !important;
-  text-decoration: underline !important;
-}
-
-.scanfeed-zen-link.muted {
-  font-size: 0.8125rem !important;
-  color: #AEAEB2 !important;
-}
-
-.scanfeed-zen-link.muted:hover {
-  color: #636366 !important;
-}
-
-.scanfeed-zen-sep {
-  color: #D1D1D6;
-  font-size: 0.75rem;
-  user-select: none;
+.scanfeed-hint-text {
+  color: #8E8E93;
 }
 
 @media (max-width: 640px) {
   .scanfeed-zen-title {
-    font-size: 1.5rem;
+    font-size: 1.625rem;
   }
   .scanfeed-zen-typewriter-row {
     font-size: 1.1875rem;

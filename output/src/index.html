@@ -563,25 +563,24 @@
     </section>
 
     <!-- ======================================================================
-         SCREEN 4: INSPIRING MOTIVATION SCREEN (SCANFEED PURE MINIMALIST TEXT)
+         SCREEN 4: INSPIRING MOTIVATION SCREEN (SCANFEED PURE MINIMALIST ZEN)
          ====================================================================== -->
-    <section class="ob-screen" id="ob-screen-inspire" aria-label="ข้อความให้กำลังใจ">
-      <div class="scanfeed-zen-container">
+    <section class="ob-screen" id="ob-screen-inspire" aria-label="ข้อความต้อนรับและให้กำลังใจ" tabindex="0">
+      <div class="scanfeed-zen-container" id="scanfeed-zen-box">
         <!-- Top Text: Fixed User Name Greeting (never deletes) -->
         <h2 class="scanfeed-zen-title">
           ยินดีต้อนรับครับ, คุณ <span class="scanfeed-zen-name" id="ob-inspire-user-name">Creator</span>
         </h2>
 
-        <!-- Bottom Text: Dynamic Typewriter Inspiring Message (types and deletes) -->
+        <!-- Bottom Text: Dynamic Typewriter Inspiring Message (types and finishes/stops) -->
         <div class="scanfeed-zen-typewriter-row">
-          <span class="mew-gradient-text scanfeed-zen-typed" id="ob-inspire-typewriter-text">การทำคอนเทนต์ที่ดี ไม่ใช่การเดา แต่คือการถอดรหัสสิ่งที่เวิร์ก</span><span class="typewriter-cursor scanfeed-zen-cursor" aria-hidden="true"></span>
+          <span class="mew-gradient-text scanfeed-zen-typed" id="ob-inspire-typewriter-text"></span><span class="typewriter-cursor scanfeed-zen-cursor" aria-hidden="true"></span>
         </div>
 
-        <!-- Subtle Grey Text Link: No button block, just small grey clickable text -->
-        <div class="scanfeed-zen-nav">
-          <button type="button" class="scanfeed-zen-link" id="ob-btn-inspire-next">คลิกเพื่อไปต่อ ➔</button>
-          <span class="scanfeed-zen-sep">•</span>
-          <button type="button" class="scanfeed-zen-link muted" id="ob-back-inspire">ย้อนกลับ</button>
+        <!-- Spacebar / Click Skip Hint -->
+        <div class="scanfeed-zen-hint" id="ob-inspire-hint">
+          <span class="scanfeed-kbd">Space</span>
+          <span class="scanfeed-hint-text">กด Spacebar เพื่อข้าม หรือคลิกที่ใดก็ได้เพื่อไปต่อ</span>
         </div>
       </div>
     </section>
