@@ -4,12 +4,13 @@
  * Reference: https://app.scanfeed.co/
  * Theme: mewteetawat.com V6.3
  * Features:
- *   - Fullscreen Viewport Navigation (Steps 0 to 5)
- *   - Business Profile Foundation with Dynamic Typing & Frosted Glass Design
- *   - Human-like Typewriter Typing & Deleting Engine
+ *   - Fullscreen Viewport Navigation (Steps 0 to 7)
+ *   - Business Profile Foundation & Account Access
+ *   - Payment & Subscription Pass (Starter, Pro, Agency)
+ *   - Scanfeed-style Dynamic Welcome & Setup Typewriter Transition
  *   - 1-Tap Auto-Advance for Role Selection
  *   - Interactive Niche Chips & Channel Spy Presets
- *   - Persistent LocalStorage Sync with Brand Brain, Research Studio & Remix Studio
+ *   - Final Launch lands directly on Overview Dashboard
  * ==============================================================================
  */
 
@@ -40,11 +41,16 @@
       this.currentStep = 0;
       this.profile = {
         name: 'Creator',
+        email: 'creator@brandfounder.co',
         businessDesc: 'แบรนด์สกินแคร์ออร์แกนิก สำหรับคนเป็นสิว ผิวแพ้ง่าย ปราศจากน้ำหอม เน้นสารสกัดธรรมชาติ ผลวิจัยรับรอง',
         targetAudience: 'คนวัยทำงานอายุ 22-38 ปี ที่ต้องการแก้ปัญหาสิวและผิวแพ้ง่ายอย่างปลอดภัย',
         brandUsp: 'สารสกัดธรรมชาติ 100% มีผลวิจัยรับรอง ปราศจากสารระคายเคือง 8 ชนิด',
-        role: 'creator',
-        roleLabel: 'Creator & Influencer',
+        plan: 'pro',
+        planLabel: 'Brand Founder Pro (฿990/ด.)',
+        planPrice: 990,
+        paid: true,
+        role: 'founder',
+        roleLabel: 'เจ้าของธุรกิจ (Brand Founder)',
         niches: ['tech', 'business'],
         nicheLabels: ['Tech & AI', 'ธุรกิจ & การเงิน'],
         channelHandle: '@mewteetawat',
@@ -64,6 +70,9 @@
       this.bizCharIndex = 0;
       this.bizIsDeleting = false;
       this.bizTypeTimer = null;
+
+      // Transition animation state
+      this.transTimer = null;
 
       this.init();
     }
@@ -87,42 +96,66 @@
     cacheDom() {
       this.modal = document.getElementById('onboarding-modal');
       this.screens = document.querySelectorAll('.ob-screen');
-      this.stepDots = document.querySelectorAll('.ob-step-dot');
       this.typewriterEl = document.getElementById('ob-typewriter-text');
 
       // Step 0: Welcome
       this.userNameInput = document.getElementById('ob-user-name');
       this.btnStart = document.getElementById('ob-btn-start');
-      this.btnSkip = document.getElementById('ob-btn-skip');
 
       // Step 1: Business Profile (Frosted Glass)
       this.bizTypewriterEl = document.getElementById('ob-biz-typewriter-text');
       this.bizDescInput = document.getElementById('ob-biz-desc');
       this.bizAudienceInput = document.getElementById('ob-biz-audience');
       this.bizUspInput = document.getElementById('ob-biz-usp');
+      this.userEmailInput = document.getElementById('ob-user-email');
       this.bizChips = document.querySelectorAll('.ob-biz-chip');
       this.btnNextBiz = document.getElementById('ob-next-biz');
       this.btnBackBiz = document.getElementById('ob-back-biz');
 
-      // Step 2: Role Selection
+      // Step 2: Payment & Checkout
+      this.planCards = document.querySelectorAll('.ob-plan-card');
+      this.btnPayMethodCard = document.getElementById('btn-pay-method-card');
+      this.btnPayMethodQr = document.getElementById('btn-pay-method-qr');
+      this.payFormCard = document.getElementById('pay-form-card');
+      this.payFormQr = document.getElementById('pay-form-qr');
+      this.checkoutPlanTitle = document.getElementById('checkout-plan-title');
+      this.checkoutPlanPrice = document.getElementById('checkout-plan-price');
+      this.checkoutTotal = document.getElementById('checkout-total');
+      this.btnPay = document.getElementById('ob-btn-pay');
+      this.paySpinner = document.getElementById('pay-spinner');
+      this.payBtnLabel = document.getElementById('pay-btn-label');
+      this.btnBackPay = document.getElementById('ob-back-pay');
+
+      // Step 3: Scanfeed Transition
+      this.transTypedLine = document.getElementById('ob-trans-typed-line');
+      this.transTypedSub = document.getElementById('ob-trans-typed-sub');
+      this.tcheck1 = document.getElementById('tcheck-1');
+      this.tcheck2 = document.getElementById('tcheck-2');
+      this.tcheck3 = document.getElementById('tcheck-3');
+      this.transProgressFill = document.getElementById('trans-progress-fill');
+      this.btnTransNext = document.getElementById('ob-btn-trans-next');
+
+      // Step 4: Role Selection
       this.roleCards = document.querySelectorAll('.ob-role-card');
       this.btnNext1 = document.getElementById('ob-next-1');
       this.btnBack1 = document.getElementById('ob-back-1');
 
-      // Step 3: Content Niches
+      // Step 5: Content Niches
       this.nicheChips = document.querySelectorAll('.ob-chip');
       this.nicheCounter = document.getElementById('ob-niche-counter');
       this.btnNext2 = document.getElementById('ob-next-2');
       this.btnBack2 = document.getElementById('ob-back-2');
 
-      // Step 4: Channel Spy
+      // Step 6: Channel Spy
       this.channelInput = document.getElementById('ob-channel-input');
       this.presetCards = document.querySelectorAll('.ob-preset-card');
       this.btnNext3 = document.getElementById('ob-next-3');
       this.btnBack3 = document.getElementById('ob-back-3');
 
-      // Step 5: Launch Summary
+      // Step 7: Launch Summary
       this.sumName = document.getElementById('sum-name');
+      this.sumEmail = document.getElementById('sum-email');
+      this.sumPlan = document.getElementById('sum-plan');
       this.sumBusiness = document.getElementById('sum-business');
       this.sumRole = document.getElementById('sum-role');
       this.sumNiches = document.getElementById('sum-niches');
@@ -141,18 +174,11 @@
         });
       }
 
-      if (this.btnSkip) {
-        this.btnSkip.addEventListener('click', () => {
-          this.saveProfile(true);
-          this.close();
-        });
-      }
-
       // Step 1: Business Profile Preset Chips
       this.bizChips.forEach(chip => {
         chip.addEventListener('click', () => {
-          this.bizChips.forEach(c => c.classList.remove('selected'));
-          chip.classList.add('selected');
+          this.bizChips.forEach(c => c.classList.remove('selected', 'active'));
+          chip.classList.add('selected', 'active');
 
           const desc = chip.getAttribute('data-desc');
           const aud = chip.getAttribute('data-aud');
@@ -173,7 +199,7 @@
         });
       });
 
-      // Step 1 Inputs Live Sync
+      // Step 1 Live Sync
       if (this.bizDescInput) {
         this.bizDescInput.addEventListener('input', (e) => {
           this.profile.businessDesc = e.target.value.trim();
@@ -187,6 +213,11 @@
       if (this.bizUspInput) {
         this.bizUspInput.addEventListener('input', (e) => {
           this.profile.brandUsp = e.target.value.trim();
+        });
+      }
+      if (this.userEmailInput) {
+        this.userEmailInput.addEventListener('input', (e) => {
+          this.profile.email = e.target.value.trim();
         });
       }
 
@@ -203,11 +234,79 @@
           if (this.bizUspInput && this.bizUspInput.value.trim()) {
             this.profile.brandUsp = this.bizUspInput.value.trim();
           }
-          this.goToStep(2);
+          if (this.userEmailInput && this.userEmailInput.value.trim()) {
+            this.profile.email = this.userEmailInput.value.trim();
+          }
+          this.goToStep(2); // Go to Payment Step!
         });
       }
 
-      // Step 2: Roles (Auto-advance to Step 3)
+      // Step 2: Payment Plan Selection
+      this.planCards.forEach(card => {
+        card.addEventListener('click', () => {
+          this.planCards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+
+          const planKey = card.getAttribute('data-plan');
+          const price = parseInt(card.getAttribute('data-price') || '990', 10);
+          const nameEl = card.querySelector('.plan-name');
+          const planName = nameEl ? nameEl.textContent.trim() : 'Brand Founder Pro';
+
+          this.profile.plan = planKey;
+          this.profile.planPrice = price;
+          this.profile.planLabel = `${planName} (฿${price}/ด.)`;
+
+          if (this.checkoutPlanTitle) this.checkoutPlanTitle.textContent = `${planName} (รายเดือน)`;
+          if (this.checkoutPlanPrice) this.checkoutPlanPrice.textContent = `฿${price.toFixed(2)}`;
+          if (this.checkoutTotal) this.checkoutTotal.textContent = `฿${price}`;
+          if (this.payBtnLabel) this.payBtnLabel.textContent = `ชำระเงิน ฿${price} และเปิดใช้งาน Brand Brain`;
+        });
+      });
+
+      // Step 2: Payment Methods toggle
+      if (this.btnPayMethodCard && this.btnPayMethodQr) {
+        this.btnPayMethodCard.addEventListener('click', () => {
+          this.btnPayMethodCard.classList.add('active');
+          this.btnPayMethodQr.classList.remove('active');
+          if (this.payFormCard) this.payFormCard.style.display = 'block';
+          if (this.payFormQr) this.payFormQr.style.display = 'none';
+        });
+
+        this.btnPayMethodQr.addEventListener('click', () => {
+          this.btnPayMethodQr.classList.add('active');
+          this.btnPayMethodCard.classList.remove('active');
+          if (this.payFormCard) this.payFormCard.style.display = 'none';
+          if (this.payFormQr) this.payFormQr.style.display = 'block';
+        });
+      }
+
+      // Step 2: Pay Button
+      if (this.btnPay) {
+        this.btnPay.addEventListener('click', () => {
+          if (this.paySpinner) this.paySpinner.style.display = 'inline-block';
+          if (this.payBtnLabel) this.payBtnLabel.textContent = 'กำลังยืนยันการชำระเงิน...';
+          this.btnPay.disabled = true;
+
+          setTimeout(() => {
+            this.profile.paid = true;
+            if (this.paySpinner) this.paySpinner.style.display = 'none';
+            if (this.payBtnLabel) this.payBtnLabel.textContent = `ชำระเงินสำเร็จ ฿${this.profile.planPrice}`;
+            this.btnPay.disabled = false;
+            this.goToStep(3); // Go to Scanfeed Transition Step!
+          }, 450);
+        });
+      }
+
+      if (this.btnBackPay) this.btnBackPay.addEventListener('click', () => this.goToStep(1));
+
+      // Step 3: Scanfeed Transition Next Button
+      if (this.btnTransNext) {
+        this.btnTransNext.addEventListener('click', () => {
+          this.goToStep(4); // Advance to Roles!
+        });
+      }
+
+      // Step 4: Roles (Auto-advance to Step 5)
       this.roleCards.forEach(card => {
         card.addEventListener('click', () => {
           this.roleCards.forEach(c => {
@@ -224,19 +323,19 @@
 
           if (this.btnNext1) this.btnNext1.disabled = false;
 
-          // 1-Tap Auto-Advance with micro-delay for visual feedback
+          // 1-Tap Auto-Advance
           setTimeout(() => {
-            if (this.currentStep === 2) {
-              this.goToStep(3);
+            if (this.currentStep === 4) {
+              this.goToStep(5);
             }
           }, 320);
         });
       });
 
-      if (this.btnBack1) this.btnBack1.addEventListener('click', () => this.goToStep(1));
-      if (this.btnNext1) this.btnNext1.addEventListener('click', () => this.goToStep(3));
+      if (this.btnBack1) this.btnBack1.addEventListener('click', () => this.goToStep(2));
+      if (this.btnNext1) this.btnNext1.addEventListener('click', () => this.goToStep(5));
 
-      // Step 3: Niches
+      // Step 5: Niches
       this.nicheChips.forEach(chip => {
         chip.addEventListener('click', () => {
           const niche = chip.dataset.niche;
@@ -249,7 +348,6 @@
             this.profile.nicheLabels = this.profile.nicheLabels.filter(label => label !== chip.querySelector('.chip-name')?.textContent.trim());
           } else {
             if (this.profile.niches.length >= 3) {
-              // Max 3 reached, replace earliest
               const firstNiche = this.profile.niches.shift();
               this.profile.nicheLabels.shift();
               const firstChip = document.querySelector(`.ob-chip[data-niche="${firstNiche}"]`);
@@ -269,10 +367,10 @@
         });
       });
 
-      if (this.btnBack2) this.btnBack2.addEventListener('click', () => this.goToStep(2));
-      if (this.btnNext2) this.btnNext2.addEventListener('click', () => this.goToStep(4));
+      if (this.btnBack2) this.btnBack2.addEventListener('click', () => this.goToStep(4));
+      if (this.btnNext2) this.btnNext2.addEventListener('click', () => this.goToStep(6));
 
-      // Step 4: Channel Spy
+      // Step 6: Channel Spy
       if (this.channelInput) {
         this.channelInput.addEventListener('input', (e) => {
           let val = e.target.value.trim();
@@ -295,24 +393,24 @@
         });
       });
 
-      if (this.btnBack3) this.btnBack3.addEventListener('click', () => this.goToStep(3));
-      if (this.btnNext3) this.btnNext3.addEventListener('click', () => this.goToStep(5));
+      if (this.btnBack3) this.btnBack3.addEventListener('click', () => this.goToStep(5));
+      if (this.btnNext3) this.btnNext3.addEventListener('click', () => this.goToStep(7));
 
-      // Step 5: Launch
+      // Step 7: Launch -> STRICT USER REQUIREMENT: Land on Overview!
       if (this.btnLaunch) {
         this.btnLaunch.addEventListener('click', () => {
           this.saveProfile(false);
           this.close();
           this.showWelcomeToast();
           if (typeof window.switchView === 'function') {
-            window.switchView('research');
+            window.switchView('overview'); // Land on Overview Dashboard!
           }
         });
       }
     }
 
     // ==========================================================================
-    // TYPEWRITER ENGINES (Human-like Typing & Deleting)
+    // TYPEWRITER ENGINES
     // ==========================================================================
     startTypewriter() {
       if (!this.typewriterEl) return;
@@ -334,16 +432,13 @@
 
     tickTypewriter() {
       if (!this.typewriterActive || !this.typewriterEl) return;
-
       const currentPhrase = TYPING_PHRASES[this.phraseIndex % TYPING_PHRASES.length];
 
       if (!this.isDeleting) {
-        // Typing characters
         this.charIndex++;
         this.typewriterEl.textContent = currentPhrase.substring(0, this.charIndex);
 
         if (this.charIndex >= currentPhrase.length) {
-          // Finished phrase, pause before deleting
           this.isDeleting = true;
           this.typeTimer = setTimeout(() => this.tickTypewriter(), 2200);
           return;
@@ -352,7 +447,6 @@
         const speed = 40 + Math.random() * 30;
         this.typeTimer = setTimeout(() => this.tickTypewriter(), speed);
       } else {
-        // Deleting characters
         this.charIndex--;
         this.typewriterEl.textContent = currentPhrase.substring(0, this.charIndex);
 
@@ -367,7 +461,6 @@
       }
     }
 
-    // Business Profile Screen Dynamic Typewriter
     startBizTypewriter() {
       if (!this.bizTypewriterEl) return;
       this.bizTypewriterActive = true;
@@ -388,7 +481,6 @@
 
     tickBizTypewriter() {
       if (!this.bizTypewriterActive || !this.bizTypewriterEl) return;
-
       const currentPhrase = BIZ_TYPING_PHRASES[this.bizPhraseIndex % BIZ_TYPING_PHRASES.length];
 
       if (!this.bizIsDeleting) {
@@ -418,6 +510,70 @@
       }
     }
 
+    // Scanfeed Transition Sequential Typewriter Animation
+    startTransTypewriter() {
+      if (this.transTimer) clearTimeout(this.transTimer);
+
+      const userName = this.profile.name || 'Creator';
+      const line1 = `ชำระเงินสำเร็จเรียบร้อย ยินดีต้อนรับครับ คุณ ${userName}! 🎉`;
+      const subline = 'ระบบกำลังเชื่อมโยงฐานข้อมูลธุรกิจของคุณเข้ากับ AI Content Engine...';
+
+      if (this.transTypedLine) this.transTypedLine.textContent = '';
+      if (this.transTypedSub) this.transTypedSub.textContent = '';
+      if (this.transProgressFill) this.transProgressFill.style.width = '20%';
+
+      if (this.tcheck1) this.tcheck1.className = 'trans-check-item done';
+      if (this.tcheck2) this.tcheck2.className = 'trans-check-item';
+      if (this.tcheck3) this.tcheck3.className = 'trans-check-item';
+
+      let i = 0;
+      const typeMainLine = () => {
+        if (!this.transTypedLine) return;
+        if (i < line1.length) {
+          this.transTypedLine.textContent = line1.substring(0, i + 1);
+          i++;
+          this.transTimer = setTimeout(typeMainLine, 35);
+        } else {
+          // Finish line 1, advance checklist 2
+          if (this.transProgressFill) this.transProgressFill.style.width = '65%';
+          if (this.tcheck2) {
+            this.tcheck2.className = 'trans-check-item done';
+            const badge = this.tcheck2.querySelector('.check-badge');
+            if (badge) badge.textContent = '✓';
+          }
+
+          // Type subline
+          let j = 0;
+          const typeSubLine = () => {
+            if (!this.transTypedSub) return;
+            if (j < subline.length) {
+              this.transTypedSub.textContent = subline.substring(0, j + 1);
+              j++;
+              this.transTimer = setTimeout(typeSubLine, 25);
+            } else {
+              // Finish all
+              if (this.transProgressFill) this.transProgressFill.style.width = '100%';
+              if (this.tcheck3) {
+                this.tcheck3.className = 'trans-check-item done';
+                const badge = this.tcheck3.querySelector('.check-badge');
+                if (badge) badge.textContent = '✓';
+              }
+            }
+          };
+          this.transTimer = setTimeout(typeSubLine, 300);
+        }
+      };
+
+      this.transTimer = setTimeout(typeMainLine, 150);
+    }
+
+    stopTransTypewriter() {
+      if (this.transTimer) {
+        clearTimeout(this.transTimer);
+        this.transTimer = null;
+      }
+    }
+
     // ==========================================================================
     // SCREEN NAVIGATION & PROGRESS
     // ==========================================================================
@@ -435,30 +591,27 @@
         }
       });
 
-      // Update top progress dots
-      this.stepDots.forEach((dot, idx) => {
-        dot.classList.remove('active', 'completed');
-        if (idx === stepIndex) {
-          dot.classList.add('active');
-        } else if (idx < stepIndex) {
-          dot.classList.add('completed');
-        }
-      });
-
       // Control typewriter animations per screen
       if (stepIndex === 0) {
         this.startTypewriter();
         this.stopBizTypewriter();
+        this.stopTransTypewriter();
       } else if (stepIndex === 1) {
         this.stopTypewriter();
         this.startBizTypewriter();
+        this.stopTransTypewriter();
+      } else if (stepIndex === 3) {
+        this.stopTypewriter();
+        this.stopBizTypewriter();
+        this.startTransTypewriter();
       } else {
         this.stopTypewriter();
         this.stopBizTypewriter();
+        this.stopTransTypewriter();
       }
 
-      // Populate Step 5 Summary
-      if (stepIndex === 5) {
+      // Populate Step 7 Summary
+      if (stepIndex === 7) {
         this.renderSummary();
       }
     }
@@ -475,6 +628,8 @@
 
     renderSummary() {
       if (this.sumName) this.sumName.textContent = this.profile.name || 'Creator';
+      if (this.sumEmail) this.sumEmail.textContent = this.profile.email || 'creator@brandfounder.co';
+      if (this.sumPlan) this.sumPlan.textContent = this.profile.planLabel || 'Brand Founder Pro (฿990/ด.)';
       if (this.sumBusiness) {
         const raw = this.profile.businessDesc || 'แบรนด์สกินแคร์ออร์แกนิก สำหรับคนเป็นสิว ผิวแพ้ง่าย';
         this.sumBusiness.textContent = raw.length > 55 ? raw.slice(0, 52) + '...' : raw;
@@ -507,6 +662,10 @@
     syncUiFromProfile() {
       if (this.userNameInput && this.profile.name) {
         this.userNameInput.value = this.profile.name;
+      }
+
+      if (this.userEmailInput && this.profile.email) {
+        this.userEmailInput.value = this.profile.email;
       }
 
       if (this.bizDescInput && this.profile.businessDesc) {
@@ -603,7 +762,7 @@
 
       if (saveToast && toastTitle && toastDesc) {
         toastTitle.textContent = `ยินดีต้อนรับ, ${this.profile.name}! 🚀`;
-        toastDesc.textContent = `บันทึกฐานข้อมูลธุรกิจและ Brand Brain สำเร็จ พร้อมแกะรอยช่อง ${this.profile.channelHandle}`;
+        toastDesc.textContent = `เปิดใช้งานแพ็กเกจ ${this.profile.planLabel} และเชื่อมต่อ Brand Brain เรียบร้อย`;
         saveToast.hidden = false;
 
         setTimeout(() => {
@@ -624,6 +783,7 @@
         this.modal.style.display = 'none';
         this.stopTypewriter();
         this.stopBizTypewriter();
+        this.stopTransTypewriter();
       }
     }
   }

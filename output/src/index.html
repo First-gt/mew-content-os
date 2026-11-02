@@ -163,53 +163,12 @@
   <div class="ob-bg-glow ob-glow-1" aria-hidden="true"></div>
   <div class="ob-bg-glow ob-glow-2" aria-hidden="true"></div>
 
-  <!-- Top Navigation Bar -->
+  <!-- Top Navigation Bar (Clean ScanFeed Minimalist) -->
   <header class="ob-top-nav">
     <div class="ob-brand-badge">
       <span class="ob-brand-icon">⚡</span>
       <span class="ob-brand-name">MEW CONTENT OS</span>
       <span class="ob-brand-tag">Brand Brain V6.3</span>
-    </div>
-
-    <!-- Segmented Step Indicators (Scanfeed Style - 6 Steps) -->
-    <div class="ob-step-indicator" id="ob-steps-tracker" aria-label="ขั้นตอนการตั้งค่า">
-      <div class="ob-step-dot active" data-step="0" title="หน้าต้อนรับ">
-        <span class="dot-num">1</span>
-        <span class="dot-label">ต้อนรับ</span>
-      </div>
-      <div class="ob-step-connector"></div>
-      <div class="ob-step-dot" data-step="1" title="ข้อมูลธุรกิจ">
-        <span class="dot-num">2</span>
-        <span class="dot-label">ธุรกิจคุณ</span>
-      </div>
-      <div class="ob-step-connector"></div>
-      <div class="ob-step-dot" data-step="2" title="บทบาท">
-        <span class="dot-num">3</span>
-        <span class="dot-label">บทบาท</span>
-      </div>
-      <div class="ob-step-connector"></div>
-      <div class="ob-step-dot" data-step="3" title="หมวดหมู่">
-        <span class="dot-num">4</span>
-        <span class="dot-label">หมวดหมู่</span>
-      </div>
-      <div class="ob-step-connector"></div>
-      <div class="ob-step-dot" data-step="4" title="ช่องคู่แข่ง">
-        <span class="dot-num">5</span>
-        <span class="dot-label">ส่องช่อง</span>
-      </div>
-      <div class="ob-step-connector"></div>
-      <div class="ob-step-dot" data-step="5" title="พร้อมใช้งาน">
-        <span class="dot-num">6</span>
-        <span class="dot-label">เริ่มต้น</span>
-      </div>
-    </div>
-
-    <!-- Skip Button -->
-    <div class="ob-top-actions">
-      <button type="button" class="btn-ob-skip" id="ob-btn-skip">
-        <span>ข้ามไปหน้าแดชบอร์ด</span>
-        <span class="skip-arrow">➔</span>
-      </button>
     </div>
   </header>
 
@@ -350,16 +309,256 @@
                 />
               </div>
             </div>
+
+            <!-- Account & Workspace Access Row -->
+            <div class="ob-field-group" style="margin-top: 1rem;">
+              <label for="ob-user-email" class="ob-field-label">
+                <span class="label-badge">เข้าสู่ระบบ</span>
+                <span>อีเมลสำหรับเข้าใช้งาน Workspace (Account Access)</span>
+              </label>
+              <input 
+                type="email" 
+                id="ob-user-email" 
+                class="ob-input-glass" 
+                placeholder="เช่น creator@mybrand.com"
+                value="creator@brandfounder.co"
+                required
+              />
+              <span class="field-hint">🔒 ข้อมูลนี้จะใช้ผูกสิทธิ์บัญชีและบันทึกคลัง Brand Brain ของคุณ</span>
+            </div>
           </div>
         </div>
 
         <footer class="ob-screen-footer">
           <button type="button" class="btn-ob-secondary" id="ob-back-biz">ย้อนกลับ</button>
           <button type="button" class="btn-ob-primary" id="ob-next-biz">
-            <span>ถัดไป: เลือกบทบาท</span>
+            <span>ถัดไป: ไปหน้าชำระเงิน</span>
             <span>➔</span>
           </button>
         </footer>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SCREEN 2: PAYMENT & SUBSCRIPTION PASS (FROSTED GLASS CHECKOUT)
+         ====================================================================== -->
+    <section class="ob-screen" id="ob-screen-pay" aria-label="ชำระเงินและเปิดใช้งาน">
+      <div class="ob-content-wrapper ob-pay-wrapper">
+        <div class="ob-screen-header">
+          <span class="ob-step-badge">ขั้นตอนชำระเงิน • การันตีคืนเงิน 100% ใน 14 วัน</span>
+          <h2 class="ob-screen-title">เลือกแพ็กเกจและเปิดใช้งาน Brand Brain</h2>
+          <p class="ob-screen-sub">ปลดล็อกการเข้าถึงระบบวิจัยคลิปไวรัล 400+ รายการ และเครื่องมือ AI สังเคราะห์สคริปต์ระดับมืออาชีพ</p>
+        </div>
+
+        <div class="ob-pay-grid">
+          <!-- Left: Pricing Tier Cards -->
+          <div class="ob-plans-column">
+            <!-- Plan 1 -->
+            <div class="ob-plan-card" data-plan="starter" data-price="590" role="button" tabindex="0">
+              <div class="plan-card-header">
+                <div>
+                  <h3 class="plan-name">Starter Creator</h3>
+                  <p class="plan-target">สำหรับครีเอเตอร์เริ่มต้นสร้างตัวตน</p>
+                </div>
+                <div class="plan-price">
+                  <span class="price-currency">฿</span>
+                  <span class="price-amount">590</span>
+                  <span class="price-period">/เดือน</span>
+                </div>
+              </div>
+              <ul class="plan-features">
+                <li>✓ วิเคราะห์คลิปเดี่ยว Dual-Lens Engine</li>
+                <li>✓ คลังเก็บวัตถุดิบ 50 รายการ</li>
+                <li>✓ Remix Studio สูงสุด 10 ดราฟต์</li>
+              </ul>
+            </div>
+
+            <!-- Plan 2: Recommended -->
+            <div class="ob-plan-card selected" data-plan="pro" data-price="990" role="button" tabindex="0">
+              <div class="plan-badge-rec">⭐ แนะนำยอดนิยม</div>
+              <div class="plan-card-header">
+                <div>
+                  <h3 class="plan-name">Brand Founder Pro</h3>
+                  <p class="plan-target">สำหรับเจ้าของแบรนด์ &amp; ครีเอเตอร์มืออาชีพ</p>
+                </div>
+                <div class="plan-price">
+                  <span class="price-currency">฿</span>
+                  <span class="price-amount">990</span>
+                  <span class="price-period">/เดือน</span>
+                </div>
+              </div>
+              <ul class="plan-features">
+                <li>✓ <strong>สแกนทั้งช่อง 400+ คลิป</strong> Performance Matrix</li>
+                <li>✓ <strong>Dual-Lens AI Analysis</strong> ถอดรหัส WHAT &amp; HOW</li>
+                <li>✓ <strong>Remix Studio ไม่จำกัด</strong> + ตรวจลิขสิทธิ์ Claims Risk</li>
+                <li>✓ ส่งออก <strong>Director Brief</strong> สำหรับถ่ายทำจริง</li>
+              </ul>
+            </div>
+
+            <!-- Plan 3 -->
+            <div class="ob-plan-card" data-plan="agency" data-price="2490" role="button" tabindex="0">
+              <div class="plan-card-header">
+                <div>
+                  <h3 class="plan-name">Agency Scale</h3>
+                  <p class="plan-target">สำหรับเอเจนซี่และทีมคอนเทนต์ขยายสเกล</p>
+                </div>
+                <div class="plan-price">
+                  <span class="price-currency">฿</span>
+                  <span class="price-amount">2,490</span>
+                  <span class="price-period">/เดือน</span>
+                </div>
+              </div>
+              <ul class="plan-features">
+                <li>✓ ทุกฟีเจอร์ใน Pro + รองรับ 5 Workspaces</li>
+                <li>✓ จัดการคลังแยกตามแบรนด์ลูกค้า</li>
+                <li>✓ สิทธิ์ Export บทและบรีฟแบบ White-label</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right: Checkout Box -->
+          <div class="ob-checkout-column">
+            <div class="ob-glass-card ob-checkout-card">
+              <h3 class="checkout-summary-title">สรุปยอดชำระเงิน</h3>
+              
+              <div class="checkout-line-item">
+                <span id="checkout-plan-title">Brand Founder Pro (รายเดือน)</span>
+                <span class="checkout-price" id="checkout-plan-price">฿990.00</span>
+              </div>
+              <div class="checkout-line-item discount">
+                <span>สิทธิประโยชน์ Onboarding Pass</span>
+                <span class="discount-pill">รวมทุกฟีเจอร์</span>
+              </div>
+              <div class="checkout-divider"></div>
+              <div class="checkout-total-row">
+                <span>ยอดสุทธิที่ต้องชำระ</span>
+                <span class="checkout-total-amount" id="checkout-total">฿990</span>
+              </div>
+
+              <!-- Payment Method Selector -->
+              <div class="ob-pay-methods">
+                <span class="pay-method-label">เลือกช่องทางชำระเงิน:</span>
+                <div class="pay-method-options">
+                  <button type="button" class="pay-method-btn active" data-method="card" id="btn-pay-method-card">
+                    <span>💳 บัตรเครดิต/เดบิต</span>
+                  </button>
+                  <button type="button" class="pay-method-btn" data-method="promptpay" id="btn-pay-method-qr">
+                    <span>📲 PromptPay QR</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Card Payment Form -->
+              <div class="pay-form-card" id="pay-form-card">
+                <div class="ob-field-group">
+                  <label class="ob-field-label">หมายเลขบัตร (Mock Demo)</label>
+                  <input type="text" class="ob-input-glass" value="4242 •••• •••• 4242" readonly />
+                </div>
+                <div class="ob-fields-row">
+                  <div class="ob-field-group">
+                    <label class="ob-field-label">วันหมดอายุ</label>
+                    <input type="text" class="ob-input-glass" value="12/28" readonly />
+                  </div>
+                  <div class="ob-field-group">
+                    <label class="ob-field-label">CVC</label>
+                    <input type="text" class="ob-input-glass" value="•••" readonly />
+                  </div>
+                </div>
+              </div>
+
+              <!-- PromptPay QR Box (Hidden initially) -->
+              <div class="pay-form-qr" id="pay-form-qr" style="display: none;">
+                <div class="qr-mock-box">
+                  <div class="qr-code-graphic">
+                    <svg width="100" height="100" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm14-2h4v4h-4v-4zm-4 0h2v2h-2v-2zm2 4h2v4h-2v-4zm2 2h2v2h-2v-2zm-6-2h2v4h-2v-4z"/>
+                    </svg>
+                  </div>
+                  <span class="qr-hint">สแกนชำระผ่าน Mobile Banking ทุกธนาคาร</span>
+                </div>
+              </div>
+
+              <!-- Guarantee Badge -->
+              <div class="checkout-guarantee">
+                <span class="guarantee-icon">🛡️</span>
+                <div class="guarantee-text">
+                  <strong>การันตีความพึงพอใจ 100%</strong>
+                  <span>หากไม่พึงพอใจ ยินดีคืนเงินเต็มจำนวนภายใน 14 วัน</span>
+                </div>
+              </div>
+
+              <!-- Action Button -->
+              <button type="button" class="btn-ob-hero-primary ob-btn-pay-now" id="ob-btn-pay">
+                <span class="btn-spinner" id="pay-spinner" style="display:none;">⏳ </span>
+                <span id="pay-btn-label">ชำระเงิน ฿990 และเปิดใช้งาน Brand Brain</span>
+                <span class="btn-icon">➔</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <footer class="ob-screen-footer">
+          <button type="button" class="btn-ob-secondary" id="ob-back-pay">ย้อนกลับ</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SCREEN 3: SCANFEED-STYLE TYPEWRITER TRANSITION (AFTER PAYMENT)
+         ====================================================================== -->
+    <section class="ob-screen" id="ob-screen-trans" aria-label="สถานะการเตรียมระบบ">
+      <div class="ob-content-wrapper ob-trans-wrapper">
+        <div class="ob-glass-card ob-trans-card">
+          <!-- Mascot / Brand Owl Avatar like Scanfeed -->
+          <div class="ob-trans-avatar-box">
+            <div class="ob-trans-avatar-circle">
+              <span class="ob-trans-emoji">🦉</span>
+            </div>
+            <div class="ob-trans-radar-pulse"></div>
+          </div>
+
+          <!-- Dynamic Sequential Typewriter (Scanfeed Experience) -->
+          <div class="ob-trans-typing-container">
+            <div class="ob-trans-eyebrow">
+              <span class="badge-pill green">✓ PAYMENT VERIFIED · PRO ACTIVE</span>
+            </div>
+            <h2 class="ob-trans-main-headline">
+              <span class="mew-gradient-text" id="ob-trans-typed-line">ชำระเงินสำเร็จเรียบร้อย ยินดีต้อนรับครับ!</span>
+              <span class="typewriter-cursor ob-trans-cursor" aria-hidden="true"></span>
+            </h2>
+            <p class="ob-trans-subline" id="ob-trans-typed-sub">
+              ระบบกำลังเชื่อมโยงฐานข้อมูลธุรกิจของคุณเข้ากับ AI Content Engine...
+            </p>
+          </div>
+
+          <!-- Sequential Micro-steps -->
+          <div class="ob-trans-checklist">
+            <div class="trans-check-item done" id="tcheck-1">
+              <span class="check-badge">✓</span>
+              <span class="check-text">ยืนยันการชำระเงินและเปิดสิทธิ์ Pro License เรียบร้อย</span>
+            </div>
+            <div class="trans-check-item" id="tcheck-2">
+              <span class="check-badge">⋯</span>
+              <span class="check-text">บันทึกฐานข้อมูลสินค้าและกลุ่มเป้าหมายลง Brand Brain</span>
+            </div>
+            <div class="trans-check-item" id="tcheck-3">
+              <span class="check-badge">⋯</span>
+              <span class="check-text">เตรียมโครงสร้างคลิปไวรัลกว่า 400+ รายการพร้อมวิจัย</span>
+            </div>
+          </div>
+
+          <!-- Progress Loading Bar -->
+          <div class="ob-trans-progress-track">
+            <div class="ob-trans-progress-bar" id="trans-progress-fill"></div>
+          </div>
+
+          <div class="ob-trans-actions">
+            <button type="button" class="btn-ob-hero-primary" id="ob-btn-trans-next">
+              <span>ไปต่อ: เลือกบทบาทการทำคอนเทนต์</span>
+              <span class="btn-icon">➔</span>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -558,6 +757,14 @@
             <div class="summary-item">
               <span class="summary-label">ผู้ใช้งาน</span>
               <span class="summary-val" id="sum-name">Creator</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">บัญชี Workspace</span>
+              <span class="summary-val" id="sum-email">creator@brandfounder.co</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">แพ็กเกจ</span>
+              <span class="summary-val" id="sum-plan">Brand Founder Pro (฿990/ด.)</span>
             </div>
             <div class="summary-item">
               <span class="summary-label">ธุรกิจ / สินค้า</span>
