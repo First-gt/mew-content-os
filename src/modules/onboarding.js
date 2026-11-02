@@ -4,10 +4,11 @@
  * Reference: https://app.scanfeed.co/
  * Theme: mewteetawat.com V6.3
  * Features:
- *   - Fullscreen Viewport Navigation (Steps 0 to 7)
+ *   - Fullscreen Viewport Navigation (Steps 0 to 8)
  *   - Business Profile Foundation & Account Access
  *   - Payment & Subscription Pass (Starter, Pro, Agency)
  *   - Scanfeed-style Dynamic Welcome & Setup Typewriter Transition
+ *   - Inspiring Creator Motivation Screen (Frosted Glass & Dynamic Typewriter)
  *   - 1-Tap Auto-Advance for Role Selection
  *   - Interactive Niche Chips & Channel Spy Presets
  *   - Final Launch lands directly on Overview Dashboard
@@ -34,6 +35,16 @@
     'ระบุกลุ่มลูกค้าเป้าหมายที่คุณอยากเข้าถึง',
     'ใส่จุดแข็งและปัญหาสำคัญที่แบรนด์ช่วยแก้ไข',
     'AI จะใช้ข้อมูลนี้สร้างสคริปต์ที่ขายได้จริง'
+  ];
+
+  // Inspiring Motivation Quotes for Creators & Founders (Bottom quote types and deletes)
+  const INSPIRE_QUOTES = [
+    'การทำคอนเทนต์ที่ดี ไม่ใช่การเดา แต่คือการถอดรหัสสิ่งที่เวิร์ก',
+    'ไอเดียร้อยล้าน เริ่มต้นจากคลิปแรกที่คุณกล้าลงมือทำ',
+    'ระบบนี้พร้อมเป็นสมองที่สอง ให้คุณประหยัดเวลาและโฟกัสกับคุณค่าที่แท้จริง',
+    'ไม่ต้องกังวลเรื่องตันไอเดีย เพราะ AI และคลังความรู้พร้อมซัพพอร์ตคุณ 24 ชม.',
+    'มาสร้างตัวตนและเปลี่ยนยอดวิวให้เป็นยอดขายจริงไปด้วยกัน',
+    'คุณไม่ได้กำลังสร้างแค่วิดีโอ แต่คุณกำลังสร้างสินทรัพย์ของแบรนด์'
   ];
 
   class ScanfeedOnboarding {
@@ -74,6 +85,13 @@
       // Transition animation state
       this.transTimer = null;
 
+      // Inspiring Motivation Typewriter state
+      this.inspireTypewriterActive = false;
+      this.inspireQuoteIndex = 0;
+      this.inspireCharIndex = 0;
+      this.inspireIsDeleting = false;
+      this.inspireTimer = null;
+
       this.init();
     }
 
@@ -86,7 +104,6 @@
       // Check if first-time user
       const saved = localStorage.getItem(STORAGE_KEY);
       if (!saved) {
-        // Auto-show on first visit
         this.open();
       } else {
         this.applyProfileToOS();
@@ -102,7 +119,7 @@
       this.userNameInput = document.getElementById('ob-user-name');
       this.btnStart = document.getElementById('ob-btn-start');
 
-      // Step 1: Business Profile (Frosted Glass)
+      // Step 1: Business Profile
       this.bizTypewriterEl = document.getElementById('ob-biz-typewriter-text');
       this.bizDescInput = document.getElementById('ob-biz-desc');
       this.bizAudienceInput = document.getElementById('ob-biz-audience');
@@ -135,24 +152,30 @@
       this.transProgressFill = document.getElementById('trans-progress-fill');
       this.btnTransNext = document.getElementById('ob-btn-trans-next');
 
-      // Step 4: Role Selection
+      // Step 4: Inspiring Motivation Screen
+      this.inspireUserName = document.getElementById('ob-inspire-user-name');
+      this.inspireTypewriterEl = document.getElementById('ob-inspire-typewriter-text');
+      this.btnInspireNext = document.getElementById('ob-btn-inspire-next');
+      this.btnBackInspire = document.getElementById('ob-back-inspire');
+
+      // Step 5: Role Selection
       this.roleCards = document.querySelectorAll('.ob-role-card');
       this.btnNext1 = document.getElementById('ob-next-1');
       this.btnBack1 = document.getElementById('ob-back-1');
 
-      // Step 5: Content Niches
+      // Step 6: Content Niches
       this.nicheChips = document.querySelectorAll('.ob-chip');
       this.nicheCounter = document.getElementById('ob-niche-counter');
       this.btnNext2 = document.getElementById('ob-next-2');
       this.btnBack2 = document.getElementById('ob-back-2');
 
-      // Step 6: Channel Spy
+      // Step 7: Channel Spy
       this.channelInput = document.getElementById('ob-channel-input');
       this.presetCards = document.querySelectorAll('.ob-preset-card');
       this.btnNext3 = document.getElementById('ob-next-3');
       this.btnBack3 = document.getElementById('ob-back-3');
 
-      // Step 7: Launch Summary
+      // Step 8: Launch Summary
       this.sumName = document.getElementById('sum-name');
       this.sumEmail = document.getElementById('sum-email');
       this.sumPlan = document.getElementById('sum-plan');
@@ -237,7 +260,7 @@
           if (this.userEmailInput && this.userEmailInput.value.trim()) {
             this.profile.email = this.userEmailInput.value.trim();
           }
-          this.goToStep(2); // Go to Payment Step!
+          this.goToStep(2); // Go to Payment Step
         });
       }
 
@@ -292,21 +315,33 @@
             if (this.paySpinner) this.paySpinner.style.display = 'none';
             if (this.payBtnLabel) this.payBtnLabel.textContent = `ชำระเงินสำเร็จ ฿${this.profile.planPrice}`;
             this.btnPay.disabled = false;
-            this.goToStep(3); // Go to Scanfeed Transition Step!
+            this.goToStep(3); // Go to Scanfeed Transition Step
           }, 450);
         });
       }
 
       if (this.btnBackPay) this.btnBackPay.addEventListener('click', () => this.goToStep(1));
 
-      // Step 3: Scanfeed Transition Next Button
+      // Step 3: Scanfeed Transition Next Button -> Go to Inspiring Screen (Step 4)
       if (this.btnTransNext) {
         this.btnTransNext.addEventListener('click', () => {
-          this.goToStep(4); // Advance to Roles!
+          this.goToStep(4);
         });
       }
 
-      // Step 4: Roles (Auto-advance to Step 5)
+      // Step 4: Inspiring Motivation Screen
+      if (this.btnInspireNext) {
+        this.btnInspireNext.addEventListener('click', () => {
+          this.goToStep(5); // Advance to Roles
+        });
+      }
+      if (this.btnBackInspire) {
+        this.btnBackInspire.addEventListener('click', () => {
+          this.goToStep(3);
+        });
+      }
+
+      // Step 5: Roles (Auto-advance to Step 6)
       this.roleCards.forEach(card => {
         card.addEventListener('click', () => {
           this.roleCards.forEach(c => {
@@ -325,17 +360,17 @@
 
           // 1-Tap Auto-Advance
           setTimeout(() => {
-            if (this.currentStep === 4) {
-              this.goToStep(5);
+            if (this.currentStep === 5) {
+              this.goToStep(6);
             }
           }, 320);
         });
       });
 
-      if (this.btnBack1) this.btnBack1.addEventListener('click', () => this.goToStep(2));
-      if (this.btnNext1) this.btnNext1.addEventListener('click', () => this.goToStep(5));
+      if (this.btnBack1) this.btnBack1.addEventListener('click', () => this.goToStep(4));
+      if (this.btnNext1) this.btnNext1.addEventListener('click', () => this.goToStep(6));
 
-      // Step 5: Niches
+      // Step 6: Niches
       this.nicheChips.forEach(chip => {
         chip.addEventListener('click', () => {
           const niche = chip.dataset.niche;
@@ -367,10 +402,10 @@
         });
       });
 
-      if (this.btnBack2) this.btnBack2.addEventListener('click', () => this.goToStep(4));
-      if (this.btnNext2) this.btnNext2.addEventListener('click', () => this.goToStep(6));
+      if (this.btnBack2) this.btnBack2.addEventListener('click', () => this.goToStep(5));
+      if (this.btnNext2) this.btnNext2.addEventListener('click', () => this.goToStep(7));
 
-      // Step 6: Channel Spy
+      // Step 7: Channel Spy
       if (this.channelInput) {
         this.channelInput.addEventListener('input', (e) => {
           let val = e.target.value.trim();
@@ -393,17 +428,17 @@
         });
       });
 
-      if (this.btnBack3) this.btnBack3.addEventListener('click', () => this.goToStep(5));
-      if (this.btnNext3) this.btnNext3.addEventListener('click', () => this.goToStep(7));
+      if (this.btnBack3) this.btnBack3.addEventListener('click', () => this.goToStep(6));
+      if (this.btnNext3) this.btnNext3.addEventListener('click', () => this.goToStep(8));
 
-      // Step 7: Launch -> STRICT USER REQUIREMENT: Land on Overview!
+      // Step 8: Launch -> Land on Overview
       if (this.btnLaunch) {
         this.btnLaunch.addEventListener('click', () => {
           this.saveProfile(false);
           this.close();
           this.showWelcomeToast();
           if (typeof window.switchView === 'function') {
-            window.switchView('overview'); // Land on Overview Dashboard!
+            window.switchView('overview');
           }
         });
       }
@@ -534,7 +569,6 @@
           i++;
           this.transTimer = setTimeout(typeMainLine, 35);
         } else {
-          // Finish line 1, advance checklist 2
           if (this.transProgressFill) this.transProgressFill.style.width = '65%';
           if (this.tcheck2) {
             this.tcheck2.className = 'trans-check-item done';
@@ -542,7 +576,6 @@
             if (badge) badge.textContent = '✓';
           }
 
-          // Type subline
           let j = 0;
           const typeSubLine = () => {
             if (!this.transTypedSub) return;
@@ -551,7 +584,6 @@
               j++;
               this.transTimer = setTimeout(typeSubLine, 25);
             } else {
-              // Finish all
               if (this.transProgressFill) this.transProgressFill.style.width = '100%';
               if (this.tcheck3) {
                 this.tcheck3.className = 'trans-check-item done';
@@ -571,6 +603,63 @@
       if (this.transTimer) {
         clearTimeout(this.transTimer);
         this.transTimer = null;
+      }
+    }
+
+    // Inspiring Motivation Typewriter (Top Name stays fixed, only bottom quote types & deletes)
+    startInspireTypewriter() {
+      // 1. Static User Name on top (never deleted)
+      if (this.inspireUserName) {
+        this.inspireUserName.textContent = this.profile.name || 'Creator';
+      }
+
+      // 2. Dynamic Rotating Quote at the bottom
+      if (!this.inspireTypewriterEl) return;
+      this.inspireTypewriterActive = true;
+      this.inspireCharIndex = 0;
+      this.inspireIsDeleting = false;
+      this.inspireTypewriterEl.textContent = '';
+      if (this.inspireTimer) clearTimeout(this.inspireTimer);
+      this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 200);
+    }
+
+    stopInspireTypewriter() {
+      this.inspireTypewriterActive = false;
+      if (this.inspireTimer) {
+        clearTimeout(this.inspireTimer);
+        this.inspireTimer = null;
+      }
+    }
+
+    tickInspireTypewriter() {
+      if (!this.inspireTypewriterActive || !this.inspireTypewriterEl) return;
+      const currentQuote = INSPIRE_QUOTES[this.inspireQuoteIndex % INSPIRE_QUOTES.length];
+
+      if (!this.inspireIsDeleting) {
+        this.inspireCharIndex++;
+        this.inspireTypewriterEl.textContent = currentQuote.substring(0, this.inspireCharIndex);
+
+        if (this.inspireCharIndex >= currentQuote.length) {
+          this.inspireIsDeleting = true;
+          this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 2600); // Pause on quote
+          return;
+        }
+
+        const speed = 40 + Math.random() * 25;
+        this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), speed);
+      } else {
+        // Deleting characters (only the quote at the bottom!)
+        this.inspireCharIndex--;
+        this.inspireTypewriterEl.textContent = currentQuote.substring(0, this.inspireCharIndex);
+
+        if (this.inspireCharIndex <= 0) {
+          this.inspireIsDeleting = false;
+          this.inspireQuoteIndex++;
+          this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 450);
+          return;
+        }
+
+        this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 18);
       }
     }
 
@@ -596,22 +685,31 @@
         this.startTypewriter();
         this.stopBizTypewriter();
         this.stopTransTypewriter();
+        this.stopInspireTypewriter();
       } else if (stepIndex === 1) {
         this.stopTypewriter();
         this.startBizTypewriter();
         this.stopTransTypewriter();
+        this.stopInspireTypewriter();
       } else if (stepIndex === 3) {
         this.stopTypewriter();
         this.stopBizTypewriter();
         this.startTransTypewriter();
+        this.stopInspireTypewriter();
+      } else if (stepIndex === 4) {
+        this.stopTypewriter();
+        this.stopBizTypewriter();
+        this.stopTransTypewriter();
+        this.startInspireTypewriter();
       } else {
         this.stopTypewriter();
         this.stopBizTypewriter();
         this.stopTransTypewriter();
+        this.stopInspireTypewriter();
       }
 
-      // Populate Step 7 Summary
-      if (stepIndex === 7) {
+      // Populate Step 8 Summary
+      if (stepIndex === 8) {
         this.renderSummary();
       }
     }
@@ -727,21 +825,18 @@
     }
 
     applyProfileToOS() {
-      // 1. Update Brand Brain button in Header
       const brandBtnLabel = document.getElementById('header-brand-name');
       if (brandBtnLabel) {
         const displayName = this.profile.name ? `${this.profile.name} (${this.profile.roleLabel || 'Creator'})` : 'Brand Brain';
         brandBtnLabel.textContent = displayName;
       }
 
-      // 2. Auto-wire to Research Studio Channel Input
       const channelInput = document.getElementById('creator-channel-input');
       if (channelInput && this.profile.channelHandle) {
         channelInput.value = this.profile.channelHandle;
         channelInput.dispatchEvent(new Event('input', { bubbles: true }));
       }
 
-      // 3. Auto-populate Remix Studio with Business Foundation
       const remixAudience = document.getElementById('input-target-audience');
       if (remixAudience && this.profile.targetAudience) {
         remixAudience.value = this.profile.targetAudience;
@@ -784,6 +879,7 @@
         this.stopTypewriter();
         this.stopBizTypewriter();
         this.stopTransTypewriter();
+        this.stopInspireTypewriter();
       }
     }
   }
@@ -803,7 +899,6 @@
     initOnboarding();
   }
 
-  // Global Helpers
   window.openOnboardingModal = function () {
     if (instance) {
       instance.open();

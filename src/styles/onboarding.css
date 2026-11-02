@@ -1339,3 +1339,160 @@
   }
 }
 
+/* ==============================================================================
+   SCREEN 4: INSPIRING MOTIVATION SCREEN (FROSTED GLASS VIBE)
+   ============================================================================== */
+.ob-inspire-wrapper {
+  max-width: 740px;
+}
+
+.ob-inspire-card {
+  text-align: center;
+  padding: 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1.5px solid rgba(237, 118, 91, 0.25);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(237, 118, 91, 0.1);
+  backdrop-filter: blur(24px);
+  border-radius: 24px;
+}
+
+.ob-inspire-eyebrow {
+  margin-bottom: 1.25rem;
+}
+
+.ob-inspire-avatar-sparkle {
+  font-size: 2.25rem;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+  animation: floatSparkle 3s ease-in-out infinite;
+}
+
+@keyframes floatSparkle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(6deg); }
+}
+
+.ob-inspire-greeting {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--v6-ink, #11110F);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.35;
+}
+
+.ob-user-name-highlight {
+  color: var(--v6-coral, #ed765b);
+  font-weight: 800;
+  border-bottom: 2.5px solid rgba(237, 118, 91, 0.35);
+  padding-bottom: 2px;
+}
+
+.ob-inspire-subtext {
+  font-size: 0.9375rem;
+  color: var(--v6-muted, #6B6762);
+  margin: 0 0 2rem 0;
+}
+
+.ob-inspire-quote-panel {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid rgba(237, 118, 91, 0.2);
+  border-radius: 20px;
+  padding: 2.25rem 2rem 1.75rem 2rem;
+  margin-bottom: 2.25rem;
+  box-shadow: 0 10px 30px rgba(237, 118, 91, 0.07);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+}
+
+.quote-watermark {
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  font-size: 5rem;
+  line-height: 1;
+  font-family: Georgia, serif;
+  color: var(--v6-coral, #ed765b);
+  opacity: 0.12;
+  user-select: none;
+  pointer-events: none;
+}
+
+.quote-text-container {
+  font-size: 1.3125rem;
+  font-weight: 700;
+  line-height: 1.6;
+  min-height: 3.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.ob-inspire-typed {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.quote-caption {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--v6-muted, #6B6762);
+  margin-top: 1rem;
+  border-top: 1px dashed rgba(30, 30, 30, 0.08);
+  padding-top: 0.85rem;
+  width: 100%;
+}
+
+.ob-inspire-actions {
+  width: 100%;
+  max-width: 380px;
+}
+
+.ob-inspire-actions .btn-ob-hero-primary {
+  width: 100%;
+}
+
+.btn-ob-text-back {
+  background: transparent;
+  border: none;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--v6-muted, #6B6762);
+  cursor: pointer;
+  margin-top: 1rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-ob-text-back:hover {
+  color: var(--v6-ink, #11110F);
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .ob-inspire-card {
+    padding: 2.25rem 1.5rem;
+  }
+  .quote-text-container {
+    font-size: 1.125rem;
+  }
+  .ob-inspire-greeting {
+    font-size: 1.35rem;
+  }
+}
+
+
