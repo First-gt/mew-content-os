@@ -985,7 +985,7 @@
           <span class="badge-pill soft">Dual-Mode Research Engine</span>
         </div>
         <h1 class="research-main-title">
-          Research Studio &amp; <span class="mew-gradient-text">Channel Matrix</span>
+          Research Studio &amp; <span class="mew-gradient-text" id="research-typewriter-text">Channel Matrix</span><span class="typewriter-cursor" aria-hidden="true"></span>
         </h1>
         <p class="research-main-desc">
           วิเคราะห์เจาะลึก 1 คลิปแบบ <strong>Dual-Lens (WHAT/HOW)</strong> หรือสแกนทั้งช่อง <strong>400+ คลิป</strong> พล็อตกราฟ Performance Matrix และค้นหาโครงสร้างสคริปต์ที่สร้างผลลัพธ์จริง
@@ -2139,7 +2139,7 @@
       </div>
 
       <h1 class="library-title">
-        Dual-Vault <span class="mew-gradient-text">Reference Library</span>
+        Dual-Vault <span class="mew-gradient-text" id="library-typewriter-text">Reference Library</span><span class="typewriter-cursor" aria-hidden="true"></span>
       </h1>
       
       <p class="library-subtitle">
@@ -2683,7 +2683,7 @@
       </div>
 
       <h1 class="remix-title">
-        Remix Studio — <span class="mew-gradient-text-violet">Creative Synthesis</span>
+        Remix Studio — <span class="mew-gradient-text-violet" id="remix-typewriter-text">Creative Synthesis</span><span class="typewriter-cursor" aria-hidden="true"></span>
       </h1>
       
       <p class="remix-subtitle">
@@ -3348,7 +3348,7 @@
       </div>
 
       <h1 class="board-title">
-        Content Board — <span class="mew-gradient-text-coral">Production Pipeline</span>
+        Content Board — <span class="mew-gradient-text-coral" id="board-typewriter-text">Production Pipeline</span><span class="typewriter-cursor" aria-hidden="true"></span>
       </h1>
       
       <p class="board-subtitle">
@@ -4190,6 +4190,113 @@
         }
       }
 
+      // Headline Typewriter Configurations for All Main Views
+      var VIEW_TYPEWRITERS = {
+        overview: {
+          id: 'typewriter-text',
+          phrases: [
+            'Actionable Data',
+            'Actionable DNA',
+            'Original Concepts',
+            'Founder Authority',
+            'High-Retention Hooks',
+            'Strategic Assets'
+          ]
+        },
+        research: {
+          id: 'research-typewriter-text',
+          phrases: [
+            'Channel Matrix',
+            'Dual-Lens Analysis',
+            'Viral Outlier Scan',
+            'Hook & Structure Deconstruct',
+            'Creator Intelligence',
+            'WHAT & HOW Engine'
+          ]
+        },
+        library: {
+          id: 'library-typewriter-text',
+          phrases: [
+            'Reference Library',
+            'Content Vault (WHAT)',
+            'Packaging Vault (HOW)',
+            'Viral Hook Archive',
+            'Strategic Ingredients'
+          ]
+        },
+        remix: {
+          id: 'remix-typewriter-text',
+          phrases: [
+            'Creative Synthesis',
+            'AI Concept Generator',
+            'WHAT × HOW Cross-Pollination',
+            'Original Viral Scripts',
+            'Brand Voice Alignment'
+          ]
+        },
+        board: {
+          id: 'board-typewriter-text',
+          phrases: [
+            'Production Pipeline',
+            'Director Brief Handoff',
+            'Script Approval Gate',
+            'Story & Hook Revisions',
+            'Viral Publishing Board'
+          ]
+        }
+      };
+
+      var activeViewTypewriterTimer = null;
+      function startViewTypewriter(viewName) {
+        var cfg = VIEW_TYPEWRITERS[viewName];
+        if (!cfg) return;
+        var el = document.getElementById(cfg.id);
+        if (!el) return;
+
+        if (activeViewTypewriterTimer) {
+          clearTimeout(activeViewTypewriterTimer);
+          activeViewTypewriterTimer = null;
+        }
+
+        var phrases = cfg.phrases;
+        var pIdx = 0;
+        var cIdx = 0;
+        var isDel = false;
+        var speed = 65;
+
+        el.textContent = '';
+
+        function tick() {
+          var targetEl = document.getElementById(cfg.id);
+          if (!targetEl) return;
+
+          var curr = phrases[pIdx % phrases.length];
+          if (isDel) {
+            cIdx--;
+            targetEl.textContent = curr.substring(0, cIdx);
+            speed = 30;
+          } else {
+            cIdx++;
+            targetEl.textContent = curr.substring(0, cIdx);
+            speed = 65;
+          }
+
+          if (!isDel && cIdx >= curr.length) {
+            isDel = true;
+            speed = 2200;
+          } else if (isDel && cIdx <= 0) {
+            isDel = false;
+            pIdx++;
+            speed = 380;
+          }
+
+          activeViewTypewriterTimer = setTimeout(tick, speed);
+        }
+
+        activeViewTypewriterTimer = setTimeout(tick, 150);
+      }
+      window.startViewTypewriter = startViewTypewriter;
+
       // Switch active view smoothly
       function switchView(targetViewId) {
         var views = document.querySelectorAll('.view-section');
@@ -4244,8 +4351,13 @@
 
         updateStageContextBar(cleanId);
 
+        // Trigger dynamic headline typewriter for the active view
+        startViewTypewriter(cleanId);
+
         if (cleanId === 'overview' && window.dashboardController && typeof window.dashboardController.initTypewriter === 'function') {
           window.dashboardController.initTypewriter();
+        } else if (cleanId === 'research' && window.researchController && typeof window.researchController.initTypewriter === 'function') {
+          window.researchController.initTypewriter();
         }
 
         // Update URL hash without forcing jump
@@ -4326,6 +4438,7 @@
         switchView(window.location.hash);
       } else {
         updateStageContextBar('overview');
+        startViewTypewriter('overview');
       }
     })();
   </script>

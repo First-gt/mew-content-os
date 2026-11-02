@@ -3437,6 +3437,7 @@ class ResearchController {
     this.renderReelArchive();
     this.selectClip(this.state.selectedClipId, false);
     this.renderClipsTable();
+    this.initTypewriter();
   }
 
   bindEvents() {
@@ -5007,6 +5008,61 @@ class ResearchController {
         `;
       }
     }
+  }
+
+  initTypewriter() {
+    if (typeof window === 'undefined') return;
+    const el = document.getElementById('research-typewriter-text');
+    if (!el) return;
+
+    if (this.typewriterTimer) {
+      clearTimeout(this.typewriterTimer);
+      this.typewriterTimer = null;
+    }
+
+    const phrases = [
+      'Channel Matrix',
+      'Dual-Lens Analysis',
+      'Viral Outlier Scan',
+      'Hook & Structure Deconstruct',
+      'Creator Intelligence',
+      'WHAT & HOW Engine'
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 65;
+
+    el.textContent = '';
+
+    const tick = () => {
+      const targetEl = document.getElementById('research-typewriter-text');
+      if (!targetEl) return;
+
+      const currentPhrase = phrases[phraseIndex % phrases.length];
+      if (isDeleting) {
+        charIndex--;
+        targetEl.textContent = currentPhrase.substring(0, charIndex);
+        typingSpeed = 30;
+      } else {
+        charIndex++;
+        targetEl.textContent = currentPhrase.substring(0, charIndex);
+        typingSpeed = 65;
+      }
+
+      if (!isDeleting && charIndex >= currentPhrase.length) {
+        isDeleting = true;
+        typingSpeed = 2200;
+      } else if (isDeleting && charIndex <= 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        typingSpeed = 380;
+      }
+
+      this.typewriterTimer = setTimeout(tick, typingSpeed);
+    };
+
+    this.typewriterTimer = setTimeout(tick, 150);
   }
 
   showToast(message, type = 'coral') {
