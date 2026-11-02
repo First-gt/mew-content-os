@@ -563,43 +563,25 @@
     </section>
 
     <!-- ======================================================================
-         SCREEN 4: INSPIRING MOTIVATION SCREEN (FROSTED GLASS SCANFEED VIBE)
+         SCREEN 4: INSPIRING MOTIVATION SCREEN (SCANFEED PURE MINIMALIST TEXT)
          ====================================================================== -->
     <section class="ob-screen" id="ob-screen-inspire" aria-label="ข้อความให้กำลังใจ">
-      <div class="ob-content-wrapper ob-inspire-wrapper">
-        <div class="ob-glass-card ob-inspire-card">
-          <!-- Sparkle Eyebrow -->
-          <div class="ob-inspire-eyebrow">
-            <span class="badge-pill soft">✨ CREATIVE MINDSET · MEW CONTENT OS</span>
-          </div>
+      <div class="scanfeed-zen-container">
+        <!-- Top Text: Fixed User Name Greeting (never deletes) -->
+        <h2 class="scanfeed-zen-title">
+          ยินดีต้อนรับครับ, คุณ <span class="scanfeed-zen-name" id="ob-inspire-user-name">Creator</span>
+        </h2>
 
-          <!-- Fixed Top Header (Name stays fixed, never deleted) -->
-          <div class="ob-inspire-header-box">
-            <div class="ob-inspire-avatar-sparkle">💡</div>
-            <h2 class="ob-inspire-greeting">
-              ยินดีต้อนรับสู่การเดินทางใหม่ของคุณ, <span class="ob-user-name-highlight" id="ob-inspire-user-name">Creator</span>!
-            </h2>
-            <p class="ob-inspire-subtext">ก่อนเริ่มตั้งค่าบทบาท มีหนึ่งสิ่งที่ทีมงานอยากบอกกับคุณ:</p>
-          </div>
+        <!-- Bottom Text: Dynamic Typewriter Inspiring Message (types and deletes) -->
+        <div class="scanfeed-zen-typewriter-row">
+          <span class="mew-gradient-text scanfeed-zen-typed" id="ob-inspire-typewriter-text">การทำคอนเทนต์ที่ดี ไม่ใช่การเดา แต่คือการถอดรหัสสิ่งที่เวิร์ก</span><span class="typewriter-cursor scanfeed-zen-cursor" aria-hidden="true"></span>
+        </div>
 
-          <!-- Frosted Glass Dynamic Typewriter Area (Only this text types and deletes) -->
-          <div class="ob-inspire-quote-panel">
-            <div class="quote-watermark" aria-hidden="true">“</div>
-            <div class="quote-text-container">
-              <span class="mew-gradient-text ob-inspire-typed" id="ob-inspire-typewriter-text">การทำคอนเทนต์ที่ดี ไม่ใช่การเดา แต่คือการถอดรหัสสิ่งที่เวิร์ก</span>
-              <span class="typewriter-cursor ob-inspire-cursor" aria-hidden="true"></span>
-            </div>
-            <span class="quote-caption">⚡ ถอดรหัสโครงสร้าง สังเคราะห์เป็นตัวตนของคุณ และก้าวสู่คอนเทนต์ที่มีผลลัพธ์</span>
-          </div>
-
-          <div class="ob-inspire-actions">
-            <button type="button" class="btn-ob-hero-primary" id="ob-btn-inspire-next">
-              <span>พร้อมแล้ว: ไปเลือกบทบาทของคุณ</span>
-              <span class="btn-icon">➔</span>
-            </button>
-          </div>
-          
-          <button type="button" class="btn-ob-text-back" id="ob-back-inspire">ย้อนกลับ</button>
+        <!-- Subtle Grey Text Link: No button block, just small grey clickable text -->
+        <div class="scanfeed-zen-nav">
+          <button type="button" class="scanfeed-zen-link" id="ob-btn-inspire-next">คลิกเพื่อไปต่อ ➔</button>
+          <span class="scanfeed-zen-sep">•</span>
+          <button type="button" class="scanfeed-zen-link muted" id="ob-back-inspire">ย้อนกลับ</button>
         </div>
       </div>
     </section>
