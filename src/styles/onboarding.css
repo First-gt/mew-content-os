@@ -1469,6 +1469,12 @@
   letter-spacing: -0.02em;
   margin: 0;
   word-break: break-word;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scanfeed-zen-headline.zen-fade-out {
+  opacity: 0;
+  transform: translateY(-4px);
 }
 
 .scanfeed-zen-user-name {

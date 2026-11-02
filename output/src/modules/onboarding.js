@@ -149,6 +149,7 @@
       // Step 4: Inspiring Motivation Screen (1:1 Scanfeed Zen)
       this.inspireScreen = document.getElementById('ob-screen-inspire');
       this.inspireZenBox = document.getElementById('scanfeed-zen-box');
+      this.inspireHeadlineEl = document.querySelector('.scanfeed-zen-headline');
       this.inspireUserName = document.getElementById('ob-inspire-user-name');
       this.inspireTypewriterEl = document.getElementById('ob-inspire-typewriter-text');
       this.inspireCloseBtn = document.getElementById('ob-inspire-close');
@@ -643,6 +644,9 @@
       this.inspireCharIndex = 0;
       this.inspireIsDeleting = false;
       this.inspireTypewriterEl.textContent = '';
+      if (this.inspireHeadlineEl) {
+        this.inspireHeadlineEl.classList.remove('zen-fade-out');
+      }
       if (this.inspireSpacebarPopup) {
         this.inspireSpacebarPopup.classList.remove('popup-visible');
       }
@@ -655,6 +659,9 @@
       if (this.inspireTimer) {
         clearTimeout(this.inspireTimer);
         this.inspireTimer = null;
+      }
+      if (this.inspireHeadlineEl) {
+        this.inspireHeadlineEl.classList.remove('zen-fade-out');
       }
       if (this.inspireSpacebarPopup) {
         this.inspireSpacebarPopup.classList.remove('popup-visible');
@@ -681,27 +688,53 @@
         if (this.inspireCharIndex >= currentMessage.length) {
           // Check if this is the 4th message (index 3)
           if (this.inspireQuoteIndex >= messages.length - 1) {
-            // STOP on 4th message! Do NOT delete, do NOT loop.
+            // Finished all 4 messages! Wait briefly then advance to the next screen automatically
             this.inspireTypewriterActive = false;
             if (this.inspireTimer) {
               clearTimeout(this.inspireTimer);
               this.inspireTimer = null;
             }
-            // Trigger Spacebar popup
             if (this.inspireSpacebarPopup) {
               this.inspireSpacebarPopup.classList.add('popup-visible');
             }
+            this.inspireTimer = setTimeout(() => {
+              if (this.currentStep === 4) {
+                this.goToStep(5);
+              }
+            }, 2100);
             return;
           }
 
-          // Otherwise pause briefly then erase to show next message
-          const pauseTime = this.inspireQuoteIndex === 0 ? 1800 : 2000;
+          // Message 1: Smooth fade-out transition
+          if (this.inspireQuoteIndex === 0) {
+            this.inspireTimer = setTimeout(() => {
+              if (!this.inspireTypewriterActive) return;
+              if (this.inspireHeadlineEl) {
+                this.inspireHeadlineEl.classList.add('zen-fade-out');
+              }
+              this.inspireTimer = setTimeout(() => {
+                if (!this.inspireTypewriterActive) return;
+                this.inspireTypewriterEl.textContent = '';
+                if (this.inspireHeadlineEl) {
+                  this.inspireHeadlineEl.classList.remove('zen-fade-out');
+                }
+                this.inspireQuoteIndex++;
+                this.inspireCharIndex = 0;
+                this.inspireIsDeleting = false;
+                this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), 320);
+              }, 280);
+            }, 1600);
+            return;
+          }
+
+          // Messages 2 & 3: Pause then erase back letter by letter
+          const pauseTime = 1800;
           this.inspireIsDeleting = true;
           this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), pauseTime);
           return;
         }
 
-        const speed = 36 + Math.random() * 20;
+        const speed = 34 + Math.random() * 16;
         this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), speed);
       } else {
         // Deleting characters back
@@ -715,7 +748,7 @@
           return;
         }
 
-        const deleteSpeed = 16;
+        const deleteSpeed = 15;
         this.inspireTimer = setTimeout(() => this.tickInspireTypewriter(), deleteSpeed);
       }
     }
