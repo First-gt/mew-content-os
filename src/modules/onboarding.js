@@ -95,6 +95,17 @@
       this.loadSavedProfile();
       this.startTypewriter();
 
+      // If opened in Boss Review mode (?review=1 or #review=1), bypass blocking fullscreen modal
+      if (
+        typeof window !== 'undefined' &&
+        window.location &&
+        (window.location.search.includes('review=1') || window.location.hash.includes('review=1'))
+      ) {
+        this.saveProfile(true);
+        this.close();
+        return;
+      }
+
       // Check if first-time user
       const saved = localStorage.getItem(STORAGE_KEY);
       if (!saved) {
