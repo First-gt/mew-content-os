@@ -5,6 +5,11 @@
    for specific UI areas without breaking other sections.
    ============================================================================== */
 
+#founder-review-widget-host {
+  position: relative;
+  z-index: 2147483645;
+}
+
 #founder-review-widget-host[hidden],
 #founder-review-widget-host.is-client-mode {
   display: none !important;
@@ -15,7 +20,8 @@
   position: fixed;
   bottom: 1.5rem;
   right: 1.5rem;
-  z-index: 99999;
+  z-index: 2147483645 !important;
+  pointer-events: auto !important;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -137,7 +143,7 @@ body.founder-inspect-mode {
   border: 2px solid var(--v6-violet, #8a76ff);
   border-radius: 14px;
   box-shadow: 0 18px 45px rgba(17, 17, 15, 0.28);
-  z-index: 100002;
+  z-index: 2147483647 !important;
   padding: 1rem;
   font-family: var(--v6-font-sans, inherit);
   color: var(--v6-ink, #11110f);
@@ -244,7 +250,7 @@ body.founder-inspect-mode {
   background: var(--v6-white, #ffffff);
   border-left: 1.5px solid var(--v6-line, #e7e3de);
   box-shadow: -15px 0 45px rgba(17, 17, 15, 0.12);
-  z-index: 100000;
+  z-index: 2147483646 !important;
   display: flex;
   flex-direction: column;
   transform: translateX(100%);
