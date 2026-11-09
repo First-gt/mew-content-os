@@ -11069,6 +11069,10 @@ class FounderReviewWidget {
     const hash = String(loc.hash || '');
     if (search.includes('review=1') || hash.includes('review=1')) {
       this.disableClientMode();
+      if (typeof document !== 'undefined') {
+        const obModal = document.getElementById('onboarding-modal');
+        if (obModal) obModal.style.display = 'none';
+      }
       return true;
     }
     return false;
@@ -11440,6 +11444,8 @@ class FounderReviewWidget {
     this.isInspectMode = true;
     this.closeBlockPopover();
     if (typeof document !== 'undefined') {
+      const obModal = document.getElementById('onboarding-modal');
+      if (obModal) obModal.style.display = 'none';
       document.body.classList.add('founder-inspect-mode');
     }
     this.closeDrawer();
@@ -11681,6 +11687,8 @@ class FounderReviewWidget {
     this.currentTab = tab;
     this.render();
     if (typeof document !== 'undefined') {
+      const obModal = document.getElementById('onboarding-modal');
+      if (obModal) obModal.style.display = 'none';
       const drawer = document.getElementById('founder-review-drawer');
       if (drawer) {
         drawer.classList.add('is-open');
@@ -11699,6 +11707,8 @@ class FounderReviewWidget {
 
   toggleDrawer() {
     if (typeof document === 'undefined') return;
+    const obModal = document.getElementById('onboarding-modal');
+    if (obModal) obModal.style.display = 'none';
     const drawer = document.getElementById('founder-review-drawer');
     if (drawer && drawer.classList.contains('is-open')) {
       this.closeDrawer();
@@ -11733,6 +11743,7 @@ class FounderReviewWidget {
     if (!host) {
       host = document.createElement('div');
       host.id = 'founder-review-widget-host';
+      host.setAttribute?.('style', 'position: relative; z-index: 2147483645;');
       this.container.appendChild(host);
     }
 
@@ -11747,6 +11758,8 @@ class FounderReviewWidget {
     host.removeAttribute('hidden');
     host.classList.remove('is-client-mode');
     host.style.removeProperty('display');
+    host.style.position = 'relative';
+    host.style.zIndex = '2147483645';
 
     const wasOpen = host.querySelector('#founder-review-drawer')?.classList.contains('is-open');
     const pendingCount = this.reviews.length;
