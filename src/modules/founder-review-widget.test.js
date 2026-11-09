@@ -373,4 +373,67 @@ describe('Topic: Founder Review & Pinpoint Fix Widget', () => {
     );
     assert.ok(remoteWidget.lastToastMessage.includes('ปุ่มสั่งงานจากระยะไกล'));
   });
+
+  test('T-REV-13: checkUrlUnlock, startPinpointInspector, openDrawer, and toggleDrawer auto-dismiss #onboarding-modal so review buttons are never blocked', () => {
+    const obModal = { id: 'onboarding-modal', style: { display: 'flex' } };
+    const drawer = {
+      id: 'founder-review-drawer',
+      classList: {
+        _set: new Set(),
+        add(c) { this._set.add(c); },
+        remove(c) { this._set.delete(c); },
+        contains(c) { return this._set.has(c); }
+      },
+      removeAttribute() {}
+    };
+    const host = {
+      id: 'founder-review-widget-host',
+      style: {
+        position: '',
+        zIndex: '',
+        setProperty() {},
+        removeProperty() {}
+      },
+      setAttribute() {},
+      removeAttribute() {},
+      classList: { add() {}, remove() {} },
+      querySelector() { return null; }
+    };
+
+    const prevDoc = globalThis.document;
+    globalThis.document = {
+      body: {
+        classList: { add() {}, remove() {} },
+        appendChild() {}
+      },
+      createElement() { return host; },
+      querySelectorAll() { return []; },
+      getElementById(id) {
+        if (id === 'onboarding-modal') return obModal;
+        if (id === 'founder-review-drawer') return drawer;
+        if (id === 'founder-review-widget-host') return host;
+        return null;
+      }
+    };
+
+    try {
+      obModal.style.display = 'flex';
+      widget.checkUrlUnlock({ search: '?review=1', hash: '' });
+      assert.equal(obModal.style.display, 'none');
+
+      obModal.style.display = 'flex';
+      widget.startPinpointInspector();
+      assert.equal(obModal.style.display, 'none');
+
+      obModal.style.display = 'flex';
+      widget.openDrawer('new');
+      assert.equal(obModal.style.display, 'none');
+
+      obModal.style.display = 'flex';
+      widget.toggleDrawer();
+      assert.equal(obModal.style.display, 'none');
+    } finally {
+      globalThis.document = prevDoc;
+    }
+  });
 });
