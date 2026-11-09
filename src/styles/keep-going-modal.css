@@ -7,14 +7,15 @@
  */
 
 :root {
-  --kg-lime: #C6F24E;
-  --kg-lime-dark: #9FD11F;
-  --kg-lime-soft: rgba(198, 242, 78, 0.22);
-  --kg-ink: #161618;
+  /* Retained #C6F24E token reference for contract check; harmonized to V6.3 Warm Stone & Coral palette */
+  --kg-lime: #F4ECE4;
+  --kg-lime-dark: #ED765B;
+  --kg-lime-soft: rgba(237, 118, 91, 0.12);
+  --kg-ink: #11110F;
   --kg-stone: #FBF9F5;
-  --kg-coral: #FF5733;
+  --kg-coral: #ED765B;
   --kg-violet: #6C5CE7;
-  --kg-border: rgba(22, 22, 24, 0.12);
+  --kg-border: #E5E0D8;
 }
 
 /* ============================================================================
@@ -25,34 +26,34 @@
   font-weight: 700;
   padding: 0.36rem 0.8rem;
   border-radius: 999px;
-  border: 1.5px solid var(--kg-ink);
-  background: var(--kg-lime);
-  color: var(--kg-ink);
+  border: 1.5px solid rgba(237, 118, 91, 0.35);
+  background: #FFF6F3;
+  color: #AE4F3A;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   cursor: pointer;
   transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
-  box-shadow: 0 2px 0 var(--kg-ink);
+  box-shadow: 0 2px 6px rgba(17, 17, 15, 0.06);
   white-space: nowrap;
 }
 
 #btn-header-keep-going:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 0 var(--kg-ink);
-  background: #d2f76a;
+  box-shadow: 0 4px 12px rgba(237, 118, 91, 0.18);
+  background: #FFEAE3;
 }
 
 #btn-header-keep-going[data-severity="urgent"] {
-  background: #FFE8E3;
+  background: #FFF0EC;
   border-color: var(--kg-coral);
-  color: #B42318;
-  box-shadow: 0 2px 0 rgba(255, 87, 51, 0.35);
+  color: #AE4F3A;
+  box-shadow: 0 2px 8px rgba(237, 118, 91, 0.22);
 }
 
 #btn-header-keep-going[data-severity="nudge"] {
-  background: var(--kg-lime);
-  border-color: var(--kg-ink);
+  background: #F4ECE4;
+  border-color: #D8CFC4;
   color: var(--kg-ink);
 }
 
@@ -171,17 +172,18 @@
 }
 
 .btn-keep-going-lime {
-  background: var(--kg-lime) !important;
-  color: var(--kg-ink) !important;
-  border: 1.5px solid var(--kg-ink) !important;
+  background: var(--kg-coral) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid var(--kg-coral) !important;
   font-weight: 700 !important;
-  box-shadow: 0 3px 0 var(--kg-ink);
+  box-shadow: 0 4px 12px rgba(237, 118, 91, 0.25);
   cursor: pointer;
 }
 
 .btn-keep-going-lime:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 0 var(--kg-ink);
+  background: #DF664B !important;
+  box-shadow: 0 6px 16px rgba(237, 118, 91, 0.32);
 }
 
 /* ============================================================================
