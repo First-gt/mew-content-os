@@ -40,6 +40,8 @@
     [hidden],
     .board-modal-overlay[hidden],
     .board-modal-overlay[aria-hidden="true"],
+    .keep-going-modal-overlay[hidden],
+    .keep-going-modal-overlay[aria-hidden="true"],
     .mew-modal-overlay[hidden],
     .drawer-backdrop[hidden] {
       display: none !important;
@@ -47,6 +49,7 @@
   </style>
   <link rel="stylesheet" href="styles/founder-review-widget.css">
   <link rel="stylesheet" href="styles/intuitive-clean.css">
+  <link rel="stylesheet" href="styles/keep-going-modal.css">
 </head>
 <body>
   <!-- Subtle Film Noise Overlay (Official mewteetawat.com aesthetic) -->
@@ -111,6 +114,9 @@
 
         <!-- Header Utilities -->
         <div class="app-header-utilities">
+          <button type="button" id="btn-header-keep-going" class="btn-pill" onclick="window.openKeepGoingModal && window.openKeepGoingModal()" title="เปิดโพย 20 ไอเดียช่วยชีวิตคนทำคอนเทนต์ · ทำต่อไป ห้ามหยุด">
+            <span id="header-keep-going-label">🔥 20 ไอเดียช่วยชีวิต</span>
+          </button>
           <button type="button" id="btn-header-brand-brain" class="btn-pill btn-ghost" onclick="window.openOnboardingModal()" title="ตั้งค่าข้อมูลสินค้าและ Brand Brain" style="font-size: 0.75rem; padding: 0.35rem 0.75rem; border: 1.5px solid rgba(22,22,24,0.12); display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
             <span aria-hidden="true">🧠</span>
             <span id="header-brand-name">Brand Brain</span>
@@ -885,6 +891,31 @@
 
             </div>
           </div>
+
+          <!-- S00 Keep-Going Inactivity Reminder & 20 Content Lifesaver Ideas Banner (Topic T35) -->
+          <section id="s00-keep-going-banner" class="s00-keep-going-banner-section" role="region" aria-label="แจ้งเตือนความสม่ำเสมอและ 20 ไอเดียช่วยชีวิตคนทำคอนเทนต์">
+            <div class="keep-going-s00-card" id="s00-keep-going-card" data-severity="urgent">
+              <div class="keep-going-s00-left">
+                <div class="keep-going-s00-eyebrow-row">
+                  <span class="keep-going-severity-pill" id="s00-keep-going-severity">🚨 เตือนด่วน · ห้ามหยุดทำคอนเทนต์</span>
+                  <span class="keep-going-vault-mini-stat" id="s00-keep-going-vault-summary">คลังวัตถุดิบจริง: 7 Note · 2 Concept · 2 Board</span>
+                </div>
+                <h2 class="keep-going-s00-headline" id="s00-keep-going-headline">หมดมุกแล้ว แต่ยังต้องโพสต์ทุกวัน — หยิบ 20 ไอเดียช่วยชีวิตไปเดินเครื่องต่อทันที</h2>
+                <p class="keep-going-s00-subheadline" id="s00-keep-going-subheadline">อย่าปล่อยให้จังหวะหยุดชะงัก เลือก 1 ไอเดียช่วยชีวิตเพื่อส่งเข้า Remix Studio หรือค้นหาคลิปอ้างอิงใน Research</p>
+                <p class="keep-going-s00-mantra" id="s00-keep-going-mantra">ทำยังไม่ดีก็ไม่เป็นไร ทำต่อไป ห้ามหยุด — คอนเทนต์ที่ดีไม่ต้องเริ่มจากไอเดียใหม่เสมอ หยิบสิ่งที่มีอยู่แล้วมาเล่าต่อได้ทันที</p>
+              </div>
+              <div class="keep-going-s00-actions">
+                <button type="button" class="btn-pill btn-keep-going-lime" id="btn-s00-open-keep-going" data-action="open-keep-going-modal">
+                  <span aria-hidden="true">💡</span>
+                  <span>เปิดโพย 20 ไอเดียช่วยชีวิต</span>
+                </button>
+                <button type="button" class="btn-pill btn-ghost btn-keep-going-random-s00" id="btn-s00-random-idea" data-action="open-random-lifesaver">
+                  <span aria-hidden="true">🎲</span>
+                  <span>สุ่มไอเดียทำวันนี้</span>
+                </button>
+              </div>
+            </div>
+          </section>
 
           <!-- Summary Cards Grid (.mew-offer-card Style with 4px Top Accent Bar) -->
           <div class="summary-grid" role="region" aria-label="สรุปข้อมูลคลังและกิจกรรม">
@@ -4362,6 +4393,140 @@
             <span>Confirm &amp; Save to Library</span>
           </button>
         </div>
+      </div>
+    </div>
+
+    <!-- ============================================================================
+         TOPIC T35: KEEP-GOING INACTIVITY REMINDER & 20 CONTENT LIFESAVER IDEAS MODAL
+         ============================================================================ -->
+    <div class="keep-going-modal-overlay" id="keep-going-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="keep-going-modal-title" aria-hidden="true" hidden>
+      <div class="keep-going-modal-card mew-offer-card" role="document">
+        <!-- Modal Top Header -->
+        <div class="keep-going-modal-header">
+          <div class="keep-going-title-group">
+            <div class="keep-going-kicker-row">
+              <span class="keep-going-lime-tag">KEEP GOING SYSTEM · T35</span>
+              <span class="badge-pill soft">20 Content Lifesaver Ideas</span>
+              <span class="badge-pill soft">Zero Fake Metrics</span>
+            </div>
+            <h2 id="keep-going-modal-title" class="keep-going-modal-title">
+              หมดมุกแล้ว แต่ยังต้องโพสต์ทุกวัน · <span class="keep-going-highlight-underline">20 ไอเดียช่วยชีวิตคนทำคอนเทนต์</span>
+            </h2>
+          </div>
+          <button type="button" class="btn-close-modal" id="btn-close-keep-going-modal" data-action="close-keep-going-modal" aria-label="ปิดหน้าต่าง 20 ไอเดียช่วยชีวิต">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Top Keep-Going Warning & Encouragement Banner -->
+        <section class="keep-going-warning-banner" id="keep-going-warning-banner" data-severity="urgent" aria-label="สถานะความสม่ำเสมอและคำปลุกใจ">
+          <div class="keep-going-warning-top">
+            <div class="keep-going-warning-main">
+              <div class="keep-going-badge-row">
+                <span class="keep-going-severity-badge" id="keep-going-severity-badge">🚨 URGENT REMINDER · ห้ามหยุดโพสต์!</span>
+                <span class="keep-going-days-pill" id="keep-going-days-pill">ตรวจสอบจากข้อมูลจริงในคลัง</span>
+              </div>
+              <h3 class="keep-going-warning-headline" id="keep-going-headline">แจ้งเตือนความสม่ำเสมอในการทำคอนเทนต์</h3>
+              <p class="keep-going-warning-subheadline" id="keep-going-subheadline">เลือก 1 ไอเดียด้านล่างเพื่อเริ่มต้นทำคอนเทนต์วันนี้</p>
+              <blockquote class="keep-going-mantra-box" id="keep-going-mantra">
+                “ทำยังไม่ดีก็ไม่เป็นไร ทำต่อไป ห้ามหยุด — คอนเทนต์ที่ดีไม่ต้องเริ่มจากไอเดียใหม่เสมอ หยิบสิ่งที่มีอยู่แล้วมาเล่าต่อได้ทันที”
+              </blockquote>
+            </div>
+
+            <!-- Real Vault Counters + Demo Status Switcher -->
+            <div class="keep-going-warning-side">
+              <div class="keep-going-real-stats" aria-label="สถิติจริงจากคลังข้อมูล">
+                <div class="keep-going-stat-item">
+                  <span class="keep-going-stat-val font-num" id="keep-going-stat-notes" data-testid="keep-going-stat-notes">7</span>
+                  <span class="keep-going-stat-lbl">Saved Notes</span>
+                </div>
+                <div class="keep-going-stat-item">
+                  <span class="keep-going-stat-val font-num" id="keep-going-stat-concepts" data-testid="keep-going-stat-concepts">2</span>
+                  <span class="keep-going-stat-lbl">Concepts</span>
+                </div>
+                <div class="keep-going-stat-item">
+                  <span class="keep-going-stat-val font-num" id="keep-going-stat-board" data-testid="keep-going-stat-board">2</span>
+                  <span class="keep-going-stat-lbl">Board Items</span>
+                </div>
+              </div>
+
+              <div class="keep-going-sim-switcher" role="group" aria-label="ทดสอบสถานะจำนวนวันที่ไม่ได้อัปเดต">
+                <span class="sim-switcher-label">จำลองสถานะ:</span>
+                <div class="sim-switcher-pills">
+                  <button type="button" class="sim-pill active" data-sim-days="real">ข้อมูลจริง</button>
+                  <button type="button" class="sim-pill" data-sim-days="0">0 วัน (ไฟแรง)</button>
+                  <button type="button" class="sim-pill" data-sim-days="3">3 วัน (เริ่มแผ่ว)</button>
+                  <button type="button" class="sim-pill" data-sim-days="7">7 วัน (เตือนด่วน)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Filter & Search Controls Bar -->
+        <section class="keep-going-controls-bar" aria-label="ตัวกรองและค้นหาไอเดียช่วยชีวิต">
+          <div class="keep-going-filter-row">
+            <div class="keep-going-filter-group" role="group" aria-label="หมวดหมู่ไอเดีย">
+              <span class="filter-group-label">หมวดหมู่:</span>
+              <button type="button" class="kg-filter-pill active" data-category-filter="all">ทั้งหมด (20)</button>
+              <button type="button" class="kg-filter-pill" data-category-filter="customer">ลูกค้า &amp; คำถาม</button>
+              <button type="button" class="kg-filter-pill" data-category-filter="product">สินค้า &amp; วิธีใช้</button>
+              <button type="button" class="kg-filter-pill" data-category-filter="behind-the-scenes">เบื้องหลัง &amp; มุมมอง</button>
+              <button type="button" class="kg-filter-pill" data-category-filter="repurpose">ต่อยอดงานเดิม</button>
+            </div>
+
+            <div class="keep-going-filter-group" role="group" aria-label="เลนส์การวิเคราะห์">
+              <span class="filter-group-label">Lens:</span>
+              <button type="button" class="kg-lens-pill active" data-lens-filter="all">ทุกมิติ</button>
+              <button type="button" class="kg-lens-pill lens-coral" data-lens-filter="content">Content (WHAT)</button>
+              <button type="button" class="kg-lens-pill lens-violet" data-lens-filter="packaging">Packaging (HOW)</button>
+            </div>
+          </div>
+
+          <div class="keep-going-search-row">
+            <div class="keep-going-search-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input
+                type="search"
+                id="keep-going-search"
+                class="keep-going-search-input"
+                placeholder="ค้นหาจาก 20 ไอเดีย เช่น คำถามลูกค้า, รีวิว, เบื้องหลัง, Before &amp; After..."
+                aria-label="ค้นหาไอเดียช่วยชีวิต"
+              />
+            </div>
+
+            <button type="button" class="btn-pill btn-keep-going-random" id="btn-random-lifesaver">
+              <span>🎲 สุ่ม 1 ไอเดียช่วยชีวิต</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- 20 Lifesaver Ideas Grid -->
+        <div class="keep-going-ideas-scroll" role="region" aria-label="รายการ 20 ไอเดียช่วยชีวิตคนทำคอนเทนต์">
+          <div class="keep-going-ideas-grid" id="keep-going-ideas-grid">
+            <!-- Rendered dynamically by KeepGoingModalController -->
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <footer class="keep-going-modal-footer">
+          <div class="keep-going-footer-meta">
+            <span id="keep-going-results-count">แสดง 20 จาก 20 ไอเดียช่วยชีวิต</span>
+            <span class="keep-going-footer-sep" aria-hidden="true">·</span>
+            <span class="keep-going-footer-hint">เลือกไอเดียเพื่อส่งเข้า Remix Studio หรือค้นหาคลิปอ้างอิงใน Research</span>
+          </div>
+          <div class="keep-going-footer-actions">
+            <button type="button" class="btn-pill btn-primary btn-keep-going-commit" id="btn-keep-going-commit">
+              <span>รับทราบ — ลุยทำคอนเทนต์ต่อ ไม่หยุด!</span>
+            </button>
+          </div>
+        </footer>
       </div>
     </div>
 
