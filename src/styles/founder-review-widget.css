@@ -5,6 +5,11 @@
    for specific UI areas without breaking other sections.
    ============================================================================== */
 
+#founder-review-widget-host[hidden],
+#founder-review-widget-host.is-client-mode {
+  display: none !important;
+}
+
 /* Floating Trigger Button */
 .founder-review-trigger {
   position: fixed;
@@ -56,11 +61,22 @@ body.founder-inspect-mode {
 .founder-inspect-hover {
   outline: 2.5px dashed var(--v6-coral, #ed765b) !important;
   outline-offset: 4px !important;
-  background-color: rgba(237, 118, 91, 0.05) !important;
+  background-color: rgba(237, 118, 91, 0.06) !important;
   transition: outline 0.1s ease, background-color 0.1s ease;
 }
 
+.founder-inspect-selected {
+  outline: 3px solid var(--v6-violet, #8a76ff) !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 0 6px rgba(138, 118, 255, 0.22) !important;
+  transition: outline 0.15s ease, box-shadow 0.15s ease;
+}
+
 /* Pin Badges Dropped on Components */
+.founder-has-pin {
+  position: relative;
+}
+
 .founder-dropped-pin {
   position: absolute;
   top: 8px;
@@ -69,14 +85,152 @@ body.founder-inspect-mode {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.2rem 0.5rem;
+  padding: 0.22rem 0.6rem;
   background: var(--v6-coral, #ed765b);
   color: #ffffff;
-  font-size: 0.75rem;
+  border: 1.5px solid #ffffff;
+  font-size: 0.72rem;
   font-weight: 700;
   border-radius: 9999px;
-  box-shadow: 0 2px 8px rgba(237, 118, 91, 0.4);
+  box-shadow: 0 3px 10px rgba(17, 17, 15, 0.25);
   cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.founder-dropped-pin:hover {
+  transform: scale(1.06);
+}
+
+.founder-dropped-pin.status-pending {
+  background: #f59e0b;
+  color: #11110f;
+}
+
+.founder-dropped-pin.status-in-progress {
+  background: #2563eb;
+  color: #ffffff;
+  animation: founderPinPulse 1.3s infinite;
+}
+
+.founder-dropped-pin.status-resolved {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.founder-dropped-pin.status-failed {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+@keyframes founderPinPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(37, 99, 235, 0); }
+}
+
+/* Inline Floating Block Review Card (#founder-block-popover) */
+#founder-block-popover,
+.founder-block-popover {
+  position: fixed;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  background: var(--v6-white, #ffffff);
+  border: 2px solid var(--v6-violet, #8a76ff);
+  border-radius: 14px;
+  box-shadow: 0 18px 45px rgba(17, 17, 15, 0.28);
+  z-index: 100002;
+  padding: 1rem;
+  font-family: var(--v6-font-sans, inherit);
+  color: var(--v6-ink, #11110f);
+}
+
+.founder-popover-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.founder-popover-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--v6-ink, #11110f);
+  line-height: 1.35;
+}
+
+.founder-popover-close {
+  background: transparent;
+  border: none;
+  color: var(--v6-muted, #6b6762);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0 0.2rem;
+  line-height: 1;
+}
+
+.founder-popover-meta {
+  background: var(--v6-soft, #f4f2ee);
+  border: 1px solid var(--v6-line, #e7e3de);
+  border-radius: 8px;
+  padding: 0.45rem 0.65rem;
+  margin-bottom: 0.65rem;
+  font-size: 0.75rem;
+}
+
+.founder-popover-selector {
+  display: block;
+  color: var(--v6-violet-text, #5a46c9);
+  font-weight: 700;
+  word-break: break-all;
+}
+
+.founder-popover-snippet {
+  color: var(--v6-muted, #6b6762);
+  margin-top: 0.2rem;
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.founder-popover-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.founder-popover-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--v6-muted, #6b6762);
+  white-space: nowrap;
+}
+
+.founder-popover-select {
+  padding: 0.4rem 0.6rem !important;
+  font-size: 0.82rem !important;
+}
+
+.founder-popover-textarea {
+  min-height: 82px !important;
+  font-size: 0.85rem !important;
+  margin-bottom: 0.65rem;
+}
+
+.founder-popover-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.founder-popover-submit {
+  padding: 0.55rem 0.75rem !important;
+  font-size: 0.82rem !important;
+}
+
+.founder-popover-cancel {
+  padding: 0.55rem 0.75rem !important;
+  font-size: 0.82rem !important;
 }
 
 /* Review Drawer / Modal */
@@ -165,6 +319,33 @@ body.founder-inspect-mode {
   flex: 1;
   overflow-y: auto;
   padding: 1.5rem;
+}
+
+.founder-review-footer {
+  padding: 0.85rem 1.5rem;
+  border-top: 1px solid var(--v6-line, #e7e3de);
+  background: var(--v6-paper, #fbfaf8);
+}
+
+#btn-founder-client-mode,
+.founder-client-mode-btn {
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  background: transparent;
+  color: var(--v6-muted, #6b6762);
+  border: 1px dashed var(--v6-line, #e7e3de);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#btn-founder-client-mode:hover,
+.founder-client-mode-btn:hover {
+  background: var(--v6-ink, #11110f);
+  color: #ffffff;
+  border-color: var(--v6-ink, #11110f);
 }
 
 .founder-form-group {
@@ -284,7 +465,7 @@ body.founder-inspect-mode {
   color: #ffffff;
 }
 
-/* History Cards */
+/* History Cards & Status Badges */
 .founder-review-card {
   background: var(--v6-soft, #f4f2ee);
   border: 1px solid var(--v6-line, #e7e3de);
@@ -293,24 +474,61 @@ body.founder-inspect-mode {
   margin-bottom: 1rem;
 }
 
+.founder-review-card.status-in-progress {
+  border-left: 4px solid #2563eb;
+}
+
+.founder-review-card.status-resolved {
+  border-left: 4px solid #10b981;
+}
+
 .founder-card-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.35rem;
   margin-bottom: 0.5rem;
 }
 
 .founder-type-tag {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 0.2rem 0.5rem;
+  padding: 0.18rem 0.45rem;
   border-radius: 4px;
   background: #ffffff;
   border: 1px solid var(--v6-line, #e7e3de);
 }
 
+.founder-status-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.18rem 0.55rem;
+  border-radius: 9999px;
+}
+
+.founder-status-badge.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.founder-status-badge.status-in-progress {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.founder-status-badge.status-resolved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.founder-status-badge.status-failed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
 .founder-time-tag {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--v6-muted, #6b6762);
 }
 
@@ -318,15 +536,64 @@ body.founder-inspect-mode {
   font-size: 0.825rem;
   font-weight: 700;
   color: var(--v6-coral-text, #ae4f3a);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.founder-card-selector {
+  font-size: 0.75rem;
+  color: var(--v6-violet-text, #5a46c9);
+  margin-bottom: 0.35rem;
 }
 
 .founder-comment-text {
   font-size: 0.875rem;
   color: var(--v6-ink, #11110f);
   line-height: 1.5;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.65rem;
   white-space: pre-wrap;
+}
+
+.founder-resolution-note {
+  font-size: 0.78rem;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  margin-bottom: 0.65rem;
+}
+
+.founder-resolved-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.founder-reload-btn {
+  flex: 1;
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.42rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.founder-reload-btn:hover {
+  background: #059669;
+}
+
+.founder-retrigger-btn {
+  background: #ffffff;
+  color: var(--v6-ink, #11110f);
+  border: 1px solid var(--v6-line, #e7e3de);
+  border-radius: 6px;
+  padding: 0.42rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .founder-card-actions {
