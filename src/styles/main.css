@@ -13,7 +13,7 @@
   --paper: #f4f2eb;
   --v6-paper: #f4f2eb;          /* Editorial Paper Canvas */
   --v6-soft: #edf0e4;           /* Soft Sage Surface / Subdued Card */
-  --v6-white: #f9f8f2;          /* Crisp Off-White Paper for Cards */
+  --v6-white: #ffffff;          /* Crisp White Paper for Cards */
   --line: #dcded2;
   --v6-line: #dcded2;           /* Sage-Stone Divider Line */
   --v6-line-dashed: #b8c0ae;    /* Dashed Border / Sage Accent Line */
@@ -1351,7 +1351,7 @@ body,
 .single-ingest-card,
 .dual-lens-card,
 .save-gate-modal-card {
-  background-color: #f9f8f2 !important;
+  background-color: #ffffff !important;
   border: 1px solid #dcded2 !important;
   border-radius: 6px !important;
   box-shadow: none !important;
