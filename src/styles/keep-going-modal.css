@@ -30,53 +30,55 @@
    1. HEADER TRIGGER BUTTON (#btn-header-keep-going)
    ============================================================================ */
 #btn-header-keep-going {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  padding: 0.36rem 0.82rem;
-  border-radius: 9999px;
-  border: 1px solid rgba(237, 118, 91, 0.32);
-  background: linear-gradient(135deg, #fff5f2 0%, #f5f2ff 100%);
-  color: var(--kg-ink);
+  padding: 0.375rem 0.78rem;
+  border-radius: 5px;
+  border: 1px solid #c5d65b;
+  background: #e8ecdd;
+  color: #252c27;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
-  box-shadow: 0 2px 8px rgba(17, 17, 15, 0.04);
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  box-shadow: none;
   white-space: nowrap;
 }
 
 #btn-header-keep-going:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(237, 118, 91, 0.14);
-  background: linear-gradient(135deg, #fde8e2 0%, #ede7ff 100%);
-  border-color: var(--kg-coral);
+  box-shadow: none;
+  background: #d8ee72;
+  border-color: #b8c95a;
+  color: #1b241e;
 }
 
 #btn-header-keep-going[data-severity="urgent"] {
-  background: linear-gradient(135deg, #fef1ee 0%, #f5f2ff 100%);
-  border-color: rgba(196, 69, 43, 0.32);
-  color: var(--kg-coral-text);
-  box-shadow: 0 2px 8px rgba(196, 69, 43, 0.08);
+  background: #d8ee72;
+  border-color: #b8c95a;
+  color: #252c27;
+  box-shadow: none;
 }
 
 #btn-header-keep-going[data-severity="urgent"]:hover {
-  background: linear-gradient(135deg, #fde4de 0%, #ece6ff 100%);
-  border-color: var(--kg-coral-strong);
-  box-shadow: 0 6px 16px rgba(196, 69, 43, 0.15);
+  background: #26392d;
+  border-color: #26392d;
+  color: #f4f2eb;
+  box-shadow: none;
 }
 
 #btn-header-keep-going[data-severity="nudge"] {
-  background: #fff5f2;
-  border-color: rgba(237, 118, 91, 0.34);
-  color: var(--kg-coral-text);
-  box-shadow: 0 2px 8px rgba(237, 118, 91, 0.08);
+  background: #e8ecdd;
+  border-color: #b8c0ae;
+  color: #252c27;
+  box-shadow: none;
 }
 
 #btn-header-keep-going[data-severity="active"] {
-  background: var(--kg-soft);
-  border-color: var(--kg-line);
-  color: var(--kg-ink);
+  background: #f9f8f2;
+  border-color: #dcded2;
+  color: #252c27;
 }
 
 /* ============================================================================
