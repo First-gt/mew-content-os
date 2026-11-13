@@ -7,7 +7,7 @@
 <div class="dashboard-container" id="dashboard-root" data-testid="dashboard-root">
 
   <style>
-    /* S00: Dashboard & Overview - Card Color Brightness Optimization */
+    /* S00: Dashboard & Overview - Card Color Brightness & Workflow Step Optimization */
     #view-overview .summary-card,
     #view-overview .mew-offer-card,
     #view-overview .panel-card,
@@ -19,6 +19,22 @@
       background: #ffffff !important;
       border-color: #f1f5f9 !important;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02), 0 0 0 1px rgba(255, 255, 255, 0.8) !important;
+    }
+    #view-overview .card-recent-research,
+    .dashboard-container .card-recent-research {
+      border-top: 3.5px solid #ed765b !important;
+    }
+    #view-overview .card-vault-summary,
+    .dashboard-container .card-vault-summary {
+      border-top: 3.5px solid #8a76ff !important;
+    }
+    #view-overview .card-remix-drafts,
+    .dashboard-container .card-remix-drafts {
+      border-top: 3.5px solid #8a76ff !important;
+    }
+    #view-overview .card-continue-work,
+    .dashboard-container .card-continue-work {
+      border-top: 3.5px solid #252c27 !important;
     }
     #view-overview .summary-card-inner,
     .dashboard-container .summary-card-inner {
@@ -39,10 +55,29 @@
       border-color: #f1f5f9 !important;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
     }
-    #view-overview .summary-icon-wrap,
-    .dashboard-container .summary-icon-wrap {
+    #view-overview .card-recent-research .summary-icon-wrap,
+    .dashboard-container .card-recent-research .summary-icon-wrap {
+      background-color: rgba(237, 118, 91, 0.12) !important;
+      color: #ae4f3a !important;
+      border-color: rgba(237, 118, 91, 0.25) !important;
+    }
+    #view-overview .card-vault-summary .summary-icon-wrap,
+    .dashboard-container .card-vault-summary .summary-icon-wrap,
+    #view-overview .card-remix-drafts .summary-icon-wrap,
+    .dashboard-container .card-remix-drafts .summary-icon-wrap {
+      background-color: rgba(138, 118, 255, 0.12) !important;
+      color: #8a76ff !important;
+      border-color: rgba(138, 118, 255, 0.25) !important;
+    }
+    #view-overview .card-continue-work .summary-icon-wrap,
+    .dashboard-container .card-continue-work .summary-icon-wrap {
       background-color: #f8fafc !important;
+      color: #252c27 !important;
       border-color: #f1f5f9 !important;
+    }
+    .card-step-kicker {
+      font-weight: 800;
+      letter-spacing: 0.02em;
     }
     #view-overview .summary-card:hover,
     .dashboard-container .summary-card:hover,
@@ -90,13 +125,13 @@
                 data-testid="btn-research-a-clip" 
                 data-action="btn-research-a-clip" 
                 data-target="S01"
-                aria-label="Research a Clip: เริ่มต้นวิจัยคลิปต้นฉบับ (S01)">
+                aria-label="ข้อ 1: Research a Clip: เริ่มต้นวิจัยคลิปต้นฉบับ (S01)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <span class="btn-text">Research a Clip</span>
-          <span class="btn-action-badge" aria-hidden="true">S01</span>
+          <span class="btn-action-badge" aria-hidden="true">ข้อ 1 · S01</span>
         </button>
 
         <!-- Button 2: btn-open-library -> S04 -->
@@ -106,13 +141,13 @@
                 data-testid="btn-open-library" 
                 data-action="btn-open-library" 
                 data-target="S04"
-                aria-label="Open My Library: เปิดคลังวัตถุดิบ 2 คลัง (S04)">
+                aria-label="ข้อ 2: Open My Library: เปิดคลังวัตถุดิบ 2 คลัง (S04)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
           </svg>
           <span class="btn-text">Open My Library</span>
-          <span class="btn-action-badge" aria-hidden="true">S04</span>
+          <span class="btn-action-badge" aria-hidden="true">ข้อ 2 · S04</span>
         </button>
 
         <!-- Button 3: btn-start-remix -> S06 -->
@@ -122,12 +157,12 @@
                 data-testid="btn-start-remix" 
                 data-action="btn-start-remix" 
                 data-target="S06"
-                aria-label="Start Remix: เริ่มต้นกระบวนการรีมิกซ์วัตถุดิบ (S06)">
+                aria-label="ข้อ 3: Start Remix: เริ่มต้นกระบวนการรีมิกซ์วัตถุดิบ (S06)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
           </svg>
           <span class="btn-text">Start Remix</span>
-          <span class="btn-action-badge" aria-hidden="true">S06</span>
+          <span class="btn-action-badge" aria-hidden="true">ข้อ 3 · S06</span>
         </button>
 
       </div>
@@ -152,7 +187,7 @@
              data-testid="recent-research" 
              tabindex="0" 
              role="button" 
-             aria-label="การ์ดวิจัยล่าสุด: เปิดดูรายการวิจัยและผลการวิเคราะห์">
+             aria-label="ข้อ 1: การ์ดวิจัยล่าสุด: เปิดดูรายการวิจัยและผลการวิเคราะห์">
       <div class="summary-card-inner">
         <div class="summary-card-header">
           <div class="summary-icon-wrap" aria-hidden="true">
@@ -161,7 +196,7 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
           </div>
-          <span class="badge-pill coral">Dual-Lens · S01</span>
+          <span class="badge-pill coral"><strong class="card-step-kicker">ข้อ 1</strong> · Dual-Lens · S01</span>
         </div>
 
         <div class="summary-metric-row">
@@ -198,7 +233,7 @@
              data-testid="vault-summary" 
              tabindex="0" 
              role="button" 
-             aria-label="การ์ดสรุปคลังวัตถุดิบ: แสดงจำนวน Saved Content และ Saved Packaging แยกกัน">
+             aria-label="ข้อ 2: การ์ดสรุปคลังวัตถุดิบ: แสดงจำนวน Saved Content และ Saved Packaging แยกกัน">
       <div class="summary-card-inner">
         <div class="summary-card-header">
           <div class="summary-icon-wrap" aria-hidden="true">
@@ -207,7 +242,7 @@
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
             </svg>
           </div>
-          <span class="badge-pill violet">Dual-Vault · S04</span>
+          <span class="badge-pill violet"><strong class="card-step-kicker">ข้อ 2</strong> · Dual-Vault · S04</span>
         </div>
 
         <h2 class="summary-card-title">Vault Summary</h2>
@@ -261,7 +296,7 @@
              data-testid="remix-drafts" 
              tabindex="0" 
              role="button" 
-             aria-label="การ์ดดราฟต์รีมิกซ์: ดูแนวคิดที่สังเคราะห์จากวัตถุดิบ">
+             aria-label="ข้อ 3: การ์ดดราฟต์รีมิกซ์: ดูแนวคิดที่สังเคราะห์จากวัตถุดิบ">
       <div class="summary-card-inner">
         <div class="summary-card-header">
           <div class="summary-icon-wrap" aria-hidden="true">
@@ -269,7 +304,7 @@
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
             </svg>
           </div>
-          <span class="badge-pill violet">C(N)+P(N) · S08</span>
+          <span class="badge-pill violet"><strong class="card-step-kicker">ข้อ 3</strong> · C(N)+P(N) · S08</span>
         </div>
 
         <div class="summary-metric-row">
@@ -306,7 +341,7 @@
              data-testid="continue-work" 
              tabindex="0" 
              role="button" 
-             aria-label="การ์ดทำงานต่อ: กลับไปทำงานค้างต่อจากสเตทเดิม">
+             aria-label="ข้อ 4: การ์ดทำงานต่อ: กลับไปทำงานค้างต่อจากสเตทเดิม">
       <div class="summary-card-inner">
         <div class="summary-card-header">
           <div class="summary-icon-wrap" aria-hidden="true">
@@ -315,7 +350,7 @@
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
           </div>
-          <span class="badge-pill ink">Preserved State</span>
+          <span class="badge-pill ink"><strong class="card-step-kicker">ข้อ 4</strong> · Preserved State</span>
         </div>
 
         <div class="summary-metric-row">
