@@ -8,7 +8,7 @@
   <!-- Google Fonts: Inter, Prompt, Noto Sans Thai -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Main Stylesheet (Theme mewteetawat.com V6.3) -->
   <link rel="stylesheet" href="styles/main.css">
@@ -1916,620 +1916,268 @@
   </div>
 
   <!-- ============================================================================
-       MODE 2: CHANNEL PERFORMANCE MATRIX (400+ CLIPS SCATTER PLOT & SCRIPT STRUCTURE)
+       MODE 2: CHANNEL PERFORMANCE MATRIX — EXACT 1:1 CREATOR LAB (http://127.0.0.1:5190/)
        ============================================================================ -->
-  <div id="panel-channel-scan-mode" class="research-mode-view" role="tabpanel" aria-labelledby="mode-tab-channel" hidden>
-    
-    <!-- CHANNEL SEARCH & SCAN BAR -->
-    <section class="channel-search-section">
-      <div class="mew-offer-card channel-search-card violet-accent">
-        <div class="search-header-row">
-          <div class="search-title-group">
-            <span class="badge-pill violet">Channel Intelligence</span>
-            <h2 class="search-title">Scan Creator Channel &amp; Map Performance Matrix</h2>
-            <p class="search-desc">
-              ป้อนชื่อบัญชีหรือ Profile URL เพื่อสแกนคลังคลิปทั้งหมด จัดกลุ่มสคริปต์ และวิเคราะห์ความสัมพันธ์ระหว่างยอดคนดู (Reach) กับการมีส่วนร่วม (Engagement)
-            </p>
-          </div>
+  <div id="panel-channel-scan-mode" class="research-mode-view cl-exact-root" role="tabpanel" aria-labelledby="mode-tab-channel" hidden>
+    <div class="cl-app-shell" id="cl-app-shell">
+      <header class="topbar">
+        <a class="brand" href="#panel-channel-scan-mode" aria-label="Creator Lab home"><span class="brand-mark">c<span>l</span></span> creator lab<span class="edition">RESEARCH EDITION / 01</span></a>
+        <div class="top-actions">
+          <span id="connection-status" class="connection">0/3 keys configured</span>
+          <button type="button" class="quiet" id="connections-open">Connections</button>
+          <button type="button" class="primary" id="new-open">New analysis <span>↗</span></button>
         </div>
-
-        <form class="channel-scan-form" id="form-channel-scan" onsubmit="return false;">
-          <div class="input-field-group">
-            <span class="input-icon" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </span>
-            <input 
-              type="text" 
-              id="input-channel-handle" 
-              class="v6-text-input" 
-              placeholder="ใส่ @username หรือ Profile URL (เช่น @mewteetawat, @jev_creator)"
-              value="@mewteetawat"
-              required
-              aria-label="Creator Profile Handle"
-            />
-            <button type="submit" class="btn-pill btn-primary" id="btn-start-channel-scan">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="23 4 23 10 17 10"></polyline>
-                <polyline points="1 20 1 14 7 14"></polyline>
-                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-              </svg>
-              <span>Start Channel Scan</span>
-            </button>
-          </div>
-
-          <!-- Channel Presets -->
-          <div class="channel-presets-bar">
-            <span class="preset-label">Quick Scan Presets:</span>
-            <div class="preset-chips-list">
-              <button type="button" class="preset-channel-btn active" data-channel="@mewteetawat">
-                <span>@mewteetawat</span>
-                <span class="chip-count">440 clips</span>
-              </button>
-              <button type="button" class="preset-channel-btn" data-channel="@jev_creator">
-                <span>@jev_creator</span>
-                <span class="chip-count">144 clips</span>
-              </button>
-              <button type="button" class="preset-channel-btn" data-channel="@artem_nov">
-                <span>@artem_nov</span>
-                <span class="chip-count">218 clips</span>
-              </button>
-            </div>
-          </div>
-        </form>
+      </header>
+      <div class="focus-bar" id="cl-focus-bar" hidden>
+        <span id="focus-title">CREATOR LAB</span>
+        <button type="button" id="focus-exit">Exit focus ↗</button>
       </div>
-    </section>
-
-    <!-- Channel Scan Initial Placeholder (Shown before Start Channel Scan is clicked) -->
-    <div id="channel-scan-initial-placeholder" class="mew-offer-card initial-guide-placeholder violet-accent">
-      <div class="guide-placeholder-icon violet" aria-hidden="true">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="6" cy="18" r="3"></circle>
-          <circle cx="18" cy="6" r="3"></circle>
-          <circle cx="18" cy="18" r="3"></circle>
-          <line x1="6" y1="18" x2="18" y2="6"></line>
-        </svg>
-      </div>
-      <div class="guide-placeholder-content">
-        <span class="badge-pill violet">Performance Intelligence</span>
-        <h3 class="guide-title">สแกนคลังและสร้าง Performance Matrix ทั้งช่อง</h3>
-        <p class="guide-desc">ใส่ชื่อบัญชี หรือคลิก Quick Scan Preset ด้านบน แล้วกด <strong>"Start Channel Scan"</strong> เพื่อเริ่มประมวลผล 440+ คลิปและแมปพิกัดบนกราฟ</p>
-      </div>
-    </div>
-
-    <!-- ========================================================================
-         PATTERN WORKSPACE: REEL ARCHIVE + PERFORMANCE MAP (VIDEO THUMBNAILS ON GRAPH)
-         Reference: "Watch the patterns form." Layout
-         ======================================================================== -->
-    <section class="pattern-workspace-section" id="section-channel-pattern-workspace" aria-labelledby="pattern-heading" hidden>
-      <div class="mew-offer-card pattern-workspace-card">
-        
-        <!-- ========================================================================
-             1. LIVE DECODE SCANNER HUD (Faithful Recreation of User's Video Reference)
-             Shows live count-up, batch illumination, and real-time reel spotlight
-             ======================================================================== -->
-        <div class="channel-scan-live-hud" id="channel-scan-live-hud">
-          <div class="scan-hud-top-bar">
-            <div class="scan-hud-title-wrap">
-              <h2 class="scan-hud-headline">Decode <span class="mew-gradient-text" id="scan-hud-handle">@mewteetawat.</span></h2>
-              <span class="scan-hud-live-tag" id="scan-hud-status-badge"><span class="pulse-dot"></span> LIVE DECODE SCAN</span>
+      <div class="cl-main">
+        <section class="intro">
+          <div>
+            <div class="eyebrow"><span class="status-dot"></span><span id="run-label">THE CREATOR RESEARCH LAB</span></div>
+            <h1>Find the pattern.<br><span>See the proof.</span></h1>
+            <p id="intro-copy">Hundreds of videos. A few recurring moves. Explore the words behind the numbers.</p>
+          </div>
+          <div class="intro-right">
+            <label class="small-label" for="run-select">YOUR RESEARCH</label>
+            <select id="run-select">
+              <option value="demo">Motion rehearsal · synthetic data</option>
+            </select>
+            <div class="run-actions">
+              <button type="button" class="quiet" id="resume" hidden>Start / resume</button>
+              <button type="button" class="quiet" id="pause" hidden>Pause run</button>
+              <button type="button" class="quiet" id="export" hidden>Export ↓</button>
+              <a class="quiet" href="http://127.0.0.1:5190/record" target="_blank" rel="noopener noreferrer">Recording studio ↗</a>
+              <button type="button" class="quiet" id="portrait">Portrait view</button>
+              <button type="button" class="quiet" id="focus">Focus demo</button>
             </div>
-            <div class="scan-hud-actions">
-              <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-replay-scan-anim" aria-label="เล่นแอนิเมชันสแกนใหม่อีกครั้ง">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polyline points="23 4 23 10 17 10"></polyline>
-                  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                </svg>
-                <span>Replay Scan Animation</span>
-              </button>
+            <p id="run-note">Rehearse the visual. Connect a creator to collect real evidence.</p>
+          </div>
+        </section>
+        <div id="notice" class="notice" role="status">Motion rehearsal. All examples, portraits and metrics below are synthetic.</div>
+        <section class="stats" aria-label="Analysis progress">
+          <div><span>REELS COLLECTED</span><strong id="stat-collected">0</strong></div>
+          <div><span>TRANSCRIPTS READY</span><strong id="stat-transcribed">0</strong></div>
+          <div><span>JEV CLASSIFIED</span><strong id="stat-classified">0</strong></div>
+          <div><span>JEV COST · EST.</span><strong id="stat-cost">$0.0000</strong></div>
+          <div class="pipeline-status">
+            <span id="pipeline-label">READY TO EXPLORE</span>
+            <div class="progress-track"><div id="pipeline-progress"></div></div>
+            <small id="cost-detail">Real usage appears after a run</small>
+          </div>
+        </section>
+        <section class="explorer">
+          <div class="explorer-toolbar">
+            <div class="canvas-flow"><span>Thumbnail wall</span><span aria-hidden="true">→</span><span>Performance map</span></div>
+            <div class="replay-tools">
+              <span id="replay-status"></span>
+              <button type="button" id="replay" class="replay-button"><span>▶</span> Replay analysis</button>
             </div>
           </div>
-
-          <!-- 3 KPI Counter Boxes matching Video -->
-          <div class="scan-hud-counters-row">
-            <div class="scan-hud-kpi-card">
-              <span class="scan-kpi-label">SCRIPTS CLASSIFIED</span>
-              <div class="scan-kpi-num font-num"><span id="scan-stat-classified">0</span> <span class="scan-kpi-denom">/ <span id="scan-stat-total">440</span></span></div>
-              <div class="scan-kpi-progress-bar"><div class="scan-kpi-progress-fill" id="scan-progress-classified"></div></div>
-            </div>
-
-            <div class="scan-hud-kpi-card coral-accent">
-              <span class="scan-kpi-label">SCRIPT LABELS</span>
-              <div class="scan-kpi-num font-num" id="scan-stat-labels">0</div>
-              <span class="scan-kpi-sub">Taxonomy data points labeled</span>
-            </div>
-
-            <div class="scan-hud-kpi-card green-accent">
-              <span class="scan-kpi-label">DECODE COST · EST.</span>
-              <div class="scan-kpi-num font-num" id="scan-stat-cost">$0.0000 <span class="scan-kpi-sub">so far</span></div>
-              <span class="scan-kpi-sub">LLM Deep Extraction Units</span>
-            </div>
+          <div class="research-filters">
+            <div class="research-prompt"><span class="eyebrow">FIND YOUR PATTERN</span><span>What are they saying, and how do they hook you?</span></div>
+            <label for="topic-filter">Topic<select id="topic-filter"><option value="all">All topics</option></select></label>
+            <span class="filter-join" aria-hidden="true">+</span>
+            <label for="hook-filter">Hook<select id="hook-filter"><option value="all">All hooks</option></select></label>
+            <button type="button" id="clear-research" class="quiet" hidden>Clear filters ×</button>
+            <a href="#findings" class="research-jump">Compare engagement ↓</a>
           </div>
-
-          <!-- Middle Inspection Live Deck matching Video -->
-          <div class="scan-live-deck-grid">
-            <!-- Mini Reel Archive Batch Indicator -->
-            <div class="scan-deck-archive-box">
-              <div class="scan-deck-head">
-                <span class="scan-deck-head-title">REEL ARCHIVE</span>
-                <span class="font-num scan-deck-batch-pill" id="scan-deck-batch">1 - 30</span>
+          <div class="filterbar">
+            <label>COMPARE / COLOR BY <select id="dimension"></select></label>
+            <label>METRIC <select id="metric"><option value="views">Views</option><option value="plays">Plays</option></select></label>
+            <label>POST AGE <select id="age"><option value="7">7+ days</option><option value="30">30+ days</option><option value="0">All ages</option></select></label>
+            <label>CONFIDENCE <select id="confidence"><option value="0">All labels</option><option value="0.65">65%+</option><option value="0.85">85%+</option></select></label>
+            <label>LENGTH <select id="duration"><option value="0">All lengths</option><option value="30">Under 30s</option><option value="60">Under 60s</option><option value="90">Under 90s</option></select></label>
+            <label class="dedupe"><input type="checkbox" id="dedupe" checked> Hide repeat scripts</label>
+            <button type="button" class="quiet" id="schema-open">What Jev sees ↗</button>
+          </div>
+          <div class="legend" id="legend"></div>
+          <div class="stage-layout">
+            <div class="stage-wrap">
+              <div class="stage-heading"><span id="canvas-title">THE ARCHIVE</span><span id="canvas-note">Each frame is one Reel</span></div>
+              <div id="stage" class="stage map simultaneous" aria-label="Interactive Reel thumbnails">
+                <svg id="axes" aria-hidden="true"></svg>
+                <div id="wall-label" class="panel-label">01 / THUMBNAIL WALL</div>
+                <div id="map-label" class="panel-label">02 / PERFORMANCE MAP</div>
+                <div id="panel-divider"></div>
+                <div id="tiles"></div>
+                <div id="map-tiles"></div>
+                <div id="empty" hidden>No matching Reels. Change your filters or start a collection.</div>
+                <div class="scan-line" id="scan-line"></div>
               </div>
-              <div class="scan-deck-mini-grid" id="scan-deck-mini-grid" aria-label="ความคืบหน้าการประมวลผลคลิปย่อ">
-                <!-- 30 mini reel dots/slots generated dynamically in JS -->
-              </div>
+              <div class="stage-footer"><span id="plotted-count"></span><span id="axis-caption">Select a frame to inspect its script ↗</span></div>
             </div>
-
-            <!-- INSIDE THE REEL Spotlight Card matching Video -->
-            <div class="scan-inside-reel-card">
-              <div class="scan-inside-tag">INSIDE THE REEL</div>
-              <div class="scan-inside-body">
-                <div class="scan-inside-thumb-wrap">
-                  <img src="assets/video_preview.png" alt="Reel preview" class="scan-inside-img" id="scan-inside-img" />
-                  <div class="scan-inside-screen-quote" id="scan-inside-screen-quote">
-                    "อย่าก๊อปปี้คลิปคนอื่นทั้งดุ้น ถ้าคุณยังไม่ได้แยก WHAT ออกจาก HOW"
-                  </div>
+            <aside class="inspector" id="active-reel-inspector">
+              <p class="inspector-empty" id="inspector-empty" hidden>No Reels match these filters. Choose another topic or hook to inspect a script.</p>
+              <div class="inspector-heading"><span>UNDER THE FRAME</span><span id="post-index">01 / 144</span></div>
+              <div class="preview-row">
+                <div class="preview-media">
+                  <img id="preview-image" alt="Selected Reel thumbnail">
+                  <video id="preview-video" controls playsinline hidden></video>
+                  <button type="button" id="preview-play" aria-label="Play selected Reel" hidden>▶</button>
                 </div>
-
-                <div class="scan-inside-meta-col">
-                  <div class="scan-meta-row">
-                    <span class="scan-meta-label">TOPIC</span>
-                    <strong class="scan-meta-val" id="scan-meta-topic">Mindset</strong>
-                  </div>
-                  <div class="scan-meta-row">
-                    <span class="scan-meta-label">HOOK</span>
-                    <strong class="scan-meta-val" id="scan-meta-hook">Curiosity</strong>
-                  </div>
-                  <div class="scan-meta-row">
-                    <span class="scan-meta-label">STRUCTURE</span>
-                    <strong class="scan-meta-val" id="scan-meta-structure">Problem / Solution</strong>
-                  </div>
-                  <div class="scan-meta-stats font-num">
-                    <span id="scan-meta-plays">842.5K plays</span>
-                    <span class="meta-dot">·</span>
-                    <span id="scan-meta-likes">45.8K likes</span>
-                  </div>
+                <div class="preview-caption">
+                  <span id="post-creator">@demo.creator</span>
+                  <time id="post-date"></time>
+                  <div id="post-tags"></div>
+                  <a id="original" target="_blank" rel="noopener noreferrer" hidden>Original Reel ↗</a>
                 </div>
               </div>
-            </div>
+              <blockquote id="opening"></blockquote>
+              <div class="post-metrics">
+                <div><strong id="post-views">0</strong><span id="post-view-label">Views</span></div>
+                <div><strong id="post-likes">0</strong><span>Likes</span></div>
+                <div><strong id="post-rate">0</strong><span>Likes / 1k</span></div>
+              </div>
+              <div class="anatomy-heading"><span>SCRIPT ANATOMY</span><small id="anatomy-note">Exact transcript excerpts</small></div>
+              <div id="anatomy-bar"></div>
+              <div id="anatomy-legend"></div>
+              <div class="transcript" id="transcript"></div>
+              <details class="all-labels">
+                <summary>All classifications &amp; confidence</summary>
+                <div id="all-labels"></div>
+              </details>
+              <p id="post-error" class="error"></p>
+            </aside>
           </div>
-
-          <!-- Bottom Hook Patterns Counters matching Video -->
-          <div class="scan-patterns-found-bar">
-            <span class="scan-patterns-title">HOOK PATTERNS FOUND:</span>
-            <div class="scan-pattern-chips">
-              <div class="scan-pattern-chip"><span>Curiosity</span> <strong class="font-num" id="scan-count-curiosity">0</strong></div>
-              <div class="scan-pattern-chip"><span>Recognition</span> <strong class="font-num" id="scan-count-recognition">0</strong></div>
-              <div class="scan-pattern-chip"><span>Contradiction</span> <strong class="font-num" id="scan-count-contradiction">0</strong></div>
-              <div class="scan-pattern-chip"><span>Result / Proof</span> <strong class="font-num" id="scan-count-result">0</strong></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ========================================================================
-             2. CREATOR LAB EXPLORER: 01 / THUMBNAIL WALL → 02 / PERFORMANCE MAP
-             Faithful Creator Lab (artemnovitckii/creator-lab) + Multi-Clip Picker
-             ======================================================================== -->
-        <div class="pattern-top-bar cl-intro-bar">
-          <div class="pattern-title-group">
-            <div class="cl-eyebrow-row">
-              <span class="pattern-status-dot" aria-hidden="true"></span>
-              <span class="cl-eyebrow-txt">THE CREATOR RESEARCH LAB · RESEARCH EDITION / 01</span>
-            </div>
-            <h2 id="pattern-heading" class="pattern-main-headline">Find the pattern. <span class="cl-italic-accent">See the proof.</span></h2>
-            <p class="pattern-main-sub">สำรวจคำพูดและกลไกเบื้องหลังตัวเลข — คลิกเลือกคลิปที่ต้องการจริงๆ จากกำแพงคลิปย่อ กราฟ หรือตารางหลักฐานเพื่อนำไปใช้งานต่อได้ทันที</p>
-          </div>
-          <div class="pattern-channel-meta">
-            <span class="pattern-status-dot" aria-hidden="true"></span>
-            <span class="pattern-handle" id="pattern-channel-handle">@mewteetawat</span>
-            <span class="meta-sep">·</span>
-            <span class="pattern-mode-text">Creator Lab Deep Archive</span>
-          </div>
-        </div>
-
-        <!-- 3 METRIC BOXES -->
-        <div class="pattern-kpi-row">
-          <div class="pattern-kpi-box">
-            <span class="pattern-kpi-label">SCRIPTS LABELED</span>
-            <div class="pattern-kpi-val font-num" id="pattern-scripts-count">440</div>
-            <span class="pattern-kpi-hint">สแกนครอบคลุมคลังคลิปทั้งหมด</span>
-          </div>
-          <div class="pattern-kpi-box coral-tint">
-            <span class="pattern-kpi-label">MEDIAN REACH (PLAYS)</span>
-            <div class="pattern-kpi-val font-num" id="pattern-median-plays">358.4K</div>
-            <span class="pattern-kpi-hint">ค่ามัธยฐานแท้จริง (Benchmark)</span>
-          </div>
-          <div class="pattern-kpi-box green-tint">
-            <span class="pattern-kpi-label">VIRAL OUTLIERS</span>
-            <div class="pattern-kpi-val font-num" id="pattern-outlier-ratio">18 / 440 (4.1%)</div>
-            <span class="pattern-kpi-hint">ยอดวิวทะลุเกิน 2x มัธยฐาน</span>
-          </div>
-        </div>
-
-        <!-- CREATOR LAB EXPLORER TOOLBAR + FIND YOUR PATTERN FILTER BAR -->
-        <div class="cl-explorer-shell">
-          <div class="cl-explorer-toolbar">
-            <div class="cl-canvas-flow">
-              <span class="cl-flow-step">01 / Thumbnail wall</span>
-              <span class="cl-flow-arrow" aria-hidden="true">&rarr;</span>
-              <span class="cl-flow-step">02 / Performance map</span>
-              <span class="cl-flow-arrow" aria-hidden="true">&rarr;</span>
-              <span class="cl-flow-step">03 / Under the frame &amp; Pick clips</span>
-            </div>
-            <div class="cl-toolbar-right">
-              <span class="cl-toolbar-hint">💡 กดปุ่ม <strong>+ เลือก</strong> บนคลิปใดก็ได้เพื่อคัดเข้าชุดที่ต้องการ</span>
-            </div>
-          </div>
-
-          <div class="cl-research-filters" aria-label="ค้นหาแพตเทิร์นของช่อง">
-            <div class="cl-research-prompt">
-              <span class="cl-eyebrow">FIND YOUR PATTERN</span>
-              <span class="cl-prompt-sub">เขากำลังพูดเรื่องอะไร และเปิดหัวคลิปดึงคนดูด้วยกลไกไหน?</span>
-            </div>
-            <label class="cl-filter-label" for="cl-topic-filter">
-              <span>TOPIC</span>
-              <select id="cl-topic-filter" class="cl-select">
-                <option value="all">All topics (ทุกหัวข้อ)</option>
-                <option value="Creator Strategy">Creator Strategy</option>
-                <option value="Mindset">Mindset</option>
-                <option value="Business">Business</option>
-                <option value="Relationships">Relationships</option>
-              </select>
-            </label>
-            <span class="cl-filter-join" aria-hidden="true">+</span>
-            <label class="cl-filter-label" for="cl-hook-filter">
-              <span>HOOK MECHANISM</span>
-              <select id="cl-hook-filter" class="cl-select">
-                <option value="all">All hooks (ทุกกลไกเปิดคลิป)</option>
-                <option value="Curiosity">Curiosity (กระตุ้นความอยากรู้)</option>
-                <option value="Contradiction">Contradiction (ขัดความเชื่อเดิม)</option>
-                <option value="Recognition">Recognition (ตรงใจคนดู)</option>
-                <option value="Result / Proof">Result / Proof (โชว์ผลลัพธ์)</option>
-              </select>
-            </label>
-            <label class="cl-filter-label" for="cl-dimension-select">
-              <span>COMPARE / COLOR BY</span>
-              <select id="cl-dimension-select" class="cl-select">
-                <option value="tier">Performance Tier</option>
-                <option value="structure">Script Structure</option>
-                <option value="hookMechanism">Hook Mechanism</option>
-              </select>
-            </label>
-            <button type="button" id="cl-clear-filters" class="btn-pill btn-ghost btn-sm" hidden>ล้างตัวกรอง &times;</button>
-          </div>
-        </div>
-
-        <!-- STICKY / FLOATING MULTI-CLIP PICKER ACTION BAR (ปุ่มกดสำหรับเลือกคลิปที่ต้องการจริงๆ ได้) -->
-        <div class="creator-lab-picked-bar" id="creator-lab-picked-bar" role="region" aria-label="แถบจัดการคลิปที่เลือกไว้">
-          <div class="picked-bar-left">
-            <div class="picked-count-pill">
-              <span class="picked-dot"></span>
-              <span>เลือกไว้ <strong id="picked-clips-count" class="font-num">0</strong> คลิปที่ต้องการ</span>
-            </div>
-            <div class="picked-clips-chips" id="picked-clips-chips" aria-live="polite">
-              <span class="picked-empty-hint">ยังไม่ได้เลือกคลิป — กดปุ่ม "+ เลือก" บนการ์ดคลิปย่อ, ในแถบเจาะลึก หรือกดเลือก Viral Outliers ทั้งหมด</span>
-            </div>
-          </div>
-          <div class="picked-bar-actions">
-            <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-picked-SelectAllOutliers" title="เลือกคลิประดับ Viral Outliers ทั้งหมดทันที">
-              <span>⚡ เลือก Viral Outliers ทั้งหมด</span>
-            </button>
-            <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-picked-clear" title="ล้างรายการคลิปที่เลือกไว้">
-              <span>ล้างที่เลือก</span>
-            </button>
-            <button type="button" class="btn-pill btn-primary btn-sm" id="btn-picked-save-all">
-              <span>📥 บันทึกคลิปที่เลือกทั้งหมดเข้า Library</span>
-            </button>
-            <button type="button" class="btn-pill btn-secondary btn-sm" id="btn-picked-send-remix">
-              <span>🧪 ส่งคลิปที่เลือกไปต่อยอดใน Remix Studio</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- MAIN THREE-COLUMN CREATOR LAB STAGE: 01 THUMBNAIL WALL | 02 PERFORMANCE MAP | 03 UNDER THE FRAME -->
-        <div class="pattern-two-col-layout">
-          
-          <!-- LEFT: 01 / THUMBNAIL WALL (REEL ARCHIVE WITH PICK BUTTON ON EVERY TILE) -->
-          <aside class="reel-archive-card" aria-label="คลังคลิปย่อ Reel Archive">
-            <div class="archive-header-row">
-              <div class="archive-title-group">
-                <span class="cl-panel-tag">01 / THUMBNAIL WALL</span>
-                <h3 class="archive-title">REEL ARCHIVE</h3>
-                <span class="archive-range font-num" id="archive-range-text">1 - 24 of 440</span>
-              </div>
-              <div class="archive-nav-btns">
-                <button type="button" class="btn-archive-nav" id="btn-prev-archive" aria-label="หน้าก่อนหน้า">&larr;</button>
-                <button type="button" class="btn-archive-nav" id="btn-next-archive" aria-label="หน้าถัดไป">&rarr;</button>
-              </div>
-            </div>
-
-            <div class="reel-archive-grid" id="reel-archive-grid" role="list" aria-label="รายการคลิปย่อพร้อมปุ่มกดเลือก">
-              <!-- Populated dynamically via research.js -->
-            </div>
-          </aside>
-
-          <!-- CENTER: 02 / PERFORMANCE MAP (SCATTER PLOT WITH THUMBNAIL POINTS) -->
-          <div class="performance-map-card" aria-label="แผนที่ผลงาน Performance Map">
-            <div class="perf-map-header">
-              <div class="perf-map-title-group">
-                <span class="cl-panel-tag">02 / PERFORMANCE MAP · FROM SCRIPT TO PERFORMANCE</span>
-                <h3 class="perf-map-title">PERFORMANCE MAP</h3>
-                <span class="perf-map-axis-hint font-num">LIKES / 1K PLAYS &uarr; vs PLAYS · LOG SCALE &rarr;</span>
-              </div>
-
-              <!-- Scatter Filter Controls -->
-              <div class="scatter-controls-bar">
-                <div class="filter-tier-group" role="group" aria-label="กรองระดับผลงาน">
-                  <span class="filter-tier-label">Tier:</span>
-                  <button type="button" class="tier-pill-filter active" data-tier="all">All (440)</button>
-                  <button type="button" class="tier-pill-filter tier-green" data-tier="viral">Viral Outliers</button>
-                  <button type="button" class="tier-pill-filter tier-violet" data-tier="engagement">High Engagement</button>
-                  <button type="button" class="tier-pill-filter tier-coral" data-tier="solid">Solid Performer</button>
-                  <button type="button" class="tier-pill-filter tier-stone" data-tier="baseline">Baseline</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Legend for Scatter Tiers -->
-            <div class="scatter-legend-bar">
-              <div class="legend-item"><span class="legend-dot green"></span><span><strong>Viral Outlier</strong></span></div>
-              <div class="legend-item"><span class="legend-dot violet"></span><span><strong>High Engagement</strong></span></div>
-              <div class="legend-item"><span class="legend-dot coral"></span><span><strong>Solid Performer</strong></span></div>
-              <div class="legend-item"><span class="legend-dot stone"></span><span><strong>Baseline</strong></span></div>
-            </div>
-
-            <!-- Scatter Canvas SVG Area -->
-            <div class="scatter-canvas-wrapper" id="scatter-plot-container" tabindex="0" role="region" aria-label="Interactive Scatter Plot Canvas">
-              <svg id="scatter-svg" class="scatter-svg" viewBox="0 0 840 440" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-                <!-- Dynamic elements generated in research.js -->
-              </svg>
-
-              <!-- Floating Tooltip Container (Hidden per user request: replaced by Clean Side Inspector) -->
-              <div class="scatter-tooltip" id="scatter-tooltip" role="tooltip" hidden style="display: none !important;" aria-hidden="true">
-                <div class="tooltip-header">
-                  <span class="tooltip-tier-badge" id="tt-tier">Viral Outlier</span>
-                  <span class="tooltip-structure" id="tt-structure">Steps (n=31)</span>
-                </div>
-                <div class="tooltip-preview-card">
-                  <div class="tooltip-thumb" aria-hidden="true">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                    <span class="thumb-dur" id="tt-thumb-duration">00:48</span>
-                  </div>
-                  <div class="tooltip-hook" id="tt-hook">
-                    "อย่าก๊อปปี้คลิปคนอื่นทั้งดุ้น ถ้าคุณยังไม่ได้ทำสิ่งนี้..."
-                  </div>
-                </div>
-                <div class="tooltip-metrics-row">
-                  <div class="tt-metric">
-                    <span class="tt-metric-label">Views</span>
-                    <strong class="tt-metric-val font-num" id="tt-views">842.5K</strong>
-                  </div>
-                  <div class="tt-metric">
-                    <span class="tt-metric-label">Likes</span>
-                    <strong class="tt-metric-val font-num" id="tt-likes">45.8K</strong>
-                  </div>
-                  <div class="tt-metric">
-                    <span class="tt-metric-label">Likes / 1k</span>
-                    <strong class="tt-metric-val font-num" id="tt-rate">54.4</strong>
-                  </div>
-                </div>
-                <div class="tooltip-cta-hint">
-                  <span>คลิกเพื่อโหลดเข้าสู่ Dual-Lens Analysis (WHAT/HOW) &rarr;</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Scatter Footer Info -->
-            <div class="scatter-footer-meta">
-              <div class="meta-left">
-                <span>แสดงผลคลิป: <strong id="scatter-visible-count">440</strong> รายการ</span>
-                <span class="meta-hint-dot">·</span>
-                <span>เส้นประสีส้ม = ค่ามัธยฐานของช่อง (Median Views: 358.4K)</span>
-              </div>
-              <div class="meta-right">
-                <span class="interactive-hint">💡 คลิกคลิปบนกราฟเพื่อดูสคริปต์ หรือดับเบิลคลิกเพื่อเลือกเข้าชุดทันที &rarr;</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- RIGHT COLUMN: 03 / UNDER THE FRAME — CREATOR LAB INSPECTOR -->
-          <aside class="creator-lab-side-inspector active-reel-inspector" id="active-reel-inspector" aria-label="แถบด้านข้างสแกนเจาะลึกคลิป">
-            <div class="cl-inspector-eyebrow-row">
-              <span class="cl-inspector-kicker">UNDER THE FRAME</span>
-              <span class="cl-inspector-index font-num" id="insp-post-index">01 / 440</span>
-            </div>
-
-            <div class="side-insp-header">
-              <div class="side-insp-badge-row">
-                <span class="badge-pill tier-badge green" id="insp-tier-badge">Viral Outlier</span>
-                <span class="side-insp-live-tag"><span class="pulse-dot"></span> DEEP SCAN</span>
-              </div>
-              <span class="side-insp-handle font-num" id="insp-handle">@mewteetawat</span>
-            </div>
-
-            <!-- PROMINENT PICK CLIP BUTTON (ปุ่มกดเลือกคลิปที่ต้องการจริงๆ) -->
-            <div class="side-insp-pick-banner">
-              <button type="button" class="btn-insp-pick-clip" id="btn-insp-pick-clip" aria-pressed="false">
-                🎯 + เลือกคลิปนี้เข้าชุดที่ต้องการ (Pick Clip)
-              </button>
-            </div>
-
-            <!-- Media Preview Card -->
-            <div class="side-insp-media-card">
-              <div class="side-insp-thumb-box">
-                <img src="assets/video_preview.png" alt="คลิปที่เลือก" class="side-insp-thumb-img" id="insp-thumb" />
-                <div class="insp-play-badge" aria-hidden="true">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                </div>
-                <span class="side-insp-duration font-num" id="insp-duration">00:48</span>
-              </div>
-              <div class="side-insp-metrics-row font-num">
-                <div class="side-insp-metric">
-                  <span class="side-metric-label">VIEWS</span>
-                  <strong id="insp-views">842.5K</strong>
-                </div>
-                <div class="side-insp-metric">
-                  <span class="side-metric-label">LIKES</span>
-                  <strong id="insp-likes">45.8K</strong>
-                </div>
-                <div class="side-insp-metric">
-                  <span class="side-metric-label">LIKES / 1K</span>
-                  <strong id="insp-rate">54.4</strong>
-                </div>
-              </div>
-            </div>
-
-            <!-- Hook Quote Box -->
-            <div class="side-insp-hook-box">
-              <div class="side-insp-hook-label">
-                <span class="insp-structure-tag font-num" id="insp-structure">Problem → Solution</span>
-                <span class="hook-kicker-txt">Opening Hook Quote</span>
-              </div>
-              <h4 class="side-insp-hook" id="insp-hook">
-                "อย่าก๊อปปี้คลิปคนอื่นทั้งดุ้น ถ้าคุณยังไม่ได้แยก WHAT ออกจาก HOW"
-              </h4>
-            </div>
-
-            <!-- CREATOR LAB SCRIPT ANATOMY BAR & TIMED TRANSCRIPT SEGMENTS -->
-            <div class="cl-anatomy-block">
-              <div class="cl-anatomy-heading">
-                <span>SCRIPT ANATOMY</span>
-                <small id="insp-anatomy-note">Timed transcript excerpts</small>
-              </div>
-              <div class="cl-anatomy-bar" id="insp-anatomy-bar" role="group" aria-label="สัดส่วนโครงสร้างสคริปต์">
-                <!-- Populated dynamically in research.js -->
-              </div>
-              <div class="cl-anatomy-legend" id="insp-anatomy-legend">
-                <!-- Populated dynamically in research.js -->
-              </div>
-              <div class="cl-transcript-list" id="insp-transcript-segments">
-                <!-- Populated dynamically in research.js -->
-              </div>
-            </div>
-
-            <!-- WHY LINK THIS CLIP? (อธิบายเจาะลึกทำไมควรวิเคราะห์คลิปนี้) -->
-            <div class="side-insp-why-box">
-              <div class="side-why-title">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="16" x2="12" y2="12"></line>
-                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-                <span>ทำไมควรวิเคราะห์คลิปนี้? (Strategic Value):</span>
-              </div>
-              <p class="side-why-desc" id="insp-why-desc">
-                คลิปนี้มียอดวิวสูงระดับ Outlier โดดเด่นด้วยโครงสร้างที่ตรึงคนดูได้เกิน 2x ของค่ามัธยฐานช่อง เหมาะมากสำหรับใช้เป็นโครงสร้างต้นแบบ
-              </p>
-            </div>
-
-            <!-- CREATOR LAB DEEP SCAN: DUAL-LENS PREVIEW -->
-            <div class="side-insp-dual-box">
-              <div class="side-dual-item what-item">
-                <span class="badge-pill coral-sub">WHAT (แก่นสาระ)</span>
-                <p class="side-dual-text" id="insp-what">
-                  แยกความคิดหลักออกจากเทคนิคการเล่า เพื่อนำไปสังเคราะห์คอนเทนต์ใหม่
-                </p>
-              </div>
-              <div class="side-dual-item how-item">
-                <span class="badge-pill violet-sub">HOW (วิธีเล่า &amp; SFX)</span>
-                <p class="side-dual-text" id="insp-how">
-                  Contrarian Hook + Pattern Interrupt สลับมุมกล้องเร็วพร้อม Bass Boom
-                </p>
-              </div>
-            </div>
-
-            <!-- ACTION BUTTONS: LINK TO ONE-CLIP SCAN & SAVE TO LIBRARY -->
-            <div class="side-insp-actions-row">
-              <button type="button" class="btn-pill btn-primary btn-side-link" id="btn-insp-analyze" aria-label="ส่งคลิปนี้ไปวิเคราะห์เจาะลึกแบบ 1 คลิป">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                </svg>
-                <span>วิเคราะห์เจาะลึก (One-Clip Scan) &rarr;</span>
-              </button>
-
-              <button type="button" class="btn-pill btn-ghost btn-side-save" id="btn-insp-save" aria-label="เก็บคลิปนี้เข้าคลัง">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                  <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                </svg>
-                <span>+ เก็บเข้าคลัง</span>
-              </button>
-            </div>
-          </aside>
-
-        </div>
-
-        <!-- ========================================================================
-             3. FOLLOW THE EVIDENCE — PATTERN COMPARISON & EXAMPLES GRID (Creator Lab)
-             ======================================================================== -->
-        <div class="cl-findings-section" id="creator-lab-findings" aria-labelledby="cl-findings-heading">
-          <div class="cl-findings-header">
+        </section>
+        <section class="findings" id="findings" aria-labelledby="findings-heading">
+          <div class="findings-header">
             <div>
-              <span class="cl-eyebrow">FOLLOW THE EVIDENCE · THE REELS BEHIND THE NUMBERS</span>
-              <h3 id="cl-findings-heading" class="cl-findings-title">Which patterns connect? สำรวจหลักฐานคลิปจริงแยกตามโครงสร้าง</h3>
-              <p class="cl-findings-sub" id="cl-findings-context">เปรียบเทียบผลลัพธ์ของแต่ละโครงสร้างสคริปต์ พร้อมกดปุ่ม <strong>+ เลือกคลิปนี้</strong> จากตัวอย่างด้านล่างได้ทันที</p>
+              <div class="eyebrow">FOLLOW THE EVIDENCE</div>
+              <h2 id="findings-heading">Which patterns connect?</h2>
+              <p id="research-context" role="status"></p>
             </div>
+            <label class="findings-sort">Rank patterns &amp; examples by
+              <select id="research-sort">
+                <option value="reach">Median reach</option>
+                <option value="likeRate">Likes per 1k</option>
+                <option value="commentRate">Comments per 1k</option>
+              </select>
+            </label>
           </div>
-
-          <div class="cl-table-wrap">
-            <table class="cl-evidence-table">
+          <div class="research-summary" id="research-summary"></div>
+          <div class="comparison-toolbar">
+            <p>Choose two patterns to compare. Open examples to see their scripts.</p>
+            <button type="button" id="compare-selected" disabled>Compare 0 / 2</button>
+          </div>
+          <div class="table-wrap">
+            <table>
               <thead>
                 <tr>
-                  <th>Pattern / Structure</th>
+                  <th id="group-title">Hook mechanism</th>
                   <th>Reels</th>
-                  <th>Median Plays</th>
-                  <th>Median Likes / 1k</th>
-                  <th>Filter Examples</th>
+                  <th id="median-heading">Median views</th>
+                  <th>Likes / 1k</th>
+                  <th>Comments / 1k</th>
+                  <th>Examples</th>
+                  <th>Compare</th>
                 </tr>
               </thead>
-              <tbody id="cl-pattern-table-body">
-                <!-- Populated dynamically in research.js -->
-              </tbody>
+              <tbody id="group-table"></tbody>
             </table>
           </div>
-
-          <div class="cl-examples-header">
+          <p class="research-caveat">Rates are medians of each Reel’s response per 1,000 views or plays. Missing counts are excluded from that metric. Small samples are marked; patterns describe this archive, not what caused its performance.</p>
+          <div id="comparison" class="comparison" hidden></div>
+          <div class="examples-heading">
             <div>
-              <span class="cl-eyebrow">EXPLORE &amp; PICK THE EXAMPLES</span>
-              <h4 id="cl-examples-title" class="cl-examples-heading-txt">ตัวอย่างคลิปเด่นที่ตรงกับเงื่อนไข (คลิกเพื่อดูสคริปต์หรือกดเลือกเข้าชุด)</h4>
+              <span class="eyebrow">THE REELS BEHIND THE NUMBERS</span>
+              <h3 id="examples-title">Explore the examples</h3>
             </div>
+            <button type="button" id="examples-all" class="quiet" hidden>All matching patterns ↗</button>
           </div>
-
-          <div class="cl-example-grid" id="cl-example-grid">
-            <!-- Populated dynamically in research.js -->
+          <div class="example-grid" id="example-grid"></div>
+          <div class="examples-pagination">
+            <button type="button" id="examples-prev" class="quiet">← Previous</button>
+            <span id="examples-page" aria-live="polite"></span>
+            <button type="button" id="examples-next" class="quiet">Next →</button>
           </div>
-        </div>
-
+        </section>
+        <details class="run-log">
+          <summary>Run activity &amp; cost details <span id="run-state"></span></summary>
+          <div id="run-error" class="error"></div>
+          <form id="attach-form" hidden>
+            <label>Recover Apify run <input id="attach-id" placeholder="Actor run ID" required></label>
+            <button type="submit">Attach run</button>
+          </form>
+          <pre id="events"></pre>
+        </details>
+        <footer class="cl-footer">CREATOR LAB / POWERED BY JEV <span>Patterns describe this sample. They do not explain causation or predict virality.</span></footer>
       </div>
-    </section>
 
-    <!-- Unwanted cluttered sections hidden per user request: Structure Breakdown, Gallery, and Table -->
-    <div id="hidden-legacy-sections" hidden style="display: none !important;" aria-hidden="true">
-      <section class="script-structure-section" aria-labelledby="structure-heading">
-        <div class="mew-offer-card script-structure-card violet-accent">
-          <div class="structure-bars-container" id="structure-bars-list"></div>
-          <button type="button" id="btn-reset-structure-filter" hidden></button>
-        </div>
-      </section>
+      <dialog id="new-dialog" class="cl-dialog">
+        <form id="new-form">
+          <div class="dialog-header"><span class="eyebrow">START A RESEARCH RUN</span><button type="button" class="close" data-close="new-dialog" aria-label="Close">×</button></div>
+          <h2>Whose patterns<br>are we finding?</h2>
+          <label>Instagram handle<input name="creator" required placeholder="e.g. hormozi" pattern="[a-zA-Z0-9_.]{1,30}" autocomplete="off"></label>
+          <div class="form-row">
+            <label>Reels to collect<select name="limit"><option value="20">20 · pilot</option><option value="100">100</option><option value="500">500</option><option value="1000">1,000</option></select></label>
+            <label>Parallel requests<select name="concurrency"><option value="4">4</option><option value="8">8</option><option value="12">12</option></select></label>
+          </div>
+          <div class="form-row">
+            <label>Apify spending cap ($)<input name="budget" type="number" min="0.05" max="30" value="3" step="0.05"></label>
+            <label>Spoken language<select name="language"><option value="">Detect automatically</option><option value="en">English</option></select></label>
+          </div>
+          <p class="form-hint">Apify collects metadata. <span id="transcription-provider">Fireworks</span> transcribes. Jev labels the words. Optional Apify transcript, shares and download add-ons stay off.</p>
+          <label class="file-label">Or import an Apify JSON export<input type="file" id="import-file" accept="application/json,.json"></label>
+          <p id="new-error" class="error"></p>
+          <button class="primary full" type="submit">Create &amp; start analysis ↗</button>
+        </form>
+      </dialog>
 
-      <section class="channel-video-gallery-section" id="section-channel-gallery">
-        <span id="channel-video-gallery-count"></span>
-        <div id="channel-video-cards-grid"></div>
-      </section>
+      <dialog id="connections-dialog" class="cl-dialog">
+        <form id="connections-form">
+          <div class="dialog-header"><span class="eyebrow">LOCAL CONNECTIONS</span><button type="button" class="close" data-close="connections-dialog" aria-label="Close">×</button></div>
+          <h2>Connect the pipeline.</h2>
+          <p>Existing environment keys are used automatically. New keys entered here stay in server memory until restart.</p>
+          <label>Apify token <span id="apify-status"></span><input name="apify" type="password" autocomplete="off" placeholder="Keep existing configuration"></label>
+          <label>Fireworks API key <span id="fireworks-status"></span><input name="fireworks" type="password" autocomplete="off" placeholder="Keep existing configuration"></label>
+          <label>Groq API key (optional) <span id="groq-status"></span><input name="groq" type="password" autocomplete="off" placeholder="Keep existing configuration"></label>
+          <label>TypeSafe / Jev API key <span id="jev-status"></span><input name="jev" type="password" autocomplete="off" placeholder="Keep existing configuration"></label>
+          <p id="connections-result" class="form-hint"></p>
+          <button class="primary full" type="submit">Save &amp; verify connections ↗</button>
+        </form>
+      </dialog>
 
-      <section class="channel-clips-table-section" id="section-channel-table">
-        <span id="table-filter-caption"></span>
-        <input type="text" id="input-table-search" />
-        <table><tbody id="clips-table-body"></tbody></table>
-        <span id="pagination-info-text"></span>
-        <button type="button" id="btn-table-prev"></button>
-        <button type="button" id="btn-table-next"></button>
-      </section>
+      <dialog id="schema-dialog" class="cl-dialog">
+        <div class="dialog-header"><span class="eyebrow">THE CLASSIFICATION LENS</span><button type="button" class="close" data-close="schema-dialog" aria-label="Close">×</button></div>
+        <h2>Words first.<br>Numbers after.</h2>
+        <p>Jev receives the spoken transcript, its opening and numbered segments. Views, likes and captions are excluded. Metrics are joined after classification.</p>
+        <div id="schema-content"></div>
+        <p>Segment colors describe the role of each passage. Confidence describes model certainty, not the chance a Reel goes viral. Unknowns remain unknown.</p>
+      </dialog>
+
+      <div id="toast" role="status" hidden></div>
     </div>
 
+    <!-- Hidden Legacy & Test Compatibility Containers (Do not display visually) -->
+    <div id="hidden-legacy-sections" hidden style="display: none !important;" aria-hidden="true">
+      <form id="form-channel-scan"><input type="text" id="input-channel-handle" value="@mewteetawat" /><button type="submit" id="btn-start-channel-scan"></button></form>
+      <div id="channel-scan-initial-placeholder"></div>
+      <section id="section-channel-pattern-workspace">
+        <div id="creator-lab-picked-bar">
+          <strong id="picked-clips-count">0</strong>
+          <div id="picked-clips-chips"></div>
+          <button type="button" id="btn-picked-SelectAllOutliers"></button>
+          <button type="button" id="btn-picked-clear"></button>
+          <button type="button" id="btn-picked-save-all"></button>
+          <button type="button" id="btn-picked-send-remix"></button>
+        </div>
+        <button type="button" id="btn-insp-pick-clip"></button>
+        <div id="insp-anatomy-bar"></div>
+        <div id="insp-anatomy-legend"></div>
+        <div id="insp-transcript-segments"></div>
+        <table><tbody id="cl-pattern-table-body"></tbody></table>
+        <div id="cl-example-grid"></div>
+        <div id="reel-archive-grid"></div>
+        <svg id="scatter-svg"></svg>
+        <div id="scatter-tooltip"></div>
+      </section>
+      <section class="script-structure-section"><div id="structure-bars-list"></div><button type="button" id="btn-reset-structure-filter"></button></section>
+      <section id="section-channel-gallery"><span id="channel-video-gallery-count"></span><div id="channel-video-cards-grid"></div></section>
+      <section id="section-channel-table"><span id="table-filter-caption"></span><input type="text" id="input-table-search" /><table><tbody id="clips-table-body"></tbody></table><span id="pagination-info-text"></span><button type="button" id="btn-table-prev"></button><button type="button" id="btn-table-next"></button></section>
+    </div>
   </div>
 
   <!-- S03 Save Gate Modal is mounted at root body for flawless z-index overlay -->
