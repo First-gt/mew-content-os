@@ -436,4 +436,73 @@ describe('Topic: Founder Review & Pinpoint Fix Widget', () => {
       globalThis.document = prevDoc;
     }
   });
+
+  test('T-REV-14: #section-channel-pattern-workspace contains Creator Lab REA elements and ResearchController supports togglePickClip & savePickedClipsToLibrary', async () => {
+    const fs = await import('node:fs');
+    const path = await import('node:path');
+    const indexHtml = fs.readFileSync(path.resolve('src/index.html'), 'utf8');
+
+    for (const id of [
+      'id="creator-lab-picked-bar"',
+      'id="btn-insp-pick-clip"',
+      'id="btn-picked-save-all"',
+      'id="btn-picked-send-remix"',
+      'id="insp-anatomy-bar"',
+      'id="insp-transcript-segments"',
+      'id="cl-pattern-table-body"',
+      'id="cl-example-grid"'
+    ]) {
+      assert.ok(indexHtml.includes(id), `Expected src/index.html to contain ${id}`);
+    }
+
+    const { ResearchController } = await import('./research.js');
+    assert.equal(typeof ResearchController.prototype.togglePickClip, 'function');
+    assert.equal(typeof ResearchController.prototype.savePickedClipsToLibrary, 'function');
+
+    const dummyRoot = {
+      querySelector() { return null; },
+      querySelectorAll() { return []; }
+    };
+    const prevWin = globalThis.window;
+    const prevDoc = globalThis.document;
+    const prevStorage = globalThis.localStorage;
+    const memStorage = new MockStorage();
+    globalThis.localStorage = memStorage;
+    globalThis.document = {
+      getElementById() { return null; },
+      querySelector() { return null; },
+      querySelectorAll() { return []; },
+      addEventListener() {}
+    };
+    globalThis.window = {
+      dispatchEvent() {},
+      addEventListener() {}
+    };
+
+    try {
+      const ctrl = new ResearchController(dummyRoot);
+      assert.ok(ctrl.state.pickedClipIds instanceof Set);
+
+      ctrl.state.pickedClipIds.clear();
+      const picked = ctrl.togglePickClip('clip-scan-3');
+      assert.equal(picked, true);
+      assert.equal(ctrl.state.pickedClipIds.has('clip-scan-3'), true);
+
+      const saved = ctrl.savePickedClipsToLibrary(false);
+      assert.equal(saved.length, 1);
+      assert.equal(saved[0].clipId, 'clip-scan-3');
+
+      const stored = JSON.parse(memStorage.getItem('mew_user_saved_clips') || '[]');
+      assert.equal(stored.length, 1);
+      assert.equal(stored[0].clipId, 'clip-scan-3');
+
+      const unpicked = ctrl.togglePickClip('clip-scan-3');
+      assert.equal(unpicked, false);
+      assert.equal(ctrl.state.pickedClipIds.has('clip-scan-3'), false);
+    } finally {
+      globalThis.window = prevWin;
+      globalThis.document = prevDoc;
+      globalThis.localStorage = prevStorage;
+    }
+  });
 });
