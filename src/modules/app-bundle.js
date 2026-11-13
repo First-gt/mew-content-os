@@ -4117,6 +4117,9 @@ class ResearchController {
     this.renderClipsTable();
 
     // Trigger Live Decode Scanner HUD animation & stream clips into the Performance Map below
+    if (typeof this._clStartAnalysis === 'function') {
+      this._clStartAnalysis(query);
+    }
     this.runScanReplayAnimation(query, () => {
       this.renderScatterPlot(true);
     });
@@ -5788,19 +5791,19 @@ class ResearchController {
       $('#pipeline-label').textContent = job.synthetic ? 'MOTION REHEARSAL' : `${job.status.toUpperCase()} · ${completed.length}/${ps.length}`;
       $('#cost-detail').textContent = job.synthetic ? 'Synthetic data · no API calls' : `${audioCosts} · Apify ${money(job.costs.apify, 3)} · ${job.retries || 0} retries`;
       $('#notice').textContent = job.synthetic ? 'Motion rehearsal. All examples, portraits and metrics below are synthetic.' : `@${job.creator} · ${ps.length} retrieved Reels · ${completed.length} classified${excluded ? ` · ${excluded} excluded from speech analysis` : ''}${failed ? ` · ${failed} need retry` : ''} · Metrics are a collection-time snapshot${job.retries ? ' · Cost estimates may omit uncertain retry charges' : ''}`;
-      $('#focus-title').textContent = job.synthetic ? 'MOTION REHEARSAL · SYNTHETIC DATA' : `@${job.creator.toUpperCase()} / ${ps.length} REELS / CREATOR LAB`;
-      $('#intro-copy').textContent = job.synthetic ? 'Rehearse the movement. Collect a creator to find real patterns.' : `${ps.length} collected Reels. Explore the scripts behind the numbers.`;
+      $('#focus-title').textContent = job.synthetic ? 'MOTION REHEARSAL · SYNTHETIC DATA' : `@${job.creator.toUpperCase()} / ${ps.length} REELS / MEW CONTENT OS · CHANNEL MATRIX`;
+      $('#intro-copy').textContent = job.synthetic ? 'Hundreds of videos. A few recurring moves. Explore the words behind the numbers.' : `${ps.length} collected Reels. Explore the scripts behind the numbers.`;
       $('#notice').classList.toggle('real', !job.synthetic);
-      $('#run-label').textContent = job.synthetic ? 'THE CREATOR RESEARCH LAB' : `RESEARCHING @${job.creator.toUpperCase()}`;
+      $('#run-label').textContent = job.synthetic ? 'MEW CONTENT OS · CHANNEL MATRIX' : `RESEARCHING @${job.creator.toUpperCase()}`;
       $('#run-state').textContent = job.status;
       $('#run-error').textContent = job.error || '';
       $('#attach-form').hidden = !job.scrapeUncertain;
       $('#events').textContent = (job.events || []).slice().reverse().map(e => `${new Date(e.at).toLocaleTimeString()}  ${e.message}`).join('\n');
       const running = ['running', 'scraping'].includes(job.status);
-      $('#resume').hidden = job.synthetic || running;
-      $('#pause').hidden = job.synthetic || !running;
-      $('#export').hidden = job.synthetic;
-      $('#run-note').textContent = job.synthetic ? 'Rehearse the visual. Start an analysis to see real evidence.' : `${(job.elapsedMs / 1000).toFixed(1)}s recorded processing · ${completed.filter(p => p.analysis.review).length} need label review`;
+      if ($('#resume')) $('#resume').hidden = job.synthetic || running;
+      if ($('#pause')) $('#pause').hidden = job.synthetic || !running;
+      if ($('#export')) $('#export').hidden = job.synthetic;
+      $('#run-note').textContent = job.synthetic ? 'วางลิงก์ช่องแล้วกด Start analysis ↗ เพื่อเก็บหลักฐานจริง' : `${(job.elapsedMs / 1000).toFixed(1)}s recorded processing · ${completed.filter(p => p.analysis.review).length} need label review`;
     }
 
     function calculate() {
@@ -6142,12 +6145,12 @@ class ResearchController {
     function renderConnections() {
       const active = ['apify', boot.transcriptionProvider || 'groq', 'jev'];
       const count = active.filter(k => boot.connections[k]?.configured).length;
-      $('#connection-status').textContent = `${count}/3 keys configured`;
+      if ($('#connection-status')) $('#connection-status').textContent = `${count}/3 keys configured`;
       for (const k of ['apify', 'groq', 'fireworks', 'jev']) {
         const el = $(`#${k}-status`);
         if (el) el.textContent = boot.connections[k]?.verified ? '· key verified' : boot.connections[k]?.configured ? '· configured' : active.includes(k) ? '· needed' : '· optional';
       }
-      $('#transcription-provider').textContent = title(boot.transcriptionProvider || 'groq');
+      if ($('#transcription-provider')) $('#transcription-provider').textContent = title(boot.transcriptionProvider || 'groq');
     }
 
     function refreshRunSelect() {
@@ -6156,6 +6159,24 @@ class ResearchController {
       $('#run-select').value = current;
       renderConnections();
     }
+
+    const revealAnalysisResults = () => {
+      const emptyEl = $('#cl-pre-analysis-empty');
+      const resultsEl = $('#cl-analysis-results');
+      if (emptyEl) emptyEl.hidden = true;
+      if (resultsEl) resultsEl.hidden = false;
+    };
+
+    const parseCreatorHandle = (rawInput) => {
+      const str = String(rawInput || '').trim();
+      if (!str) return 'mewteetawat';
+      const atMatch = str.match(/@([a-zA-Z0-9_.]+)/);
+      if (atMatch) return atMatch[1];
+      const urlParts = str.replace(/\/+$/, '').split('/');
+      const last = urlParts[urlParts.length - 1] || '';
+      const cleaned = last.replace(/^@/, '').replace(/[^a-zA-Z0-9_.]/g, '');
+      return cleaned || 'mewteetawat';
+    };
 
     async function loadJob(id) {
       stopReplay();
@@ -6180,6 +6201,34 @@ class ResearchController {
       render();
       if (selected) selectPost(selected);
     }
+
+    async function startChannelAnalysis(rawInput, customLimit = null) {
+      const creator = parseCreatorHandle(rawInput);
+      const limitSelect = $('#cl-analysis-limit');
+      const limit = Number(customLimit || limitSelect?.value || 144);
+      const inputEl = $('#cl-analysis-input');
+      if (inputEl && rawInput) inputEl.value = rawInput;
+
+      revealAnalysisResults();
+      const createdJob = makeDemoJob(creator, limit, false);
+      localRuns.set(createdJob.id, createdJob);
+      boot.runs = [
+        { id: createdJob.id, creator, status: 'complete', createdAt: new Date().toISOString(), count: limit, completed: limit },
+        ...boot.runs.filter(r => r.id !== createdJob.id)
+      ];
+      refreshRunSelect();
+      await loadJob(createdJob.id);
+      if ($('#run-select')) $('#run-select').value = createdJob.id;
+      setTimeout(() => {
+        for (const b of $('#map-tiles').children) {
+          b.dataset.arrived = 'false';
+        }
+        layout();
+        replay();
+      }, 25);
+    }
+
+    this._clStartAnalysis = startChannelAnalysis;
 
     function stopReplay() {
       replayToken++;
@@ -6239,8 +6288,28 @@ class ResearchController {
     refreshRunSelect();
     loadJob('demo');
 
+    // Integrated Channel Analysis Form & Quick Preset Chips
+    const analysisForm = $('#cl-analysis-form');
+    if (analysisForm) {
+      analysisForm.onsubmit = e => {
+        e.preventDefault();
+        const raw = $('#cl-analysis-input')?.value || '@mewteetawat';
+        startChannelAnalysis(raw);
+      };
+    }
+
+    $$('[data-cl-preset]').forEach(btn => {
+      btn.onclick = () => {
+        const preset = btn.getAttribute('data-cl-preset') || '@mewteetawat';
+        startChannelAnalysis(preset);
+      };
+    });
+
     // Event bindings matching app.js 1:1
-    $('#run-select').onchange = e => loadJob(e.target.value).catch(err => toast(err.message));
+    $('#run-select').onchange = e => {
+      revealAnalysisResults();
+      loadJob(e.target.value).catch(err => toast(err.message));
+    };
     $('#dimension').onchange = e => {
       stopReplay();
       dimension = e.target.value;
@@ -6323,10 +6392,13 @@ class ResearchController {
       setTimeout(layout, 30);
     };
     for (const id of ['new', 'connections', 'schema']) {
-      $(`#${id}-open`).onclick = () => {
-        const dlg = $(`#${id}-dialog`);
-        if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
-      };
+      const openBtn = $(`#${id}-open`);
+      if (openBtn) {
+        openBtn.onclick = () => {
+          const dlg = $(`#${id}-dialog`);
+          if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+        };
+      }
     }
     $$('[data-close]').forEach(b => {
       b.onclick = () => {
@@ -6335,54 +6407,25 @@ class ResearchController {
       };
     });
 
-    $('#new-form').onsubmit = async e => {
-      e.preventDefault();
-      const b = e.submitter;
-      if (b) b.disabled = true;
-      $('#new-error').textContent = '';
-      try {
-        const data = Object.fromEntries(new FormData(e.target));
-        const creator = String(data.creator || '').replace(/^@/, '').trim() || 'creator';
-        const limit = Number(data.limit || 100);
-        const createdJob = makeDemoJob(creator, limit, false);
-        localRuns.set(createdJob.id, createdJob);
-        boot.runs = [
-          { id: createdJob.id, creator, status: 'complete', createdAt: new Date().toISOString(), count: limit, completed: limit },
-          ...boot.runs.filter(r => r.id !== createdJob.id)
-        ];
-        refreshRunSelect();
-        await loadJob(createdJob.id);
-        $('#run-select').value = createdJob.id;
-        $('#new-dialog').close();
-        replay();
-      } catch (err) {
-        $('#new-error').textContent = err.message;
-      } finally {
-        if (b) b.disabled = false;
-      }
-    };
-
-    $('#connections-form').onsubmit = async e => {
-      e.preventDefault();
-      const b = e.submitter;
-      if (b) b.disabled = true;
-      $('#connections-result').textContent = 'Checking provider access…';
-      try {
-        const data = Object.fromEntries(new FormData(e.target));
-        for (const k of ['apify', 'fireworks', 'groq', 'jev']) {
-          if (data[k] && String(data[k]).trim()) {
-            boot.connections[k] = { configured: true, verified: true };
-          }
+    if ($('#new-form')) {
+      $('#new-form').onsubmit = async e => {
+        e.preventDefault();
+        const b = e.submitter;
+        if (b) b.disabled = true;
+        $('#new-error').textContent = '';
+        try {
+          const data = Object.fromEntries(new FormData(e.target));
+          const creator = String(data.creator || '').replace(/^@/, '').trim() || 'creator';
+          const limit = Number(data.limit || 100);
+          await startChannelAnalysis(creator, limit);
+          $('#new-dialog').close();
+        } catch (err) {
+          $('#new-error').textContent = err.message;
+        } finally {
+          if (b) b.disabled = false;
         }
-        e.target.reset();
-        $('#connections-result').textContent = Object.entries(boot.connections).map(([k, v]) => `${title(k)}: ${v.verified ? 'verified' : 'key needed'}`).join(' · ');
-        renderConnections();
-      } catch (err) {
-        $('#connections-result').textContent = err.message;
-      } finally {
-        if (b) b.disabled = false;
-      }
-    };
+      };
+    }
 
     if (typeof ResizeObserver !== 'undefined') {
       new ResizeObserver(() => layout()).observe(stageEl);
@@ -6390,6 +6433,8 @@ class ResearchController {
 
     this._clTriggerArrival = () => {
       if (!job) return;
+      const resultsEl = $('#cl-analysis-results');
+      if (resultsEl && resultsEl.hidden) return;
       for (const b of $('#map-tiles').children) {
         b.dataset.arrived = 'false';
       }
