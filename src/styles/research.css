@@ -4347,3 +4347,119 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Integrated Channel Analysis Input Bar & Pre-Analysis Empty State */
+#panel-channel-scan-mode .intro-left {
+  flex: 1;
+  min-width: 0;
+}
+
+#panel-channel-scan-mode .cl-analysis-bar {
+  margin-top: 22px;
+  padding: 16px 18px;
+  background: #f9f8f2;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+#panel-channel-scan-mode .cl-analysis-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#panel-channel-scan-mode #cl-analysis-input {
+  flex: 1;
+  min-width: 240px;
+  padding: 11px 14px;
+  background: #fcfbf6;
+  border: 1px solid #ccd3c1;
+  border-radius: 5px;
+  color: var(--ink);
+  font: 13px var(--sans);
+}
+
+#panel-channel-scan-mode #cl-analysis-input:focus {
+  outline: 2px solid var(--dark);
+  outline-offset: 2px;
+}
+
+#panel-channel-scan-mode #cl-analysis-limit {
+  padding: 10px 12px;
+  background: #fcfbf6;
+  border: 1px solid #ccd3c1;
+  border-radius: 5px;
+  font: 12px var(--mono);
+  color: var(--ink);
+}
+
+#panel-channel-scan-mode #cl-analysis-submit {
+  padding: 11px 18px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+#panel-channel-scan-mode .cl-analysis-presets-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}
+
+#panel-channel-scan-mode .cl-presets-kicker {
+  font: 9px var(--mono);
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-right: 4px;
+}
+
+#panel-channel-scan-mode .cl-preset-chip {
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #edf0e4;
+  font: 11px var(--mono);
+  color: var(--dark);
+}
+
+#panel-channel-scan-mode .cl-preset-chip:hover {
+  background: var(--accent);
+  border-color: #b8c95a;
+}
+
+#panel-channel-scan-mode .cl-pre-analysis-empty {
+  margin: 18px 0 36px;
+  padding: 54px 32px;
+  background: #f9f8f2;
+  border: 1px dashed #b8c0ae;
+  border-radius: 6px;
+  text-align: center;
+}
+
+#panel-channel-scan-mode .cl-pre-empty-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+#panel-channel-scan-mode .cl-pre-analysis-empty h2 {
+  font: normal clamp(24px, 2.6vw, 34px)/1.25 var(--serif);
+  letter-spacing: -1px;
+  color: var(--ink);
+  margin: 14px 0 12px;
+}
+
+#panel-channel-scan-mode .cl-pre-analysis-empty h2 span {
+  font-style: italic;
+  color: #697b55;
+}
+
+#panel-channel-scan-mode .cl-pre-analysis-empty p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0;
+}
