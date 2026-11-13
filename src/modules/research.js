@@ -240,19 +240,36 @@ export function generateChannelDataset(channelHandle = '@mewteetawat') {
       tier = 'baseline';
     }
 
+    const topics = ['Creator Strategy', 'Mindset', 'Business', 'Relationships'];
+    const mechanisms = ['Curiosity', 'Contradiction', 'Recognition', 'Result / Proof'];
+    const topic = topics[i % topics.length];
+    const hookMechanism = mechanisms[(i * 3) % mechanisms.length];
+    const hookQuoteText = i < hooksPool.length ? template.hook : `${template.hook} (Vol. ${Math.floor(i / hooksPool.length) + 1})`;
+    const durSec = 30 + (i % 40);
+
+    const anatomy = [
+      { role: 'hook', start: 0.0, text: hookQuoteText },
+      { role: 'problem', start: 4.5, text: 'คนส่วนใหญ่ติดกับดักการทำซ้ำโดยไม่เข้าใจโครงสร้างเบื้องหลังที่ดึงสายตาคนดูไว้' },
+      { role: 'advice', start: 14.0, text: `ใช้แกน ${template.structure} แยกประเด็นสำคัญออกเป็นจังหวะสั้นๆ ที่กระชับและเห็นภาพทันที` },
+      { role: 'payoff', start: Math.max(22.0, durSec - 8), text: 'ผลลัพธ์คือคนดูดูจบคลิปและจดจำแก่นความคิดของคุณได้แม่นยำขึ้น' }
+    ];
+
     clips.push({
       id: `clip-scan-${i + 1}`,
       index: i + 1,
       creator: channelHandle.replace('@', ''),
       handle: channelHandle,
-      hook: i < hooksPool.length ? template.hook : `${template.hook} (Vol. ${Math.floor(i / hooksPool.length) + 1})`,
+      hook: hookQuoteText,
       structure: template.structure,
+      topic,
+      hookMechanism,
+      anatomy,
       views,
       likes,
       likeRate,
       tier,
-      duration: 30 + (i % 40),
-      durationText: `${30 + (i % 40)} วินาที`,
+      duration: durSec,
+      durationText: `${durSec} วินาที`,
       publishedDaysAgo: Math.floor(i * 1.6) + 1
     });
   }
@@ -285,7 +302,11 @@ export class ResearchController {
       filteredClips: [],
       selectedTierFilter: 'all', // 'all' | 'viral' | 'engagement' | 'solid' | 'baseline'
       selectedStructureFilter: 'all', // 'all' | structureId
+      topicFilter: 'all',
+      hookMechanismFilter: 'all',
+      dimensionBy: 'tier',
       selectedClipId: 'clip-scan-1',
+      pickedClipIds: new Set(['clip-scan-1', 'clip-scan-25']),
       archivePage: 1,
       archivePageSize: 24,
       tablePage: 1,
@@ -317,6 +338,11 @@ export class ResearchController {
       btnPrevArchive: this.root.querySelector('#btn-prev-archive'),
       btnNextArchive: this.root.querySelector('#btn-next-archive'),
       activeReelInspector: this.root.querySelector('#active-reel-inspector'),
+      inspPostIndex: this.root.querySelector('#insp-post-index'),
+      btnInspPickClip: this.root.querySelector('#btn-insp-pick-clip'),
+      inspAnatomyBar: this.root.querySelector('#insp-anatomy-bar'),
+      inspAnatomyLegend: this.root.querySelector('#insp-anatomy-legend'),
+      inspTranscriptSegments: this.root.querySelector('#insp-transcript-segments'),
       inspThumb: this.root.querySelector('#insp-thumb'),
       inspDuration: this.root.querySelector('#insp-duration'),
       inspStructure: this.root.querySelector('#insp-structure'),
@@ -331,6 +357,23 @@ export class ResearchController {
       inspHow: this.root.querySelector('#insp-how'),
       btnInspAnalyze: this.root.querySelector('#btn-insp-analyze'),
       btnInspSave: this.root.querySelector('#btn-insp-save'),
+
+      // Creator Lab Filters & Multi-Clip Picker Action Bar
+      clTopicFilter: this.root.querySelector('#cl-topic-filter'),
+      clHookFilter: this.root.querySelector('#cl-hook-filter'),
+      clDimensionSelect: this.root.querySelector('#cl-dimension-select'),
+      clClearFilters: this.root.querySelector('#cl-clear-filters'),
+      creatorLabPickedBar: this.root.querySelector('#creator-lab-picked-bar'),
+      pickedClipsCount: this.root.querySelector('#picked-clips-count'),
+      pickedClipsChips: this.root.querySelector('#picked-clips-chips'),
+      btnPickedSelectAllOutliers: this.root.querySelector('#btn-picked-SelectAllOutliers'),
+      btnPickedClear: this.root.querySelector('#btn-picked-clear'),
+      btnPickedSaveAll: this.root.querySelector('#btn-picked-save-all'),
+      btnPickedSendRemix: this.root.querySelector('#btn-picked-send-remix'),
+      clPatternTableBody: this.root.querySelector('#cl-pattern-table-body'),
+      clExampleGrid: this.root.querySelector('#cl-example-grid'),
+      clFindingsContext: this.root.querySelector('#cl-findings-context'),
+      clExamplesTitle: this.root.querySelector('#cl-examples-title'),
 
       // Mode 1: Single Clip Elements
       singleClipPlaceholder: this.root.querySelector('#single-clip-initial-placeholder'),
@@ -490,6 +533,8 @@ export class ResearchController {
     this.renderChannelVideoCards();
     this.renderScatterPlot();
     this.renderReelArchive();
+    this.renderCreatorLabEvidence();
+    this.renderPickedClipsBar();
     this.selectClip(this.state.selectedClipId, false);
     this.renderClipsTable();
     this.initTypewriter();
@@ -681,6 +726,12 @@ export class ResearchController {
     });
 
     // Active Reel Inspector Action Buttons
+    this.dom.btnInspPickClip?.addEventListener('click', () => {
+      if (this.state.selectedClipId) {
+        this.togglePickClip(this.state.selectedClipId);
+      }
+    });
+
     this.dom.btnInspAnalyze?.addEventListener('click', () => {
       const clip = this.state.channelClips.find(c => c.id === this.state.selectedClipId);
       if (clip) this.loadClipFromScatter(clip);
@@ -692,6 +743,49 @@ export class ResearchController {
         this.loadClipFromScatter(clip);
         this.openSaveModal();
       }
+    });
+
+    // Creator Lab Pattern Filters & Multi-Clip Picker Action Bar
+    this.dom.clTopicFilter?.addEventListener('change', (e) => {
+      this.state.topicFilter = e.target.value;
+      this.applyFilters();
+    });
+
+    this.dom.clHookFilter?.addEventListener('change', (e) => {
+      this.state.hookMechanismFilter = e.target.value;
+      this.applyFilters();
+    });
+
+    this.dom.clDimensionSelect?.addEventListener('change', (e) => {
+      this.state.dimensionBy = e.target.value;
+      this.renderCreatorLabEvidence();
+    });
+
+    this.dom.clClearFilters?.addEventListener('click', () => {
+      this.state.topicFilter = 'all';
+      this.state.hookMechanismFilter = 'all';
+      this.state.selectedTierFilter = 'all';
+      this.state.selectedStructureFilter = 'all';
+      if (this.dom.clTopicFilter) this.dom.clTopicFilter.value = 'all';
+      if (this.dom.clHookFilter) this.dom.clHookFilter.value = 'all';
+      this.dom.tierPillFilters.forEach(p => p.classList.toggle('active', p.getAttribute('data-tier') === 'all'));
+      this.applyFilters();
+    });
+
+    this.dom.btnPickedSelectAllOutliers?.addEventListener('click', () => {
+      this.selectAllOutlierClips();
+    });
+
+    this.dom.btnPickedClear?.addEventListener('click', () => {
+      this.clearPickedClips();
+    });
+
+    this.dom.btnPickedSaveAll?.addEventListener('click', () => {
+      this.savePickedClipsToLibrary(false);
+    });
+
+    this.dom.btnPickedSendRemix?.addEventListener('click', () => {
+      this.sendPickedClipsToRemix();
     });
 
     // Replay Scan Animation Button
@@ -1066,6 +1160,8 @@ export class ResearchController {
     this.renderChannelVideoCards();
     this.state.archivePage = 1;
     this.renderReelArchive();
+    this.renderCreatorLabEvidence();
+    this.renderPickedClipsBar();
     this.selectClip(this.state.filteredClips[0]?.id || '', false);
     this.renderClipsTable();
 
@@ -1176,6 +1272,25 @@ export class ResearchController {
       filtered = filtered.filter(c => c.tier === this.state.selectedTierFilter);
     }
 
+    // Filter by Topic (Creator Lab FIND YOUR PATTERN)
+    if (this.state.topicFilter && this.state.topicFilter !== 'all') {
+      filtered = filtered.filter(c => c.topic === this.state.topicFilter);
+    }
+
+    // Filter by Hook Mechanism (Creator Lab FIND YOUR PATTERN)
+    if (this.state.hookMechanismFilter && this.state.hookMechanismFilter !== 'all') {
+      filtered = filtered.filter(c => c.hookMechanism === this.state.hookMechanismFilter);
+    }
+
+    if (this.dom.clClearFilters) {
+      this.dom.clClearFilters.hidden = (
+        this.state.topicFilter === 'all' &&
+        this.state.hookMechanismFilter === 'all' &&
+        this.state.selectedTierFilter === 'all' &&
+        this.state.selectedStructureFilter === 'all'
+      );
+    }
+
     // Filter by Structure
     if (this.state.selectedStructureFilter !== 'all') {
       const targetStructure = SCRIPT_STRUCTURES.find(s => s.id === this.state.selectedStructureFilter);
@@ -1198,6 +1313,7 @@ export class ResearchController {
     this.renderScatterPlot();
     this.state.archivePage = 1;
     this.renderReelArchive();
+    this.renderCreatorLabEvidence();
     this.selectClip(this.state.filteredClips[0]?.id || '', false);
     this.renderClipsTable();
   }
@@ -1478,7 +1594,7 @@ export class ResearchController {
   }
 
   /**
-   * Render Reel Archive Mini Grid (Left Column of Image 2 Reference)
+   * Render Reel Archive Mini Grid (Left Column 01 / THUMBNAIL WALL with Multi-Clip Pick Button)
    */
   renderReelArchive() {
     const grid = this.dom.reelArchiveGrid;
@@ -1496,9 +1612,10 @@ export class ResearchController {
 
     grid.innerHTML = pageClips.map(clip => {
       const isSelected = clip.id === this.state.selectedClipId;
+      const isPicked = this.state.pickedClipIds.has(clip.id);
       return `
         <div 
-          class="reel-mini-card ${isSelected ? 'active-selected' : ''}" 
+          class="reel-mini-card ${isSelected ? 'active-selected' : ''} ${isPicked ? 'is-picked-card' : ''}" 
           data-reel-id="${clip.id}"
           tabindex="0"
           role="button"
@@ -1507,6 +1624,7 @@ export class ResearchController {
           <img src="assets/video_preview.png" alt="${clip.hook}" class="reel-mini-thumb" />
           <div class="reel-mini-overlay"></div>
           <span class="reel-mini-tag tier-${clip.tier}"></span>
+          <button type="button" class="btn-pick-clip ${isPicked ? 'is-picked' : ''}" data-pick-clip-id="${clip.id}" title="เลือกคลิปนี้">${isPicked ? '✓ เลือกแล้ว' : '+ เลือก'}</button>
           <span class="reel-mini-dur font-num">${clip.durationText || '48 วินาที'}</span>
         </div>
       `;
@@ -1517,20 +1635,32 @@ export class ResearchController {
       card.addEventListener('mouseenter', () => {
         this.selectClip(id, true);
       });
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-pick-clip')) return;
         this.selectClip(id, true);
       });
       card.addEventListener('keydown', (e) => {
+        if (e.target.closest('.btn-pick-clip')) return;
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           this.selectClip(id, true);
         }
       });
     });
+
+    grid.querySelectorAll('.btn-pick-clip').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const clipId = btn.getAttribute('data-pick-clip-id');
+        if (clipId) {
+          this.togglePickClip(clipId);
+        }
+      });
+    });
   }
 
   /**
-   * Selects and inspects a clip across Archive, Scatter Map, and Inspector Bar
+   * Selects and inspects a clip across Archive, Scatter Map, and UNDER THE FRAME Inspector Bar
    */
   selectClip(clipId, shouldSyncScatter = true) {
     const clip = this.state.channelClips.find(c => c.id === clipId);
@@ -1565,7 +1695,14 @@ export class ResearchController {
       });
     }
 
-    // 3. Update Active Reel Inspector
+    // 3. Update Active Reel Inspector (UNDER THE FRAME)
+    if (this.dom.inspPostIndex) {
+      const idx = (clip.index || 1).toString().padStart(2, '0');
+      this.dom.inspPostIndex.textContent = `${idx} / ${this.state.channelClips.length}`;
+    }
+
+    this.syncInspectorPickButton();
+
     if (this.dom.inspStructure) this.dom.inspStructure.textContent = clip.structure;
     if (this.dom.inspTierBadge) {
       const tierMap = {
@@ -1596,6 +1733,52 @@ export class ResearchController {
       this.dom.inspLikes.textContent = clip.likes >= 1000 ? `${(clip.likes / 1000).toFixed(1)}K` : (clip.likes || '14.9K');
     }
 
+    // 4. Creator Lab SCRIPT ANATOMY Bar & Timed Transcript Excerpts
+    const roleColors = {
+      hook: '#b3c966',
+      problem: '#cd937d',
+      advice: '#889f70',
+      payoff: '#b1a4c5',
+      cta: '#d2b266'
+    };
+    const roleLabels = {
+      hook: 'Hook',
+      problem: 'Problem',
+      advice: 'Method / Steps',
+      payoff: 'Payoff',
+      cta: 'CTA'
+    };
+    const anatomy = clip.anatomy || [
+      { role: 'hook', start: 0.0, text: clip.hook },
+      { role: 'problem', start: 5.0, text: 'ชี้จุดบอดที่คนทำคอนเทนต์ส่วนใหญ่เผชิญแต่ไม่รู้ตัว' },
+      { role: 'advice', start: 15.0, text: `แกน ${clip.structure} เพื่อจัดลำดับความคิดให้คนดูเข้าใจทันที` },
+      { role: 'payoff', start: 28.0, text: 'สรุปผลลัพธ์ที่นำไปปรับใช้ต่อยอดได้ทันที' }
+    ];
+
+    if (this.dom.inspAnatomyBar) {
+      this.dom.inspAnatomyBar.innerHTML = anatomy.map((seg, idx) => {
+        const col = roleColors[seg.role] || '#889f70';
+        return `<button type="button" class="cl-anatomy-seg-btn" data-seg-idx="${idx}" title="${roleLabels[seg.role] || seg.role}: ${seg.text}" style="flex:${Math.max(1, seg.text.length)};--seg-color:${col};background:${col};"></button>`;
+      }).join('');
+    }
+    if (this.dom.inspAnatomyLegend) {
+      this.dom.inspAnatomyLegend.innerHTML = anatomy.map(seg => {
+        const col = roleColors[seg.role] || '#889f70';
+        return `<span class="cl-legend-chip"><i class="cl-swatch" style="background:${col};"></i>${roleLabels[seg.role] || seg.role}</span>`;
+      }).join('');
+    }
+    if (this.dom.inspTranscriptSegments) {
+      this.dom.inspTranscriptSegments.innerHTML = anatomy.map((seg, idx) => {
+        const col = roleColors[seg.role] || '#889f70';
+        return `
+          <div class="cl-transcript-seg" id="cl-seg-${idx}" style="border-left-color:${col};">
+            <small class="font-num">${Number(seg.start).toFixed(1)}s · ${roleLabels[seg.role] || seg.role}</small>
+            <p>${seg.text}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
     // Dynamic explanation of why to link this clip (Strategic Intent)
     if (this.dom.inspWhyDesc) {
       const vText = clip.views >= 1000000 ? `${(clip.views / 1000000).toFixed(1)}M` : `${(clip.views / 1000).toFixed(1)}K`;
@@ -1616,6 +1799,293 @@ export class ResearchController {
     }
     if (this.dom.inspHow) {
       this.dom.inspHow.textContent = clip.how?.hookType || `โครงสร้าง ${clip.structure} + Pattern Interrupt ช่วงเปิดคลิปเพื่อตรึงคนดู`;
+    }
+  }
+
+  /**
+   * Toggle picking/selecting a clip into the user's multi-clip selection set
+   */
+  togglePickClip(clipId) {
+    if (!clipId) return;
+    if (!(this.state.pickedClipIds instanceof Set)) {
+      this.state.pickedClipIds = new Set(this.state.pickedClipIds || []);
+    }
+
+    const isNowPicked = !this.state.pickedClipIds.has(clipId);
+    if (isNowPicked) {
+      this.state.pickedClipIds.add(clipId);
+    } else {
+      this.state.pickedClipIds.delete(clipId);
+    }
+
+    // Update all pick buttons in archive & evidence grid without losing focus
+    this.root.querySelectorAll(`[data-pick-clip-id="${clipId}"]`).forEach(btn => {
+      btn.classList.toggle('is-picked', isNowPicked);
+      btn.textContent = isNowPicked ? '✓ เลือกแล้ว' : '+ เลือก';
+    });
+
+    this.root.querySelectorAll(`.reel-mini-card[data-reel-id="${clipId}"]`).forEach(card => {
+      card.classList.toggle('is-picked-card', isNowPicked);
+    });
+
+    this.syncInspectorPickButton();
+    this.renderPickedClipsBar();
+    return isNowPicked;
+  }
+
+  syncInspectorPickButton() {
+    const btn = this.dom.btnInspPickClip;
+    if (!btn) return;
+    const isPicked = this.state.pickedClipIds.has(this.state.selectedClipId);
+    btn.classList.toggle('is-picked', isPicked);
+    btn.setAttribute('aria-pressed', isPicked ? 'true' : 'false');
+    btn.textContent = isPicked
+      ? '✓ เลือกคลิปนี้แล้ว (คลิกเพื่อยกเลิก)'
+      : '🎯 + เลือกคลิปนี้เข้าชุดที่ต้องการ (Pick Clip)';
+  }
+
+  selectAllOutlierClips() {
+    const outliers = this.state.filteredClips.filter(c => c.tier === 'viral');
+    const targetList = outliers.length > 0 ? outliers : this.state.filteredClips.slice(0, 6);
+    targetList.forEach(c => this.state.pickedClipIds.add(c.id));
+    this.renderReelArchive();
+    this.renderCreatorLabEvidence();
+    this.syncInspectorPickButton();
+    this.renderPickedClipsBar();
+    this.showToast(`เลือกคลิป Viral Outliers จำนวน ${targetList.length} คลิปเข้าชุดเรียบร้อยแล้ว`, 'green');
+  }
+
+  clearPickedClips() {
+    this.state.pickedClipIds.clear();
+    this.renderReelArchive();
+    this.renderCreatorLabEvidence();
+    this.syncInspectorPickButton();
+    this.renderPickedClipsBar();
+    this.showToast('ล้างรายการคลิปที่เลือกไว้แล้ว', 'coral');
+  }
+
+  renderPickedClipsBar() {
+    const countEl = this.dom.pickedClipsCount;
+    const chipsEl = this.dom.pickedClipsChips;
+    const pickedIds = Array.from(this.state.pickedClipIds || []);
+
+    if (countEl) {
+      countEl.textContent = String(pickedIds.length);
+    }
+
+    if (chipsEl) {
+      if (pickedIds.length === 0) {
+        chipsEl.innerHTML = `<span class="picked-empty-hint">ยังไม่ได้เลือกคลิป — กดปุ่ม "+ เลือก" บนการ์ดคลิปย่อ, ในแถบเจาะลึก หรือกดเลือก Viral Outliers ทั้งหมด</span>`;
+      } else {
+        const pickedClips = pickedIds
+          .map(id => this.state.channelClips.find(c => c.id === id))
+          .filter(Boolean);
+        chipsEl.innerHTML = pickedClips.slice(0, 6).map(clip => `
+          <span class="picked-clip-chip" data-chip-clip-id="${clip.id}">
+            <span class="chip-title" title="${clip.hook}">#${clip.index} ${clip.hook.slice(0, 24)}…</span>
+            <button type="button" class="chip-remove-btn" data-unpick-clip-id="${clip.id}" aria-label="นำคลิป ${clip.index} ออก">&times;</button>
+          </span>
+        `).join('') + (pickedClips.length > 6 ? `<span class="picked-more-badge">+${pickedClips.length - 6} คลิป</span>` : '');
+
+        chipsEl.querySelectorAll('[data-unpick-clip-id]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = btn.getAttribute('data-unpick-clip-id');
+            if (id) this.togglePickClip(id);
+          });
+        });
+      }
+    }
+  }
+
+  /**
+   * Save all currently picked clips into Library (localStorage + CustomEvent + LibraryController sync)
+   */
+  savePickedClipsToLibrary(navigateToRemix = false) {
+    const pickedIds = Array.from(this.state.pickedClipIds || []);
+    if (pickedIds.length === 0 && this.state.selectedClipId) {
+      pickedIds.push(this.state.selectedClipId);
+      this.state.pickedClipIds.add(this.state.selectedClipId);
+      this.renderPickedClipsBar();
+    }
+
+    const pickedClips = pickedIds
+      .map(id => this.state.channelClips.find(c => c.id === id))
+      .filter(Boolean);
+
+    if (pickedClips.length === 0) {
+      this.showToast('กรุณาเลือกอย่างน้อย 1 คลิปที่ต้องการก่อนบันทึก', 'coral');
+      return [];
+    }
+
+    const now = Date.now();
+    const recordsToSave = pickedClips.map((clip, idx) => ({
+      id: `saved-picked-${now}-${idx}`,
+      noteId: `saved-picked-${now}-${idx}`,
+      sourceId: clip.id,
+      clipId: clip.id,
+      title: clip.hook,
+      subtitle: `Creator Lab Selected (${clip.structure} · ${clip.hookMechanism || 'Curiosity'})`,
+      creator: clip.creator || 'mewteetawat',
+      creatorAvatar: (clip.creator || 'M').slice(0, 2).toUpperCase(),
+      handle: clip.handle || '@mewteetawat',
+      duration: clip.durationText || '48 วินาที',
+      sourceUrl: '#',
+      thumbnailUrl: 'assets/video_preview.png',
+      vaultType: 'content',
+      lens: 'content',
+      savedOrigin: 'creator-lab-picker',
+      whyNote: `คัดเลือกจาก Creator Lab Pattern Workspace (${clip.structure}, ยอดวิว ${(clip.views / 1000).toFixed(1)}K, ${clip.likeRate} Likes/1k)`,
+      founderWhy: `คัดเลือกจาก Creator Lab Pattern Workspace (${clip.structure}, ยอดวิว ${(clip.views / 1000).toFixed(1)}K, ${clip.likeRate} Likes/1k)`,
+      why: `คัดเลือกจาก Creator Lab Pattern Workspace (${clip.structure}, ยอดวิว ${(clip.views / 1000).toFixed(1)}K, ${clip.likeRate} Likes/1k)`,
+      tags: [clip.structure, clip.topic || 'Creator Strategy', clip.hookMechanism || 'Viral Hook'],
+      aiInsight: `โครงสร้าง ${clip.structure} ที่พิสูจน์แล้วจากคลังคลิปจริง (${clip.likeRate} Likes/1k)`,
+      savedAt: new Date().toISOString()
+    }));
+
+    try {
+      const userSaved = JSON.parse(localStorage.getItem('mew_user_saved_clips') || '[]');
+      const existing = JSON.parse(localStorage.getItem('mew_saved_references') || '[]');
+      recordsToSave.forEach(rec => {
+        userSaved.unshift(rec);
+        existing.unshift(rec);
+      });
+      localStorage.setItem('mew_user_saved_clips', JSON.stringify(userSaved));
+      localStorage.setItem('mew_saved_references', JSON.stringify(existing));
+    } catch (err) {
+      console.warn('LocalStorage save failed:', err);
+    }
+
+    recordsToSave.forEach(rec => {
+      window.dispatchEvent(new CustomEvent('mew:reference-saved', {
+        bubbles: true,
+        detail: rec
+      }));
+    });
+
+    if (window.mewLibraryController && typeof window.mewLibraryController.syncFromStore === 'function') {
+      window.mewLibraryController.syncFromStore();
+      window.mewLibraryController.render();
+    }
+
+    this.showToast(`บันทึกคลิปที่เลือกจำนวน ${recordsToSave.length} คลิปเข้าสู่ My Library เรียบร้อยแล้ว`, 'green');
+
+    if (!navigateToRemix && typeof window.switchView === 'function') {
+      window.dispatchEvent(new CustomEvent('mew:navigate-library', { detail: { lens: 'content' } }));
+    }
+
+    return recordsToSave;
+  }
+
+  sendPickedClipsToRemix() {
+    const saved = this.savePickedClipsToLibrary(true);
+    if (saved.length > 0) {
+      this.showToast(`ส่ง ${saved.length} คลิปที่เลือกไปยัง Remix Studio เพื่อสังเคราะห์สคริปต์ใหม่`, 'violet');
+      if (typeof window.switchView === 'function') {
+        window.switchView('remix');
+      }
+    }
+  }
+
+  /**
+   * Creator Lab FOLLOW THE EVIDENCE Section (Pattern Comparison Table + Pickable Example Cards)
+   */
+  renderCreatorLabEvidence() {
+    const tbody = this.dom.clPatternTableBody;
+    const grid = this.dom.clExampleGrid;
+    if (!tbody && !grid) return;
+
+    const clips = this.state.filteredClips;
+    const dim = this.state.dimensionBy || 'structure';
+
+    // Group clips by selected dimension
+    const groupsMap = new Map();
+    clips.forEach(clip => {
+      const key = dim === 'tier'
+        ? (clip.tier === 'viral' ? 'Viral Outlier' : clip.tier === 'engagement' ? 'High Engagement' : clip.tier === 'solid' ? 'Solid Performer' : 'Baseline')
+        : dim === 'hookMechanism'
+          ? (clip.hookMechanism || 'Curiosity')
+          : (clip.structure || 'Problem → Solution');
+      if (!groupsMap.has(key)) groupsMap.set(key, []);
+      groupsMap.get(key).push(clip);
+    });
+
+    const groupRows = Array.from(groupsMap.entries()).map(([key, list]) => {
+      const sortedViews = list.map(c => c.views).sort((a, b) => a - b);
+      const medViews = sortedViews.length ? sortedViews[Math.floor(sortedViews.length / 2)] : 0;
+      const sortedRate = list.map(c => c.likeRate).sort((a, b) => a - b);
+      const medRate = sortedRate.length ? sortedRate[Math.floor(sortedRate.length / 2)] : 0;
+      return { key, count: list.length, medViews, medRate };
+    }).sort((a, b) => b.medViews - a.medViews);
+
+    if (tbody) {
+      tbody.innerHTML = groupRows.map(g => `
+        <tr>
+          <td><strong>${g.key}</strong></td>
+          <td class="font-num">${g.count}</td>
+          <td class="font-num">${(g.medViews / 1000).toFixed(1)}K</td>
+          <td class="font-num">${g.medRate.toFixed(1)}</td>
+          <td>
+            <button type="button" class="btn-pill btn-ghost btn-sm" data-cl-filter-group="${g.key}">ดูคลิปในกลุ่มนี้ &nearr;</button>
+          </td>
+        </tr>
+      `).join('');
+
+      tbody.querySelectorAll('[data-cl-filter-group]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const groupKey = btn.getAttribute('data-cl-filter-group');
+          if (this.dom.clExamplesTitle) {
+            this.dom.clExamplesTitle.textContent = `${groupKey} · ตัวอย่างคลิปเด่นที่คัดสรรแล้ว`;
+          }
+          this.dom.clExampleGrid?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      });
+    }
+
+    if (grid) {
+      const topExamples = [...clips].sort((a, b) => b.views - a.views).slice(0, 6);
+      grid.innerHTML = topExamples.map(clip => {
+        const isPicked = this.state.pickedClipIds.has(clip.id);
+        const vLabel = clip.views >= 1000000 ? `${(clip.views / 1000000).toFixed(1)}M` : `${(clip.views / 1000).toFixed(1)}K`;
+        return `
+          <article class="cl-example-card ${isPicked ? 'is-picked-card' : ''}" data-example-clip-id="${clip.id}">
+            <div class="cl-example-thumb-col">
+              <img src="assets/video_preview.png" alt="${clip.hook}" class="cl-example-img" />
+              <span class="cl-example-dur font-num">${clip.durationText || '48s'}</span>
+            </div>
+            <div class="cl-example-copy-col">
+              <small class="cl-example-meta">${clip.topic || 'Creator Strategy'} · ${clip.hookMechanism || 'Curiosity'} · ${clip.structure}</small>
+              <h5 class="cl-example-hook">“${clip.hook}”</h5>
+              <div class="cl-example-metrics font-num">
+                <span><strong>${vLabel}</strong> plays</span>
+                <span><strong>${clip.likeRate}</strong> likes / 1k</span>
+              </div>
+              <div class="cl-example-actions">
+                <button type="button" class="btn-pill btn-ghost btn-sm" data-cl-inspect-id="${clip.id}">ดูสคริปต์ &nearr;</button>
+                <button type="button" class="btn-pick-clip ${isPicked ? 'is-picked' : ''}" data-pick-clip-id="${clip.id}" title="เลือกคลิปนี้">${isPicked ? '✓ เลือกแล้ว' : '+ เลือก'}</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('[data-cl-inspect-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cid = btn.getAttribute('data-cl-inspect-id');
+          if (cid) {
+            this.selectClip(cid, true);
+            this.dom.activeReelInspector?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        });
+      });
+
+      grid.querySelectorAll('.btn-pick-clip').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const cid = btn.getAttribute('data-pick-clip-id');
+          if (cid) this.togglePickClip(cid);
+        });
+      });
     }
   }
 
