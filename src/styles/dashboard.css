@@ -740,10 +740,52 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
 }
 
-#view-overview .summary-icon-wrap,
-.dashboard-container .summary-icon-wrap {
+#view-overview .card-recent-research,
+.dashboard-container .card-recent-research {
+  border-top: 3.5px solid #ed765b !important;
+}
+
+#view-overview .card-vault-summary,
+.dashboard-container .card-vault-summary {
+  border-top: 3.5px solid #8a76ff !important;
+}
+
+#view-overview .card-remix-drafts,
+.dashboard-container .card-remix-drafts {
+  border-top: 3.5px solid #8a76ff !important;
+}
+
+#view-overview .card-continue-work,
+.dashboard-container .card-continue-work {
+  border-top: 3.5px solid #252c27 !important;
+}
+
+#view-overview .card-recent-research .summary-icon-wrap,
+.dashboard-container .card-recent-research .summary-icon-wrap {
+  background-color: rgba(237, 118, 91, 0.12) !important;
+  color: #ae4f3a !important;
+  border-color: rgba(237, 118, 91, 0.25) !important;
+}
+
+#view-overview .card-vault-summary .summary-icon-wrap,
+.dashboard-container .card-vault-summary .summary-icon-wrap,
+#view-overview .card-remix-drafts .summary-icon-wrap,
+.dashboard-container .card-remix-drafts .summary-icon-wrap {
+  background-color: rgba(138, 118, 255, 0.12) !important;
+  color: #8a76ff !important;
+  border-color: rgba(138, 118, 255, 0.25) !important;
+}
+
+#view-overview .card-continue-work .summary-icon-wrap,
+.dashboard-container .card-continue-work .summary-icon-wrap {
   background-color: #f8fafc !important;
+  color: #252c27 !important;
   border-color: #f1f5f9 !important;
+}
+
+.card-step-kicker {
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 #view-overview .summary-card:hover,
