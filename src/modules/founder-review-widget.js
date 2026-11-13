@@ -423,14 +423,16 @@ export class FounderReviewWidget {
       // Local server unreachable (e.g. remote user on GitHub Pages / different internet)
     }
 
-    if (this.cloudRelayUrl) {
+    if (!syncedReview && this.cloudRelayUrl && !(this.cloudRelayBackoffUntil && Date.now() < this.cloudRelayBackoffUntil)) {
       try {
         const relayRes = await this.fetchImpl(this.cloudRelayUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ eventType: 'NEW_REVIEW', review })
         });
-        if (!syncedReview && relayRes && relayRes.ok) {
+        if (relayRes && relayRes.status === 429) {
+          this.cloudRelayBackoffUntil = Date.now() + 5 * 60 * 1000;
+        } else if (relayRes && relayRes.ok) {
           const startedAt = new Date().toISOString();
           this.updateReviewStatus(review.id, 'IN_PROGRESS', { startedAt });
           this.startPolling();
@@ -489,11 +491,13 @@ export class FounderReviewWidget {
   async pollServerStatus() {
     if (!this.fetchImpl) return;
     let changed = false;
+    let localOk = false;
     const endpoint = this.getEffectiveApiEndpoint();
 
     try {
       const res = await this.fetchImpl(`${endpoint}?t=${Date.now()}`);
       if (res && res.ok && typeof res.json === 'function') {
+        localOk = true;
         const data = await res.json();
         if (data && Array.isArray(data.reviews)) {
           if (this.applyServerReviews(data.reviews)) {
@@ -505,10 +509,17 @@ export class FounderReviewWidget {
       // Ignore local server error when user is remote
     }
 
-    if (this.cloudRelayUrl) {
+    const pendingLocal = this.reviews.find(r => r.status === 'PENDING');
+    if (pendingLocal && localOk) {
+      await this.syncToServer(pendingLocal);
+    }
+
+    if (!localOk && this.cloudRelayUrl && !(this.cloudRelayBackoffUntil && Date.now() < this.cloudRelayBackoffUntil)) {
       try {
         const relayRes = await this.fetchImpl(`${this.cloudRelayUrl}/json?poll=1&since=30m`);
-        if (relayRes && relayRes.ok && typeof relayRes.text === 'function') {
+        if (relayRes && relayRes.status === 429) {
+          this.cloudRelayBackoffUntil = Date.now() + 5 * 60 * 1000;
+        } else if (relayRes && relayRes.ok && typeof relayRes.text === 'function') {
           const text = await relayRes.text();
           const latestById = new Map();
           for (const rawLine of String(text || '').split('\n')) {
