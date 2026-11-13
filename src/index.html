@@ -2108,23 +2108,27 @@
         </div>
 
         <!-- ========================================================================
-             2. PERFORMANCE MATRIX & SCATTER PLOT GRAPH (Below the Decoder HUD)
-             Clips glide in smoothly from the side (Reel Archive) into the graph!
+             2. CREATOR LAB EXPLORER: 01 / THUMBNAIL WALL → 02 / PERFORMANCE MAP
+             Faithful Creator Lab (artemnovitckii/creator-lab) + Multi-Clip Picker
              ======================================================================== -->
-        <div class="pattern-top-bar">
+        <div class="pattern-top-bar cl-intro-bar">
           <div class="pattern-title-group">
-            <h2 id="pattern-heading" class="pattern-main-headline">Watch the patterns form.</h2>
-            <p class="pattern-main-sub">โครงสร้างความสัมพันธ์ระหว่างยอดคนดู (Reach) กับการมีส่วนร่วม (Engagement) — คลิปจากด้านข้างจะบินเข้าสู่พิกัดบนกราฟอย่างสมูท</p>
+            <div class="cl-eyebrow-row">
+              <span class="pattern-status-dot" aria-hidden="true"></span>
+              <span class="cl-eyebrow-txt">THE CREATOR RESEARCH LAB · RESEARCH EDITION / 01</span>
+            </div>
+            <h2 id="pattern-heading" class="pattern-main-headline">Find the pattern. <span class="cl-italic-accent">See the proof.</span></h2>
+            <p class="pattern-main-sub">สำรวจคำพูดและกลไกเบื้องหลังตัวเลข — คลิกเลือกคลิปที่ต้องการจริงๆ จากกำแพงคลิปย่อ กราฟ หรือตารางหลักฐานเพื่อนำไปใช้งานต่อได้ทันที</p>
           </div>
           <div class="pattern-channel-meta">
             <span class="pattern-status-dot" aria-hidden="true"></span>
             <span class="pattern-handle" id="pattern-channel-handle">@mewteetawat</span>
             <span class="meta-sep">·</span>
-            <span class="pattern-mode-text">Saved Channel Analysis</span>
+            <span class="pattern-mode-text">Creator Lab Deep Archive</span>
           </div>
         </div>
 
-        <!-- 3 METRIC BOXES (Like Image 2) -->
+        <!-- 3 METRIC BOXES -->
         <div class="pattern-kpi-row">
           <div class="pattern-kpi-box">
             <span class="pattern-kpi-label">SCRIPTS LABELED</span>
@@ -2143,13 +2147,94 @@
           </div>
         </div>
 
-        <!-- MAIN TWO-COLUMN WORKSPACE: LEFT REEL ARCHIVE | RIGHT PERFORMANCE MAP -->
+        <!-- CREATOR LAB EXPLORER TOOLBAR + FIND YOUR PATTERN FILTER BAR -->
+        <div class="cl-explorer-shell">
+          <div class="cl-explorer-toolbar">
+            <div class="cl-canvas-flow">
+              <span class="cl-flow-step">01 / Thumbnail wall</span>
+              <span class="cl-flow-arrow" aria-hidden="true">&rarr;</span>
+              <span class="cl-flow-step">02 / Performance map</span>
+              <span class="cl-flow-arrow" aria-hidden="true">&rarr;</span>
+              <span class="cl-flow-step">03 / Under the frame &amp; Pick clips</span>
+            </div>
+            <div class="cl-toolbar-right">
+              <span class="cl-toolbar-hint">💡 กดปุ่ม <strong>+ เลือก</strong> บนคลิปใดก็ได้เพื่อคัดเข้าชุดที่ต้องการ</span>
+            </div>
+          </div>
+
+          <div class="cl-research-filters" aria-label="ค้นหาแพตเทิร์นของช่อง">
+            <div class="cl-research-prompt">
+              <span class="cl-eyebrow">FIND YOUR PATTERN</span>
+              <span class="cl-prompt-sub">เขากำลังพูดเรื่องอะไร และเปิดหัวคลิปดึงคนดูด้วยกลไกไหน?</span>
+            </div>
+            <label class="cl-filter-label" for="cl-topic-filter">
+              <span>TOPIC</span>
+              <select id="cl-topic-filter" class="cl-select">
+                <option value="all">All topics (ทุกหัวข้อ)</option>
+                <option value="Creator Strategy">Creator Strategy</option>
+                <option value="Mindset">Mindset</option>
+                <option value="Business">Business</option>
+                <option value="Relationships">Relationships</option>
+              </select>
+            </label>
+            <span class="cl-filter-join" aria-hidden="true">+</span>
+            <label class="cl-filter-label" for="cl-hook-filter">
+              <span>HOOK MECHANISM</span>
+              <select id="cl-hook-filter" class="cl-select">
+                <option value="all">All hooks (ทุกกลไกเปิดคลิป)</option>
+                <option value="Curiosity">Curiosity (กระตุ้นความอยากรู้)</option>
+                <option value="Contradiction">Contradiction (ขัดความเชื่อเดิม)</option>
+                <option value="Recognition">Recognition (ตรงใจคนดู)</option>
+                <option value="Result / Proof">Result / Proof (โชว์ผลลัพธ์)</option>
+              </select>
+            </label>
+            <label class="cl-filter-label" for="cl-dimension-select">
+              <span>COMPARE / COLOR BY</span>
+              <select id="cl-dimension-select" class="cl-select">
+                <option value="tier">Performance Tier</option>
+                <option value="structure">Script Structure</option>
+                <option value="hookMechanism">Hook Mechanism</option>
+              </select>
+            </label>
+            <button type="button" id="cl-clear-filters" class="btn-pill btn-ghost btn-sm" hidden>ล้างตัวกรอง &times;</button>
+          </div>
+        </div>
+
+        <!-- STICKY / FLOATING MULTI-CLIP PICKER ACTION BAR (ปุ่มกดสำหรับเลือกคลิปที่ต้องการจริงๆ ได้) -->
+        <div class="creator-lab-picked-bar" id="creator-lab-picked-bar" role="region" aria-label="แถบจัดการคลิปที่เลือกไว้">
+          <div class="picked-bar-left">
+            <div class="picked-count-pill">
+              <span class="picked-dot"></span>
+              <span>เลือกไว้ <strong id="picked-clips-count" class="font-num">0</strong> คลิปที่ต้องการ</span>
+            </div>
+            <div class="picked-clips-chips" id="picked-clips-chips" aria-live="polite">
+              <span class="picked-empty-hint">ยังไม่ได้เลือกคลิป — กดปุ่ม "+ เลือก" บนการ์ดคลิปย่อ, ในแถบเจาะลึก หรือกดเลือก Viral Outliers ทั้งหมด</span>
+            </div>
+          </div>
+          <div class="picked-bar-actions">
+            <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-picked-SelectAllOutliers" title="เลือกคลิประดับ Viral Outliers ทั้งหมดทันที">
+              <span>⚡ เลือก Viral Outliers ทั้งหมด</span>
+            </button>
+            <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-picked-clear" title="ล้างรายการคลิปที่เลือกไว้">
+              <span>ล้างที่เลือก</span>
+            </button>
+            <button type="button" class="btn-pill btn-primary btn-sm" id="btn-picked-save-all">
+              <span>📥 บันทึกคลิปที่เลือกทั้งหมดเข้า Library</span>
+            </button>
+            <button type="button" class="btn-pill btn-secondary btn-sm" id="btn-picked-send-remix">
+              <span>🧪 ส่งคลิปที่เลือกไปต่อยอดใน Remix Studio</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- MAIN THREE-COLUMN CREATOR LAB STAGE: 01 THUMBNAIL WALL | 02 PERFORMANCE MAP | 03 UNDER THE FRAME -->
         <div class="pattern-two-col-layout">
           
-          <!-- LEFT: REEL ARCHIVE (Grid of mini clip thumbnails) -->
+          <!-- LEFT: 01 / THUMBNAIL WALL (REEL ARCHIVE WITH PICK BUTTON ON EVERY TILE) -->
           <aside class="reel-archive-card" aria-label="คลังคลิปย่อ Reel Archive">
             <div class="archive-header-row">
               <div class="archive-title-group">
+                <span class="cl-panel-tag">01 / THUMBNAIL WALL</span>
                 <h3 class="archive-title">REEL ARCHIVE</h3>
                 <span class="archive-range font-num" id="archive-range-text">1 - 24 of 440</span>
               </div>
@@ -2159,15 +2244,16 @@
               </div>
             </div>
 
-            <div class="reel-archive-grid" id="reel-archive-grid" role="list" aria-label="รายการคลิปย่อ">
+            <div class="reel-archive-grid" id="reel-archive-grid" role="list" aria-label="รายการคลิปย่อพร้อมปุ่มกดเลือก">
               <!-- Populated dynamically via research.js -->
             </div>
           </aside>
 
-          <!-- RIGHT: PERFORMANCE MAP (SCATTER PLOT WITH THUMBNAIL POINTS) -->
+          <!-- CENTER: 02 / PERFORMANCE MAP (SCATTER PLOT WITH THUMBNAIL POINTS) -->
           <div class="performance-map-card" aria-label="แผนที่ผลงาน Performance Map">
             <div class="perf-map-header">
               <div class="perf-map-title-group">
+                <span class="cl-panel-tag">02 / PERFORMANCE MAP · FROM SCRIPT TO PERFORMANCE</span>
                 <h3 class="perf-map-title">PERFORMANCE MAP</h3>
                 <span class="perf-map-axis-hint font-num">LIKES / 1K PLAYS &uarr; vs PLAYS · LOG SCALE &rarr;</span>
               </div>
@@ -2244,19 +2330,31 @@
                 <span>เส้นประสีส้ม = ค่ามัธยฐานของช่อง (Median Views: 358.4K)</span>
               </div>
               <div class="meta-right">
-                <span class="interactive-hint">💡 เอาเมาส์ทาบหรือคลิกคลิปบนกราฟ เพื่อดูสแกนเจาะลึกที่แถบด้านข้าง &rarr;</span>
+                <span class="interactive-hint">💡 คลิกคลิปบนกราฟเพื่อดูสคริปต์ หรือดับเบิลคลิกเพื่อเลือกเข้าชุดทันที &rarr;</span>
               </div>
             </div>
           </div>
 
-          <!-- RIGHT COLUMN: CREATOR LAB DEEP SCAN SIDE INSPECTOR (แถบด้านข้างสแกนเจาะลึกคลิป) -->
+          <!-- RIGHT COLUMN: 03 / UNDER THE FRAME — CREATOR LAB INSPECTOR -->
           <aside class="creator-lab-side-inspector active-reel-inspector" id="active-reel-inspector" aria-label="แถบด้านข้างสแกนเจาะลึกคลิป">
+            <div class="cl-inspector-eyebrow-row">
+              <span class="cl-inspector-kicker">UNDER THE FRAME</span>
+              <span class="cl-inspector-index font-num" id="insp-post-index">01 / 440</span>
+            </div>
+
             <div class="side-insp-header">
               <div class="side-insp-badge-row">
                 <span class="badge-pill tier-badge green" id="insp-tier-badge">Viral Outlier</span>
                 <span class="side-insp-live-tag"><span class="pulse-dot"></span> DEEP SCAN</span>
               </div>
               <span class="side-insp-handle font-num" id="insp-handle">@mewteetawat</span>
+            </div>
+
+            <!-- PROMINENT PICK CLIP BUTTON (ปุ่มกดเลือกคลิปที่ต้องการจริงๆ) -->
+            <div class="side-insp-pick-banner">
+              <button type="button" class="btn-insp-pick-clip" id="btn-insp-pick-clip" aria-pressed="false">
+                🎯 + เลือกคลิปนี้เข้าชุดที่ต้องการ (Pick Clip)
+              </button>
             </div>
 
             <!-- Media Preview Card -->
@@ -2288,11 +2386,28 @@
             <div class="side-insp-hook-box">
               <div class="side-insp-hook-label">
                 <span class="insp-structure-tag font-num" id="insp-structure">Problem → Solution</span>
-                <span class="hook-kicker-txt">Hook Quote</span>
+                <span class="hook-kicker-txt">Opening Hook Quote</span>
               </div>
               <h4 class="side-insp-hook" id="insp-hook">
                 "อย่าก๊อปปี้คลิปคนอื่นทั้งดุ้น ถ้าคุณยังไม่ได้แยก WHAT ออกจาก HOW"
               </h4>
+            </div>
+
+            <!-- CREATOR LAB SCRIPT ANATOMY BAR & TIMED TRANSCRIPT SEGMENTS -->
+            <div class="cl-anatomy-block">
+              <div class="cl-anatomy-heading">
+                <span>SCRIPT ANATOMY</span>
+                <small id="insp-anatomy-note">Timed transcript excerpts</small>
+              </div>
+              <div class="cl-anatomy-bar" id="insp-anatomy-bar" role="group" aria-label="สัดส่วนโครงสร้างสคริปต์">
+                <!-- Populated dynamically in research.js -->
+              </div>
+              <div class="cl-anatomy-legend" id="insp-anatomy-legend">
+                <!-- Populated dynamically in research.js -->
+              </div>
+              <div class="cl-transcript-list" id="insp-transcript-segments">
+                <!-- Populated dynamically in research.js -->
+              </div>
             </div>
 
             <!-- WHY LINK THIS CLIP? (อธิบายเจาะลึกทำไมควรวิเคราะห์คลิปนี้) -->
@@ -2345,6 +2460,47 @@
             </div>
           </aside>
 
+        </div>
+
+        <!-- ========================================================================
+             3. FOLLOW THE EVIDENCE — PATTERN COMPARISON & EXAMPLES GRID (Creator Lab)
+             ======================================================================== -->
+        <div class="cl-findings-section" id="creator-lab-findings" aria-labelledby="cl-findings-heading">
+          <div class="cl-findings-header">
+            <div>
+              <span class="cl-eyebrow">FOLLOW THE EVIDENCE · THE REELS BEHIND THE NUMBERS</span>
+              <h3 id="cl-findings-heading" class="cl-findings-title">Which patterns connect? สำรวจหลักฐานคลิปจริงแยกตามโครงสร้าง</h3>
+              <p class="cl-findings-sub" id="cl-findings-context">เปรียบเทียบผลลัพธ์ของแต่ละโครงสร้างสคริปต์ พร้อมกดปุ่ม <strong>+ เลือกคลิปนี้</strong> จากตัวอย่างด้านล่างได้ทันที</p>
+            </div>
+          </div>
+
+          <div class="cl-table-wrap">
+            <table class="cl-evidence-table">
+              <thead>
+                <tr>
+                  <th>Pattern / Structure</th>
+                  <th>Reels</th>
+                  <th>Median Plays</th>
+                  <th>Median Likes / 1k</th>
+                  <th>Filter Examples</th>
+                </tr>
+              </thead>
+              <tbody id="cl-pattern-table-body">
+                <!-- Populated dynamically in research.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="cl-examples-header">
+            <div>
+              <span class="cl-eyebrow">EXPLORE &amp; PICK THE EXAMPLES</span>
+              <h4 id="cl-examples-title" class="cl-examples-heading-txt">ตัวอย่างคลิปเด่นที่ตรงกับเงื่อนไข (คลิกเพื่อดูสคริปต์หรือกดเลือกเข้าชุด)</h4>
+            </div>
+          </div>
+
+          <div class="cl-example-grid" id="cl-example-grid">
+            <!-- Populated dynamically in research.js -->
+          </div>
         </div>
 
       </div>
