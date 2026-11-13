@@ -2630,3 +2630,599 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ==============================================================================
+   8. CREATOR LAB REA EDITION + MULTI-CLIP PICKER (#section-channel-pattern-workspace)
+   Inspired by artemnovitckii/creator-lab with real multi-clip selection
+   ============================================================================== */
+
+.cl-intro-bar .cl-eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.cl-eyebrow-txt,
+.cl-eyebrow,
+.cl-panel-tag {
+  font-family: 'JetBrains Mono', 'DM Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5b6b57;
+}
+
+.cl-italic-accent {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  color: #4f6a42;
+  font-weight: 500;
+}
+
+/* Creator Lab Explorer Toolbar & FIND YOUR PATTERN Filter Bar */
+.cl-explorer-shell {
+  border: 1px solid #d8ddd0;
+  border-radius: 14px;
+  background: #f9f8f2;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.cl-explorer-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.7rem 1.1rem;
+  border-bottom: 1px solid #d8ddd0;
+  background: #f3f2ea;
+}
+
+.cl-canvas-flow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #252c27;
+}
+
+.cl-flow-step {
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  background: #e5eadb;
+  color: #26392d;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+}
+
+.cl-flow-arrow {
+  color: #7c9668;
+  font-weight: 800;
+}
+
+.cl-toolbar-hint {
+  font-size: 0.78rem;
+  color: #52584e;
+}
+
+.cl-research-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  background: #edf0e4;
+}
+
+.cl-research-prompt {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-right: 0.5rem;
+}
+
+.cl-prompt-sub {
+  font-size: 0.75rem;
+  color: #5c6257;
+}
+
+.cl-filter-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #5b6356;
+  letter-spacing: 0.05em;
+}
+
+.cl-select {
+  padding: 0.42rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid #c9d1be;
+  background: #fafbf5;
+  color: #252c27;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 155px;
+  cursor: pointer;
+}
+
+.cl-filter-join {
+  font-family: Georgia, serif;
+  font-size: 1.25rem;
+  color: #7c8b70;
+}
+
+/* Sticky / Floating Multi-Clip Picker Action Bar */
+.creator-lab-picked-bar {
+  position: sticky;
+  top: 0.65rem;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  padding: 0.85rem 1.15rem;
+  margin-bottom: 1.15rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #223327 0%, #2d4233 100%);
+  color: #f4f2eb;
+  border: 1.5px solid #b8d458;
+  box-shadow: 0 12px 28px rgba(34, 51, 39, 0.22);
+}
+
+.picked-bar-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 260px;
+}
+
+.picked-count-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: #d8ee72;
+  color: #1d2b20;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.picked-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #223327;
+}
+
+.picked-clips-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.picked-empty-hint {
+  font-size: 0.78rem;
+  color: #d0d7c8;
+}
+
+.picked-clip-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.24rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(216, 238, 114, 0.45);
+  color: #f7f9f0;
+  font-size: 0.73rem;
+}
+
+.chip-remove-btn {
+  border: 0;
+  background: rgba(0, 0, 0, 0.28);
+  color: #d8ee72;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.chip-remove-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.picked-more-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #d8ee72;
+  padding: 0.2rem 0.45rem;
+}
+
+.picked-bar-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.creator-lab-picked-bar .btn-ghost {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f4f2eb;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.creator-lab-picked-bar .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.creator-lab-picked-bar .btn-primary {
+  background: #d8ee72;
+  color: #1c2a1f;
+  border-color: #d8ee72;
+  font-weight: 800;
+}
+
+.creator-lab-picked-bar .btn-primary:hover {
+  background: #e5f78e;
+}
+
+.creator-lab-picked-bar .btn-secondary {
+  background: #ed765b;
+  color: #ffffff;
+  border: 1px solid #ed765b;
+  font-weight: 700;
+}
+
+/* Pick Button on every Mini Reel Card (.btn-pick-clip) */
+.reel-mini-card {
+  position: relative;
+}
+
+.reel-mini-card.is-picked-card {
+  outline: 2.5px solid #26392d !important;
+  box-shadow: 0 0 0 3px #d8ee72 !important;
+}
+
+.btn-pick-clip {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 6;
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: rgba(25, 35, 28, 0.84);
+  color: #ffffff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1.25;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-pick-clip:hover {
+  background: #26392d;
+  border-color: #d8ee72;
+  transform: scale(1.04);
+}
+
+.btn-pick-clip.is-picked {
+  background: #d8ee72;
+  color: #1a291e;
+  border-color: #26392d;
+  font-weight: 800;
+}
+
+/* UNDER THE FRAME Inspector Upgrades */
+.cl-inspector-eyebrow-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.55rem;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid #dcded2;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: #636b5e;
+}
+
+.side-insp-pick-banner {
+  margin-bottom: 0.75rem;
+}
+
+.btn-insp-pick-clip {
+  width: 100%;
+  padding: 0.62rem 0.9rem;
+  border-radius: 10px;
+  border: 1.5px solid #26392d;
+  background: #f4f7ea;
+  color: #1f3124;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.btn-insp-pick-clip:hover {
+  background: #e5efd0;
+}
+
+.btn-insp-pick-clip.is-picked {
+  background: #26392d;
+  color: #d8ee72;
+  border-color: #26392d;
+  box-shadow: 0 4px 12px rgba(38, 57, 45, 0.22);
+}
+
+/* Creator Lab SCRIPT ANATOMY Bar & Transcript Excerpts */
+.cl-anatomy-block {
+  padding: 0.75rem 0.85rem;
+  border-radius: 10px;
+  background: #f4f3eb;
+  border: 1px solid #dcded2;
+  margin-bottom: 0.75rem;
+}
+
+.cl-anatomy-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #555c50;
+  letter-spacing: 0.05em;
+}
+
+.cl-anatomy-bar {
+  display: flex;
+  height: 9px;
+  gap: 2px;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #e2e5d8;
+}
+
+.cl-anatomy-seg-btn {
+  border: 0;
+  padding: 0;
+  height: 100%;
+  min-width: 6px;
+  cursor: pointer;
+}
+
+.cl-anatomy-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 0.55rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: #5f6659;
+}
+
+.cl-legend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.cl-swatch {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.cl-transcript-list {
+  max-height: 145px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-right: 0.25rem;
+}
+
+.cl-transcript-seg {
+  border-left: 3px solid #889f70;
+  padding-left: 0.55rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: #252c27;
+}
+
+.cl-transcript-seg small {
+  display: block;
+  font-size: 0.62rem;
+  color: #6b7064;
+}
+
+.cl-transcript-seg p {
+  margin: 0.1rem 0 0;
+}
+
+/* FOLLOW THE EVIDENCE Section */
+.cl-findings-section {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #d8ddd0;
+}
+
+.cl-findings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
+.cl-findings-title {
+  font-family: Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+  color: #252c27;
+  margin: 0.25rem 0;
+}
+
+.cl-findings-sub {
+  font-size: 0.82rem;
+  color: #5f6659;
+  margin: 0;
+}
+
+.cl-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #d8ddd0;
+  border-radius: 12px;
+  background: #f9f8f2;
+  margin-bottom: 1.35rem;
+}
+
+.cl-evidence-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.cl-evidence-table th {
+  text-align: left;
+  padding: 0.65rem 0.9rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  color: #636b5e;
+  border-bottom: 1px solid #d8ddd0;
+  background: #f1f2e8;
+}
+
+.cl-evidence-table td {
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid #e6e9de;
+}
+
+.cl-examples-header {
+  margin-bottom: 0.85rem;
+}
+
+.cl-examples-heading-txt {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0.2rem 0 0;
+  color: #252c27;
+}
+
+.cl-example-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.9rem;
+}
+
+.cl-example-card {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  border: 1px solid #d8ddd0;
+  border-radius: 12px;
+  background: #f9f8f2;
+  overflow: hidden;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.cl-example-card.is-picked-card {
+  border-color: #26392d;
+  box-shadow: 0 0 0 2px #d8ee72;
+}
+
+.cl-example-thumb-col {
+  position: relative;
+  background: #dfe4d5;
+  min-height: 140px;
+}
+
+.cl-example-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cl-example-dur {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: rgba(25, 35, 28, 0.82);
+  color: #ffffff;
+  font-size: 0.64rem;
+}
+
+.cl-example-copy-col {
+  padding: 0.75rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.cl-example-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.64rem;
+  color: #636b5e;
+}
+
+.cl-example-hook {
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0;
+  color: #252c27;
+}
+
+.cl-example-metrics {
+  display: flex;
+  gap: 0.85rem;
+  font-size: 0.75rem;
+  color: #4f574b;
+  margin-top: auto;
+}
+
+.cl-example-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid #e4e7dc;
+}
+
+.cl-example-actions .btn-pick-clip {
+  position: static;
+  padding: 0.28rem 0.65rem;
+  font-size: 0.72rem;
+}
