@@ -3482,6 +3482,7 @@ class ResearchController {
     this.renderPickedClipsBar();
     this.selectClip(this.state.selectedClipId, false);
     this.renderClipsTable();
+    this.initCreatorLabExactEngine();
     this.initTypewriter();
   }
 
@@ -3761,8 +3762,13 @@ class ResearchController {
       this.dom.panelSingleMode.hidden = true;
       this.dom.panelChannelMode.classList.add('active');
       this.dom.panelChannelMode.hidden = false;
-      // Refresh scatter plot on first tab switch
-      requestAnimationFrame(() => this.renderScatterPlot());
+      // Refresh Creator Lab stage layout & scatter plot on tab switch
+      requestAnimationFrame(() => {
+        this.renderScatterPlot();
+        if (typeof this._clTriggerArrival === 'function') {
+          this._clTriggerArrival();
+        }
+      });
     }
   }
 
@@ -5533,6 +5539,862 @@ class ResearchController {
     };
 
     this.typewriterTimer = setTimeout(tick, 150);
+  }
+
+  /**
+   * Exact 1:1 Creator Lab Engine (http://127.0.0.1:5190/)
+   * Mounted inside #panel-channel-scan-mode
+   */
+  initCreatorLabExactEngine() {
+    const panel = this.dom.panelChannelMode;
+    if (!panel || typeof panel.querySelector !== 'function') return;
+    const stageEl = panel.querySelector('#stage');
+    if (!stageEl) return;
+
+    const shell = panel.querySelector('#cl-app-shell') || panel;
+    const $ = s => panel.querySelector(s);
+    const $$ = s => [...panel.querySelectorAll(s)];
+
+    const VERSION = 'script-anatomy-v1';
+    const DIMENSIONS = {
+      topic: { title: 'Topic', criteria: { business: 'Business building, entrepreneurship, operations', money: 'Personal finance, income, investing', marketing: 'Marketing, sales, audience building, content', mindset: 'Beliefs, motivation, resilience, confidence', habits: 'Productivity, discipline, daily routines', relationships: 'Relationships, communication, social life', health: 'Health, fitness, nutrition, wellbeing', technology: 'Technology, AI, software, tools', other: 'A clear topic outside the other choices', unclear: 'Insufficient speech, ambiguous, or no fitting category' } },
+      opening: { title: 'Opening move', criteria: { question: 'Opens by asking a question', instruction: 'Opens with a directive to the viewer', claim: 'Opens with an assertion or observation', story: 'Opens by narrating an event or personal experience', dialogue: 'Opens with quoted or conversational dialogue', unclear: 'Insufficient speech, ambiguous, or no fitting category' } },
+      mechanism: { title: 'Hook mechanism', criteria: { contradiction: 'Challenges a stated familiar belief or expectation', curiosity: 'Withholds a specific answer or creates an explicit information gap', result: 'Promises or shows a concrete desirable outcome in words', mistake: 'Warns of a mistake, cost, risk or loss', recognition: 'Names a recognizable viewer situation or frustration', story: 'Introduces an event whose outcome is unresolved', direct: 'States the subject or advice directly without another clear mechanism', unclear: 'Insufficient speech, ambiguous, or no fitting category' } },
+      structure: { title: 'Script structure', criteria: { story: 'Events unfold and lead to a lesson', steps: 'A sequence, checklist, or list of tips', problem_solution: 'A problem is introduced, followed by a remedy', explanation: 'Explains how or why something works', comparison: 'Compares two or more approaches or alternatives', opinion: 'Argues a point of view', qa: 'Question and answer exchange', unclear: 'Insufficient speech, ambiguous, or no fitting category' } },
+      evidence: { title: 'Evidence offered', criteria: { example: 'Concrete illustrative example or worked scenario', personal: 'Personal anecdote or claimed firsthand experience', numbers: 'Numerical result or quantitative claim', source: 'Named external person, publication or study', reasoning: 'An explicit chain of reasoning without concrete evidence', none: 'No explicit support is offered', unclear: 'Insufficient speech, ambiguous, or no fitting category' } },
+      emotion: { title: 'Emotional appeal', criteria: { aspiration: 'Desire for achievement or a better future', concern: 'Fear, risk, worry or potential loss', relief: 'Reassurance, validation or relief', surprise: 'Unexpected revelation or incongruity', amusement: 'Humor or entertainment', neutral: 'Mostly informative, without a clear emotional appeal', unclear: 'Insufficient speech, ambiguous, or no fitting category' } },
+      specificity: { title: 'Advice specificity', criteria: { none: 'No advice is given', principle: 'General principle with no concrete action', action: 'A specific action the viewer could perform', sequence: 'Multiple ordered, concrete actions the viewer could follow', unclear: 'Insufficient speech, ambiguous, or no fitting category' } },
+      cta: { title: 'Spoken CTA', criteria: { none: 'No explicit social or commercial call to action', follow: 'Follow or subscribe', engage: 'Like, save, or share', comment: 'Comment or reply', visit: 'Visit a link, website or other resource', buy: 'Purchase or book', multiple: 'Multiple different explicit calls to action', unclear: 'Insufficient speech, ambiguous, or no fitting category' } }
+    };
+    const ROLES = {
+      hook: 'Creates the initial reason to keep listening',
+      setup: 'Supplies context needed to understand the main point',
+      problem: 'Names an obstacle, mistake, cost or conflict',
+      example: 'Gives an illustration, anecdote, evidence or concrete case',
+      advice: 'Gives the main recommendation or explanation of what to do',
+      payoff: 'Resolves the opening question or delivers the key conclusion',
+      cta: 'Explicit request to follow, comment, share, visit or purchase',
+      other: 'Transition or material without another clear role'
+    };
+
+    const artwork = (i) => {
+      const colors = ['#dccfb3', '#94a795', '#d07d61', '#9bafbd', '#c6b5aa', '#ac9f7c'];
+      const c = colors[i % 6];
+      return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160"><rect width="120" height="160" fill="${c}"/><path d="M0 160 Q5 103 60 96 Q115 103 120 160" fill="#282d29"/><ellipse cx="60" cy="62" rx="28" ry="35" fill="#e4bd97"/><path d="M32 59 Q25 16 60 20 Q100 18 88 61 L78 41 Q56 51 38 40Z" fill="#34312c"/><path d="M45 63 h5 M71 63 h5" stroke="#30312b" stroke-width="3"/><path d="M52 80 Q60 84 68 79" stroke="#7d4a3b" fill="none"/><rect x="10" y="120" width="100" height="23" fill="#f7f1df"/><text x="60" y="135" font-family="sans-serif" font-size="9" text-anchor="middle" fill="#21241f">DEMO FRAME ${i + 1}</text></svg>`;
+    };
+
+    const makeDemoJob = (creatorHandle = 'demo.creator', count = 144, isSynthetic = true) => {
+      const examples = [
+        ['question', 'curiosity', 'explanation', 'Why do some ideas stay in your notes for months?', 'The next step is usually too vague. Write down one thing you can finish in ten minutes.', 'principle'],
+        ['claim', 'contradiction', 'problem_solution', 'A longer to-do list can make your day less productive.', 'Every new item competes with the one that matters. Pick one outcome before opening your inbox.', 'action'],
+        ['instruction', 'mistake', 'steps', 'Stop rewriting the same opening ten times.', 'Write the useful part first. Then explain who needs it. Build the opening from that.', 'sequence'],
+        ['story', 'story', 'story', 'Last week I found a notebook full of unfinished ideas.', 'One had a clear next step. I finished that one first. That gave me a better way to plan the others.', 'action'],
+        ['claim', 'result', 'explanation', 'One clear example can make a complicated idea easier to explain.', 'Take a familiar task and show the exact change. Let the example do some of the explaining.', 'action'],
+        ['claim', 'recognition', 'opinion', 'You know that feeling when you work all day and still have nothing to show?', 'Sometimes you need a smaller definition of finished. Choose something you can actually complete today.', 'action']
+      ];
+      const now = Date.now();
+      const posts = Array.from({ length: count }, (_, i) => {
+        const e = examples[i % examples.length];
+        const confidence = 0.72 + (i % 23) / 100;
+        const label = v => ({ value: v, confidence });
+        const views = Math.round(2400 * Math.pow(1.057, i % 112) * (1 + (i % 3) * 0.6));
+        const segments = [
+          { id: 's0', start: 0, end: 6, text: e[3], value: 'hook', confidence },
+          { id: 's1', start: 6, end: 17, text: e[4], value: i % 2 ? 'advice' : 'example', confidence },
+          { id: 's2', start: 17, end: 23, text: 'Start with one example you can use today.', value: 'payoff', confidence }
+        ];
+        return {
+          id: `rehearsal-${i}`,
+          creator: creatorHandle,
+          url: '',
+          publishedAt: new Date(now - (20 + i) * 864e5).toISOString(),
+          scrapedAt: new Date(now).toISOString(),
+          caption: 'Synthetic fixture for motion rehearsal',
+          likes: Math.round(views * (0.009 + (i * 13 % 70) / 1000)),
+          comments: i * 3,
+          views,
+          plays: null,
+          duration: 23 + (i % 50),
+          thumbnailUrl: `/demo-art/${i % 12}.svg`,
+          videoUrl: '',
+          status: 'complete',
+          transcript: { text: segments.map(s => s.text).join(' '), segments, source: 'synthetic fixture' },
+          analysis: {
+            schemaVersion: VERSION,
+            model: 'synthetic fixture',
+            labels: {
+              topic: label(i % 3 ? 'habits' : 'marketing'),
+              opening: label(e[0]),
+              mechanism: label(e[1]),
+              structure: label(e[2]),
+              evidence: label(i % 2 ? 'reasoning' : 'example'),
+              emotion: label(i % 3 ? 'aspiration' : 'relief'),
+              specificity: label(e[5]),
+              cta: label('none')
+            },
+            anatomy: segments,
+            opening: e[3],
+            inputTokens: null,
+            costUsd: isSynthetic ? null : 0.00038,
+            review: false,
+            completedAt: new Date(now).toISOString()
+          }
+        };
+      });
+      return {
+        id: isSynthetic ? 'demo' : `run-${creatorHandle}`,
+        creator: creatorHandle,
+        status: isSynthetic ? 'rehearsal' : 'complete',
+        synthetic: isSynthetic,
+        posts,
+        events: isSynthetic ? [] : [{ at: new Date(now).toISOString(), message: `Completed analysis for @${creatorHandle} (${count} Reels)` }],
+        costs: { apify: isSynthetic ? null : 0.45 },
+        elapsedMs: isSynthetic ? 0 : 14200,
+        retries: 0
+      };
+    };
+
+    // research.mjs functions
+    const median = values => {
+      const a = values.filter(v => typeof v === 'number' && Number.isFinite(v)).sort((a, b) => a - b);
+      return a.length ? (a[Math.floor((a.length - 1) / 2)] + a[Math.ceil((a.length - 1) / 2)]) / 2 : null;
+    };
+    const known = value => typeof value === 'number' && Number.isFinite(value) && value >= 0;
+    const rate = (post, field, metric) => known(post[field]) && known(post[metric]) && post[metric] > 0 ? post[field] / post[metric] * 1000 : null;
+    const filterPosts = (posts, { topic = 'all', hook = 'all', dimension = 'mechanism', minAgeDays = 0, minConfidence = 0, maxDuration = 0, dedupe = true, now = Date.now() } = {}) => {
+      return posts.filter(p => (!dedupe || !p.duplicateOf) && (!minAgeDays || (p.publishedAt && (now - Date.parse(p.publishedAt)) / 864e5 >= minAgeDays)) && (!maxDuration || (known(p.duration) && p.duration <= maxDuration)) && (topic === 'all' || (!p.excludedReason && p.analysis?.labels.topic?.value === topic)) && (hook === 'all' || (!p.excludedReason && p.analysis?.labels.mechanism?.value === hook)) && (!minConfidence || [dimension, ...(topic === 'all' ? [] : ['topic']), ...(hook === 'all' ? [] : ['mechanism'])].every(key => p.analysis?.labels[key]?.confidence >= minConfidence)));
+    };
+    const summarize = (posts, metric = 'views') => {
+      const values = {
+        reach: posts.map(p => p[metric]).filter(known),
+        likes: posts.map(p => p.likes).filter(known),
+        likeRate: posts.map(p => rate(p, 'likes', metric)).filter(v => v !== null),
+        commentRate: posts.map(p => rate(p, 'comments', metric)).filter(v => v !== null)
+      };
+      return {
+        n: posts.length,
+        ...Object.fromEntries(Object.entries(values).map(([k, v]) => [k, median(v)])),
+        counts: Object.fromEntries(Object.entries(values).map(([k, v]) => [k, v.length]))
+      };
+    };
+    const groupPosts = (posts, dimension = 'mechanism', metric = 'views') => {
+      const buckets = new Map();
+      for (const p of posts) {
+        if (!p.analysis || p.excludedReason) continue;
+        const key = p.analysis.labels[dimension]?.value || 'unclear';
+        if (!buckets.has(key)) buckets.set(key, []);
+        buckets.get(key).push(p);
+      }
+      return [...buckets].map(([key, posts]) => ({ key, posts, ...summarize(posts, metric) }));
+    };
+    const sortExamples = (posts, sort = 'reach', metric = 'views') => {
+      const score = p => sort === 'likeRate' ? rate(p, 'likes', metric) : sort === 'commentRate' ? rate(p, 'comments', metric) : known(p[metric]) ? p[metric] : null;
+      return posts.slice().sort((a, b) => {
+        const av = score(a), bv = score(b);
+        if (av === null) return bv === null ? a.id.localeCompare(b.id) : 1;
+        if (bv === null) return -1;
+        return bv - av || a.id.localeCompare(b.id);
+      });
+    };
+
+    // app.js state & helpers
+    const escape = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const openingLine = p => {
+      const text = p.analysis?.opening || p.transcript?.text || '';
+      const sentence = text.match(/^.*?[.!?](?:\s|$)/s)?.[0]?.trim();
+      return sentence || ((text.length > 180 ? text.slice(0, 177) + '…' : text));
+    };
+    const title = s => String(s ?? 'unknown').replaceAll('_', ' ').replace(/^./, c => c.toUpperCase());
+    const compact = n => n === null || n === undefined ? 'Unknown' : new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }).format(n);
+    const money = (n, d = 4) => n === null ? 'Unknown' : `$${n.toFixed(d)}`;
+    const colors = ['#899967', '#c58e65', '#8babc0', '#bf8585', '#a39dc0', '#81aaa0', '#c2b275', '#929789', '#849d65', '#bb9279'];
+    const roleColors = { hook: '#b3c966', setup: '#a8b9b0', problem: '#cd937d', example: '#87a9bd', advice: '#889f70', payoff: '#b1a4c5', cta: '#d2b266', other: '#bcc2b4', unclear: '#bcc2b4' };
+
+    let boot = {
+      token: 'local-rea-token',
+      transcriptionProvider: 'fireworks',
+      dimensions: DIMENSIONS,
+      roles: ROLES,
+      version: VERSION,
+      connections: {
+        fireworks: { configured: false, verified: false },
+        apify: { configured: false, verified: false },
+        groq: { configured: false, verified: false },
+        jev: { configured: false, verified: false }
+      },
+      runs: []
+    };
+    const localRuns = new Map();
+    let job = null;
+    let selected = null;
+    let dimension = 'mechanism';
+    let category = 'all';
+    let plot = [];
+    let groups = [];
+    let visible = [];
+    let replaying = false;
+    let replayToken = 0;
+    let replayRevealed = new Set();
+    let metricsInitialized = false;
+    let compareKeys = new Set();
+    let comparisonOpen = false;
+    let examplePage = 0;
+
+    function toast(text) {
+      const t = $('#toast');
+      if (!t) return;
+      t.textContent = text;
+      t.hidden = false;
+      setTimeout(() => { t.hidden = true; }, 5500);
+    }
+
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    const safeLink = s => {
+      try {
+        const u = new URL(s);
+        return u.protocol === 'https:' ? u.href : '';
+      } catch {
+        return '';
+      }
+    };
+    const imageURL = p => {
+      const m = String(p.thumbnailUrl || '').match(/\/demo-art\/(\d+)\.svg$/);
+      if (m) {
+        return 'data:image/svg+xml;utf8,' + encodeURIComponent(artwork(Number(m[1])));
+      }
+      return job.synthetic ? p.thumbnailUrl : `http://127.0.0.1:5190/media/${job.id}/${p.id}`;
+    };
+    const colorFor = val => colors[Math.max(0, Object.keys(boot.dimensions[dimension].criteria).indexOf(val)) % colors.length];
+    const value = p => p.excludedReason ? (p.status === 'no_audio' ? 'no_audio' : 'too_little_speech') : p.analysis?.labels[dimension]?.value || (p.status === 'failed' ? 'needs_retry' : 'unclassified');
+
+    function readStats() {
+      const ps = job.posts;
+      const completed = ps.filter(p => p.analysis);
+      const transcribed = ps.filter(p => p.transcript);
+      const excluded = ps.filter(p => p.excludedReason).length;
+      const failed = ps.filter(p => p.status === 'failed').length;
+      $('#stat-collected').textContent = compact(ps.length);
+      $('#stat-transcribed').textContent = job.synthetic ? 'Demo' : compact(transcribed.length);
+      $('#stat-classified').textContent = job.synthetic ? 'Demo' : compact(completed.length);
+      const paid = completed.filter(p => !p.analysis.reused);
+      const jevUnknown = paid.some(p => p.analysis.costUsd === null);
+      const jev = paid.reduce((s, p) => s + (p.analysis.costUsd || 0), 0);
+      const audioCosts = ['groq', 'fireworks'].map(provider => {
+        const audio = transcribed.filter(p => p.transcript.source === provider && !p.transcript.reused);
+        return audio.length ? `${title(provider)} ${audio.some(p => p.transcript.costUsd == null) ? 'unknown' : `~${money(audio.reduce((sum, p) => sum + p.transcript.costUsd, 0), 3)}`}` : null;
+      }).filter(Boolean).join(' · ') || 'Transcription $0';
+      $('#stat-cost').textContent = job.synthetic ? 'Demo' : jevUnknown ? 'Unknown' : money(jev);
+      $('#pipeline-progress').style.width = `${ps.length ? completed.length / ps.length * 100 : 0}%`;
+      $('#pipeline-label').textContent = job.synthetic ? 'MOTION REHEARSAL' : `${job.status.toUpperCase()} · ${completed.length}/${ps.length}`;
+      $('#cost-detail').textContent = job.synthetic ? 'Synthetic data · no API calls' : `${audioCosts} · Apify ${money(job.costs.apify, 3)} · ${job.retries || 0} retries`;
+      $('#notice').textContent = job.synthetic ? 'Motion rehearsal. All examples, portraits and metrics below are synthetic.' : `@${job.creator} · ${ps.length} retrieved Reels · ${completed.length} classified${excluded ? ` · ${excluded} excluded from speech analysis` : ''}${failed ? ` · ${failed} need retry` : ''} · Metrics are a collection-time snapshot${job.retries ? ' · Cost estimates may omit uncertain retry charges' : ''}`;
+      $('#focus-title').textContent = job.synthetic ? 'MOTION REHEARSAL · SYNTHETIC DATA' : `@${job.creator.toUpperCase()} / ${ps.length} REELS / CREATOR LAB`;
+      $('#intro-copy').textContent = job.synthetic ? 'Rehearse the movement. Collect a creator to find real patterns.' : `${ps.length} collected Reels. Explore the scripts behind the numbers.`;
+      $('#notice').classList.toggle('real', !job.synthetic);
+      $('#run-label').textContent = job.synthetic ? 'THE CREATOR RESEARCH LAB' : `RESEARCHING @${job.creator.toUpperCase()}`;
+      $('#run-state').textContent = job.status;
+      $('#run-error').textContent = job.error || '';
+      $('#attach-form').hidden = !job.scrapeUncertain;
+      $('#events').textContent = (job.events || []).slice().reverse().map(e => `${new Date(e.at).toLocaleTimeString()}  ${e.message}`).join('\n');
+      const running = ['running', 'scraping'].includes(job.status);
+      $('#resume').hidden = job.synthetic || running;
+      $('#pause').hidden = job.synthetic || !running;
+      $('#export').hidden = job.synthetic;
+      $('#run-note').textContent = job.synthetic ? 'Rehearse the visual. Start an analysis to see real evidence.' : `${(job.elapsedMs / 1000).toFixed(1)}s recorded processing · ${completed.filter(p => p.analysis.review).length} need label review`;
+    }
+
+    function calculate() {
+      const metric = $('#metric').value;
+      visible = filterPosts(job.posts, {
+        topic: $('#topic-filter').value,
+        hook: $('#hook-filter').value,
+        dimension,
+        minAgeDays: +$('#age').value,
+        minConfidence: +$('#confidence').value,
+        maxDuration: +$('#duration').value,
+        dedupe: $('#dedupe').checked
+      });
+      groups = groupPosts(visible, dimension, metric);
+      const sort = $('#research-sort').value;
+      groups.sort((a, b) => (b[sort] ?? -Infinity) - (a[sort] ?? -Infinity) || b.n - a.n || a.key.localeCompare(b.key));
+      plot = visible.filter(p => p.analysis && !p.excludedReason && p[metric] > 0 && p.likes !== null && (category === 'all' || value(p) === category)).map(p => ({ post: p, x: p[metric], y: rate(p, 'likes', metric) }));
+    }
+
+    function renderLegend() {
+      const counts = new Map();
+      for (const p of visible) counts.set(value(p), (counts.get(value(p)) || 0) + 1);
+      $('#legend').innerHTML = `<button type="button" data-category="all" class="${category === 'all' ? 'active' : ''}">All patterns <b>${visible.length}</b></button>` + [...counts].sort((a, b) => b[1] - a[1]).map(([k, n]) => `<button type="button" data-category="${escape(k)}" class="${category === k ? 'active' : ''}"><i class="swatch" style="--color:${colorFor(k)}"></i>${title(k)} <b>${n}</b></button>`).join('');
+      $('#legend').querySelectorAll('button').forEach(b => {
+        b.onclick = () => {
+          stopReplay();
+          category = b.dataset.category;
+          examplePage = 0;
+          render();
+        };
+      });
+    }
+
+    function makeTile(p) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tile';
+      b.dataset.id = p.id;
+      b.dataset.initial = p.creator?.[0]?.toUpperCase() || '?';
+      b.setAttribute('aria-label', `Inspect Reel ${p.id}`);
+      const img = document.createElement('img');
+      img.src = imageURL(p);
+      img.alt = '';
+      img.decoding = 'async';
+      img.onerror = () => b.classList.add('missing');
+      b.append(img);
+      const bar = document.createElement('span');
+      bar.className = 'tile-color';
+      b.append(bar);
+      b.onclick = () => selectPost(p.id);
+      return b;
+    }
+
+    function buildTiles() {
+      for (const [selector, posts] of [['#tiles', job.posts], ['#map-tiles', job.posts.filter(p => p.analysis && !p.excludedReason)]]) {
+        const node = $(selector);
+        const wanted = new Set(posts.map(p => p.id));
+        for (const tile of [...node.children]) if (!wanted.has(tile.dataset.id)) tile.remove();
+        const current = new Set([...node.children].map(n => n.dataset.id));
+        for (const p of posts) if (!current.has(p.id)) node.append(makeTile(p));
+      }
+    }
+
+    function layout() {
+      if (!job) return;
+      const stage = $('#stage');
+      if (!stage) return;
+      if (shell.classList.contains('focused') && !shell.classList.contains('portrait') && window.innerWidth > 760) {
+        const height = Math.max(330, Math.floor(window.innerHeight - (stage.getBoundingClientRect().top + window.scrollY) - 48));
+        if (stage.style.height !== `${height}px`) stage.style.height = `${height}px`;
+        $('.inspector').style.maxHeight = `${height + 70}px`;
+      } else {
+        stage.style.height = '';
+        $('.inspector').style.maxHeight = '';
+      }
+      const w = stage.clientWidth || 980;
+      const h = stage.clientHeight || 465;
+      const stacked = w < 680;
+      stage.classList.add('map', 'simultaneous');
+      const wallW = stacked ? w : Math.floor(w * .43) - 15;
+      const wallH = stacked ? Math.floor(h * .36) : h;
+      const mapX = stacked ? 0 : wallW + 30;
+      const mapY = stacked ? wallH + 25 : 0;
+      const mapW = w - mapX;
+      const mapH = h - mapY;
+      $('#wall-label').style.cssText = 'left:0;top:0';
+      $('#map-label').style.cssText = `left:${mapX}px;top:${mapY}px`;
+      $('#panel-divider').style.cssText = stacked ? `left:0;top:${wallH + 9}px;width:${w}px;height:1px` : `left:${wallW + 14}px;top:0;width:1px;height:${h}px`;
+      const gap = 3;
+      const columns = Math.max(5, Math.ceil(Math.sqrt(Math.max(1, visible.length) * wallW / Math.max(80, wallH - 32) * 1.2)));
+      const cell = Math.min(70, (wallW - (columns - 1) * gap) / columns);
+      const tileH = Math.min(cell * 1.25, (wallH - 35) / Math.max(1, Math.ceil(visible.length / columns)) - gap);
+      const domain = visible.filter(p => p.analysis && !p.excludedReason && p[$('#metric').value] > 0 && p.likes !== null).map(p => ({ x: p[$('#metric').value], y: p.likes / p[$('#metric').value] * 1000 }));
+      const lo = Math.floor(Math.log10(domain.length ? Math.min(...domain.map(p => p.x)) : 1000));
+      const hi = Math.max(lo + 1, Math.ceil(Math.log10(domain.length ? Math.max(...domain.map(p => p.x)) : 10000)));
+      const ymax = Math.max(10, Math.ceil(Math.max(...domain.map(p => p.y), 1) / 10) * 10);
+      const left = mapX + 38, right = 18, top = mapY + 48, bottom = 42, pw = Math.max(1, mapW - 38 - right), ph = Math.max(1, mapH - 48 - bottom);
+      const xy = p => [left + (Math.log10(p.x) - lo) / (hi - lo) * pw, top + (1 - p.y / ymax) * ph];
+      const lookup = new Map(visible.map((p, i) => [p.id, i]));
+      const posts = new Map(job.posts.map(p => [p.id, p]));
+      const wallPositions = new Map();
+      const styleTile = (b, p) => {
+        b.style.setProperty('--color', colorFor(value(p)));
+        b.classList.toggle('selected', p.id === selected);
+        b.title = `${p.analysis?.opening || p.id} · ${compact(p[$('#metric').value])} ${$('#metric').value}`;
+      };
+      const place = (b, x, y, tw, th) => {
+        b.style.width = `${Math.max(3, tw)}px`;
+        b.style.height = `${Math.max(4, th)}px`;
+        b.style.transform = `translate(${x}px,${y}px)`;
+      };
+      for (const b of $('#tiles').children) {
+        const p = posts.get(b.dataset.id), idx = lookup.get(p.id);
+        b.hidden = idx === undefined;
+        if (b.hidden) continue;
+        styleTile(b, p);
+        b.classList.toggle('dimmed', category !== 'all' && value(p) !== category);
+        b.classList.toggle('unseen', replaying && !replayRevealed.has(p.id));
+        const x = (idx % columns) * (cell + gap), y = Math.floor(idx / columns) * (tileH + gap) + 29;
+        wallPositions.set(p.id, { x, y });
+        place(b, x, y, cell, tileH);
+      }
+      const active = plot.filter(p => !replaying || replayRevealed.has(p.post.id));
+      const map = new Map(active.map(p => [p.post.id, p]));
+      for (const b of $('#map-tiles').children) {
+        const p = posts.get(b.dataset.id), point = map.get(p.id);
+        styleTile(b, p);
+        b.hidden = false;
+        if (!point) {
+          b.dataset.plotted = 'false';
+          b.style.opacity = '0';
+          b.style.pointerEvents = 'none';
+          b.tabIndex = -1;
+          b.setAttribute('aria-hidden', 'true');
+          b.dataset.arrived = 'false';
+          b.style.transition = 'none';
+          const pos = wallPositions.get(p.id) || { x: 0, y: 29 };
+          place(b, pos.x, pos.y, cell, tileH);
+          continue;
+        }
+        const [x, y] = xy(point), tw = plot.length > 350 ? 12 : plot.length > 150 ? 16 : 21;
+        const apply = () => {
+          b.style.transition = '';
+          b.style.opacity = '1';
+          b.style.pointerEvents = 'auto';
+          b.tabIndex = 0;
+          b.removeAttribute('aria-hidden');
+          place(b, x - tw / 2, y - tw * .635, tw, tw * 1.27);
+        };
+        b.dataset.plotted = 'true';
+        if (b.dataset.arrived !== 'true') {
+          const pos = wallPositions.get(p.id) || { x: 0, y: 29 };
+          b.style.transition = 'none';
+          place(b, pos.x, pos.y, cell, tileH);
+          b.style.opacity = '0';
+          void b.offsetWidth;
+          b.dataset.arrived = 'true';
+          apply();
+        } else {
+          apply();
+        }
+      }
+      const mx = median(active.map(p => p.x)), my = median(active.map(p => p.y));
+      let svg = '';
+      for (let i = 0; i <= 4; i++) {
+        const val = ymax * i / 4, y = top + ph * (1 - i / 4);
+        svg += `<line x1="${left}" x2="${w - right}" y1="${y}" y2="${y}"/><text x="${left - 8}" y="${y + 3}" text-anchor="end">${val.toFixed(0)}</text>`;
+      }
+      for (let i = lo; i <= hi; i++) {
+        const x = left + (i - lo) / (hi - lo) * pw;
+        svg += `<text x="${x}" y="${h - 13}" text-anchor="middle">${compact(10 ** i)}</text>`;
+      }
+      if (mx !== null) {
+        const [x, y] = xy({ x: mx, y: my });
+        svg += `<line class="median" x1="${x}" x2="${x}" y1="${top}" y2="${h - bottom}"/><line class="median" x1="${left}" x2="${w - right}" y1="${y}" y2="${y}"/>`;
+      }
+      svg += `<text x="${left}" y="${mapY + 32}">LIKES / 1K ${$('#metric').value.toUpperCase()} ↑</text>`;
+      $('#axes').innerHTML = svg;
+      $('#canvas-title').textContent = 'FROM SCRIPT TO PERFORMANCE';
+      $('#canvas-note').textContent = replaying ? 'Saved analysis replay · both views stay visible' : 'Dashed lines = plotted sample medians';
+      $('#plotted-count').textContent = `${visible.length} frames · ${active.length} / ${plot.length} plotted`;
+      $('#axis-caption').textContent = `${$('#metric').value.toUpperCase()} · LOG SCALE →`;
+      $('#empty').hidden = visible.length > 0;
+    }
+
+    function selectPost(id) {
+      selected = id;
+      const p = job.posts.find(p => p.id === id);
+      if (!p) return;
+      $('#preview-video').pause();
+      $('#preview-video').hidden = true;
+      $('#preview-video').removeAttribute('src');
+      $('.preview-media').classList.remove('playing');
+      $('#preview-image').hidden = false;
+      $('#preview-image').src = imageURL(p);
+      $('#preview-play').hidden = !safeLink(p.videoUrl);
+      $('#post-creator').textContent = `@${p.creator}`;
+      $('#post-date').textContent = p.publishedAt ? new Date(p.publishedAt).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Date unavailable';
+      $('#post-index').textContent = `${String(job.posts.indexOf(p) + 1).padStart(2, '0')} / ${job.posts.length}`;
+      $('#original').hidden = !safeLink(p.url);
+      $('#original').href = safeLink(p.url);
+      $('#opening').textContent = openingLine(p) || 'Waiting for the spoken transcript.';
+      $('#post-tags').innerHTML = [p.analysis?.labels.mechanism?.value, p.analysis?.labels.structure?.value].filter(Boolean).map(t => `<span class="tag">${title(t)}</span>`).join('');
+      const metric = $('#metric').value;
+      $('#post-views').textContent = compact(p[metric]);
+      $('#post-view-label').textContent = title(metric);
+      $('#post-likes').textContent = compact(p.likes);
+      $('#post-rate').textContent = p[metric] > 0 && p.likes !== null ? (p.likes / p[metric] * 1000).toFixed(1) : 'Unknown';
+      const anatomy = p.analysis?.anatomy || [];
+      $('#anatomy-note').textContent = anatomy.some(s => s.start !== null) ? 'Timed transcript excerpts' : 'Text excerpts · no timing';
+      $('#anatomy-bar').innerHTML = anatomy.map((s, i) => `<button type="button" title="${title(s.value)}: ${escape(s.text)}" aria-label="Go to segment ${i + 1}" data-segment="${i}" style="flex:${Math.max(1, s.text.length)};--color:${roleColors[s.value] || roleColors.other}"></button>`).join('');
+      $('#anatomy-legend').innerHTML = [...new Set(anatomy.map(s => s.value))].map(r => `<span><i class="swatch" style="--color:${roleColors[r] || roleColors.other}"></i>${title(r)}</span>`).join('');
+      $('#transcript').innerHTML = anatomy.length ? anatomy.map((s, i) => `<p class="segment" id="segment-${i}" style="--color:${roleColors[s.value] || roleColors.other}"><small>${s.start !== null ? `${Number(s.start).toFixed(1)}s · ` : ''}${title(s.value)}</small>${escape(s.text)}</p>`).join('') : `<p>${escape(p.transcript?.text || 'The transcript will appear here as the pipeline completes.')}</p>`;
+      $('#anatomy-bar').querySelectorAll('button').forEach(b => {
+        b.onclick = () => {
+          const s = anatomy[+b.dataset.segment];
+          $(`#segment-${b.dataset.segment}`)?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          if (!$('#preview-video').hidden && s.start !== null) $('#preview-video').currentTime = s.start;
+        };
+      });
+      $('#all-labels').innerHTML = Object.entries(p.analysis?.labels || {}).map(([key, a]) => `<div class="label-line"><span>${escape(boot.dimensions[key]?.title || key)}</span><span>${title(a.value)}</span><span>${Math.round(a.confidence * 100)}%</span></div>`).join('');
+      $('#post-error').textContent = p.excludedReason || ((p.error || p.analysis?.review) ? 'Review: ' + (p.error || 'Some labels are uncertain. Check the spoken source.') : '');
+      for (const tile of $$('.tile')) tile.classList.toggle('selected', tile.dataset.id === selected);
+    }
+
+    const formatRate = (n, digits = 1) => n === null ? 'Unknown' : n.toFixed(digits);
+    function researchPosts() {
+      return visible.filter(p => p.analysis && !p.excludedReason && (category === 'all' || value(p) === category));
+    }
+
+    function renderGroups() {
+      const metric = $('#metric').value, sort = $('#research-sort').value;
+      const valid = new Set(groups.map(g => g.key));
+      compareKeys = new Set([...compareKeys].filter(key => valid.has(key)));
+      if (compareKeys.size !== 2) comparisonOpen = false;
+      $('#group-title').textContent = boot.dimensions[dimension].title;
+      $('#median-heading').textContent = `Median ${metric}`;
+      const topic = $('#topic-filter').value, hook = $('#hook-filter').value;
+      $('#clear-research').hidden = topic === 'all' && hook === 'all';
+      const context = [topic === 'all' ? 'All topics' : title(topic), hook === 'all' ? 'All hooks' : title(hook)];
+      $('#research-context').textContent = `${context.join(' · ')} · Comparing ${boot.dimensions[dimension].title.toLowerCase()} · ${groups.reduce((n, g) => n + g.n, 0)} classified Reels`;
+      const summary = summarize(researchPosts(), metric);
+      $('#research-summary').innerHTML = [
+        ['Matching Reels', summary.n, `${visible.length} pass the filters`],
+        [`Median ${metric}`, compact(summary.reach), `${summary.counts.reach} with counts`],
+        ['Median likes / 1k', formatRate(summary.likeRate), `${summary.counts.likeRate} with counts`],
+        ['Median comments / 1k', formatRate(summary.commentRate, 2), `${summary.counts.commentRate} with counts`]
+      ].map(([label, val, note]) => `<div><span>${label}</span><strong>${val}</strong><small>${note}</small></div>`).join('');
+      $('#group-table').innerHTML = groups.length ? groups.map(g => `<tr data-pattern="${escape(g.key)}" class="${compareKeys.has(g.key) ? 'comparing' : ''}"><td><i class="swatch" style="--color:${colorFor(g.key)}"></i>${title(g.key)}</td><td>${g.n}${g.n < 5 ? '<small class="sample-warning">Small sample</small>' : ''}</td><td class="${sort === 'reach' ? 'ranked-metric' : ''}">${compact(g.reach)}<small class="metric-count">n=${g.counts.reach}</small></td><td class="${sort === 'likeRate' ? 'ranked-metric' : ''}">${formatRate(g.likeRate)}<small class="metric-count">n=${g.counts.likeRate}</small></td><td class="${sort === 'commentRate' ? 'ranked-metric' : ''}">${formatRate(g.commentRate, 2)}<small class="metric-count">n=${g.counts.commentRate}</small></td><td><button type="button" data-group="${escape(g.key)}">See Reels ↗</button></td><td><input type="checkbox" data-compare="${escape(g.key)}" aria-label="Compare ${escape(title(g.key))}" ${compareKeys.has(g.key) ? 'checked' : ''} ${compareKeys.size === 2 && !compareKeys.has(g.key) ? 'disabled' : ''}></td></tr>`).join('') : '<tr><td colspan="7">No classified Reels match these filters. Try another topic or hook.</td></tr>';
+      $('#group-table').querySelectorAll('[data-group]').forEach(b => {
+        b.onclick = () => {
+          stopReplay();
+          category = b.dataset.group;
+          examplePage = 0;
+          render();
+          $('#example-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+      });
+      $('#group-table').querySelectorAll('[data-compare]').forEach(b => {
+        b.onchange = () => {
+          if (b.checked) compareKeys.add(b.dataset.compare);
+          else compareKeys.delete(b.dataset.compare);
+          comparisonOpen = false;
+          renderGroups();
+        };
+      });
+      $('#compare-selected').disabled = compareKeys.size !== 2;
+      $('#compare-selected').textContent = `Compare ${compareKeys.size} / 2`;
+      renderComparison();
+      renderExamples();
+    }
+
+    function renderComparison() {
+      const selectedGroups = [...compareKeys].map(key => groups.find(g => g.key === key)).filter(Boolean);
+      $('#comparison').hidden = !comparisonOpen || selectedGroups.length !== 2;
+      if ($('#comparison').hidden) {
+        $('#comparison').innerHTML = '';
+        return;
+      }
+      const metric = $('#metric').value, [a, b] = selectedGroups;
+      const delta = a.likeRate > 0 && b.likeRate !== null ? `${title(b.key)} has ${Math.abs((b.likeRate / a.likeRate - 1) * 100).toFixed(0)}% ${b.likeRate >= a.likeRate ? 'higher' : 'lower'} median likes per 1,000 ${metric} than ${title(a.key).toLowerCase()} in this filtered sample.` : 'A relative comparison needs known rates and a nonzero baseline.';
+      $('#comparison').innerHTML = `<div class="comparison-heading"><span class="eyebrow">SIDE BY SIDE / SAME FILTERS</span><button type="button" id="comparison-close" class="quiet" aria-label="Close comparison">×</button></div>` + selectedGroups.map(g => `<article><small>${g.n} REELS${g.n < 5 ? ' · SMALL SAMPLE' : ''}</small><h3>${title(g.key)}</h3><dl><div><dt>Median ${metric}</dt><dd>${compact(g.reach)} <small>n=${g.counts.reach}</small></dd></div><div><dt>Median likes</dt><dd>${compact(g.likes)} <small>n=${g.counts.likes}</small></dd></div><div><dt>Likes / 1k ${metric}</dt><dd>${formatRate(g.likeRate)} <small>n=${g.counts.likeRate}</small></dd></div><div><dt>Comments / 1k ${metric}</dt><dd>${formatRate(g.commentRate, 2)} <small>n=${g.counts.commentRate}</small></dd></div></dl><button type="button" data-evidence="${escape(g.key)}">See the Reels ↗</button></article>`).join('') + `<p>${delta} This is an observed association, not evidence that the hook caused the result.</p>`;
+      $('#comparison-close').onclick = () => {
+        comparisonOpen = false;
+        renderComparison();
+      };
+      $('#comparison').querySelectorAll('[data-evidence]').forEach(b => {
+        b.onclick = () => {
+          stopReplay();
+          category = b.dataset.evidence;
+          examplePage = 0;
+          render();
+          $('#example-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+      });
+    }
+
+    function renderExamples() {
+      const metric = $('#metric').value, sort = $('#research-sort').value;
+      const sorted = sortExamples(researchPosts(), sort, metric);
+      const pages = Math.max(1, Math.ceil(sorted.length / 6));
+      examplePage = Math.min(examplePage, pages - 1);
+      const shown = sorted.slice(examplePage * 6, examplePage * 6 + 6);
+      $('#examples-title').textContent = category === 'all' ? `All matching patterns · ${sorted.length} Reels` : `${title(category)} · ${sorted.length} Reels`;
+      $('#examples-all').hidden = category === 'all';
+      $('#examples-page').textContent = sorted.length ? `${examplePage * 6 + 1}–${Math.min((examplePage + 1) * 6, sorted.length)} of ${sorted.length} · Highest ${sort === 'reach' ? metric : sort === 'likeRate' ? 'likes / 1k' : 'comments / 1k'} first` : 'No matching examples';
+      $('#examples-prev').disabled = examplePage === 0;
+      $('#examples-next').disabled = examplePage >= pages - 1;
+      $('#example-grid').innerHTML = shown.length ? shown.map(p => `<article class="example-card" data-post="${escape(p.id)}"><button type="button" class="example-thumbnail" data-inspect="${escape(p.id)}" aria-label="Inspect Reel ${escape(p.id)}"><img src="${escape(imageURL(p))}" loading="lazy" alt="Reel thumbnail"><span>Inspect script ↗</span></button><div class="example-copy"><small>${title(p.analysis.labels.topic?.value)} · ${title(p.analysis.labels.mechanism?.value)}</small><h4>${escape(openingLine(p))}</h4><div class="example-metrics"><span><b>${compact(p[metric])}</b> ${metric}</span><span><b>${compact(p.likes)}</b> likes</span><span><b>${formatRate(rate(p, 'likes', metric))}</b> likes / 1k</span><span><b>${formatRate(rate(p, 'comments', metric), 2)}</b> comments / 1k</span></div><div class="example-links"><button type="button" class="quiet" data-inspect="${escape(p.id)}">Read script ↗</button>${!job.synthetic && safeLink(p.url) ? `<a href="${escape(safeLink(p.url))}" target="_blank" rel="noopener noreferrer">Original Reel ↗</a>` : '<span>Synthetic example</span>'}</div></div></article>`).join('') : '<p class="examples-empty">No examples for this combination. Clear a filter to explore more Reels.</p>';
+      $('#example-grid').querySelectorAll('[data-inspect]').forEach(b => {
+        b.onclick = () => {
+          selectPost(b.dataset.inspect);
+          $('.inspector').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        };
+      });
+    }
+
+    function render() {
+      if (!metricsInitialized && job.posts.length) {
+        if (!job.posts.some(p => p.views > 0) && job.posts.some(p => p.plays > 0)) $('#metric').value = 'plays';
+        else $('#metric').value = 'views';
+        if (job.posts.length < 100 || !job.posts.some(p => p.publishedAt && (Date.now() - Date.parse(p.publishedAt)) / 864e5 >= 7)) $('#age').value = '0';
+        else $('#age').value = '7';
+        metricsInitialized = true;
+      }
+      readStats();
+      calculate();
+      $('.inspector').classList.toggle('no-matches', !visible.length);
+      $('#inspector-empty').hidden = visible.length > 0;
+      renderLegend();
+      buildTiles();
+      layout();
+      renderGroups();
+      if (!selected && job.posts.length) {
+        selectPost((job.posts.find(p => p.analysis && !p.excludedReason) || job.posts[0]).id);
+      }
+    }
+
+    function renderConnections() {
+      const active = ['apify', boot.transcriptionProvider || 'groq', 'jev'];
+      const count = active.filter(k => boot.connections[k]?.configured).length;
+      $('#connection-status').textContent = `${count}/3 keys configured`;
+      for (const k of ['apify', 'groq', 'fireworks', 'jev']) {
+        const el = $(`#${k}-status`);
+        if (el) el.textContent = boot.connections[k]?.verified ? '· key verified' : boot.connections[k]?.configured ? '· configured' : active.includes(k) ? '· needed' : '· optional';
+      }
+      $('#transcription-provider').textContent = title(boot.transcriptionProvider || 'groq');
+    }
+
+    function refreshRunSelect() {
+      const current = job?.id || 'demo';
+      $('#run-select').innerHTML = '<option value="demo">Motion rehearsal · synthetic data</option>' + boot.runs.map(r => `<option value="${r.id}">@${escape(r.creator)} · ${r.completed}/${r.count} · ${r.status}</option>`).join('');
+      $('#run-select').value = current;
+      renderConnections();
+    }
+
+    async function loadJob(id) {
+      stopReplay();
+      if (id === 'demo') {
+        job = makeDemoJob('demo.creator', 144, true);
+      } else if (localRuns.has(id)) {
+        job = localRuns.get(id);
+      } else {
+        job = makeDemoJob('demo.creator', 144, true);
+      }
+      selected = (job.posts.find(p => p.analysis && !p.excludedReason) || job.posts[0])?.id;
+      metricsInitialized = false;
+      category = 'all';
+      compareKeys.clear();
+      comparisonOpen = false;
+      examplePage = 0;
+      $('#topic-filter').value = 'all';
+      $('#hook-filter').value = 'all';
+      $('#tiles').innerHTML = '';
+      $('#map-tiles').innerHTML = '';
+      $('#comparison').hidden = true;
+      render();
+      if (selected) selectPost(selected);
+    }
+
+    function stopReplay() {
+      replayToken++;
+      replaying = false;
+      replayRevealed.clear();
+      $('#replay').innerHTML = '<span>▶</span> Replay analysis';
+      $('#replay-status').textContent = '';
+      $$('.tile').forEach(t => t.classList.remove('processing', 'unseen'));
+      if (job) layout();
+    }
+
+    async function replay() {
+      if (replaying) {
+        stopReplay();
+        return;
+      }
+      const ready = visible.filter(p => p.analysis && !p.excludedReason && (category === 'all' || value(p) === category));
+      if (!ready.length) {
+        toast('Classify a few Reels before replaying their analysis.');
+        return;
+      }
+      replaying = true;
+      replayRevealed.clear();
+      const token = ++replayToken;
+      layout();
+      $('#replay').textContent = '■ Stop replay';
+      $('#replay-status').textContent = `REPLAY · 0 / ${ready.length}`;
+      await sleep(450);
+      const chunk = Math.max(1, Math.ceil(ready.length / 48));
+      for (let i = 0; i < ready.length; i += chunk) {
+        if (token !== replayToken) return;
+        for (const p of ready.slice(i, i + chunk)) {
+          replayRevealed.add(p.id);
+          const b = $(`#tiles [data-id="${p.id}"]`);
+          b?.classList.add('processing');
+          setTimeout(() => b?.classList.remove('processing'), 450);
+        }
+        layout();
+        selectPost(ready[Math.min(i + chunk - 1, ready.length - 1)].id);
+        $('#replay-status').textContent = `REPLAY · ${Math.min(i + chunk, ready.length)} / ${ready.length}`;
+        await sleep(125);
+      }
+      await sleep(1800);
+      if (token !== replayToken) return;
+      stopReplay();
+      $('#replay-status').textContent = 'REPLAY COMPLETE';
+    }
+
+    // Populate dropdowns & schema dialog
+    $('#dimension').innerHTML = Object.entries(boot.dimensions).map(([key, v]) => `<option value="${key}">${v.title}</option>`).join('');
+    $('#dimension').value = dimension;
+    for (const [id, key, label] of [['topic-filter', 'topic', 'topics'], ['hook-filter', 'mechanism', 'hooks']]) {
+      $(`#${id}`).innerHTML = `<option value="all">All ${label}</option>` + Object.keys(boot.dimensions[key].criteria).map(k => `<option value="${k}">${title(k)}</option>`).join('');
+    }
+    $('#schema-content').innerHTML = Object.entries(boot.dimensions).map(([key, d]) => `<article><h3>${escape(d.title)}</h3><div class="schema-tags">${Object.keys(d.criteria).map(title).join(' / ')}</div><p>${Object.entries(d.criteria).map(([k, v]) => `<b>${title(k)}:</b> ${escape(v)}`).join('<br>')}</p></article>`).join('');
+
+    refreshRunSelect();
+    loadJob('demo');
+
+    // Event bindings matching app.js 1:1
+    $('#run-select').onchange = e => loadJob(e.target.value).catch(err => toast(err.message));
+    $('#dimension').onchange = e => {
+      stopReplay();
+      dimension = e.target.value;
+      category = 'all';
+      compareKeys.clear();
+      comparisonOpen = false;
+      examplePage = 0;
+      render();
+    };
+    for (const id of ['metric', 'age', 'confidence', 'duration', 'dedupe', 'topic-filter', 'hook-filter']) {
+      $(`#${id}`).onchange = () => {
+        stopReplay();
+        category = 'all';
+        examplePage = 0;
+        comparisonOpen = false;
+        render();
+        const first = researchPosts()[0] || visible[0];
+        if (first && !visible.some(p => p.id === selected)) selectPost(first.id);
+        else if (selected) selectPost(selected);
+      };
+    }
+    $('#clear-research').onclick = () => {
+      stopReplay();
+      $('#topic-filter').value = 'all';
+      $('#hook-filter').value = 'all';
+      category = 'all';
+      examplePage = 0;
+      render();
+    };
+    $('#research-sort').onchange = () => {
+      examplePage = 0;
+      calculate();
+      renderGroups();
+    };
+    $('#compare-selected').onclick = () => {
+      comparisonOpen = true;
+      renderComparison();
+      $('#comparison').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+    $('#examples-all').onclick = () => {
+      stopReplay();
+      category = 'all';
+      examplePage = 0;
+      render();
+    };
+    $('#examples-prev').onclick = () => {
+      examplePage = Math.max(0, examplePage - 1);
+      renderExamples();
+    };
+    $('#examples-next').onclick = () => {
+      examplePage++;
+      renderExamples();
+    };
+    $('#replay').onclick = replay;
+    $('#preview-play').onclick = () => {
+      const p = job.posts.find(p => p.id === selected);
+      if (!p) return;
+      $('#preview-image').hidden = true;
+      $('#preview-play').hidden = true;
+      $('.preview-media').classList.add('playing');
+      $('#preview-video').hidden = false;
+      $('#preview-video').src = safeLink(p.videoUrl);
+      $('#preview-video').play().catch(() => toast('Preview could not play. Use the original Reel link or refresh its media URL.'));
+    };
+
+    const focusDemo = (on) => {
+      shell.classList.toggle('focused', on);
+      $('#cl-focus-bar').hidden = !on;
+      window.scrollTo({ top: 0 });
+      setTimeout(layout, 20);
+    };
+    $('#focus').onclick = () => focusDemo(true);
+    $('#focus-exit').onclick = () => focusDemo(false);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && shell.classList.contains('focused')) focusDemo(false);
+    });
+    $('#portrait').onclick = () => {
+      shell.classList.toggle('portrait');
+      $('#portrait').textContent = shell.classList.contains('portrait') ? 'Desktop view' : 'Portrait view';
+      setTimeout(layout, 30);
+    };
+    for (const id of ['new', 'connections', 'schema']) {
+      $(`#${id}-open`).onclick = () => {
+        const dlg = $(`#${id}-dialog`);
+        if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+      };
+    }
+    $$('[data-close]').forEach(b => {
+      b.onclick = () => {
+        const dlg = $(`#${b.dataset.close}`);
+        if (dlg && typeof dlg.close === 'function') dlg.close();
+      };
+    });
+
+    $('#new-form').onsubmit = async e => {
+      e.preventDefault();
+      const b = e.submitter;
+      if (b) b.disabled = true;
+      $('#new-error').textContent = '';
+      try {
+        const data = Object.fromEntries(new FormData(e.target));
+        const creator = String(data.creator || '').replace(/^@/, '').trim() || 'creator';
+        const limit = Number(data.limit || 100);
+        const createdJob = makeDemoJob(creator, limit, false);
+        localRuns.set(createdJob.id, createdJob);
+        boot.runs = [
+          { id: createdJob.id, creator, status: 'complete', createdAt: new Date().toISOString(), count: limit, completed: limit },
+          ...boot.runs.filter(r => r.id !== createdJob.id)
+        ];
+        refreshRunSelect();
+        await loadJob(createdJob.id);
+        $('#run-select').value = createdJob.id;
+        $('#new-dialog').close();
+        replay();
+      } catch (err) {
+        $('#new-error').textContent = err.message;
+      } finally {
+        if (b) b.disabled = false;
+      }
+    };
+
+    $('#connections-form').onsubmit = async e => {
+      e.preventDefault();
+      const b = e.submitter;
+      if (b) b.disabled = true;
+      $('#connections-result').textContent = 'Checking provider access…';
+      try {
+        const data = Object.fromEntries(new FormData(e.target));
+        for (const k of ['apify', 'fireworks', 'groq', 'jev']) {
+          if (data[k] && String(data[k]).trim()) {
+            boot.connections[k] = { configured: true, verified: true };
+          }
+        }
+        e.target.reset();
+        $('#connections-result').textContent = Object.entries(boot.connections).map(([k, v]) => `${title(k)}: ${v.verified ? 'verified' : 'key needed'}`).join(' · ');
+        renderConnections();
+      } catch (err) {
+        $('#connections-result').textContent = err.message;
+      } finally {
+        if (b) b.disabled = false;
+      }
+    };
+
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(() => layout()).observe(stageEl);
+    }
+
+    this._clTriggerArrival = () => {
+      if (!job) return;
+      for (const b of $('#map-tiles').children) {
+        b.dataset.arrived = 'false';
+      }
+      layout();
+    };
   }
 
   showToast(message, type = 'coral') {
