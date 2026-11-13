@@ -505,4 +505,24 @@ describe('Topic: Founder Review & Pinpoint Fix Widget', () => {
       globalThis.localStorage = prevStorage;
     }
   });
+
+  test('T-REV-15: Whole-site Paper-and-Sage theme tokens in main.css and gated #cl-analysis-form + #cl-analysis-results in index.html', async () => {
+    const fs = await import('node:fs');
+    const path = await import('node:path');
+    const mainCss = fs.readFileSync(path.resolve('src/styles/main.css'), 'utf8');
+    const indexHtml = fs.readFileSync(path.resolve('src/index.html'), 'utf8');
+
+    assert.ok(mainCss.includes('--paper: #f4f2eb;'));
+    assert.ok(mainCss.includes('--v6-paper: #f4f2eb;'));
+    assert.ok(mainCss.includes('--accent: #d8ee72;'));
+    assert.ok(mainCss.includes('--dark: #26392d;'));
+
+    assert.ok(!indexHtml.includes('<header class="topbar">'));
+    assert.ok(!indexHtml.includes('id="connections-dialog"'));
+    assert.ok(indexHtml.includes('id="cl-analysis-form"'));
+    assert.ok(indexHtml.includes('id="cl-analysis-input"'));
+    assert.ok(indexHtml.includes('id="cl-analysis-submit"'));
+    assert.ok(indexHtml.includes('id="cl-pre-analysis-empty"'));
+    assert.ok(indexHtml.includes('<div id="cl-analysis-results" hidden>'));
+  });
 });
