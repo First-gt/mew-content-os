@@ -9,43 +9,50 @@
    CSS Custom Properties (Theme Design Tokens)
    ------------------------------------------------------------------------------ */
 :root {
-  /* mewteetawat.com V6.3 Core Palette */
-  --v6-paper: #fbfaf8;          /* Warm Paper Canvas */
-  --v6-soft: #f4f2ee;           /* Soft Surface / Subdued Card */
-  --v6-white: #ffffff;          /* Pure White for Accent Cards */
-  --v6-line: #e7e3de;           /* Stone Divider Line */
-  --v6-line-dashed: #cfc9c1;    /* Dashed Border / Stone Accent Line */
-  --v6-ink: #11110f;            /* Primary Deep Ink */
-  --v6-ink-deep: #09090b;       /* Deepest Ink */
-  --v6-muted: #6b6762;          /* Warm Muted Neutral */
-  --v6-muted-light: #9b968e;    /* Light Muted Neutral */
-  --v6-coral: #ed765b;          /* Accent Coral */
-  --v6-coral-text: #ae4f3a;     /* Eyebrow / Kicker / Deep Coral Text */
-  --v6-coral-subtle: rgba(237, 118, 91, 0.12); /* Coral Tint */
-  --v6-coral-hover: #e0684d;
-  --v6-violet: #8a76ff;         /* Electric Violet */
-  --v6-violet-text: #5a46c9;    /* Violet Deep Text */
-  --v6-violet-subtle: rgba(138, 118, 255, 0.12); /* Violet Tint */
-  --v6-blue: #6fa1ff;           /* Sky Blue Accent */
-  --v6-green: #10b981;          /* Status Green */
-  --v6-green-subtle: rgba(16, 185, 129, 0.12);
+  /* Editorial Paper-and-Sage Core Palette (Unified across MEW Content OS) */
+  --paper: #f4f2eb;
+  --v6-paper: #f4f2eb;          /* Editorial Paper Canvas */
+  --v6-soft: #edf0e4;           /* Soft Sage Surface / Subdued Card */
+  --v6-white: #f9f8f2;          /* Crisp Off-White Paper for Cards */
+  --line: #dcded2;
+  --v6-line: #dcded2;           /* Sage-Stone Divider Line */
+  --v6-line-dashed: #b8c0ae;    /* Dashed Border / Sage Accent Line */
+  --ink: #252c27;
+  --v6-ink: #252c27;            /* Primary Deep Forest Ink */
+  --v6-ink-deep: #1b241e;       /* Deepest Ink */
+  --muted: #73766b;
+  --v6-muted: #73766b;          /* Warm Sage Muted Neutral */
+  --v6-muted-light: #898e7c;    /* Light Muted Neutral */
+  --accent: #d8ee72;
+  --dark: #26392d;
+  --v6-coral: #26392d;          /* Primary Dark Sage Accent */
+  --v6-coral-text: #4d6340;     /* Eyebrow / Kicker / Deep Sage Text */
+  --v6-coral-subtle: #e4e9d8;   /* Soft Sage Tint */
+  --v6-coral-hover: #3c5540;
+  --v6-violet: #697b55;         /* Editorial Sage Accent */
+  --v6-violet-text: #3d4f34;    /* Deep Sage Text */
+  --v6-violet-subtle: #e8ecdd;  /* Sage Tint */
+  --v6-blue: #829c63;           /* Olive Sage Accent */
+  --v6-green: #5f7a46;          /* Status Sage Green */
+  --v6-green-subtle: #e2e7d6;
 
   /* Shadows */
-  --v6-shadow-card: 0 18px 50px rgba(17, 17, 15, 0.05);
-  --v6-shadow-sm: 0 4px 14px rgba(17, 17, 15, 0.03);
-  --v6-shadow-hover: 0 22px 55px rgba(17, 17, 15, 0.09);
-  --v6-shadow-floating: 0 20px 60px rgba(17, 17, 15, 0.15);
+  --v6-shadow-card: 0 2px 6px rgba(37, 44, 39, 0.04);
+  --v6-shadow-sm: 0 1px 3px rgba(37, 44, 39, 0.03);
+  --v6-shadow-hover: 0 8px 20px rgba(37, 44, 39, 0.07);
+  --v6-shadow-floating: 0 18px 48px rgba(37, 44, 39, 0.14);
 
   /* Radii */
-  --v6-radius-pill: 9999px;
-  --v6-radius-card: 16px;
-  --v6-radius-lg: 20px;
-  --v6-radius-md: 12px;
-  --v6-radius-sm: 8px;
+  --v6-radius-pill: 6px;
+  --v6-radius-card: 6px;
+  --v6-radius-lg: 8px;
+  --v6-radius-md: 6px;
+  --v6-radius-sm: 5px;
 
   /* Typography */
-  --v6-font-sans: 'Inter', 'Prompt', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --v6-font-num: 'Inter', sans-serif;
+  --v6-font-sans: 'DM Sans', 'Prompt', 'Noto Sans Thai', sans-serif;
+  --v6-font-num: 'DM Mono', 'DM Sans', monospace;
+  --v6-font-serif: Georgia, 'Times New Roman', serif;
 
   /* Transitions */
   --v6-ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -1261,4 +1268,156 @@ a {
   .pipeline-item-action {
     align-self: flex-end;
   }
+}
+
+/* ==============================================================================
+   WHOLE-WEBSITE EDITORIAL PAPER-AND-SAGE THEME UNIFICATION
+   Matches Channel Matrix Scan (Creator Lab) across Sidebar, Topbar, Overview,
+   Research, Library, Remix Studio, Content Board, and Modals
+   ============================================================================== */
+
+html,
+body,
+.app-shell,
+.app-main,
+#screen-outlet,
+#view-overview,
+#view-research,
+#view-library,
+#view-remix,
+#view-remix-workspace,
+#view-board,
+#view-content-board {
+  background-color: #f4f2eb !important;
+  color: #252c27;
+  font-family: var(--v6-font-sans);
+}
+
+.mew-hero-bg {
+  background: #f4f2eb !important;
+}
+
+.app-header,
+.app-topbar,
+.app-sidebar,
+[data-testid="context-bar"] {
+  background-color: #f4f2eb !important;
+  border-color: #dcded2 !important;
+}
+
+/* Editorial Cards & Panels across all views */
+.mew-offer-card,
+.summary-card,
+.overview-stat-card,
+.library-card,
+.ref-card,
+.remix-panel,
+.board-column,
+.board-card,
+.pipeline-item,
+.dashboard-hero,
+.research-mode-switcher-bar,
+.single-ingest-card,
+.dual-lens-card,
+.save-gate-modal-card {
+  background-color: #f9f8f2 !important;
+  border: 1px solid #dcded2 !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+}
+
+.mew-offer-card::before {
+  height: 2px;
+  background: #859860 !important;
+}
+
+/* Editorial Serif Headings & Sage Italic Accents */
+h1,
+h2,
+.hero-title,
+.overview-title,
+.research-title,
+.library-title,
+.remix-title,
+.board-title,
+.section-main-title,
+.modal-main-title {
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-weight: 400 !important;
+  letter-spacing: -1.5px !important;
+  color: #252c27 !important;
+}
+
+.mew-gradient-text {
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  color: #697b55 !important;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  -webkit-text-fill-color: #697b55 !important;
+}
+
+/* Primary Buttons, Active Mode Toggle Pills & Navigation Pills */
+.btn-pill.btn-primary,
+.btn-primary,
+.mode-toggle-pill.active,
+.nav-link.is-active,
+.nav-item.is-active,
+.vault-tab-btn.active,
+.pill-tab-btn.active {
+  background: #26392d !important;
+  color: #f4f2eb !important;
+  border-color: #26392d !important;
+  border-radius: 5px !important;
+  box-shadow: none !important;
+}
+
+.btn-pill.btn-primary:hover,
+.btn-primary:hover {
+  background: #3c5540 !important;
+  border-color: #3c5540 !important;
+  color: #f4f2eb !important;
+}
+
+.btn-pill.btn-ghost,
+.btn-ghost {
+  background: #f9f8f2 !important;
+  color: #252c27 !important;
+  border: 1px solid #dcded2 !important;
+  border-radius: 5px !important;
+  box-shadow: none !important;
+}
+
+.btn-pill.btn-ghost:hover,
+.btn-ghost:hover {
+  background: #e4e7d9 !important;
+  border-color: #b8c0ae !important;
+}
+
+/* Accent Badges & Highlights */
+.badge-pill.green,
+.badge-pill.coral,
+.status-saved,
+.btn-action-badge {
+  background: #d8ee72 !important;
+  color: #252c27 !important;
+  border-color: #c5d65b !important;
+}
+
+.badge-pill.violet,
+.badge-pill.soft {
+  background: #e8ecdd !important;
+  color: #26392d !important;
+  border-color: #dcded2 !important;
+}
+
+/* Monospace Eyebrows & Labels */
+.eyebrow,
+.hero-kicker,
+.section-kicker,
+.card-kicker,
+.font-num {
+  font-family: 'DM Mono', monospace;
 }
