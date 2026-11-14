@@ -14,15 +14,210 @@
   data-screen-id="S02" 
   data-screen="S02" 
   data-testid="screen-research-detail"
+  data-s02-scope="true"
+  style="position: relative; z-index: 1; isolation: isolate; contain: layout style; overflow-x: hidden;"
 >
-  <div class="research-detail-container" id="research-detail-root" data-testid="research-detail-root">
+  <div class="research-detail-container" id="research-detail-root" data-testid="research-detail-root" data-s02-scope="true" style="position: relative; z-index: 1; isolation: isolate; overflow-x: hidden;">
+    <style>
+      body > header:not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]),
+      body > nav:not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]),
+      .app-header,
+      .global-header,
+      .top-nav,
+      .topbar,
+      .navbar {
+        position: relative !important;
+        z-index: 100 !important;
+        isolation: isolate !important;
+      }
+      :is(body > header, body > nav, .app-header, .global-header, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher) :is(svg, i, .icon, [class*="icon"]) {
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        inset: auto !important;
+        transform: none !important;
+        translate: none !important;
+        margin-top: 0 !important;
+        z-index: auto !important;
+        float: none !important;
+        flex-shrink: 0 !important;
+      }
+      :is(body > header, body > nav, .app-header, .global-header, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher) svg:not([hidden]):not(.is-hidden) {
+        width: 16px !important;
+        height: 16px !important;
+        max-width: 18px !important;
+        max-height: 18px !important;
+        overflow: hidden !important;
+      }
+      :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container) {
+        position: relative !important;
+        z-index: 1 !important;
+        isolation: isolate !important;
+        contain: layout style paint !important;
+        overflow: hidden !important;
+        margin-top: 0 !important;
+      }
+      :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *,
+      :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *::before,
+      :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *::after {
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        inset: auto !important;
+        transform: none !important;
+        translate: none !important;
+        z-index: auto !important;
+        float: none !important;
+        margin-top: 0 !important;
+      }
+      :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, #analysis-panel) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], .video-markers-layer, .timeline-marker, .video-scrub-handle, [class*="floating"]:not([data-testid]):not([id])) {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+      }
+      .detail-top-nav {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+        width: 100% !important;
+        padding: 12px 16px !important;
+        margin: 0 0 16px 0 !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
+      .detail-hero-header {
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+        gap: 16px !important;
+        width: 100% !important;
+        padding: 16px !important;
+        margin: 0 0 20px 0 !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
+      .research-detail-grid, #research-detail-grid {
+        display: grid !important;
+        grid-template-columns: minmax(280px, 5fr) minmax(340px, 7fr) !important;
+        gap: 24px !important;
+        align-items: start !important;
+        width: 100% !important;
+        margin: 0 0 20px 0 !important;
+        box-sizing: border-box !important;
+      }
+      @media (max-width: 900px) {
+        .research-detail-grid, #research-detail-grid {
+          grid-template-columns: 1fr !important;
+        }
+      }
+      :is(.analysis-panel-top, .video-overlay-chrome, .video-meta-controls, .source-meta-header, .detail-action-footer, #detail-action-footer) {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+        width: 100% !important;
+        margin-top: 0 !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
+      :is(.nav-left-group, .nav-quick-source, .detail-step-badge-group, .hero-kicker-row, .analysis-badge-row, .analysis-version-actions, .footer-status-group, .footer-cta-group, .video-actions-group, #btn-back-to-research, .btn-back-to-research, #top-link-original, .top-link-original, #link-original, .link-original, .badge-kicker, #meta-rights, .badge-rights-verified, #btn-analyze-again, .btn-analyze-again, #tab-content-what, #tab-packaging-how, .pill-tab-button, .btn-ctrl-action, #status-badge, .status-badge, #btn-save-to-library, .btn-save-to-library, .source-meta-heading, .section-badge-title) {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        margin-top: 0 !important;
+        vertical-align: middle !important;
+      }
+      :is(.detail-gate-callout, .creator-profile-badge, .save-gate-reminder-box) {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        margin-top: 0 !important;
+        overflow: hidden !important;
+      }
+      .dual-lens-tabs-container {
+        width: 100% !important;
+        margin: 12px 0 !important;
+        overflow: hidden !important;
+      }
+      .pill-tabs-list {
+        display: flex !important;
+        align-items: stretch !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+        width: 100% !important;
+        margin-top: 0 !important;
+      }
+      :is(#video-player, .video-player-card, .video-canvas-container, .video-viewport, #video-viewport, .video-mockup-content) {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+        overflow: hidden !important;
+        width: 100% !important;
+        margin-top: 0 !important;
+        box-sizing: border-box !important;
+      }
+      :is(.btn-video-play-overlay, #btn-video-play) {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 8px auto !important;
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 999px !important;
+        overflow: hidden !important;
+        flex-shrink: 0 !important;
+      }
+      :is(.gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot) {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+        margin-top: 0 !important;
+        overflow: hidden !important;
+      }
+      :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, #source-meta, #analysis-panel, #detail-action-footer) svg:not([hidden]):not(.is-hidden) {
+        display: inline-block !important;
+        vertical-align: middle !important;
+        width: 16px !important;
+        height: 16px !important;
+        max-width: 16px !important;
+        max-height: 16px !important;
+        flex-shrink: 0 !important;
+        overflow: hidden !important;
+        margin-top: 0 !important;
+      }
+      #btn-video-play svg:not([hidden]):not(.is-hidden) {
+        width: 24px !important;
+        height: 24px !important;
+        max-width: 24px !important;
+        max-height: 24px !important;
+      }
+      .video-scrubber-track, #video-scrubber-track {
+        display: flex !important;
+        align-items: center !important;
+        overflow: hidden !important;
+        width: 100% !important;
+        margin-top: 0 !important;
+      }
+    </style>
 
     <!-- ==========================================================================
          TOP BAR: BREADCRUMBS, BACK TO S01 & CLIP SUMMARY
          Wireframe 1: [Back to Research]  CREATOR / SOURCE / ORIGINAL LINK
          ========================================================================== -->
-    <header class="detail-top-nav" aria-label="แถบนำทางส่วนหัวและข้อมูลต้นทาง S02">
-      <div class="nav-left-group">
+    <header class="detail-top-nav" aria-label="แถบนำทางส่วนหัวและข้อมูลต้นทาง S02" style="position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; overflow: hidden;">
+      <div class="nav-left-group" style="display: inline-flex; align-items: center; gap: 8px;">
         <!-- Back Button (D1: Returns to S01 without saving to Vault) -->
         <button 
           type="button" 
@@ -32,8 +227,9 @@
           data-action="btn-back-to-research" 
           data-target="S01" 
           aria-label="กลับสู่หน้า Research Entry & Inbox (S01)"
+          style="position: static; display: inline-flex; align-items: center; gap: 8px;"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: static; width: 16px; height: 16px; max-width: 16px; max-height: 16px; flex-shrink: 0; transform: none;">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
           <span class="back-nav-text">Back to Research</span>
@@ -42,14 +238,14 @@
         <span class="nav-divider" aria-hidden="true">/</span>
 
         <!-- Step Pill -->
-        <div class="detail-step-badge-group">
+        <div class="detail-step-badge-group" style="display: inline-flex; align-items: center; gap: 8px;">
           <span class="badge-step-code">S02</span>
           <span class="badge-step-label">Research Detail &amp; Dual-Lens Analysis</span>
         </div>
       </div>
 
       <!-- Quick Context Info (Creator / Source / Original Link) -->
-      <div class="nav-quick-source" id="nav-quick-source" data-testid="nav-quick-source">
+      <div class="nav-quick-source" id="nav-quick-source" data-testid="nav-quick-source" style="display: inline-flex; align-items: center; gap: 8px;">
         <span class="source-tag-label">Source Reference:</span>
         <span class="source-creator-snippet" id="top-creator-snippet" data-testid="top-creator-snippet">@creator</span>
         <span class="source-dot-separator" aria-hidden="true">&bull;</span>
@@ -61,9 +257,10 @@
           id="top-link-original" 
           data-testid="top-link-original"
           title="เปิดลิงก์วิดีโอต้นฉบับในแท็บใหม่"
+          style="position: static; display: inline-flex; align-items: center; gap: 6px;"
         >
           <span>Original Clip</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: static; width: 12px; height: 12px; max-width: 12px; max-height: 12px; flex-shrink: 0; transform: none;">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
             <polyline points="15 3 21 3 21 9"></polyline>
             <line x1="10" y1="14" x2="21" y2="3"></line>
@@ -75,11 +272,11 @@
     <!-- ==========================================================================
          HERO TITLE & HUMAN SAVE GATE INTENT
          ========================================================================== -->
-    <div class="detail-hero-header">
+    <div class="detail-hero-header" style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
       <div class="hero-copy-group">
-        <div class="hero-kicker-row">
-          <span class="badge-kicker">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <div class="hero-kicker-row" style="display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <span class="badge-kicker" style="position: static; display: inline-flex; align-items: center; gap: 6px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: static; width: 12px; height: 12px; max-width: 12px; max-height: 12px; flex-shrink: 0; transform: none;">
               <circle cx="12" cy="12" r="10"></circle>
               <line x1="12" y1="16" x2="12" y2="12"></line>
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
@@ -98,9 +295,9 @@
       </div>
 
       <!-- Human Gate Status Callout -->
-      <aside class="detail-gate-callout" aria-label="สถานะ Human Save Gate">
-        <div class="gate-callout-icon" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <aside class="detail-gate-callout" aria-label="สถานะ Human Save Gate" style="position: static; display: flex; align-items: center; gap: 12px; overflow: hidden;">
+        <div class="gate-callout-icon" aria-hidden="true" style="position: static; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transform: none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="position: static; width: 16px; height: 16px; max-width: 16px; max-height: 16px; flex-shrink: 0; transform: none;">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
@@ -164,7 +361,7 @@
                 <svg class="icon-play" id="icon-play" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
                 </svg>
-                <svg class="icon-pause is-hidden" id="icon-pause" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <svg class="icon-pause is-hidden" id="icon-pause" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden>
                   <rect x="6" y="4" width="4" height="16"></rect>
                   <rect x="14" y="4" width="4" height="16"></rect>
                 </svg>
