@@ -316,15 +316,15 @@ export class DashboardController {
         #view-overview .dashboard-hero,
         #dashboard-root .dashboard-hero,
         .dashboard-container .dashboard-hero {
-          background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%) !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
           background-color: #ffffff !important;
-          border: 1.5px solid #bbf7d0 !important;
+          border: 1.5px solid #a7f3d0 !important;
           border-top: 4px solid #34d399 !important;
           border-radius: 24px !important;
           padding: 32px 36px !important;
-          box-shadow: 0 12px 32px rgba(52, 211, 153, 0.16), 0 4px 12px rgba(52, 211, 153, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 48px #ffffff !important;
+          box-shadow: 0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff !important;
           color: #0f172a !important;
-          filter: brightness(1.06) !important;
+          filter: brightness(1.16) !important;
           display: flex !important;
           flex-direction: column !important;
           justify-content: center !important;
@@ -459,16 +459,16 @@ export class DashboardController {
         .dashboard-container .summary-card,
         .dashboard-container .mew-offer-card,
         .dashboard-container .panel-card {
-          background: #ffffff !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(180deg, #ffffff 0%, #ffffff 100%) !important;
-          border: 1.5px solid #bbf7d0 !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+          border: 1.5px solid #a7f3d0 !important;
           border-top: 4px solid #34d399 !important;
           border-radius: 20px !important;
-          box-shadow: 0 12px 32px rgba(52, 211, 153, 0.16), 0 4px 12px rgba(52, 211, 153, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 48px #ffffff !important;
+          box-shadow: 0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff !important;
           color: #0f172a !important;
           opacity: 1 !important;
-          filter: brightness(1.06) !important;
+          filter: brightness(1.16) !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
         html body #view-overview .summary-card-inner,
@@ -520,19 +520,21 @@ export class DashboardController {
         html body #view-overview .card-preview-box.continue-box,
         html body #view-overview .vault-sub-stat,
         html body #view-overview .pipeline-item,
+        html body #view-overview .vault-mini-card,
         html body #view-overview .empty-state,
         .dashboard-container .card-preview-box,
         .dashboard-container .card-preview-box.continue-box,
         .dashboard-container .vault-sub-stat,
         .dashboard-container .pipeline-item,
+        .dashboard-container .vault-mini-card,
         .dashboard-container .empty-state {
-          background: #ffffff !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(180deg, #ffffff 0%, #ffffff 100%) !important;
-          border: 1.5px solid #bbf7d0 !important;
-          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.12), inset 0 0 36px #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+          border: 1.5px solid #a7f3d0 !important;
+          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.1), 0 0 20px rgba(255, 255, 255, 1), inset 0 0 60px #ffffff !important;
           color: #0f172a !important;
-          filter: brightness(1.04) !important;
+          filter: brightness(1.14) !important;
         }
         html body #view-overview .summary-card-title,
         html body #view-overview .preview-item-title,
@@ -685,6 +687,7 @@ export class DashboardController {
           padding: 0 !important;
           margin: 0 !important;
         }
+        html body #view-overview #card-recent-research[data-step="ข้อ 1"],
         #card-recent-research[data-step="ข้อ 1"],
         .card-recent-research[data-step="ข้อ 1"],
         [data-step="ข้อ 1"] {
@@ -692,6 +695,7 @@ export class DashboardController {
           border-radius: 20px !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
+        html body #view-overview #card-recent-research[data-step="ข้อ 1"]:hover,
         #card-recent-research[data-step="ข้อ 1"]:hover,
         .card-recent-research[data-step="ข้อ 1"]:hover,
         [data-step="ข้อ 1"]:hover {
@@ -855,9 +859,19 @@ export class DashboardController {
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
-          flex-wrap: wrap !important;
+          flex-wrap: nowrap !important;
           gap: 4px !important;
           width: 100% !important;
+        }
+        html body #view-overview .vault-stat-label,
+        .dashboard-container .vault-stat-label {
+          font-size: 0.75rem !important;
+          font-weight: 700 !important;
+          color: #0f172a !important;
+          line-height: 1.25 !important;
+          white-space: nowrap !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
         }
         html body #view-overview .vault-stat-metric,
         .dashboard-container .vault-stat-metric {
@@ -946,7 +960,7 @@ export class DashboardController {
           align-items: center !important;
           justify-content: space-between !important;
           padding-top: 14px !important;
-          margin-top: auto !important;
+          margin-top: 4px !important;
           border-top: 1px solid #dcfce7 !important;
           width: 100% !important;
           box-sizing: border-box !important;
@@ -1000,15 +1014,15 @@ export class DashboardController {
 
       const heroes = container.querySelectorAll('.dashboard-hero');
       heroes.forEach((hero) => {
-        hero.style.setProperty('background', 'linear-gradient(180deg, #ffffff 0%, #ffffff 100%)', 'important');
+        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
         hero.style.setProperty('background-color', '#ffffff', 'important');
-        hero.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        hero.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
         hero.style.setProperty('border-top', '4px solid #34d399', 'important');
         hero.style.setProperty('border-radius', '24px', 'important');
         hero.style.setProperty('padding', '32px 36px', 'important');
-        hero.style.setProperty('box-shadow', '0 12px 32px rgba(52, 211, 153, 0.16), 0 4px 12px rgba(52, 211, 153, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 48px #ffffff', 'important');
+        hero.style.setProperty('box-shadow', '0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff', 'important');
         hero.style.setProperty('color', '#0f172a', 'important');
-        hero.style.setProperty('filter', 'brightness(1.06)', 'important');
+        hero.style.setProperty('filter', 'brightness(1.16)', 'important');
       });
 
       const heroActions = container.querySelectorAll('.dashboard-hero .hero-actions');
@@ -1021,16 +1035,16 @@ export class DashboardController {
       cards.forEach((card) => {
         if (card.classList.contains('summary-card-inner') || card.classList.contains('summary-card-header') || card.classList.contains('summary-card-footer') || card.classList.contains('card-preview-box') || card.classList.contains('card-step-kicker') || card.classList.contains('summary-card-title') || card.classList.contains('summary-card-desc')) return;
         if (card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
-        card.style.setProperty('background', '#ffffff', 'important');
+        card.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
         card.style.setProperty('background-color', '#ffffff', 'important');
-        card.style.setProperty('background-image', 'linear-gradient(180deg, #ffffff 0%, #ffffff 100%)', 'important');
-        card.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        card.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
         card.style.setProperty('border-top', '4px solid #34d399', 'important');
         card.style.setProperty('border-radius', '20px', 'important');
-        card.style.setProperty('box-shadow', '0 12px 32px rgba(52, 211, 153, 0.16), 0 4px 12px rgba(52, 211, 153, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 48px #ffffff', 'important');
+        card.style.setProperty('box-shadow', '0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff', 'important');
         card.style.setProperty('color', '#0f172a', 'important');
         card.style.setProperty('opacity', '1', 'important');
-        card.style.setProperty('filter', 'brightness(1.06)', 'important');
+        card.style.setProperty('filter', 'brightness(1.16)', 'important');
         if (card.classList.contains('summary-card') || card.closest('.summary-grid')) {
           card.style.setProperty('display', 'flex', 'important');
           card.style.setProperty('flex-direction', 'column', 'important');
@@ -1061,7 +1075,7 @@ export class DashboardController {
         }
       });
 
-      const cardInners = container.querySelectorAll('.summary-card-inner, .summary-card-header, .summary-card-footer, .vault-breakdown-container, .summary-card-title, .summary-card-desc, .summary-metric-row, .summary-metric-number, .summary-metric-unit, .vault-stat-unit, .vault-stat-number, .vault-stat-label, .card-step-kicker');
+      const cardInners = container.querySelectorAll('.summary-card-inner, .summary-card-header, .summary-card-footer, .vault-breakdown-container, .summary-card-title, .summary-card-desc, .summary-metric-row, .summary-metric-number, .summary-metric-unit, .vault-stat-unit, .vault-stat-number, .vault-stat-label, .card-step-kicker, .panel-header, .panel-body, .pipeline-list, .vault-mini-grid');
       cardInners.forEach((inner) => {
         inner.style.setProperty('background', 'transparent', 'important');
         inner.style.setProperty('background-color', 'transparent', 'important');
@@ -1076,14 +1090,14 @@ export class DashboardController {
 
       const subBoxes = container.querySelectorAll('.card-preview-box, .continue-box, .vault-sub-stat, .pipeline-item, .vault-mini-card, .mini-card, .empty-state');
       subBoxes.forEach((box) => {
-        box.style.setProperty('background', '#ffffff', 'important');
+        box.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
         box.style.setProperty('background-color', '#ffffff', 'important');
-        box.style.setProperty('background-image', 'linear-gradient(180deg, #ffffff 0%, #ffffff 100%)', 'important');
-        box.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        box.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
         box.style.setProperty('border-radius', '12px', 'important');
-        box.style.setProperty('box-shadow', '0 4px 16px rgba(52, 211, 153, 0.12), inset 0 0 36px #ffffff', 'important');
+        box.style.setProperty('box-shadow', '0 4px 16px rgba(52, 211, 153, 0.1), 0 0 20px rgba(255, 255, 255, 1), inset 0 0 60px #ffffff', 'important');
         box.style.setProperty('color', '#0f172a', 'important');
-        box.style.setProperty('filter', 'brightness(1.04)', 'important');
+        box.style.setProperty('filter', 'brightness(1.14)', 'important');
       });
     });
   }
