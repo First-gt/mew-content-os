@@ -133,6 +133,8 @@ export class FounderReviewWidget {
     this.isInspectMode = false;
     this.selectedTarget = null;
     this.selectedElement = null;
+    this.popoverImages = [];
+    this.draftImages = [];
     this.currentTab = 'new'; // 'new' | 'history'
     this.container = null;
     this.pollTimer = null;
@@ -272,6 +274,8 @@ export class FounderReviewWidget {
       snippet: payload.snippet || null,
       type: payload.type || 'design', // 'design' | 'logic' | 'copy' | 'feature'
       comment: payload.comment.trim(),
+      images: Array.isArray(payload.images) ? payload.images.slice(0, 4) : [],
+      imagePaths: Array.isArray(payload.imagePaths) ? payload.imagePaths : [],
       status: 'PENDING', // PENDING | IN_PROGRESS | RESOLVED
       createdAt: new Date().toISOString()
     };
@@ -340,6 +344,9 @@ export class FounderReviewWidget {
       `🏷️ **ประเภทการแก้ไข**: ${this.getTypeLabel(review.type)}`,
       `📝 **คำสั่ง / สิ่งที่ต้องการให้ปรับปรุง**:`,
       `"${review.comment}"`,
+      (review.imagePaths && review.imagePaths.length > 0)
+        ? `🖼️ **รูปภาพประกอบ**: ${review.imagePaths.join(', ')}`
+        : (review.images && review.images.length > 0 ? `🖼️ **รูปภาพประกอบ**: แนบไว้ ${review.images.length} รูป` : null),
       `--------------------------------------------------`,
       `⚠️ **ข้อจำกัดสำคัญ**: ปรับปรุงเฉพาะโค้ดในไฟล์เป้าหมายด้านบนตามที่ระบุ ห้ามแก้ไขโครงสร้างส่วนอื่นที่ผ่านการอนุมัติแล้ว`,
       `==================================================`
@@ -412,9 +419,12 @@ export class FounderReviewWidget {
       if (res && res.ok && typeof res.json === 'function') {
         const data = await res.json();
         if (data && data.ok && data.review) {
-          this.updateReviewStatus(review.id, data.review.status || 'IN_PROGRESS', {
+          const extra = {
             startedAt: data.review.startedAt || new Date().toISOString()
-          });
+          };
+          if (Array.isArray(data.review.images)) extra.images = data.review.images;
+          if (Array.isArray(data.review.imagePaths)) extra.imagePaths = data.review.imagePaths;
+          this.updateReviewStatus(review.id, data.review.status || 'IN_PROGRESS', extra);
           this.startPolling();
           syncedReview = data.review;
         }
@@ -680,12 +690,150 @@ export class FounderReviewWidget {
   }
 
   /* ==========================================================================
+     Image Attachment & Clipboard Paste Helpers
+     ========================================================================== */
+
+  readImageFileAsDataUrl(file) {
+    return new Promise((resolve) => {
+      if (!file || typeof FileReader === 'undefined') {
+        resolve(null);
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = typeof reader.result === 'string' ? reader.result : null;
+        if (!result || typeof Image === 'undefined' || typeof document === 'undefined') {
+          resolve(result);
+          return;
+        }
+        const img = new Image();
+        img.onload = () => {
+          const maxW = 1280;
+          if (!img.width || img.width <= maxW) {
+            resolve(result);
+            return;
+          }
+          try {
+            const scale = maxW / img.width;
+            const canvas = document.createElement('canvas');
+            canvas.width = maxW;
+            canvas.height = Math.round(img.height * scale);
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+              resolve(result);
+              return;
+            }
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', 0.84));
+          } catch (e) {
+            resolve(result);
+          }
+        };
+        img.onerror = () => resolve(result);
+        img.src = result;
+      };
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  renderImageAttachmentBlock(idPrefix, images = []) {
+    return `
+      <div class="founder-image-attach" id="${idPrefix}-image-attach">
+        <div class="founder-image-toolbar">
+          <button type="button" class="founder-image-btn" id="${idPrefix}-image-pick-btn">
+            📎 แนบรูปภาพ
+          </button>
+          <span class="founder-image-hint">หรือกด Ctrl+V เพื่อวางภาพหน้าจอ (สูงสุด 4 รูป)</span>
+          <input type="file" id="${idPrefix}-image-input" accept="image/*" multiple hidden>
+        </div>
+        <div class="founder-image-previews" id="${idPrefix}-image-previews">
+          ${this.renderImagePreviewItems(images)}
+        </div>
+      </div>
+    `;
+  }
+
+  renderImagePreviewItems(images = []) {
+    if (!Array.isArray(images) || images.length === 0) return '';
+    return images.map((src, idx) => `
+      <div class="founder-image-thumb">
+        <img src="${this.escapeHtml(src)}" alt="ภาพประกอบรีวิว ${idx + 1}">
+        <button type="button" class="founder-image-remove" data-remove-img-idx="${idx}" title="ลบรูปนี้">×</button>
+      </div>
+    `).join('');
+  }
+
+  bindImageAttachment(container, idPrefix, getImages, setImages, pasteTargets = []) {
+    if (!container) return;
+    const pickBtn = container.querySelector(`#${idPrefix}-image-pick-btn`);
+    const fileInput = container.querySelector(`#${idPrefix}-image-input`);
+    const previewsEl = container.querySelector(`#${idPrefix}-image-previews`);
+
+    const syncPreviews = () => {
+      if (!previewsEl) return;
+      previewsEl.innerHTML = this.renderImagePreviewItems(getImages());
+      previewsEl.querySelectorAll('[data-remove-img-idx]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.getAttribute('data-remove-img-idx'));
+          const next = getImages().filter((_, i) => i !== idx);
+          setImages(next);
+          syncPreviews();
+        });
+      });
+    };
+
+    const appendFiles = async (files) => {
+      const imageFiles = Array.from(files || []).filter(f => f && String(f.type || '').startsWith('image/'));
+      if (imageFiles.length === 0) return;
+      const current = [...getImages()];
+      for (const file of imageFiles) {
+        if (current.length >= 4) break;
+        const dataUrl = await this.readImageFileAsDataUrl(file);
+        if (dataUrl) current.push(dataUrl);
+      }
+      setImages(current);
+      syncPreviews();
+    };
+
+    pickBtn?.addEventListener('click', () => fileInput?.click());
+    fileInput?.addEventListener('change', async (e) => {
+      await appendFiles(e.target?.files);
+      if (fileInput) fileInput.value = '';
+    });
+
+    const handlePaste = async (e) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      const pastedImages = [];
+      for (const item of items) {
+        if (item.kind === 'file' && String(item.type || '').startsWith('image/')) {
+          const f = item.getAsFile();
+          if (f) pastedImages.push(f);
+        }
+      }
+      if (pastedImages.length > 0) {
+        e.preventDefault();
+        await appendFiles(pastedImages);
+        this.showToast(`🖼️ แนบภาพหน้าจอแล้ว (${Math.min(4, getImages().length)}/4)`);
+      }
+    };
+
+    pasteTargets.filter(Boolean).forEach(node => {
+      node.addEventListener('paste', handlePaste);
+    });
+
+    syncPreviews();
+  }
+
+  /* ==========================================================================
      Inline Floating Block Review Popover (#founder-block-popover)
      ========================================================================== */
 
   openBlockPopover(anchorEl, targetInfo = this.selectedTarget) {
     if (typeof document === 'undefined' || this.isClientMode()) return;
     this.closeBlockPopover(false);
+    this.popoverImages = [];
 
     const target = targetInfo || this.selectedTarget || SECTION_MAP[0];
     const popover = document.createElement('div');
@@ -718,9 +866,10 @@ export class FounderReviewWidget {
         <textarea
           id="founder-popover-comment"
           class="founder-textarea founder-popover-textarea"
-          placeholder="พิมพ์สั่งลูกน้องได้เลย เช่น 'เปลี่ยนสีปุ่มเป็นสีเขียวมรกต', 'แก้คำในบรรทัดนี้ให้กระชับขึ้น'..."
+          placeholder="พิมพ์สั่งลูกน้องได้เลย เช่น 'เปลี่ยนสีปุ่มเป็นสีเขียวมรกต', 'แก้คำในบรรทัดนี้ให้กระชับขึ้น' (วางรูปด้วย Ctrl+V ได้)..."
           required
         ></textarea>
+        ${this.renderImageAttachmentBlock('founder-popover', this.popoverImages)}
         <div class="founder-popover-actions">
           <button type="submit" class="founder-btn-primary founder-popover-submit" id="btn-popover-submit">
             🚀 สั่งลูกน้องแก้จุดนี้ทันที
@@ -774,8 +923,10 @@ export class FounderReviewWidget {
           selector: target.selector,
           snippet: target.snippet,
           type,
-          comment
+          comment,
+          images: [...this.popoverImages]
         });
+        this.popoverImages = [];
         this.closeBlockPopover(true);
         this.showToast(`🚀 ส่งคำสั่งแก้จุด "${rev.targetName}" ให้ลูกน้อง Gemini 4 Argon แล้ว!`);
         this.currentTab = 'history';
@@ -787,11 +938,19 @@ export class FounderReviewWidget {
     });
 
     const textarea = popover.querySelector('#founder-popover-comment');
+    this.bindImageAttachment(
+      popover,
+      'founder-popover',
+      () => this.popoverImages,
+      (imgs) => { this.popoverImages = imgs; },
+      [textarea, form]
+    );
     textarea?.focus?.();
   }
 
   closeBlockPopover(clearSelection = true) {
     if (typeof document === 'undefined') return;
+    this.popoverImages = [];
     const existing = document.getElementById('founder-block-popover');
     if (existing) existing.remove();
     if (clearSelection) {
@@ -979,7 +1138,7 @@ export class FounderReviewWidget {
     this.bindDomEvents(host);
   }
 
-  renderNewForm(selected) {
+  renderNewForm(selected = SECTION_MAP[0]) {
     return `
       <form id="founder-review-form">
         <button type="button" class="founder-btn-inspect" id="btn-founder-inspect-trigger">
@@ -1028,9 +1187,10 @@ export class FounderReviewWidget {
           <textarea 
             class="founder-textarea" 
             id="founder-review-comment" 
-            placeholder="พิมพ์บอกสิ่งที่ต้องการให้ปรับปรุงตรงนี้ เช่น 'ปรับสีปุ่มให้สว่างขึ้น', 'ย้ายตำแหน่งการ์ดนี้ไปไว้ด้านบน', 'แก้อาการเปิดหน้าแล้วเด้งป๊อปอัป'..."
+            placeholder="พิมพ์บอกสิ่งที่ต้องการให้ปรับปรุงตรงนี้ เช่น 'ปรับสีปุ่มให้สว่างขึ้น', 'ย้ายตำแหน่งการ์ดนี้ไปไว้ด้านบน' (วางรูปด้วย Ctrl+V ได้)..."
             required
           ></textarea>
+          ${this.renderImageAttachmentBlock('founder-drawer', this.draftImages)}
         </div>
 
         <div class="founder-btn-row">
@@ -1068,6 +1228,15 @@ export class FounderReviewWidget {
           <div class="founder-target-name">📌 ${this.escapeHtml(r.targetName)}</div>
           ${r.selector ? `<div class="founder-card-selector"><code>${this.escapeHtml(r.selector)}</code></div>` : ''}
           <p class="founder-comment-text">${this.escapeHtml(r.comment)}</p>
+          ${Array.isArray(r.images) && r.images.length > 0 ? `
+            <div class="founder-card-images">
+              ${r.images.map((src, i) => `
+                <a href="${this.escapeHtml(src)}" target="_blank" rel="noopener noreferrer" class="founder-card-image-link" title="คลิกเพื่อดูภาพขนาดเต็ม">
+                  <img src="${this.escapeHtml(src)}" alt="ภาพประกอบรีวิว ${i + 1}">
+                </a>
+              `).join('')}
+            </div>
+          ` : ''}
           ${r.resolutionNote ? `<div class="founder-resolution-note">🤖 สรุปการแก้: ${this.escapeHtml(r.resolutionNote)}</div>` : ''}
           ${r.status === 'RESOLVED' ? `
             <div class="founder-resolved-bar">
@@ -1140,6 +1309,15 @@ export class FounderReviewWidget {
 
     const form = host.querySelector('#founder-review-form');
     if (form) {
+      const drawerTextarea = host.querySelector('#founder-review-comment');
+      this.bindImageAttachment(
+        host,
+        'founder-drawer',
+        () => this.draftImages,
+        (imgs) => { this.draftImages = imgs; },
+        [drawerTextarea, form]
+      );
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const sectionId = host.querySelector('#founder-section-select')?.value;
@@ -1156,9 +1334,11 @@ export class FounderReviewWidget {
             selector: useSelectedBlock ? this.selectedTarget.selector : null,
             snippet: useSelectedBlock ? this.selectedTarget.snippet : null,
             type: type,
-            comment: comment
+            comment: comment,
+            images: [...this.draftImages]
           });
 
+          this.draftImages = [];
           this.showToast(`✅ บันทึกรีวิวสำหรับ "${rev.targetName}" และสั่งลูกน้องแก้ไขแล้ว!`);
           this.selectedTarget = null;
           this.currentTab = 'history';
