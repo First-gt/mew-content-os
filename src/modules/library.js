@@ -879,13 +879,13 @@ export class LibraryController {
       >
         
         <!-- Card Top Bar: Selection Checkbox & Origin Stamp Badge -->
-        <div class="card-select-top-bar">
+        <div class="card-select-top-bar" data-vault-lens="${isContent ? 'content' : 'packaging'}">
           <label class="card-select-label" title="ติ๊กเลือกคลิปนี้เพื่อนำไป Remix">
             <input type="checkbox" class="card-select-chk" data-chk-id="${item.id}" ${isSelected ? 'checked' : ''} />
             <span class="card-select-box"></span>
             <span class="card-select-txt">เลือกไป Remix</span>
           </label>
-          <span class="origin-stamp-badge ${originClass}" data-vault-step="ข้อ 2" title="ข้อ 2 · Dual-Vault">${originLabel}</span>
+          <span class="origin-stamp-badge ${originClass}" data-vault-step="ข้อ 2" title="ข้อ 2 · Dual-Vault (${isContent ? 'Content WHAT' : 'Packaging HOW'})">${originLabel}</span>
         </div>
 
         <!-- Card Creator Info & Vault Tag -->
