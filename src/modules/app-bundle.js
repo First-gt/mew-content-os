@@ -2570,7 +2570,10 @@ class DashboardController {
       this.root = document.querySelector('[data-testid="dashboard-root"]') ||
                   document.getElementById('dashboard-root') ||
                   document.querySelector('#view-overview .dashboard-container') ||
-                  document.querySelector('.dashboard-container');
+                  document.querySelector('.dashboard-container') ||
+                  document.getElementById('view-overview') ||
+                  document.getElementById('screen-s00') ||
+                  document.querySelector('[data-screen="S00"]');
     }
 
     if (!this.root && typeof document === 'undefined') {
@@ -2578,6 +2581,7 @@ class DashboardController {
     }
 
     this.bindEvents();
+    this.applyBrightCardTheme();
     this.render();
 
     // Subscribe to central Store updates: numbers update immediately upon Save
@@ -2593,6 +2597,7 @@ class DashboardController {
         if (screenId && screenId !== 'S00' && screenId.toUpperCase() !== 'S00') {
           recordLastActiveScreen(screenId, params);
         } else if (screenId === 'S00' || screenId.toUpperCase() === 'S00') {
+          this.applyBrightCardTheme();
           this.render();
         }
       });
@@ -2605,11 +2610,745 @@ class DashboardController {
   }
 
   /**
+   * Ensures all cards in S00 Dashboard & Overview have bright, airy colors
+   */
+  applyBrightCardTheme() {
+    if (typeof document === 'undefined') return;
+
+    const styleId = 'mew-s00-bright-card-theme';
+    let styleEl = document.getElementById(styleId);
+    const targetParent = document.body || document.head;
+    if (!styleEl && targetParent) {
+      styleEl = document.createElement('style');
+      styleEl.id = styleId;
+      targetParent.appendChild(styleEl);
+    } else if (styleEl && document.body && styleEl.parentNode !== document.body) {
+      document.body.appendChild(styleEl);
+    }
+    if (styleEl) {
+      styleEl.textContent = `
+        html body #view-overview,
+        html body #screen-s00,
+        html body [data-screen="S00"],
+        #view-overview,
+        #screen-s00,
+        [data-screen="S00"],
+        #dashboard-root,
+        .dashboard-container {
+          --bg-primary: #ffffff !important;
+          --bg-secondary: #ffffff !important;
+          --bg-tertiary: #f8fafc !important;
+          --bg-elevated: #ffffff !important;
+          --bg-surface: #ffffff !important;
+          --bg-panel: #ffffff !important;
+          --bg-card: #ffffff !important;
+          --bg-card-hover: #ffffff !important;
+          --bg-glass: rgba(255, 255, 255, 1) !important;
+          --card-bg: #ffffff !important;
+          --surface-bg: #ffffff !important;
+          --panel-bg: #ffffff !important;
+          --mew-surface: #ffffff !important;
+          --mew-card: #ffffff !important;
+          --mew-bg: #ffffff !important;
+          --surface-1: #ffffff !important;
+          --surface-2: #ffffff !important;
+          --surface-3: #f0fdf4 !important;
+          --text-primary: #0f172a !important;
+          --text-secondary: #1e293b !important;
+          --text-muted: #475569 !important;
+          --border-color: #bbf7d0 !important;
+          --border-subtle: #dcfce7 !important;
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #ffffff 85%, #f0fdf4 100%) !important;
+          color: #0f172a !important;
+        }
+        html body #view-overview .dashboard-hero,
+        html body #screen-s00 .dashboard-hero,
+        html body [data-screen="S00"] .dashboard-hero,
+        #view-overview .dashboard-hero,
+        #dashboard-root .dashboard-hero,
+        .dashboard-container .dashboard-hero {
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important;
+          background-color: #ffffff !important;
+          border: 1.5px solid #bbf7d0 !important;
+          border-top: 4px solid #34d399 !important;
+          border-radius: 24px !important;
+          padding: 32px 36px !important;
+          box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 12px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important;
+          color: #0f172a !important;
+          filter: brightness(1.15) !important;
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: center !important;
+        }
+        #view-overview .dashboard-hero .hero-content,
+        .dashboard-container .dashboard-hero .hero-content {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 14px !important;
+          max-width: 860px !important;
+          margin: 0 !important;
+        }
+        #view-overview .dashboard-hero .hero-eyebrow-row,
+        .dashboard-container .dashboard-hero .hero-eyebrow-row {
+          display: flex !important;
+          flex-wrap: wrap !important;
+          align-items: center !important;
+          gap: 10px !important;
+          margin-bottom: 2px !important;
+        }
+        #view-overview .dashboard-hero .badge-kicker,
+        #view-overview .dashboard-hero .badge-pill,
+        .dashboard-container .dashboard-hero .badge-kicker,
+        .dashboard-container .dashboard-hero .badge-pill {
+          background: #ecfdf5 !important;
+          color: #047857 !important;
+          border: 1px solid #6ee7b7 !important;
+          box-shadow: 0 2px 6px rgba(16, 185, 129, 0.1) !important;
+        }
+        #view-overview .dashboard-hero .hero-title,
+        .dashboard-container .dashboard-hero .hero-title {
+          color: #0f172a !important;
+          margin: 0 !important;
+          line-height: 1.2 !important;
+        }
+        #view-overview .dashboard-hero #typewriter-text,
+        .dashboard-container .dashboard-hero #typewriter-text,
+        #view-overview .dashboard-hero .mew-gradient-text,
+        .dashboard-container .dashboard-hero .mew-gradient-text {
+          color: #10b981 !important;
+          background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+          -webkit-background-clip: text !important;
+          background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
+          border-right: 3px solid #10b981 !important;
+          padding-right: 4px !important;
+          animation: mew-caret-blink 0.85s step-end infinite !important;
+        }
+        @keyframes mew-caret-blink {
+          from, to { border-color: transparent; }
+          50% { border-color: #10b981; }
+        }
+        #view-overview .dashboard-hero .hero-subtitle,
+        .dashboard-container .dashboard-hero .hero-subtitle {
+          color: #334155 !important;
+          margin: 0 !important;
+          line-height: 1.65 !important;
+          font-size: 1.02rem !important;
+        }
+        #view-overview .dashboard-hero .hero-subtitle strong,
+        .dashboard-container .dashboard-hero .hero-subtitle strong {
+          color: #047857 !important;
+          background: #ecfdf5 !important;
+          border: 1px solid #a7f3d0 !important;
+          padding: 1px 6px !important;
+          border-radius: 6px !important;
+        }
+        #view-overview .dashboard-hero .hero-actions,
+        #dashboard-root .dashboard-hero .hero-actions,
+        .dashboard-container .dashboard-hero .hero-actions {
+          display: none !important;
+        }
+        #view-overview .summary-grid,
+        .dashboard-container .summary-grid {
+          display: grid !important;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+          gap: 20px !important;
+          align-items: stretch !important;
+          margin-top: 24px !important;
+        }
+        html body #view-overview .summary-card,
+        html body #view-overview .mew-offer-card,
+        html body #view-overview .panel-card,
+        html body #view-overview .summary-grid > [data-navigate="research"],
+        html body #view-overview .summary-grid > [data-navigate="library"],
+        html body #view-overview .summary-grid > [data-navigate="remix"],
+        #view-overview .summary-card,
+        #view-overview .mew-offer-card,
+        #view-overview .panel-card,
+        #view-overview .summary-grid > article,
+        #view-overview .summary-grid > div,
+        #view-overview #card-recent-research,
+        #view-overview #card-vault-summary,
+        #view-overview #card-remix-drafts,
+        #view-overview #card-continue-work,
+        #dashboard-root .summary-card,
+        #dashboard-root .mew-offer-card,
+        #dashboard-root .panel-card,
+        .dashboard-container .summary-card,
+        .dashboard-container .mew-offer-card,
+        .dashboard-container .panel-card {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important;
+          border: 1.5px solid #bbf7d0 !important;
+          border-top: 4px solid #34d399 !important;
+          border-radius: 20px !important;
+          box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important;
+          color: #0f172a !important;
+          opacity: 1 !important;
+          filter: brightness(1.15) !important;
+          transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+        }
+        html body #view-overview .summary-card-inner,
+        html body #view-overview .summary-card-header,
+        html body #view-overview .summary-card-footer,
+        html body #view-overview .vault-breakdown-container,
+        .dashboard-container .summary-card-inner,
+        .dashboard-container .summary-card-header,
+        .dashboard-container .summary-card-footer,
+        .dashboard-container .vault-breakdown-container {
+          background: transparent !important;
+          background-color: transparent !important;
+          background-image: none !important;
+          border: none !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+          filter: none !important;
+          color: #0f172a !important;
+        }
+        html body #view-overview .summary-card-footer,
+        .dashboard-container .summary-card-footer {
+          border-top: 1px solid #dcfce7 !important;
+        }
+        #view-overview .summary-card:hover,
+        .dashboard-container .summary-card:hover,
+        #view-overview .mew-offer-card:hover,
+        .dashboard-container .mew-offer-card:hover {
+          background: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%) !important;
+          border-color: #34d399 !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.22), 0 4px 12px rgba(15, 23, 42, 0.04), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important;
+          transform: translateY(-2px);
+        }
+        #view-overview .summary-card::before,
+        #view-overview .summary-card::after,
+        #view-overview .mew-offer-card::before,
+        #view-overview .mew-offer-card::after,
+        #view-overview .panel-card::before,
+        #view-overview .panel-card::after,
+        .dashboard-container .summary-card::before,
+        .dashboard-container .summary-card::after,
+        .dashboard-container .mew-offer-card::before,
+        .dashboard-container .mew-offer-card::after {
+          background: none !important;
+          opacity: 0 !important;
+          display: none !important;
+        }
+        html body #view-overview .card-preview-box,
+        html body #view-overview .card-preview-box.continue-box,
+        html body #view-overview .vault-sub-stat,
+        html body #view-overview .pipeline-item,
+        html body #view-overview .empty-state,
+        .dashboard-container .card-preview-box,
+        .dashboard-container .card-preview-box.continue-box,
+        .dashboard-container .vault-sub-stat,
+        .dashboard-container .pipeline-item,
+        .dashboard-container .empty-state {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important;
+          border: 1.5px solid #bbf7d0 !important;
+          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.1), inset 0 0 18px #ffffff !important;
+          color: #0f172a !important;
+        }
+        html body #view-overview .summary-card-title,
+        html body #view-overview .preview-item-title,
+        html body #view-overview .continue-context-headline,
+        .dashboard-container .summary-card-title,
+        .dashboard-container .preview-item-title,
+        .dashboard-container .continue-context-headline {
+          color: #0f172a !important;
+          background: transparent !important;
+          background-color: transparent !important;
+          background-image: none !important;
+          border: none !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+          filter: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          width: 100% !important;
+          text-align: left !important;
+          line-height: 1.35 !important;
+        }
+        html body #view-overview .vault-stat-label,
+        .dashboard-container .vault-stat-label {
+          color: #0f172a !important;
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          width: auto !important;
+          flex: 1 1 auto !important;
+          text-align: left !important;
+          line-height: 1.35 !important;
+          font-weight: 600 !important;
+        }
+        html body #view-overview .summary-card-desc,
+        html body #view-overview .summary-metric-unit,
+        html body #view-overview .vault-stat-unit,
+        .dashboard-container .summary-card-desc,
+        .dashboard-container .summary-metric-unit,
+        .dashboard-container .vault-stat-unit {
+          color: #334155 !important;
+          background: transparent !important;
+          background-color: transparent !important;
+          background-image: none !important;
+          border: none !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+          filter: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          text-align: left !important;
+          line-height: 1.55 !important;
+        }
+        html body #view-overview .summary-metric-number,
+        html body #view-overview .vault-stat-number,
+        html body #view-overview .footer-action-label,
+        html body #view-overview .footer-arrow,
+        .dashboard-container .summary-metric-number,
+        .dashboard-container .vault-stat-number,
+        .dashboard-container .footer-action-label,
+        .dashboard-container .footer-arrow {
+          color: #10b981 !important;
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+        #view-overview .summary-card .summary-icon-wrap,
+        .dashboard-container .summary-card .summary-icon-wrap {
+          width: 40px !important;
+          height: 40px !important;
+          min-width: 40px !important;
+          border-radius: 12px !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          flex-shrink: 0 !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%) !important;
+          background-color: #f0fdf4 !important;
+          color: #10b981 !important;
+          border: 1.5px solid #6ee7b7 !important;
+        }
+        #view-overview .summary-card .badge-pill,
+        #view-overview .summary-status-pill,
+        #view-overview .preview-badge,
+        #view-overview .vault-stat-tag,
+        .dashboard-container .summary-card .badge-pill,
+        .dashboard-container .summary-status-pill,
+        .dashboard-container .preview-badge,
+        .dashboard-container .vault-stat-tag {
+          background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%) !important;
+          background-color: #f0fdf4 !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+        }
+        #view-overview .btn-continue-work,
+        .dashboard-container .btn-continue-work {
+          background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
+          color: #ffffff !important;
+          border: none !important;
+          box-shadow: 0 6px 16px rgba(52, 211, 153, 0.35) !important;
+        }
+        .card-step-kicker {
+          display: inline;
+          font-weight: 800;
+          letter-spacing: 0.02em;
+          color: #047857 !important;
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
+        #card-recent-research[data-step="ข้อ 1"],
+        .card-recent-research[data-step="ข้อ 1"],
+        [data-step="ข้อ 1"] {
+          border-top: 4px solid #34d399 !important;
+          transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+        }
+        #card-recent-research[data-step="ข้อ 1"]:hover,
+        .card-recent-research[data-step="ข้อ 1"]:hover,
+        [data-step="ข้อ 1"]:hover {
+          border-color: #10b981 !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.22), 0 4px 12px rgba(15, 23, 42, 0.04) !important;
+          transform: translateY(-2px) !important;
+        }
+        html body #view-overview .summary-card,
+        .dashboard-container .summary-card,
+        html body #view-overview #card-recent-research,
+        html body #view-overview #card-vault-summary,
+        html body #view-overview #card-remix-drafts,
+        html body #view-overview #card-continue-work,
+        html body #view-overview .summary-grid > [data-navigate="research"],
+        .dashboard-container #card-recent-research {
+          position: relative;
+          border-top: 4px solid #34d399 !important;
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: space-between !important;
+          align-items: stretch !important;
+          gap: 12px !important;
+          padding: 24px !important;
+          box-sizing: border-box !important;
+          text-align: left !important;
+          overflow: hidden !important;
+        }
+        html body #view-overview .summary-card-inner,
+        .dashboard-container .summary-card-inner {
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: flex-start !important;
+          align-items: stretch !important;
+          flex: 1 1 auto !important;
+          gap: 12px !important;
+          width: 100% !important;
+          height: 100% !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          box-sizing: border-box !important;
+          text-align: left !important;
+        }
+        html body #view-overview .summary-card-header,
+        .dashboard-container .summary-card-header {
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          gap: 10px !important;
+          width: 100% !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          box-sizing: border-box !important;
+        }
+        html body #view-overview .summary-card .badge-pill,
+        .dashboard-container .summary-card .badge-pill {
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 4px !important;
+          padding: 5px 12px !important;
+          margin: 0 !important;
+          border-radius: 999px !important;
+          line-height: 1.25 !important;
+          white-space: nowrap !important;
+          text-align: center !important;
+          box-sizing: border-box !important;
+          flex-shrink: 0 !important;
+        }
+        html body #view-overview .summary-metric-row,
+        .dashboard-container .summary-metric-row {
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: baseline !important;
+          justify-content: flex-start !important;
+          gap: 8px !important;
+          width: 100% !important;
+          padding: 0 !important;
+          margin: 2px 0 !important;
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          box-sizing: border-box !important;
+          text-align: left !important;
+        }
+        html body #view-overview .summary-metric-number,
+        .dashboard-container .summary-metric-number {
+          font-size: 2.25rem !important;
+          font-weight: 800 !important;
+          line-height: 1 !important;
+          color: #10b981 !important;
+          font-family: var(--v6-font-num, 'Inter', sans-serif) !important;
+          letter-spacing: -0.02em !important;
+        }
+        html body #view-overview .summary-metric-unit,
+        .dashboard-container .summary-metric-unit {
+          font-size: 0.875rem !important;
+          font-weight: 600 !important;
+          line-height: 1.2 !important;
+          color: #475569 !important;
+          align-self: baseline !important;
+        }
+        html body #view-overview .summary-card-title,
+        .dashboard-container .summary-card-title {
+          font-size: 1.125rem !important;
+          font-weight: 700 !important;
+          color: #0f172a !important;
+          line-height: 1.35 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          text-align: left !important;
+          letter-spacing: -0.01em !important;
+        }
+        html body #view-overview .summary-card-desc,
+        .dashboard-container .summary-card-desc {
+          font-size: 0.875rem !important;
+          color: #475569 !important;
+          line-height: 1.55 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          text-align: left !important;
+        }
+        html body #view-overview .card-preview-box,
+        .dashboard-container .card-preview-box {
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: center !important;
+          align-items: stretch !important;
+          gap: 8px !important;
+          padding: 12px 14px !important;
+          border-radius: 12px !important;
+          background: #ffffff !important;
+          border: 1.5px solid #bbf7d0 !important;
+          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.1), inset 0 0 18px #ffffff !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+          margin: auto 0 0 0 !important;
+          text-align: left !important;
+        }
+        html body #view-overview .vault-breakdown-container,
+        .dashboard-container .vault-breakdown-container {
+          display: grid !important;
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          gap: 10px !important;
+          width: 100% !important;
+          margin: auto 0 0 0 !important;
+          box-sizing: border-box !important;
+        }
+        html body #view-overview .vault-sub-stat,
+        .dashboard-container .vault-sub-stat {
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: space-between !important;
+          gap: 6px !important;
+          padding: 10px 12px !important;
+          border-radius: 12px !important;
+          box-sizing: border-box !important;
+        }
+        html body #view-overview .vault-sub-header,
+        .dashboard-container .vault-sub-header {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          gap: 6px !important;
+          width: 100% !important;
+        }
+        html body #view-overview .preview-item-meta,
+        .dashboard-container .preview-item-meta {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          gap: 8px !important;
+          width: 100% !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          box-sizing: border-box !important;
+        }
+        html body #view-overview .preview-item-title,
+        .dashboard-container .preview-item-title {
+          font-size: 0.875rem !important;
+          font-weight: 600 !important;
+          color: #0f172a !important;
+          line-height: 1.45 !important;
+          width: 100% !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          text-align: left !important;
+          word-break: break-word !important;
+          white-space: normal !important;
+          display: -webkit-box !important;
+          -webkit-line-clamp: 2 !important;
+          -webkit-box-orient: vertical !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
+        }
+        #view-overview .preview-badge,
+        .dashboard-container .preview-badge {
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          padding: 3px 10px !important;
+          border-radius: 999px !important;
+          font-size: 0.6875rem !important;
+          font-weight: 700 !important;
+          line-height: 1.25 !important;
+          white-space: nowrap !important;
+          background: #ecfdf5 !important;
+          color: #047857 !important;
+          border: 1px solid #6ee7b7 !important;
+        }
+        #view-overview .preview-date,
+        .dashboard-container .preview-date {
+          font-size: 0.75rem !important;
+          font-weight: 500 !important;
+          color: #059669 !important;
+        }
+        #view-overview .summary-card-footer,
+        .dashboard-container .summary-card-footer {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          padding-top: 14px !important;
+          margin-top: auto !important;
+          border-top: 1px solid #d1fae5 !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        #view-overview .panel-card .pipeline-item-meta,
+        .dashboard-container .panel-card .pipeline-item-meta {
+          display: flex !important;
+          flex-wrap: wrap !important;
+          align-items: center !important;
+          gap: 8px !important;
+          color: #6b7280 !important;
+          font-size: 0.8125rem !important;
+        }
+        #view-overview .panel-card .pipeline-item-meta span,
+        #view-overview .panel-card .pipeline-item-meta .pipeline-item-tag,
+        #view-overview .panel-card .pipeline-item-meta .badge-pill,
+        #view-overview .panel-card .pipeline-item-meta .pipeline-item-time,
+        .dashboard-container .panel-card .pipeline-item-meta span,
+        .dashboard-container .panel-card .pipeline-item-meta .pipeline-item-tag,
+        .dashboard-container .panel-card .pipeline-item-meta .badge-pill,
+        .dashboard-container .panel-card .pipeline-item-meta .pipeline-item-time {
+          background: transparent !important;
+          background-color: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+          border-radius: 0 !important;
+          color: #6b7280 !important;
+          font-weight: 400 !important;
+          font-size: 0.8125rem !important;
+        }
+      `;
+    }
+
+    const containers = [];
+    if (this.root) containers.push(this.root);
+    const allS00 = document.querySelectorAll('#view-overview, #dashboard-root, .dashboard-container, #screen-s00, [data-screen="S00"], [data-testid="dashboard-root"]');
+    allS00.forEach((el) => {
+      if (!containers.includes(el)) containers.push(el);
+    });
+
+    containers.forEach((container) => {
+      container.style.setProperty('--bg-card', '#ffffff', 'important');
+      container.style.setProperty('--card-bg', '#ffffff', 'important');
+      container.style.setProperty('--surface-bg', '#ffffff', 'important');
+      container.style.setProperty('--mew-surface', '#ffffff', 'important');
+
+      const heroes = container.querySelectorAll('.dashboard-hero');
+      heroes.forEach((hero) => {
+        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%)', 'important');
+        hero.style.setProperty('background-color', '#ffffff', 'important');
+        hero.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        hero.style.setProperty('border-top', '4px solid #34d399', 'important');
+        hero.style.setProperty('border-radius', '24px', 'important');
+        hero.style.setProperty('padding', '32px 36px', 'important');
+        hero.style.setProperty('color', '#0f172a', 'important');
+        hero.style.setProperty('filter', 'brightness(1.15)', 'important');
+      });
+
+      const heroActions = container.querySelectorAll('.dashboard-hero .hero-actions');
+      heroActions.forEach((actions) => {
+        actions.style.setProperty('display', 'none', 'important');
+        actions.setAttribute('aria-hidden', 'true');
+      });
+
+      const cards = container.querySelectorAll('.summary-card, .mew-offer-card, .panel-card, [data-testid="recent-research"], [data-testid="vault-summary"], [data-testid="remix-drafts"], [data-testid="continue-work"], #card-recent-research, #card-vault-summary, #card-remix-drafts, #card-continue-work, .summary-grid > article, .summary-grid > div');
+      cards.forEach((card) => {
+        if (card.classList.contains('summary-card-inner') || card.classList.contains('summary-card-header') || card.classList.contains('summary-card-footer') || card.classList.contains('card-preview-box') || card.classList.contains('card-step-kicker') || card.classList.contains('summary-card-title') || card.classList.contains('summary-card-desc')) return;
+        if (card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
+        card.style.setProperty('background', '#ffffff', 'important');
+        card.style.setProperty('background-color', '#ffffff', 'important');
+        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%)', 'important');
+        card.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        card.style.setProperty('border-top', '4px solid #34d399', 'important');
+        card.style.setProperty('border-radius', '20px', 'important');
+        card.style.setProperty('box-shadow', '0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff', 'important');
+        card.style.setProperty('color', '#0f172a', 'important');
+        card.style.setProperty('opacity', '1', 'important');
+        card.style.setProperty('filter', 'brightness(1.15)', 'important');
+        if (card.classList.contains('summary-card') || card.closest('.summary-grid')) {
+          card.style.setProperty('display', 'flex', 'important');
+          card.style.setProperty('flex-direction', 'column', 'important');
+          card.style.setProperty('justify-content', 'space-between', 'important');
+          card.style.setProperty('align-items', 'stretch', 'important');
+          card.style.setProperty('gap', '12px', 'important');
+          card.style.setProperty('padding', '24px', 'important');
+          card.style.setProperty('box-sizing', 'border-box', 'important');
+          card.style.setProperty('text-align', 'left', 'important');
+        }
+      });
+
+      const cardInners = container.querySelectorAll('.summary-card-inner, .summary-card-header, .summary-card-footer, .vault-breakdown-container, .summary-card-title, .summary-card-desc, .summary-metric-row, .summary-metric-number, .summary-metric-unit, .vault-stat-unit, .vault-stat-number, .vault-stat-label, .card-step-kicker');
+      cardInners.forEach((inner) => {
+        inner.style.setProperty('background', 'transparent', 'important');
+        inner.style.setProperty('background-color', 'transparent', 'important');
+        inner.style.setProperty('background-image', 'none', 'important');
+        if (!inner.classList.contains('summary-card-footer')) {
+          inner.style.setProperty('border', 'none', 'important');
+        }
+        inner.style.setProperty('border-radius', '0', 'important');
+        inner.style.setProperty('box-shadow', 'none', 'important');
+        inner.style.setProperty('filter', 'none', 'important');
+      });
+
+      const subBoxes = container.querySelectorAll('.card-preview-box, .continue-box, .vault-sub-stat, .pipeline-item, .vault-mini-card, .mini-card, .empty-state');
+      subBoxes.forEach((box) => {
+        box.style.setProperty('background', '#ffffff', 'important');
+        box.style.setProperty('background-color', '#ffffff', 'important');
+        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%)', 'important');
+        box.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        box.style.setProperty('border-radius', '12px', 'important');
+        box.style.setProperty('box-shadow', '0 4px 16px rgba(52, 211, 153, 0.1), inset 0 0 18px #ffffff', 'important');
+        box.style.setProperty('color', '#0f172a', 'important');
+      });
+
+      const summaryCards = container.querySelectorAll('.summary-grid > article, .summary-grid > div, .summary-card');
+      const stepMap = [
+        { selector: '#card-recent-research, [data-testid="recent-research"], .summary-grid > [data-navigate="research"]', label: 'ข้อ 1', idx: 0 },
+        { selector: '#card-vault-summary, [data-testid="vault-summary"], .summary-grid > [data-navigate="library"]', label: 'ข้อ 2', idx: 1 },
+        { selector: '#card-remix-drafts, [data-testid="remix-drafts"], .summary-grid > [data-navigate="remix"]', label: 'ข้อ 3', idx: 2 },
+        { selector: '#card-continue-work, [data-testid="continue-work"]', label: 'ข้อ 4', idx: 3 }
+      ];
+      stepMap.forEach(({ selector, label, idx }) => {
+        const cardEl = container.querySelector(selector) || summaryCards[idx];
+        if (!cardEl) return;
+        cardEl.setAttribute('data-step', label);
+        const badgeEl = cardEl.querySelector('.summary-card-header .badge-pill, .badge-pill');
+        if (badgeEl && !badgeEl.querySelector('.card-step-kicker') && !badgeEl.textContent.includes(label)) {
+          const rawText = badgeEl.textContent.trim();
+          badgeEl.innerHTML = `<strong class="card-step-kicker">${label}</strong> · ${rawText}`;
+        }
+      });
+    });
+  }
+
+  /**
    * Initializes rotating typewriter animation for the hero heading
    */
   initTypewriter() {
     if (typeof window === 'undefined') return;
-    const el = document.getElementById('typewriter-text');
+    let el = (this.root && this.root.querySelector('#typewriter-text')) ||
+             document.getElementById('typewriter-text') ||
+             (this.root && this.root.querySelector('.hero-title .mew-gradient-text'));
+    if (!el && typeof document !== 'undefined') {
+      const heroTitle = (this.root && this.root.querySelector('#overview-heading, .hero-title')) ||
+                        document.getElementById('overview-heading');
+      if (heroTitle) {
+        const existingSpan = heroTitle.querySelector('span, em');
+        if (existingSpan) {
+          existingSpan.id = 'typewriter-text';
+          existingSpan.classList.add('mew-gradient-text');
+          el = existingSpan;
+        }
+      }
+    }
     if (!el) return;
 
     if (this.typewriterTimer) {
@@ -2618,19 +3357,19 @@ class DashboardController {
     }
 
     const phrases = [
-      'Actionable Data',
       'Actionable DNA',
+      'Actionable Data',
       'Original Concepts',
       'Founder Authority',
       'High-Retention Hooks',
       'Strategic Assets'
     ];
     let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
+    let charIndex = phrases[0].length;
+    let isDeleting = true;
     let typingSpeed = 70;
 
-    el.textContent = '';
+    el.textContent = phrases[0];
 
     const tick = () => {
       const currentPhrase = phrases[phraseIndex];
@@ -2656,7 +3395,7 @@ class DashboardController {
       this.typewriterTimer = setTimeout(tick, typingSpeed);
     };
 
-    this.typewriterTimer = setTimeout(tick, 200);
+    this.typewriterTimer = setTimeout(tick, 1800);
   }
 
   /**
@@ -2703,6 +3442,7 @@ class DashboardController {
   render(state = getState()) {
     if (!this.root) return;
 
+    this.applyBrightCardTheme();
     const metrics = getDashboardMetrics(state);
 
     // 1. Update Vault Summary: Saved Content and Saved Packaging separately
@@ -2737,6 +3477,10 @@ class DashboardController {
       }
     } else if (metrics.research.latestSource) {
       if (researchStatusEl) researchStatusEl.textContent = 'วิจัยแล้ว';
+      if (researchDateEl) {
+        const sd = metrics.research.latestSource.createdAt ? new Date(metrics.research.latestSource.createdAt) : null;
+        researchDateEl.textContent = sd ? sd.toLocaleDateString('th-TH', { day: 'numeric', month: 'short' }) : 'ล่าสุด';
+      }
       if (researchTitleEl) researchTitleEl.textContent = metrics.research.latestSource.title || 'คลิปอ้างอิงล่าสุด';
     }
 
@@ -7935,7 +8679,7 @@ __define("library.js", function (__exports, __require) {
 /**
  * ==============================================================================
  * MEW CONTENT OS - S04 & S05 Dual-Vault Reference Library & Detail Controller
- * Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+ * Theme: mewteetawat.com V6.3 (Warm Stone, Emerald Green, Violet & Deep Ink)
  * 100% Pure Client-Side JavaScript (Vanilla ES6+)
  * Zero Server Dependencies · Zero Fake Metrics · Accessible WCAG UI
  * ==============================================================================
@@ -8000,6 +8744,7 @@ const FOUNDER_SAMPLE_REFERENCES = [
     sourceId: 'source-e',
     lens: 'content',
     vaultType: 'content',
+    savedOrigin: 'both',
     title: 'Myth vs Reality: การสร้างแบรนด์ที่แท้จริง',
     subtitle: 'แยกแยะความเชื่อผิดๆ เรื่องการปั้นช่อง กับระบบหลังบ้านที่ทำให้ธุรกิจเติบโตจริง',
     creator: 'Mew Teetawat',
@@ -8073,6 +8818,7 @@ const FOUNDER_SAMPLE_REFERENCES = [
     sourceId: 'source-e',
     lens: 'packaging',
     vaultType: 'packaging',
+    savedOrigin: 'both',
     title: 'Myth vs Reality: Split-Screen Contrast',
     subtitle: 'โครงสร้างสลับฉาก 2 ขั้ว (ความเชื่อเดิม vs ความจริง) พร้อมเสียงชัตเตอร์เปลี่ยนมุมกล้อง',
     creator: 'Mew Teetawat',
@@ -8094,8 +8840,8 @@ const FOUNDER_SAMPLE_REFERENCES = [
 ];
 
 /**
- * Extracts and maps saved notes from the central store into standardized library references.
- * Strictly excludes any source with status "Analyzed · Not saved" or without saved notes.
+ * Extracts and maps คลังโน้ต items from the central store into standardized library references.
+ * Strictly excludes any source with status "Analyzed · Not saved" or without คลังโน้ต entries.
  * Sources saved to Both appear with their same sourceId, but separate cards and respective lens notes.
  * @param {Object} [state] Optional state override
  * @returns {Array<Object>}
@@ -8108,11 +8854,21 @@ function getSavedReferencesFromStore(state = null) {
 
   const { sources = [], savedNotes = [], analyses = [] } = currentState;
   const sourcesMap = new Map(sources.map(s => [s.id, s]));
+  const sourceLensesMap = new Map();
+  savedNotes.forEach(n => {
+    if (!n || !n.sourceId) return;
+    if (!sourceLensesMap.has(n.sourceId)) sourceLensesMap.set(n.sourceId, new Set());
+    if (n.lens) sourceLensesMap.get(n.sourceId).add(n.lens);
+  });
 
   // Strictly filter only notes with a valid lens ('content' or 'packaging')
-  // Clips that are "Analyzed · Not saved" have no saved notes and are strictly excluded!
+  // Clips that are "Analyzed · Not saved" have no คลังโน้ต entries and are strictly excluded!
   return savedNotes.map(note => {
     const source = sourcesMap.get(note.sourceId) || {};
+    const lensesForSource = sourceLensesMap.get(note.sourceId);
+    const savedOrigin = (lensesForSource && lensesForSource.has('content') && lensesForSource.has('packaging'))
+      ? 'both'
+      : (note.lens === 'packaging' ? 'packaging' : 'content');
     const sourceAnalyses = analyses.filter(a => a.sourceId === note.sourceId);
     const analysis = sourceAnalyses.find(a => a.isCurrent) || sourceAnalyses[sourceAnalyses.length - 1] || null;
 
@@ -8133,6 +8889,7 @@ function getSavedReferencesFromStore(state = null) {
       sourceId: note.sourceId,
       lens: note.lens,
       vaultType: note.lens,
+      savedOrigin: savedOrigin,
       title: source.title || 'Untitled Reference',
       subtitle: source.subtitle || source.title || '',
       creator: source.creator || 'Anonymous Creator',
@@ -8375,12 +9132,13 @@ class LibraryController {
       btnDismissToast: this.root.querySelector('#btn-library-toast-dismiss'),
 
       // Multi-Select Remix Action Bar & Overview Blocks
-      remixActionBar: document.getElementById('library-remix-action-bar'),
-      actionBarSelectionText: document.getElementById('action-bar-selection-text'),
-      btnBatchRemix: document.getElementById('btn-batch-remix'),
-      btnClearSelection: document.getElementById('btn-clear-selection'),
-      overviewCountContent: document.getElementById('overview-count-content'),
-      overviewCountPackaging: document.getElementById('overview-count-packaging')
+      remixActionBar: this.root.querySelector('#library-remix-action-bar') || document.getElementById('library-remix-action-bar'),
+      actionBarSelectionText: this.root.querySelector('#action-bar-selection-text') || document.getElementById('action-bar-selection-text'),
+      btnBatchRemix: this.root.querySelector('#btn-batch-remix') || document.getElementById('btn-batch-remix'),
+      btnClearSelection: this.root.querySelector('#btn-clear-selection') || document.getElementById('btn-clear-selection'),
+      overviewCountContent: this.root.querySelector('#overview-count-content') || document.getElementById('overview-count-content'),
+      overviewCountPackaging: this.root.querySelector('#overview-count-packaging') || document.getElementById('overview-count-packaging'),
+      overviewSwitchCards: this.root.querySelectorAll('[data-vault-switch]')
     };
   }
 
@@ -8393,6 +9151,19 @@ class LibraryController {
     // Vault Tab clicks
     this.dom.tabContent?.addEventListener('click', () => this.switchVault('content'));
     this.dom.tabPackaging?.addEventListener('click', () => this.switchVault('packaging'));
+    this.dom.overviewSwitchCards?.forEach(card => {
+      card.addEventListener('click', () => {
+        const targetVault = card.getAttribute('data-vault-switch');
+        if (targetVault) this.switchVault(targetVault);
+      });
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const targetVault = card.getAttribute('data-vault-switch');
+          if (targetVault) this.switchVault(targetVault);
+        }
+      });
+    });
 
     // Keyboard navigation on tabs (Arrow Left / Right)
     this.dom.tabContent?.addEventListener('keydown', (e) => this.handleTabKey(e, 'content'));
@@ -8480,13 +9251,25 @@ class LibraryController {
       if (selectedItems.length === 0) return;
 
       selectedItems.forEach(item => {
+        const noteId = item.noteId || item.id;
+        const lens = item.lens || item.vaultType || 'content';
+        try {
+          if (typeof dispatch === 'function') {
+            dispatch({
+              type: 'ADD_REMIX_INGREDIENT',
+              payload: { lens, noteId }
+            });
+          }
+        } catch (err) {
+          console.warn('[LibraryController] Failed to dispatch ADD_REMIX_INGREDIENT in batch:', err);
+        }
         window.dispatchEvent(new CustomEvent('mew:remix-select-ingredient', {
           bubbles: true,
-          detail: item
+          detail: { ...item, noteId, lens }
         }));
         window.dispatchEvent(new CustomEvent('mew_send_to_remix', {
           bubbles: true,
-          detail: item
+          detail: { ...item, noteId, lens }
         }));
       });
 
@@ -8570,6 +9353,22 @@ class LibraryController {
       this.dom.panelPackaging.hidden = isContent;
     }
 
+    // Sync overview cards active state
+    this.dom.overviewSwitchCards?.forEach(card => {
+      const isCardActive = card.getAttribute('data-vault-switch') === vault;
+      card.classList.toggle('active', isCardActive);
+      card.setAttribute('aria-pressed', isCardActive ? 'true' : 'false');
+    });
+
+    if (this.root) {
+      this.root.setAttribute('data-active-vault', vault);
+      const switcherSection = this.root.querySelector('.vault-switcher-section');
+      if (switcherSection) {
+        switcherSection.classList.toggle('emerald-tone', isContent);
+        switcherSection.classList.toggle('violet-tone', !isContent);
+      }
+    }
+
     this.render();
   }
 
@@ -8628,7 +9427,7 @@ class LibraryController {
 
     // Update summary text
     if (this.dom.summaryText) {
-      this.dom.summaryText.textContent = `แสดง ${filteredItems.length} รายการคัดสรร`;
+      this.dom.summaryText.textContent = `คลังโน้ต: แสดง ${filteredItems.length} รายการคัดสรร`;
     }
 
     if (filteredItems.length === 0) {
@@ -8651,7 +9450,7 @@ class LibraryController {
         } else {
           this.selectedCardIds.delete(id);
         }
-        const card = document.getElementById(`vault-card-${id}`);
+        const card = (this.root || document).querySelector(`#vault-card-${id}`);
         if (card) card.classList.toggle('card-selected', chk.checked);
         this.updateRemixActionBar();
       });
@@ -8730,8 +9529,8 @@ class LibraryController {
     const originLabel = item.savedOrigin === 'both' || item.lens === 'both'
       ? '✓ คอนเฟิร์มจาก Both Vaults'
       : isContent
-      ? '✓ คอนเฟิร์มเข้า Content ID'
-      : '✓ คอนเฟิร์มเข้า Packaging';
+      ? '✓ คอนเฟิร์มเข้า Content Vault'
+      : '✓ คอนเฟิร์มเข้า Packaging Vault';
     const originClass = item.savedOrigin === 'both' || item.lens === 'both'
       ? 'origin-both'
       : isContent
@@ -8746,6 +9545,7 @@ class LibraryController {
         data-note-id="${item.noteId || item.id}"
         data-source-id="${item.sourceId || ''}"
         data-lens="${item.lens || item.vaultType}"
+        data-step="2"
         tabindex="0"
       >
         
@@ -8756,7 +9556,7 @@ class LibraryController {
             <span class="card-select-box"></span>
             <span class="card-select-txt">เลือกไป Remix</span>
           </label>
-          <span class="origin-stamp-badge ${originClass}">${originLabel}</span>
+          <span class="origin-stamp-badge ${originClass}" data-vault-step="ข้อ 2">${originLabel}</span>
         </div>
 
         <!-- Card Creator Info & Vault Tag -->
@@ -8774,7 +9574,7 @@ class LibraryController {
         <!-- Card Thumbnail Preview (V6 Styled) -->
         <div class="card-thumbnail-wrap">
           <div class="card-thumbnail-media ${isContent ? 'coral-bg' : 'violet-bg'}">
-            ${item.thumbnailUrl ? `<img src="${item.thumbnailUrl}" alt="${this.escapeHtml(item.title)}" class="card-thumbnail-img" />` : ''}
+            ${item.thumbnailUrl ? `<img src="${item.thumbnailUrl}" alt="${this.escapeHtml(item.title)}" class="card-thumbnail-img" loading="lazy" onerror="this.style.display='none'" />` : ''}
             <div class="thumbnail-overlay">
               <span class="thumbnail-play-badge" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -8802,7 +9602,7 @@ class LibraryController {
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
-              FOUNDER WHY NOTE
+              FOUNDER WHY NOTE · ${isContent ? 'WHAT' : 'HOW'}
             </span>
             <span class="founder-why-date">Verified Decision</span>
           </div>
@@ -8832,7 +9632,7 @@ class LibraryController {
             </svg>
           </a>
 
-          <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <div class="card-actions-group" style="display: flex; gap: 0.5rem; align-items: center;">
             <button type="button" class="btn-card-review" aria-label="ดูรายละเอียดคลิป ${this.escapeHtml(item.title)}">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -12352,6 +13152,8 @@ class FounderReviewWidget {
     this.isInspectMode = false;
     this.selectedTarget = null;
     this.selectedElement = null;
+    this.popoverImages = [];
+    this.draftImages = [];
     this.currentTab = 'new'; // 'new' | 'history'
     this.container = null;
     this.pollTimer = null;
@@ -12491,6 +13293,8 @@ class FounderReviewWidget {
       snippet: payload.snippet || null,
       type: payload.type || 'design', // 'design' | 'logic' | 'copy' | 'feature'
       comment: payload.comment.trim(),
+      images: Array.isArray(payload.images) ? payload.images.slice(0, 4) : [],
+      imagePaths: Array.isArray(payload.imagePaths) ? payload.imagePaths : [],
       status: 'PENDING', // PENDING | IN_PROGRESS | RESOLVED
       createdAt: new Date().toISOString()
     };
@@ -12559,6 +13363,9 @@ class FounderReviewWidget {
       `🏷️ **ประเภทการแก้ไข**: ${this.getTypeLabel(review.type)}`,
       `📝 **คำสั่ง / สิ่งที่ต้องการให้ปรับปรุง**:`,
       `"${review.comment}"`,
+      (review.imagePaths && review.imagePaths.length > 0)
+        ? `🖼️ **รูปภาพประกอบ**: ${review.imagePaths.join(', ')}`
+        : (review.images && review.images.length > 0 ? `🖼️ **รูปภาพประกอบ**: แนบไว้ ${review.images.length} รูป` : null),
       `--------------------------------------------------`,
       `⚠️ **ข้อจำกัดสำคัญ**: ปรับปรุงเฉพาะโค้ดในไฟล์เป้าหมายด้านบนตามที่ระบุ ห้ามแก้ไขโครงสร้างส่วนอื่นที่ผ่านการอนุมัติแล้ว`,
       `==================================================`
@@ -12631,9 +13438,12 @@ class FounderReviewWidget {
       if (res && res.ok && typeof res.json === 'function') {
         const data = await res.json();
         if (data && data.ok && data.review) {
-          this.updateReviewStatus(review.id, data.review.status || 'IN_PROGRESS', {
+          const extra = {
             startedAt: data.review.startedAt || new Date().toISOString()
-          });
+          };
+          if (Array.isArray(data.review.images)) extra.images = data.review.images;
+          if (Array.isArray(data.review.imagePaths)) extra.imagePaths = data.review.imagePaths;
+          this.updateReviewStatus(review.id, data.review.status || 'IN_PROGRESS', extra);
           this.startPolling();
           syncedReview = data.review;
         }
@@ -12899,12 +13709,150 @@ class FounderReviewWidget {
   }
 
   /* ==========================================================================
+     Image Attachment & Clipboard Paste Helpers
+     ========================================================================== */
+
+  readImageFileAsDataUrl(file) {
+    return new Promise((resolve) => {
+      if (!file || typeof FileReader === 'undefined') {
+        resolve(null);
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = typeof reader.result === 'string' ? reader.result : null;
+        if (!result || typeof Image === 'undefined' || typeof document === 'undefined') {
+          resolve(result);
+          return;
+        }
+        const img = new Image();
+        img.onload = () => {
+          const maxW = 1280;
+          if (!img.width || img.width <= maxW) {
+            resolve(result);
+            return;
+          }
+          try {
+            const scale = maxW / img.width;
+            const canvas = document.createElement('canvas');
+            canvas.width = maxW;
+            canvas.height = Math.round(img.height * scale);
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+              resolve(result);
+              return;
+            }
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', 0.84));
+          } catch (e) {
+            resolve(result);
+          }
+        };
+        img.onerror = () => resolve(result);
+        img.src = result;
+      };
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  renderImageAttachmentBlock(idPrefix, images = []) {
+    return `
+      <div class="founder-image-attach" id="${idPrefix}-image-attach">
+        <div class="founder-image-toolbar">
+          <button type="button" class="founder-image-btn" id="${idPrefix}-image-pick-btn">
+            📎 แนบรูปภาพ
+          </button>
+          <span class="founder-image-hint">หรือกด Ctrl+V เพื่อวางภาพหน้าจอ (สูงสุด 4 รูป)</span>
+          <input type="file" id="${idPrefix}-image-input" accept="image/*" multiple hidden>
+        </div>
+        <div class="founder-image-previews" id="${idPrefix}-image-previews">
+          ${this.renderImagePreviewItems(images)}
+        </div>
+      </div>
+    `;
+  }
+
+  renderImagePreviewItems(images = []) {
+    if (!Array.isArray(images) || images.length === 0) return '';
+    return images.map((src, idx) => `
+      <div class="founder-image-thumb">
+        <img src="${this.escapeHtml(src)}" alt="ภาพประกอบรีวิว ${idx + 1}">
+        <button type="button" class="founder-image-remove" data-remove-img-idx="${idx}" title="ลบรูปนี้">×</button>
+      </div>
+    `).join('');
+  }
+
+  bindImageAttachment(container, idPrefix, getImages, setImages, pasteTargets = []) {
+    if (!container) return;
+    const pickBtn = container.querySelector(`#${idPrefix}-image-pick-btn`);
+    const fileInput = container.querySelector(`#${idPrefix}-image-input`);
+    const previewsEl = container.querySelector(`#${idPrefix}-image-previews`);
+
+    const syncPreviews = () => {
+      if (!previewsEl) return;
+      previewsEl.innerHTML = this.renderImagePreviewItems(getImages());
+      previewsEl.querySelectorAll('[data-remove-img-idx]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.getAttribute('data-remove-img-idx'));
+          const next = getImages().filter((_, i) => i !== idx);
+          setImages(next);
+          syncPreviews();
+        });
+      });
+    };
+
+    const appendFiles = async (files) => {
+      const imageFiles = Array.from(files || []).filter(f => f && String(f.type || '').startsWith('image/'));
+      if (imageFiles.length === 0) return;
+      const current = [...getImages()];
+      for (const file of imageFiles) {
+        if (current.length >= 4) break;
+        const dataUrl = await this.readImageFileAsDataUrl(file);
+        if (dataUrl) current.push(dataUrl);
+      }
+      setImages(current);
+      syncPreviews();
+    };
+
+    pickBtn?.addEventListener('click', () => fileInput?.click());
+    fileInput?.addEventListener('change', async (e) => {
+      await appendFiles(e.target?.files);
+      if (fileInput) fileInput.value = '';
+    });
+
+    const handlePaste = async (e) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      const pastedImages = [];
+      for (const item of items) {
+        if (item.kind === 'file' && String(item.type || '').startsWith('image/')) {
+          const f = item.getAsFile();
+          if (f) pastedImages.push(f);
+        }
+      }
+      if (pastedImages.length > 0) {
+        e.preventDefault();
+        await appendFiles(pastedImages);
+        this.showToast(`🖼️ แนบภาพหน้าจอแล้ว (${Math.min(4, getImages().length)}/4)`);
+      }
+    };
+
+    pasteTargets.filter(Boolean).forEach(node => {
+      node.addEventListener('paste', handlePaste);
+    });
+
+    syncPreviews();
+  }
+
+  /* ==========================================================================
      Inline Floating Block Review Popover (#founder-block-popover)
      ========================================================================== */
 
   openBlockPopover(anchorEl, targetInfo = this.selectedTarget) {
     if (typeof document === 'undefined' || this.isClientMode()) return;
     this.closeBlockPopover(false);
+    this.popoverImages = [];
 
     const target = targetInfo || this.selectedTarget || SECTION_MAP[0];
     const popover = document.createElement('div');
@@ -12937,9 +13885,10 @@ class FounderReviewWidget {
         <textarea
           id="founder-popover-comment"
           class="founder-textarea founder-popover-textarea"
-          placeholder="พิมพ์สั่งลูกน้องได้เลย เช่น 'เปลี่ยนสีปุ่มเป็นสีเขียวมรกต', 'แก้คำในบรรทัดนี้ให้กระชับขึ้น'..."
+          placeholder="พิมพ์สั่งลูกน้องได้เลย เช่น 'เปลี่ยนสีปุ่มเป็นสีเขียวมรกต', 'แก้คำในบรรทัดนี้ให้กระชับขึ้น' (วางรูปด้วย Ctrl+V ได้)..."
           required
         ></textarea>
+        ${this.renderImageAttachmentBlock('founder-popover', this.popoverImages)}
         <div class="founder-popover-actions">
           <button type="submit" class="founder-btn-primary founder-popover-submit" id="btn-popover-submit">
             🚀 สั่งลูกน้องแก้จุดนี้ทันที
@@ -12993,8 +13942,10 @@ class FounderReviewWidget {
           selector: target.selector,
           snippet: target.snippet,
           type,
-          comment
+          comment,
+          images: [...this.popoverImages]
         });
+        this.popoverImages = [];
         this.closeBlockPopover(true);
         this.showToast(`🚀 ส่งคำสั่งแก้จุด "${rev.targetName}" ให้ลูกน้อง Gemini 4 Argon แล้ว!`);
         this.currentTab = 'history';
@@ -13006,11 +13957,19 @@ class FounderReviewWidget {
     });
 
     const textarea = popover.querySelector('#founder-popover-comment');
+    this.bindImageAttachment(
+      popover,
+      'founder-popover',
+      () => this.popoverImages,
+      (imgs) => { this.popoverImages = imgs; },
+      [textarea, form]
+    );
     textarea?.focus?.();
   }
 
   closeBlockPopover(clearSelection = true) {
     if (typeof document === 'undefined') return;
+    this.popoverImages = [];
     const existing = document.getElementById('founder-block-popover');
     if (existing) existing.remove();
     if (clearSelection) {
@@ -13198,7 +14157,7 @@ class FounderReviewWidget {
     this.bindDomEvents(host);
   }
 
-  renderNewForm(selected) {
+  renderNewForm(selected = SECTION_MAP[0]) {
     return `
       <form id="founder-review-form">
         <button type="button" class="founder-btn-inspect" id="btn-founder-inspect-trigger">
@@ -13247,9 +14206,10 @@ class FounderReviewWidget {
           <textarea 
             class="founder-textarea" 
             id="founder-review-comment" 
-            placeholder="พิมพ์บอกสิ่งที่ต้องการให้ปรับปรุงตรงนี้ เช่น 'ปรับสีปุ่มให้สว่างขึ้น', 'ย้ายตำแหน่งการ์ดนี้ไปไว้ด้านบน', 'แก้อาการเปิดหน้าแล้วเด้งป๊อปอัป'..."
+            placeholder="พิมพ์บอกสิ่งที่ต้องการให้ปรับปรุงตรงนี้ เช่น 'ปรับสีปุ่มให้สว่างขึ้น', 'ย้ายตำแหน่งการ์ดนี้ไปไว้ด้านบน' (วางรูปด้วย Ctrl+V ได้)..."
             required
           ></textarea>
+          ${this.renderImageAttachmentBlock('founder-drawer', this.draftImages)}
         </div>
 
         <div class="founder-btn-row">
@@ -13287,6 +14247,15 @@ class FounderReviewWidget {
           <div class="founder-target-name">📌 ${this.escapeHtml(r.targetName)}</div>
           ${r.selector ? `<div class="founder-card-selector"><code>${this.escapeHtml(r.selector)}</code></div>` : ''}
           <p class="founder-comment-text">${this.escapeHtml(r.comment)}</p>
+          ${Array.isArray(r.images) && r.images.length > 0 ? `
+            <div class="founder-card-images">
+              ${r.images.map((src, i) => `
+                <a href="${this.escapeHtml(src)}" target="_blank" rel="noopener noreferrer" class="founder-card-image-link" title="คลิกเพื่อดูภาพขนาดเต็ม">
+                  <img src="${this.escapeHtml(src)}" alt="ภาพประกอบรีวิว ${i + 1}">
+                </a>
+              `).join('')}
+            </div>
+          ` : ''}
           ${r.resolutionNote ? `<div class="founder-resolution-note">🤖 สรุปการแก้: ${this.escapeHtml(r.resolutionNote)}</div>` : ''}
           ${r.status === 'RESOLVED' ? `
             <div class="founder-resolved-bar">
@@ -13359,6 +14328,15 @@ class FounderReviewWidget {
 
     const form = host.querySelector('#founder-review-form');
     if (form) {
+      const drawerTextarea = host.querySelector('#founder-review-comment');
+      this.bindImageAttachment(
+        host,
+        'founder-drawer',
+        () => this.draftImages,
+        (imgs) => { this.draftImages = imgs; },
+        [drawerTextarea, form]
+      );
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const sectionId = host.querySelector('#founder-section-select')?.value;
@@ -13375,9 +14353,11 @@ class FounderReviewWidget {
             selector: useSelectedBlock ? this.selectedTarget.selector : null,
             snippet: useSelectedBlock ? this.selectedTarget.snippet : null,
             type: type,
-            comment: comment
+            comment: comment,
+            images: [...this.draftImages]
           });
 
+          this.draftImages = [];
           this.showToast(`✅ บันทึกรีวิวสำหรับ "${rev.targetName}" และสั่งลูกน้องแก้ไขแล้ว!`);
           this.selectedTarget = null;
           this.currentTab = 'history';
@@ -13515,10 +14495,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-01',
     number: 1,
     title: 'ตอบคำถามที่ลูกค้าถามบ่อย',
-    subtitle: 'หยิบคำถามซ้ำ ๆ จากแชตหรือคอมเมนต์มาตอบทีละข้อแบบเข้าใจง่าย',
+    subtitle: 'หยิบคำถามซ้ำ ๆ จากแชตมาตอบสั้น ๆ ให้เข้าใจง่าย',
     category: 'customer',
     lens: 'content',
-    formatHint: 'Q&A คลิปสั้น / สรุปคำตอบชัด ๆ',
+    formatHint: 'Q&A คลิปสั้น',
     recommendedView: 'remix',
     promptHint: 'หยิบคำถามที่ลูกค้าถามซ้ำบ่อยที่สุดมาสกัดเป็นแก่นความรู้ ตอบตรงประเด็นโดยไม่อ้อมค้อม'
   },
@@ -13526,10 +14506,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-02',
     number: 2,
     title: 'โชว์การใช้งานจริงของสินค้า',
-    subtitle: 'สาธิตเป็น How-to สั้น ๆ ให้เห็นขั้นตอนและผลลัพธ์ชัดเจน',
+    subtitle: 'สาธิต How-to สั้น ๆ ให้เห็นขั้นตอนและผลลัพธ์ชัด',
     category: 'product',
     lens: 'packaging',
-    formatHint: 'Step-by-Step Demo / Hands-on Clip',
+    formatHint: 'Step-by-Step Demo',
     recommendedView: 'research',
     promptHint: 'สาธิตขั้นตอนการใช้งานจริงแบบกระชับ ให้เห็นผลลัพธ์ตั้งแต่ 3 วินาทีแรก'
   },
@@ -13537,10 +14517,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-03',
     number: 3,
     title: 'แชร์ดีเทลเล็ก ๆ ที่ซ่อนอยู่ในสินค้า',
-    subtitle: 'เล่าเหตุผลของวัสดุ ดีไซน์ หรือจุดเล็ก ๆ ที่ตั้งใจทำ',
+    subtitle: 'เล่าเหตุผลของวัสดุหรือดีไซน์จุดเล็ก ๆ ที่ตั้งใจทำ',
     category: 'product',
     lens: 'content',
-    formatHint: 'Close-up Detail / Craftsmanship Story',
+    formatHint: 'Close-up Detail',
     recommendedView: 'remix',
     promptHint: 'เจาะลึกเหตุผลเบื้องหลังการออกแบบหรือรายละเอียดเล็ก ๆ ที่สร้างคุณค่าให้ลูกค้าจริง'
   },
@@ -13548,10 +14528,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-04',
     number: 4,
     title: 'หยิบคอนเทนต์เก่าที่เคยเวิร์กมาเล่ามุมใหม่',
-    subtitle: 'คนที่เพิ่งติดตามอาจยังไม่เคยเห็นหยิบมาอัปเดตให้เข้ากับวันนี้',
+    subtitle: 'นำเรื่องเดิมที่คนชอบมาอัปเดตให้เข้ากับวันนี้',
     category: 'repurpose',
     lens: 'packaging',
-    formatHint: 'New Hook on Proven Core Idea',
+    formatHint: 'New Hook · เล่ามุมใหม่',
     recommendedView: 'remix',
     promptHint: 'นำแก่นสาระเดิมที่พิสูจน์แล้วว่าคนสนใจ มาเปลี่ยน Hook และจังหวะการเล่าใหม่'
   },
@@ -13559,10 +14539,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-05',
     number: 5,
     title: 'เล่ารีวิวลูกค้าที่มีเรื่องราว',
-    subtitle: 'เลือกเคสที่เห็นปัญหาก่อนใช้และการเปลี่ยนแปลงหลังใช้จริง',
+    subtitle: 'หยิบเคสจริงที่เห็นปัญหาก่อนใช้และผลลัพธ์หลังใช้',
     category: 'customer',
     lens: 'content',
-    formatHint: 'Customer Story / Problem-to-Solution',
+    formatHint: 'Customer Story',
     recommendedView: 'remix',
     promptHint: 'เล่าเรื่องจริงของลูกค้าตั้งแต่จุดที่เจอปัญหา จนถึงวันที่แก้ปัญหาได้ด้วยสินค้าของเรา'
   },
@@ -13570,10 +14550,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-06',
     number: 6,
     title: 'พาไปดูเบื้องหลังการทำงานของแบรนด์',
-    subtitle: 'ขั้นตอนคิดงาน ผลิต แพ็กของ หรือบรรยากาศทีม',
+    subtitle: 'เปิดขั้นตอนคิดงาน ผลิต หรือบรรยากาศทีมหลังบ้าน',
     category: 'behind-the-scenes',
     lens: 'packaging',
-    formatHint: 'Behind the Scenes / Process Cut',
+    formatHint: 'Behind the Scenes',
     recommendedView: 'research',
     promptHint: 'เปิดเผยขั้นตอนการทำงานจริงหลังบ้านเพื่อสร้างความโปร่งใสและความผูกพันกับผู้ติดตาม'
   },
@@ -13581,10 +14561,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-07',
     number: 7,
     title: 'เปรียบเทียบสินค้าหรือทางเลือก 2 แบบ',
-    subtitle: 'สรุปชัด ๆ ว่าตัวไหนเหมาะกับใคร ต่างกันอย่างไร',
+    subtitle: 'สรุปชัด ๆ ว่าแต่ละตัวต่างกันอย่างไร เหมาะกับใคร',
     category: 'product',
     lens: 'packaging',
-    formatHint: 'Side-by-Side Comparison / Split Screen',
+    formatHint: 'เทียบ 2 ตัวเลือก',
     recommendedView: 'remix',
     promptHint: 'เปรียบเทียบทางเลือก 2 แบบอย่างเป็นกลาง ชี้ชัดว่าแต่ละแบบเหมาะกับโจทย์ของใคร'
   },
@@ -13592,10 +14572,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-08',
     number: 8,
     title: 'โชว์วิธีใช้สินค้าในมุมที่คนคาดไม่ถึง',
-    subtitle: 'ทริคหรือวิธีประยุกต์ใช้งานที่แปลกแต่มีประโยชน์จริง',
+    subtitle: 'แชร์ทริคประยุกต์ใช้งานที่แปลกใหม่แต่มีประโยชน์จริง',
     category: 'product',
     lens: 'packaging',
-    formatHint: 'Unexpected Use Case / Pattern Interrupt',
+    formatHint: 'ทริคใช้งานคาดไม่ถึง',
     recommendedView: 'research',
     promptHint: 'เปิดคลิปด้วยวิธีประยุกต์ใช้งานที่คนไม่ค่อยรู้แต่ช่วยแก้ปัญหาในชีวิตประจำวันได้จริง'
   },
@@ -13603,10 +14583,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-09',
     number: 9,
     title: 'แสดงมุมมองต่อเรื่องที่กำลังเป็นกระแส',
-    subtitle: 'เชื่อมประเด็นร้อนเข้ากับจุดยืนและประสบการณ์ของแบรนด์',
+    subtitle: 'เชื่อมประเด็นร้อนเข้ากับจุดยืนและประสบการณ์แบรนด์',
     category: 'behind-the-scenes',
     lens: 'content',
-    formatHint: 'Founder POV / Timely Commentary',
+    formatHint: 'Founder POV',
     recommendedView: 'remix',
     promptHint: 'เชื่อมโยงประเด็นที่คนกำลังพูดถึงเข้ากับมุมมองและปรัชญาการทำงานของแบรนด์อย่างจริงใจ'
   },
@@ -13614,10 +14594,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-10',
     number: 10,
     title: 'หยิบคอมเมนต์ลูกค้ามาต่อยอดเป็นโพสต์',
-    subtitle: 'ตอบกลับด้วยเนื้อหาเต็มรูปแบบ ได้ทั้งใจและไอเดียสดใหม่',
+    subtitle: 'ยกคอมเมนต์จริงมาตอบกลับด้วยเนื้อหาเต็มรูปแบบ',
     category: 'customer',
     lens: 'packaging',
-    formatHint: 'Comment Callout / Visual Reply',
+    formatHint: 'ตอบกลับคอมเมนต์',
     recommendedView: 'remix',
     promptHint: 'ยกคอมเมนต์จริงของลูกค้าขึ้นหน้าจอเป็น Hook แล้วขยายคำตอบให้เป็นประโยชน์กับทุกคน'
   },
@@ -13625,10 +14605,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-11',
     number: 11,
     title: 'แนะนำชิ้นเริ่มต้นสำหรับลูกค้าใหม่',
-    subtitle: 'ถ้าเพิ่งรู้จักแบรนด์วันนี้ ควรเริ่มจากตัวไหนเพราะอะไร',
+    subtitle: 'ชี้เป้าว่าถ้าเพิ่งรู้จักแบรนด์วันนี้ควรเริ่มจากตัวไหน',
     category: 'product',
     lens: 'content',
-    formatHint: 'Starter Guide / First-Time Pick',
+    formatHint: 'Starter Guide',
     recommendedView: 'remix',
     promptHint: 'ช่วยลดความลังเลของลูกค้าใหม่ด้วยการชี้เป้าตัวเริ่มต้นที่คุ้มค่าและเข้าใจง่ายที่สุด'
   },
@@ -13636,10 +14616,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-12',
     number: 12,
     title: 'เปิดรับคำถามจากผู้ติดตาม',
-    subtitle: 'รวบรวมข้อสงสัยจริงมาทำคอนเทนต์ตอบหรือปรับปรุงสินค้า',
+    subtitle: 'ชวนส่งข้อสงสัยจริงมาทำคอนเทนต์ตอบตรงจุด',
     category: 'customer',
     lens: 'content',
-    formatHint: 'Audience Listening / Community Q&A',
+    formatHint: 'Community Q&A',
     recommendedView: 'research',
     promptHint: 'ชวนผู้ติดตามส่งคำถามหรือปัญหาที่ติดอยู่ เพื่อนำมาสกัดเป็นซีรีส์คอนเทนต์แก้ปัญหาจริง'
   },
@@ -13647,10 +14627,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-13',
     number: 13,
     title: 'ทำคู่มือพื้นฐานสำหรับมือใหม่',
-    subtitle: 'อธิบายตั้งแต่ศูนย์แบบคนไม่เคยรู้มาก่อน เข้าใจได้ทันที',
+    subtitle: 'ปูพื้นฐานตั้งแต่ศูนย์แบบเข้าใจได้ทันทีไม่ต้องมีพื้น',
     category: 'product',
     lens: 'content',
-    formatHint: 'Beginner Playbook / Zero-Jargon Guide',
+    formatHint: 'Beginner Guide',
     recommendedView: 'remix',
     promptHint: 'ปูพื้นฐานเรื่องยากให้กลายเป็นเรื่องง่ายแบบเป็นขั้นตอนสำหรับคนที่เพิ่งเริ่มต้นจากศูนย์'
   },
@@ -13658,10 +14638,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-14',
     number: 14,
     title: 'โชว์สินค้าในรูทีนชีวิตประจำวัน',
-    subtitle: 'เช้า เย็น ก่อนนอน หรือเวลาทำงาน อยู่ตรงไหนของชีวิตลูกค้า',
+    subtitle: 'เล่าว่าสินค้าอยู่ในจังหวะไหนของชีวิตประจำวันลูกค้า',
     category: 'behind-the-scenes',
     lens: 'packaging',
-    formatHint: 'Daily Routine / Real-Life Context',
+    formatHint: 'Daily Routine',
     recommendedView: 'research',
     promptHint: 'ถ่ายทอดจังหวะการใช้งานจริงในชีวิตประจำวันให้คนดูจินตนาการภาพตัวเองใช้งานตามได้ทันที'
   },
@@ -13669,10 +14649,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-15',
     number: 15,
     title: 'จัดอันดับยอดนิยมจากข้อมูลจริง',
-    subtitle: 'สินค้าขายดี ฟีเจอร์ที่คนถามถึงบ่อย หรือตัวเลือกที่คนชอบที่สุด',
+    subtitle: 'รวมอันดับขายดีหรือตัวเลือกที่คนถามถึงบ่อยที่สุด',
     category: 'repurpose',
     lens: 'packaging',
-    formatHint: 'Numbered Ranking / Honest Data Reveal',
+    formatHint: 'จัดอันดับยอดฮิต',
     recommendedView: 'remix',
     promptHint: 'จัดอันดับจากข้อมูลจริงที่มีในระบบหรือเสียงตอบรับจริงของลูกค้า โดยไม่แต่งตัวเลขสมมติ'
   },
@@ -13680,10 +14660,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-16',
     number: 16,
     title: 'โชว์ 3 วิธีใช้สินค้าชิ้นเดียวกัน',
-    subtitle: 'เปลี่ยนสถานการณ์ คนใช้ หรือโอกาสในการใช้งาน',
+    subtitle: 'เปรียบเทียบ 3 สถานการณ์การใช้งานในคลิปเดียว',
     category: 'repurpose',
     lens: 'packaging',
-    formatHint: '3-Way Showcase / Multi-Scenario Cut',
+    formatHint: '3-Way Showcase',
     recommendedView: 'remix',
     promptHint: 'นำเสนอความคุ้มค่าด้วยโครงสร้าง 3 สถานการณ์ที่แตกต่างกันในคลิปเดียว'
   },
@@ -13691,10 +14671,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-17',
     number: 17,
     title: 'ทำคอนเทนต์ Before & After',
-    subtitle: 'เทียบความต่างก่อนและหลังใช้งานให้เห็นภาพชัดเจน',
+    subtitle: 'เทียบความต่างก่อนและหลังใช้ให้เห็นภาพชัดเจน',
     category: 'product',
     lens: 'packaging',
-    formatHint: 'Visual Transformation / Before vs After',
+    formatHint: 'Before & After',
     recommendedView: 'research',
     promptHint: 'เปิดด้วยภาพเปรียบเทียบก่อนและหลังแก้ไขปัญหาอย่างซื่อสัตย์ ชัดเจนในพริบตา'
   },
@@ -13705,7 +14685,7 @@ const LIFESAVER_IDEAS = [
     subtitle: 'คลายความเข้าใจผิดด้วยข้อเท็จจริงที่ตรงไปตรงมา',
     category: 'behind-the-scenes',
     lens: 'content',
-    formatHint: 'Myth vs Truth / Misconception Hook',
+    formatHint: 'Myth vs Truth',
     recommendedView: 'remix',
     promptHint: 'เปิดด้วยความเชื่อที่คนมักเข้าใจผิด แล้วค่อยเฉลยข้อเท็จจริงอย่างตรงไปตรงมาและให้เกียรติคนดู'
   },
@@ -13713,10 +14693,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-19',
     number: 19,
     title: 'หยิบ 1 คำถามยอดฮิตมาอธิบายแบบเจาะลึก',
-    subtitle: 'เปลี่ยนคำถามสั้น ๆ ให้เป็นคอนเทนต์วิเคราะห์เต็มโพสต์',
+    subtitle: 'ขยายคำถามสั้น ๆ ให้เป็นโพสต์วิเคราะห์เจาะลึก',
     category: 'customer',
     lens: 'content',
-    formatHint: 'Deep-Dive Breakdown / Single Question',
+    formatHint: 'Deep-Dive 1 คำถาม',
     recommendedView: 'remix',
     promptHint: 'เลือกคำถามเดียวที่สำคัญที่สุด แล้วอธิบายเบื้องหลัง เหตุผล และวิธีนำไปใช้จริงอย่างละเอียด'
   },
@@ -13724,10 +14704,10 @@ const LIFESAVER_IDEAS = [
     id: 'idea-20',
     number: 20,
     title: 'อัปเดตคอนเทนต์เก่าด้วยข้อมูลและมุมมองใหม่',
-    subtitle: 'ถ้าทำเรื่องนี้อีกครั้งในวันนี้ จะเปลี่ยนหรือเติมอะไรบ้าง',
+    subtitle: 'ทบทวนเรื่องเดิมพร้อมเติมมุมมองใหม่ของวันนี้',
     category: 'repurpose',
     lens: 'content',
-    formatHint: 'Updated Perspective / Revisiting Proven Topic',
+    formatHint: 'อัปเดตมุมมองใหม่',
     recommendedView: 'remix',
     promptHint: 'ทบทวนคอนเทนต์ที่เคยทำไว้ในอดีต แล้วเติมมุมมองหรือบทเรียนใหม่ที่ได้เรียนรู้เพิ่มขึ้นในวันนี้'
   }
@@ -14156,7 +15136,7 @@ class KeepGoingModalController {
               <div class="keep-going-real-stats" aria-label="สถิติจริงจากคลังข้อมูล">
                 <div class="keep-going-stat-item">
                   <span class="keep-going-stat-val font-num" id="keep-going-stat-notes" data-testid="keep-going-stat-notes">0</span>
-                  <span class="keep-going-stat-lbl">Saved Notes</span>
+                  <span class="keep-going-stat-lbl">คลังโน้ต</span>
                 </div>
                 <div class="keep-going-stat-item">
                   <span class="keep-going-stat-val font-num" id="keep-going-stat-concepts" data-testid="keep-going-stat-concepts">0</span>
