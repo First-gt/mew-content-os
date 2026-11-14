@@ -73,8 +73,9 @@ export class ResearchDetailController {
       ? document.querySelector(container)
       : (
           container ||
-          this.resolveS02Root() ||
-          (typeof document !== 'undefined' ? document.body : null)
+          (typeof document !== 'undefined'
+            ? (document.getElementById('screen-research-detail') || document.body)
+            : null)
         );
 
     this.activeTab = DETAIL_TABS.CONTENT;
@@ -110,11 +111,7 @@ export class ResearchDetailController {
       document.getElementById('S02') ||
       document.getElementById('s02-research-detail') ||
       document.getElementById('research-detail-root') ||
-      document.getElementById('research-detail') ||
-      (document.querySelector &&
-        document.querySelector(
-          ':is(section, div, main, article):is([data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], .research-detail-view)'
-        ));
+      document.getElementById('research-detail');
     if (explicit) return explicit;
 
     if (typeof document.querySelector === 'function') {
@@ -130,7 +127,7 @@ export class ResearchDetailController {
         .map((sel) => document.querySelector(sel))
         .filter(Boolean);
 
-      if (landmarks.length > 0) {
+      if (landmarks.length >= 2) {
         let lca = landmarks[0];
         while (
           lca &&
@@ -142,7 +139,14 @@ export class ResearchDetailController {
           lca = lca.parentElement;
         }
 
-        return lca;
+        if (
+          lca &&
+          lca !== document.body &&
+          lca !== document.documentElement &&
+          landmarks.every((node) => typeof lca.contains === 'function' && lca.contains(node))
+        ) {
+          return lca;
+        }
       }
     }
 
@@ -162,21 +166,11 @@ export class ResearchDetailController {
         (document.body || document.head).appendChild(styleEl);
       }
       styleEl.textContent = `
-        header:not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]):not(.detail-top-nav),
-        nav:not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]),
-        .app-header,
-        .global-header,
-        .os-header,
-        .os-nav,
-        .top-nav,
-        .topbar,
-        .navbar,
-        .screen-nav,
-        .screen-switcher {
-          z-index: 200 !important;
+        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, [role="navigation"], [role="banner"], #__s02_nav_a__#__s02_nav_b__#__s02_nav_c__):not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]):not(.detail-top-nav) {
+          z-index: 1000 !important;
           isolation: isolate !important;
         }
-        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .detail-top-nav, .analysis-panel-top, .dual-lens-tabs-container) :is(svg, i, .icon, [class*="icon"], .badge-icon-box, .gate-callout-icon, .reminder-icon) {
+        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, [role="navigation"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, .pill-tabs-list, #__s02_icon_a__#__s02_icon_b__#__s02_icon_c__) :is(svg, i, .icon, [class*="icon"], .badge-icon-box, .gate-callout-icon, .reminder-icon, .tab-indicator-dot, .badge-kicker, .badge-step-code) {
           position: static !important;
           top: auto !important;
           left: auto !important;
@@ -190,7 +184,7 @@ export class ResearchDetailController {
           float: none !important;
           flex-shrink: 0 !important;
         }
-        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .detail-top-nav, .analysis-panel-top, .dual-lens-tabs-container) svg:not([hidden]):not(.is-hidden) {
+        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, [role="navigation"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, #__s02_svg_a__#__s02_svg_b__#__s02_svg_c__) svg:not([hidden]):not(.is-hidden) {
           display: inline-block !important;
           vertical-align: middle !important;
           width: 16px !important;
@@ -199,17 +193,29 @@ export class ResearchDetailController {
           max-height: 18px !important;
           overflow: hidden !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, :is(section, div, main, article):is([data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"])) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_root_a__#__s02_root_b__#__s02_root_c__) {
           position: relative !important;
           z-index: 1 !important;
           isolation: isolate !important;
           contain: layout style paint !important;
           overflow: hidden !important;
-          margin-top: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *,
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *::before,
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *::after {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_box_a__#__s02_box_b__#__s02_box_c__) :is(.detail-top-nav, .detail-hero-header, .research-detail-grid, .detail-col-left, .detail-col-right, .mew-offer-card, #video-player, .video-player-card, .video-canvas-container, .video-viewport, #video-viewport, .video-mockup-content, .video-controls-bar, .video-scrubber-track, #source-meta, .source-meta-card, #analysis-panel, .analysis-panel-card, .analysis-panel-top, .dual-lens-tabs-container, .pill-tabs-list, .pill-tab-button, .analysis-panels-body, .analysis-tab-panel, .analysis-section, #detail-action-footer, .detail-action-footer) {
+          position: relative !important;
+          top: auto !important;
+          left: auto !important;
+          right: auto !important;
+          bottom: auto !important;
+          inset: auto !important;
+          transform: none !important;
+          translate: none !important;
+          z-index: 1 !important;
+          float: none !important;
+          overflow: hidden !important;
+        }
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_child_a__#__s02_child_b__#__s02_child_c__) :is(svg, i, .icon, [class*="icon"], .btn-video-play-overlay, #btn-video-play, .gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, #video-avatar-glyph, .creator-avatar-circle, #meta-avatar, .tab-indicator-dot, .pulse-dot, .video-overlay-chrome, .video-badge-ratio, .video-badge-watermark, .video-beat-badge, .badge-kicker, .badge-step-code, .section-step-num, .beat-index, .detail-gate-callout),
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::before,
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::after {
           position: static !important;
           top: auto !important;
           left: auto !important;
@@ -222,13 +228,10 @@ export class ResearchDetailController {
           float: none !important;
           margin-top: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, #analysis-panel) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], .video-markers-layer, .timeline-marker, .video-scrub-handle, [class*="floating"]:not([data-testid]):not([id]), [class*="float-"]:not([data-testid]):not([id])) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, #analysis-panel, #__s02_hide_a__#__s02_hide_b__#__s02_hide_c__) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], [class*="floating"]:not([data-testid]):not([id]), [class*="float-"]:not([data-testid]):not([id])) {
           display: none !important;
-          width: 0 !important;
-          height: 0 !important;
-          overflow: hidden !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.detail-top-nav, .detail-hero-header, .analysis-panel-top, .video-overlay-chrome, .video-meta-controls, .source-meta-header, .detail-action-footer) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_flex_a__#__s02_flex_b__#__s02_flex_c__) :is(.detail-top-nav, .detail-hero-header, .analysis-panel-top, .video-overlay-chrome, .video-meta-controls, .source-meta-header, .detail-action-footer) {
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
@@ -239,20 +242,20 @@ export class ResearchDetailController {
           box-sizing: border-box !important;
           overflow: hidden !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.nav-left-group, .nav-quick-source, .detail-step-badge-group, .hero-kicker-row, .analysis-badge-row, .analysis-version-actions, .footer-status-group, .footer-cta-group, .video-actions-group, .btn-back-to-research, .top-link-original, .link-original, .badge-kicker, .badge-rights-verified, .btn-analyze-again, .pill-tab-button, .btn-ctrl-action, .status-badge, .btn-save-to-library, .source-meta-heading, .section-badge-title) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_inflex_a__#__s02_inflex_b__#__s02_inflex_c__) :is(.nav-left-group, .nav-quick-source, .detail-step-badge-group, .hero-kicker-row, .analysis-badge-row, .analysis-version-actions, .footer-status-group, .footer-cta-group, .video-actions-group, .btn-back-to-research, .top-link-original, .link-original, .badge-kicker, .badge-rights-verified, .btn-analyze-again, .pill-tab-button, .btn-ctrl-action, .status-badge, .btn-save-to-library, .source-meta-heading, .section-badge-title) {
           display: inline-flex !important;
           align-items: center !important;
           gap: 8px !important;
           margin-top: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.detail-gate-callout, .creator-profile-badge, .save-gate-reminder-box) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_call_a__#__s02_call_b__#__s02_call_c__) :is(.detail-gate-callout, .creator-profile-badge, .save-gate-reminder-box) {
           display: flex !important;
           align-items: center !important;
           gap: 12px !important;
           margin-top: 0 !important;
           overflow: hidden !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) .pill-tabs-list {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_tabs_a__#__s02_tabs_b__#__s02_tabs_c__) .pill-tabs-list {
           display: flex !important;
           align-items: stretch !important;
           flex-wrap: wrap !important;
@@ -260,7 +263,7 @@ export class ResearchDetailController {
           width: 100% !important;
           margin-top: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(#video-player, .video-player-card, .video-canvas-container, .video-viewport, .video-mockup-content) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_vid_a__#__s02_vid_b__#__s02_vid_c__) :is(#video-player, .video-player-card, .video-canvas-container, .video-viewport, .video-mockup-content) {
           display: flex !important;
           flex-direction: column !important;
           align-items: center !important;
@@ -271,7 +274,7 @@ export class ResearchDetailController {
           margin-top: 0 !important;
           box-sizing: border-box !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.btn-video-play-overlay, #btn-video-play) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_play_a__#__s02_play_b__#__s02_play_c__) :is(.btn-video-play-overlay, #btn-video-play) {
           display: inline-flex !important;
           align-items: center !important;
           justify-content: center !important;
@@ -282,7 +285,7 @@ export class ResearchDetailController {
           overflow: hidden !important;
           flex-shrink: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_glyph_a__#__s02_glyph_b__#__s02_glyph_c__) :is(.gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot) {
           display: inline-flex !important;
           align-items: center !important;
           justify-content: center !important;
@@ -290,7 +293,7 @@ export class ResearchDetailController {
           margin-top: 0 !important;
           overflow: hidden !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, #source-meta, #analysis-panel, #detail-action-footer) svg:not([hidden]):not(.is-hidden) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, #source-meta, #analysis-panel, #detail-action-footer, #__s02_svg2_a__#__s02_svg2_b__#__s02_svg2_c__) svg:not([hidden]):not(.is-hidden) {
           display: inline-block !important;
           vertical-align: middle !important;
           width: 16px !important;
@@ -301,13 +304,13 @@ export class ResearchDetailController {
           overflow: hidden !important;
           margin-top: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) #btn-video-play svg:not([hidden]):not(.is-hidden) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_svg3_a__#__s02_svg3_b__#__s02_svg3_c__) #btn-video-play svg:not([hidden]):not(.is-hidden) {
           width: 24px !important;
           height: 24px !important;
           max-width: 24px !important;
           max-height: 24px !important;
         }
-        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) .video-scrubber-track {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_scrub_a__#__s02_scrub_b__#__s02_scrub_c__) .video-scrubber-track {
           display: flex !important;
           align-items: center !important;
           overflow: hidden !important;
@@ -317,10 +320,60 @@ export class ResearchDetailController {
       `;
     }
 
+    const applyStaticImportant = (node) => {
+      if (!node || !node.style || typeof node.style.setProperty !== 'function') return;
+      node.style.setProperty('position', 'static', 'important');
+      node.style.setProperty('top', 'auto', 'important');
+      node.style.setProperty('left', 'auto', 'important');
+      node.style.setProperty('right', 'auto', 'important');
+      node.style.setProperty('bottom', 'auto', 'important');
+      node.style.setProperty('inset', 'auto', 'important');
+      node.style.setProperty('transform', 'none', 'important');
+      node.style.setProperty('translate', 'none', 'important');
+      node.style.setProperty('z-index', 'auto', 'important');
+      node.style.setProperty('float', 'none', 'important');
+      node.style.setProperty('margin-top', '0px', 'important');
+      node.style.setProperty('flex-shrink', '0', 'important');
+    };
+
+    const applySvgSizeImportant = (svg, sizePx = 16) => {
+      if (!svg || !svg.style || typeof svg.style.setProperty !== 'function') return;
+      applyStaticImportant(svg);
+      if (!svg.getAttribute('width')) svg.setAttribute('width', String(sizePx));
+      if (!svg.getAttribute('height')) svg.setAttribute('height', String(sizePx));
+      svg.style.setProperty('width', `${sizePx}px`, 'important');
+      svg.style.setProperty('height', `${sizePx}px`, 'important');
+      svg.style.setProperty('max-width', `${sizePx}px`, 'important');
+      svg.style.setProperty('max-height', `${sizePx}px`, 'important');
+      svg.style.setProperty('overflow', 'hidden', 'important');
+    };
+
     const scopeRoot =
       this.resolveS02Root() ||
       (this.root && this.root !== (typeof document !== 'undefined' ? document.body : null) ? this.root : null);
 
+    if (typeof document !== 'undefined' && typeof document.querySelectorAll === 'function') {
+      const topNavs = document.querySelectorAll(
+        'header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, [role="navigation"], [role="banner"]'
+      );
+      topNavs.forEach((navEl) => {
+        if (!navEl || (scopeRoot && typeof scopeRoot.contains === 'function' && scopeRoot.contains(navEl))) return;
+        if (navEl.style && typeof navEl.style.setProperty === 'function') {
+          navEl.style.setProperty('z-index', '1000', 'important');
+          navEl.style.setProperty('isolation', 'isolate', 'important');
+        }
+        if (typeof navEl.querySelectorAll === 'function') {
+          navEl.querySelectorAll('svg, i, .icon, [class*="icon"], [class*="badge"]').forEach((iconEl) => {
+            applyStaticImportant(iconEl);
+            if (iconEl.tagName && iconEl.tagName.toLowerCase() === 'svg') {
+              applySvgSizeImportant(iconEl, 16);
+            }
+          });
+        }
+      });
+    }
+
+    const queryTarget = scopeRoot || this.root;
     if (scopeRoot) {
       if (scopeRoot.classList && typeof scopeRoot.classList.add === 'function') {
         scopeRoot.classList.add('research-detail-view');
@@ -328,23 +381,42 @@ export class ResearchDetailController {
       if (typeof scopeRoot.setAttribute === 'function') {
         scopeRoot.setAttribute('data-s02-scope', 'true');
       }
-      if (typeof scopeRoot.querySelectorAll === 'function') {
-        const iconNodes = scopeRoot.querySelectorAll(
-          'svg, i, .icon, [class*="icon"], .btn-video-play-overlay, #btn-video-play, .gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot'
-        );
-        iconNodes.forEach((node) => {
-          if (node && node.style) {
-            node.style.position = 'static';
-            node.style.top = 'auto';
-            node.style.left = 'auto';
-            node.style.right = 'auto';
-            node.style.bottom = 'auto';
-            node.style.transform = 'none';
-            node.style.zIndex = 'auto';
-            node.style.marginTop = '0px';
-          }
-        });
+      if (scopeRoot.style && typeof scopeRoot.style.setProperty === 'function') {
+        scopeRoot.style.setProperty('position', 'relative', 'important');
+        scopeRoot.style.setProperty('z-index', '1', 'important');
+        scopeRoot.style.setProperty('isolation', 'isolate', 'important');
+        scopeRoot.style.setProperty('overflow', 'hidden', 'important');
       }
+    }
+
+    if (queryTarget && typeof queryTarget.querySelectorAll === 'function') {
+      const containerNodes = queryTarget.querySelectorAll(
+        '.detail-top-nav, .detail-hero-header, .research-detail-grid, .detail-col-left, .detail-col-right, #video-player, .video-player-card, .video-canvas-container, .video-viewport, #video-viewport, .video-mockup-content, .video-controls-bar, .video-scrubber-track, #source-meta, .source-meta-card, #analysis-panel, .analysis-panel-card, .analysis-panel-top, .dual-lens-tabs-container, .pill-tabs-list, .pill-tab-button, .analysis-panels-body, .analysis-tab-panel, .analysis-section, #detail-action-footer, .detail-action-footer'
+      );
+      containerNodes.forEach((box) => {
+        if (box && box.style && typeof box.style.setProperty === 'function') {
+          box.style.setProperty('position', 'relative', 'important');
+          box.style.setProperty('top', 'auto', 'important');
+          box.style.setProperty('left', 'auto', 'important');
+          box.style.setProperty('right', 'auto', 'important');
+          box.style.setProperty('bottom', 'auto', 'important');
+          box.style.setProperty('inset', 'auto', 'important');
+          box.style.setProperty('transform', 'none', 'important');
+          box.style.setProperty('z-index', '1', 'important');
+          box.style.setProperty('overflow', 'hidden', 'important');
+        }
+      });
+
+      const iconNodes = queryTarget.querySelectorAll(
+        '.detail-top-nav svg, .detail-hero-header svg, #video-player svg, #source-meta svg, #analysis-panel svg, #detail-action-footer svg, .btn-video-play-overlay, #btn-video-play, .gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, #video-avatar-glyph, .creator-avatar-circle, #meta-avatar, .tab-indicator-dot, .pulse-dot, .video-overlay-chrome, .video-badge-ratio, .video-badge-watermark, .video-beat-badge, .badge-kicker, .badge-step-code, .section-step-num, .beat-index, .detail-gate-callout'
+      );
+      iconNodes.forEach((node) => {
+        applyStaticImportant(node);
+        if (node.tagName && node.tagName.toLowerCase() === 'svg') {
+          const isPlayIcon = node.id === 'icon-play' || node.id === 'icon-pause' || (node.closest && node.closest('#btn-video-play'));
+          applySvgSizeImportant(node, isPlayIcon ? 24 : 16);
+        }
+      });
     }
   }
 
