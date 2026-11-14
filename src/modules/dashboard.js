@@ -283,7 +283,7 @@ export class DashboardController {
         .dashboard-container {
           --bg-primary: #ffffff !important;
           --bg-secondary: #ffffff !important;
-          --bg-tertiary: #f0fdf4 !important;
+          --bg-tertiary: #f8fffc !important;
           --bg-elevated: #ffffff !important;
           --bg-surface: #ffffff !important;
           --bg-panel: #ffffff !important;
@@ -298,15 +298,15 @@ export class DashboardController {
           --mew-bg: #ffffff !important;
           --surface-1: #ffffff !important;
           --surface-2: #ffffff !important;
-          --surface-3: #ecfdf5 !important;
+          --surface-3: #f0fdf4 !important;
           --text-primary: #0f172a !important;
           --text-secondary: #1e293b !important;
           --text-muted: #334155 !important;
-          --border-color: #6ee7b7 !important;
-          --border-subtle: #a7f3d0 !important;
+          --border-color: #a7f3d0 !important;
+          --border-subtle: #d1fae5 !important;
           background: #ffffff !important;
           background-color: #ffffff !important;
-          background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #ffffff 80%, #ecfdf5 100%) !important;
+          background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #ffffff 90%, #f0fdf4 100%) !important;
           color: #0f172a !important;
         }
         html body #view-overview#view-overview .dashboard-hero,
@@ -316,15 +316,15 @@ export class DashboardController {
         #view-overview .dashboard-hero,
         #dashboard-root .dashboard-hero,
         .dashboard-container .dashboard-hero {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%) !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 94%, #f8fffc 100%) !important;
           background-color: #ffffff !important;
-          border: 1.5px solid #6ee7b7 !important;
-          border-top: 4px solid #10b981 !important;
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
           border-radius: 24px !important;
           padding: 32px 36px !important;
-          box-shadow: 0 14px 36px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff !important;
+          box-shadow: 0 12px 32px rgba(52, 211, 153, 0.14), 0 4px 12px rgba(52, 211, 153, 0.06), inset 0 0 0 2px #ffffff, inset 0 0 36px #ffffff !important;
           color: #0f172a !important;
-          filter: none !important;
+          filter: brightness(1.02) !important;
           display: flex !important;
           flex-direction: column !important;
           justify-content: center !important;
@@ -357,10 +357,10 @@ export class DashboardController {
           font-size: 0.75rem !important;
           font-weight: 700 !important;
           line-height: 1.25 !important;
-          background: #ecfdf5 !important;
-          color: #047857 !important;
-          border: 1px solid #6ee7b7 !important;
-          box-shadow: 0 2px 6px rgba(16, 185, 129, 0.08) !important;
+          background: #f0fdf4 !important;
+          color: #059669 !important;
+          border: 1px solid #a7f3d0 !important;
+          box-shadow: 0 2px 6px rgba(52, 211, 153, 0.08) !important;
         }
         #view-overview .dashboard-hero .hero-title,
         .dashboard-container .dashboard-hero .hero-title {
@@ -373,17 +373,17 @@ export class DashboardController {
         #view-overview .dashboard-hero .mew-gradient-text,
         .dashboard-container .dashboard-hero .mew-gradient-text {
           color: #10b981 !important;
-          background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+          background: linear-gradient(135deg, #10b981 0%, #34d399 100%) !important;
           -webkit-background-clip: text !important;
           background-clip: text !important;
           -webkit-text-fill-color: transparent !important;
-          border-right: 3px solid #10b981 !important;
+          border-right: 3px solid #34d399 !important;
           padding-right: 4px !important;
           animation: mew-caret-blink 0.85s step-end infinite !important;
         }
         @keyframes mew-caret-blink {
           from, to { border-color: transparent; }
-          50% { border-color: #10b981; }
+          50% { border-color: #34d399; }
         }
         #view-overview .dashboard-hero .hero-subtitle,
         .dashboard-container .dashboard-hero .hero-subtitle {
@@ -394,8 +394,8 @@ export class DashboardController {
         }
         #view-overview .dashboard-hero .hero-subtitle strong,
         .dashboard-container .dashboard-hero .hero-subtitle strong {
-          color: #047857 !important;
-          background: #ecfdf5 !important;
+          color: #059669 !important;
+          background: #f0fdf4 !important;
           border: 1px solid #a7f3d0 !important;
           padding: 1px 6px !important;
           border-radius: 6px !important;
@@ -461,14 +461,14 @@ export class DashboardController {
         .dashboard-container .panel-card {
           background: #ffffff !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%) !important;
-          border: 1.5px solid #6ee7b7 !important;
-          border-top: 4px solid #10b981 !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 95%, #f8fffc 100%) !important;
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
           border-radius: 20px !important;
-          box-shadow: 0 14px 32px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 24px #ffffff !important;
+          box-shadow: 0 12px 30px rgba(52, 211, 153, 0.14), 0 4px 10px rgba(52, 211, 153, 0.06), inset 0 0 0 2px #ffffff, inset 0 0 36px #ffffff !important;
           color: #0f172a !important;
           opacity: 1 !important;
-          filter: none !important;
+          filter: brightness(1.02) !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
         html body #view-overview .summary-card-inner,
@@ -497,9 +497,9 @@ export class DashboardController {
         #view-overview .mew-offer-card:hover,
         .dashboard-container .mew-offer-card:hover {
           background: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%) !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
           border-color: #34d399 !important;
-          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.22), 0 4px 12px rgba(15, 23, 42, 0.04), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.2), 0 4px 12px rgba(52, 211, 153, 0.08), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important;
           transform: translateY(-2px);
         }
         #view-overview .summary-card::before,
@@ -528,9 +528,9 @@ export class DashboardController {
         .dashboard-container .empty-state {
           background: #ffffff !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important;
-          border: 1.5px solid #bbf7d0 !important;
-          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.1), inset 0 0 18px #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 94%, #f8fffc 100%) !important;
+          border: 1.5px solid #a7f3d0 !important;
+          box-shadow: 0 4px 14px rgba(52, 211, 153, 0.1), inset 0 0 28px #ffffff !important;
           color: #0f172a !important;
         }
         html body #view-overview .summary-card-title,
@@ -611,10 +611,10 @@ export class DashboardController {
           align-items: center !important;
           justify-content: center !important;
           flex-shrink: 0 !important;
-          background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%) !important;
-          background-color: #f0fdf4 !important;
+          background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
+          background-color: #ffffff !important;
           color: #10b981 !important;
-          border: 1.5px solid #6ee7b7 !important;
+          border: 1.5px solid #a7f3d0 !important;
         }
         #view-overview .summary-card .badge-pill,
         #view-overview .summary-status-pill,
@@ -624,10 +624,10 @@ export class DashboardController {
         .dashboard-container .summary-status-pill,
         .dashboard-container .preview-badge,
         .dashboard-container .vault-stat-tag {
-          background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%) !important;
-          background-color: #f0fdf4 !important;
+          background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
+          background-color: #ffffff !important;
           color: #059669 !important;
-          border: 1px solid #6ee7b7 !important;
+          border: 1px solid #a7f3d0 !important;
         }
         #view-overview .btn-continue-work,
         .dashboard-container .btn-continue-work {
@@ -641,10 +641,10 @@ export class DashboardController {
           font-size: 0.875rem !important;
           font-weight: 700 !important;
           cursor: pointer !important;
-          background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+          background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
           color: #ffffff !important;
           border: none !important;
-          box-shadow: 0 6px 16px rgba(16, 185, 129, 0.28) !important;
+          box-shadow: 0 6px 18px rgba(52, 211, 153, 0.35) !important;
         }
         #view-overview .btn-continue-work span,
         #view-overview .btn-continue-work .footer-arrow,
@@ -668,7 +668,7 @@ export class DashboardController {
           width: 8px !important;
           height: 8px !important;
           border-radius: 999px !important;
-          background: #10b981 !important;
+          background: #34d399 !important;
           display: inline-block !important;
           flex-shrink: 0 !important;
         }
@@ -676,7 +676,7 @@ export class DashboardController {
           display: inline !important;
           font-weight: 800 !important;
           letter-spacing: 0.02em !important;
-          color: #047857 !important;
+          color: #059669 !important;
           background: transparent !important;
           border: none !important;
           box-shadow: none !important;
@@ -686,14 +686,15 @@ export class DashboardController {
         #card-recent-research[data-step="ข้อ 1"],
         .card-recent-research[data-step="ข้อ 1"],
         [data-step="ข้อ 1"] {
-          border-top: 4px solid #10b981 !important;
+          border-top: 4px solid #34d399 !important;
+          border-radius: 20px !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
         #card-recent-research[data-step="ข้อ 1"]:hover,
         .card-recent-research[data-step="ข้อ 1"]:hover,
         [data-step="ข้อ 1"]:hover {
-          border-color: #059669 !important;
-          box-shadow: 0 18px 40px rgba(16, 185, 129, 0.22), 0 4px 12px rgba(15, 23, 42, 0.04) !important;
+          border-color: #34d399 !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.22), 0 4px 12px rgba(52, 211, 153, 0.08), inset 0 0 36px #ffffff !important;
           transform: translateY(-2px) !important;
         }
         html body #view-overview .summary-card,
@@ -705,7 +706,7 @@ export class DashboardController {
         html body #view-overview .summary-grid > [data-navigate="research"],
         .dashboard-container #card-recent-research {
           position: relative;
-          border-top: 4px solid #10b981 !important;
+          border-top: 4px solid #34d399 !important;
           display: flex !important;
           flex-direction: column !important;
           justify-content: space-between !important;
@@ -927,15 +928,15 @@ export class DashboardController {
           font-weight: 700 !important;
           line-height: 1.25 !important;
           white-space: nowrap !important;
-          background: #ecfdf5 !important;
-          color: #047857 !important;
-          border: 1px solid #6ee7b7 !important;
+          background: #f0fdf4 !important;
+          color: #059669 !important;
+          border: 1px solid #a7f3d0 !important;
         }
         #view-overview .preview-date,
         .dashboard-container .preview-date {
           font-size: 0.75rem !important;
           font-weight: 500 !important;
-          color: #059669 !important;
+          color: #10b981 !important;
         }
         #view-overview .summary-card-footer,
         .dashboard-container .summary-card-footer {
@@ -944,7 +945,7 @@ export class DashboardController {
           justify-content: space-between !important;
           padding-top: 14px !important;
           margin-top: auto !important;
-          border-top: 1px solid #d1fae5 !important;
+          border-top: 1px solid #dcfce7 !important;
           width: 100% !important;
           box-sizing: border-box !important;
         }
@@ -997,15 +998,15 @@ export class DashboardController {
 
       const heroes = container.querySelectorAll('.dashboard-hero');
       heroes.forEach((hero) => {
-        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%)', 'important');
+        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 94%, #f8fffc 100%)', 'important');
         hero.style.setProperty('background-color', '#ffffff', 'important');
-        hero.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
-        hero.style.setProperty('border-top', '4px solid #10b981', 'important');
+        hero.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
+        hero.style.setProperty('border-top', '4px solid #34d399', 'important');
         hero.style.setProperty('border-radius', '24px', 'important');
         hero.style.setProperty('padding', '32px 36px', 'important');
-        hero.style.setProperty('box-shadow', '0 14px 36px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff', 'important');
+        hero.style.setProperty('box-shadow', '0 12px 32px rgba(52, 211, 153, 0.14), 0 4px 12px rgba(52, 211, 153, 0.06), inset 0 0 0 2px #ffffff, inset 0 0 36px #ffffff', 'important');
         hero.style.setProperty('color', '#0f172a', 'important');
-        hero.style.setProperty('filter', 'none', 'important');
+        hero.style.setProperty('filter', 'brightness(1.02)', 'important');
       });
 
       const heroActions = container.querySelectorAll('.dashboard-hero .hero-actions');
@@ -1020,14 +1021,14 @@ export class DashboardController {
         if (card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
         card.style.setProperty('background', '#ffffff', 'important');
         card.style.setProperty('background-color', '#ffffff', 'important');
-        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%)', 'important');
-        card.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
-        card.style.setProperty('border-top', '4px solid #10b981', 'important');
+        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 95%, #f8fffc 100%)', 'important');
+        card.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
+        card.style.setProperty('border-top', '4px solid #34d399', 'important');
         card.style.setProperty('border-radius', '20px', 'important');
-        card.style.setProperty('box-shadow', '0 14px 32px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 24px #ffffff', 'important');
+        card.style.setProperty('box-shadow', '0 12px 30px rgba(52, 211, 153, 0.14), 0 4px 10px rgba(52, 211, 153, 0.06), inset 0 0 0 2px #ffffff, inset 0 0 36px #ffffff', 'important');
         card.style.setProperty('color', '#0f172a', 'important');
         card.style.setProperty('opacity', '1', 'important');
-        card.style.setProperty('filter', 'none', 'important');
+        card.style.setProperty('filter', 'brightness(1.02)', 'important');
         if (card.classList.contains('summary-card') || card.closest('.summary-grid')) {
           card.style.setProperty('display', 'flex', 'important');
           card.style.setProperty('flex-direction', 'column', 'important');
@@ -1075,10 +1076,10 @@ export class DashboardController {
       subBoxes.forEach((box) => {
         box.style.setProperty('background', '#ffffff', 'important');
         box.style.setProperty('background-color', '#ffffff', 'important');
-        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 82%, #ecfdf5 100%)', 'important');
-        box.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
+        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 94%, #f8fffc 100%)', 'important');
+        box.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
         box.style.setProperty('border-radius', '12px', 'important');
-        box.style.setProperty('box-shadow', '0 6px 18px rgba(52, 211, 153, 0.14), inset 0 0 24px #ffffff', 'important');
+        box.style.setProperty('box-shadow', '0 4px 14px rgba(52, 211, 153, 0.1), inset 0 0 28px #ffffff', 'important');
         box.style.setProperty('color', '#0f172a', 'important');
       });
     });
