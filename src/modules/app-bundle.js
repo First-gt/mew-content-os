@@ -2625,8 +2625,11 @@ class DashboardController {
     } else if (styleEl && document.body && styleEl.parentNode !== document.body) {
       document.body.appendChild(styleEl);
     }
-    if (styleEl) {
+    if ( styleEl ) {
       styleEl.textContent = `
+        html body #view-overview#view-overview,
+        html body #screen-s00#screen-s00,
+        html body [data-screen="S00"][data-screen="S00"],
         html body #view-overview,
         html body #screen-s00,
         html body [data-screen="S00"],
@@ -2637,7 +2640,7 @@ class DashboardController {
         .dashboard-container {
           --bg-primary: #ffffff !important;
           --bg-secondary: #ffffff !important;
-          --bg-tertiary: #f8fafc !important;
+          --bg-tertiary: #f0fdf4 !important;
           --bg-elevated: #ffffff !important;
           --bg-surface: #ffffff !important;
           --bg-panel: #ffffff !important;
@@ -2652,32 +2655,33 @@ class DashboardController {
           --mew-bg: #ffffff !important;
           --surface-1: #ffffff !important;
           --surface-2: #ffffff !important;
-          --surface-3: #f0fdf4 !important;
+          --surface-3: #ecfdf5 !important;
           --text-primary: #0f172a !important;
           --text-secondary: #1e293b !important;
-          --text-muted: #475569 !important;
-          --border-color: #bbf7d0 !important;
-          --border-subtle: #dcfce7 !important;
+          --text-muted: #334155 !important;
+          --border-color: #6ee7b7 !important;
+          --border-subtle: #a7f3d0 !important;
           background: #ffffff !important;
           background-color: #ffffff !important;
-          background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #ffffff 85%, #f0fdf4 100%) !important;
+          background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #ffffff 80%, #ecfdf5 100%) !important;
           color: #0f172a !important;
         }
+        html body #view-overview#view-overview .dashboard-hero,
         html body #view-overview .dashboard-hero,
         html body #screen-s00 .dashboard-hero,
         html body [data-screen="S00"] .dashboard-hero,
         #view-overview .dashboard-hero,
         #dashboard-root .dashboard-hero,
         .dashboard-container .dashboard-hero {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 82%, #ecfdf5 100%) !important;
           background-color: #ffffff !important;
-          border: 1.5px solid #bbf7d0 !important;
+          border: 1.5px solid #6ee7b7 !important;
           border-top: 4px solid #34d399 !important;
           border-radius: 24px !important;
           padding: 32px 36px !important;
-          box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 12px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important;
+          box-shadow: 0 12px 32px rgba(16, 185, 129, 0.12), 0 4px 12px rgba(15, 23, 42, 0.04), inset 0 1px 0 #ffffff !important;
           color: #0f172a !important;
-          filter: brightness(1.15) !important;
+          filter: none !important;
           display: flex !important;
           flex-direction: column !important;
           justify-content: center !important;
@@ -2702,10 +2706,18 @@ class DashboardController {
         #view-overview .dashboard-hero .badge-pill,
         .dashboard-container .dashboard-hero .badge-kicker,
         .dashboard-container .dashboard-hero .badge-pill {
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 6px !important;
+          padding: 5px 12px !important;
+          border-radius: 999px !important;
+          font-size: 0.75rem !important;
+          font-weight: 700 !important;
+          line-height: 1.25 !important;
           background: #ecfdf5 !important;
           color: #047857 !important;
           border: 1px solid #6ee7b7 !important;
-          box-shadow: 0 2px 6px rgba(16, 185, 129, 0.1) !important;
+          box-shadow: 0 2px 6px rgba(16, 185, 129, 0.08) !important;
         }
         #view-overview .dashboard-hero .hero-title,
         .dashboard-container .dashboard-hero .hero-title {
@@ -2753,11 +2765,36 @@ class DashboardController {
         #view-overview .summary-grid,
         .dashboard-container .summary-grid {
           display: grid !important;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
-          gap: 20px !important;
+          grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+          gap: 18px !important;
           align-items: stretch !important;
           margin-top: 24px !important;
         }
+        @media (max-width: 1100px) {
+          #view-overview .summary-grid,
+          .dashboard-container .summary-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          }
+        }
+        @media (max-width: 640px) {
+          #view-overview .summary-grid,
+          .dashboard-container .summary-grid {
+            grid-template-columns: minmax(0, 1fr) !important;
+          }
+        }
+        html body #view-overview#view-overview .summary-card,
+        html body #view-overview#view-overview .mew-offer-card,
+        html body #view-overview#view-overview .panel-card,
+        html body #view-overview#view-overview .card,
+        html body #view-overview#view-overview .dashboard-card,
+        html body #view-overview#view-overview .overview-card,
+        html body #view-overview#view-overview .stat-card,
+        html body #view-overview#view-overview .kpi-card,
+        html body #view-overview#view-overview .bento-card,
+        html body #view-overview#view-overview .coral-accent,
+        html body #view-overview#view-overview .violet-bar,
+        html body #view-overview#view-overview .violet-accent,
+        html body #view-overview#view-overview .ink-accent,
         html body #view-overview .summary-card,
         html body #view-overview .mew-offer-card,
         html body #view-overview .panel-card,
@@ -2781,14 +2818,14 @@ class DashboardController {
         .dashboard-container .panel-card {
           background: #ffffff !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important;
-          border: 1.5px solid #bbf7d0 !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #ecfdf5 100%) !important;
+          border: 1.5px solid #6ee7b7 !important;
           border-top: 4px solid #34d399 !important;
           border-radius: 20px !important;
-          box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important;
+          box-shadow: 0 12px 28px rgba(16, 185, 129, 0.12), 0 2px 8px rgba(15, 23, 42, 0.04), inset 0 1px 0 #ffffff !important;
           color: #0f172a !important;
           opacity: 1 !important;
-          filter: brightness(1.15) !important;
+          filter: none !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
         html body #view-overview .summary-card-inner,
@@ -2951,10 +2988,46 @@ class DashboardController {
         }
         #view-overview .btn-continue-work,
         .dashboard-container .btn-continue-work {
-          background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          gap: 8px !important;
+          width: 100% !important;
+          padding: 10px 16px !important;
+          border-radius: 999px !important;
+          font-size: 0.875rem !important;
+          font-weight: 700 !important;
+          cursor: pointer !important;
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
           color: #ffffff !important;
           border: none !important;
-          box-shadow: 0 6px 16px rgba(52, 211, 153, 0.35) !important;
+          box-shadow: 0 6px 16px rgba(16, 185, 129, 0.28) !important;
+        }
+        #view-overview .btn-continue-work span,
+        #view-overview .btn-continue-work .footer-arrow,
+        .dashboard-container .btn-continue-work span,
+        .dashboard-container .btn-continue-work .footer-arrow {
+          color: #ffffff !important;
+        }
+        #view-overview .summary-status-pill,
+        .dashboard-container .summary-status-pill {
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 6px !important;
+          padding: 5px 12px !important;
+          border-radius: 999px !important;
+          font-size: 0.8125rem !important;
+          font-weight: 700 !important;
+          line-height: 1.25 !important;
+        }
+        #view-overview .status-dot.green,
+        .dashboard-container .status-dot.green {
+          width: 8px !important;
+          height: 8px !important;
+          border-radius: 999px !important;
+          background: #10b981 !important;
+          display: inline-block !important;
+          flex-shrink: 0 !important;
         }
         .card-step-kicker {
           display: inline;
@@ -3134,8 +3207,40 @@ class DashboardController {
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
-          gap: 6px !important;
+          flex-wrap: wrap !important;
+          gap: 4px !important;
           width: 100% !important;
+        }
+        html body #view-overview .vault-stat-metric,
+        .dashboard-container .vault-stat-metric {
+          display: flex !important;
+          align-items: baseline !important;
+          gap: 6px !important;
+          margin-top: 2px !important;
+        }
+        html body #view-overview .vault-stat-number,
+        .dashboard-container .vault-stat-number {
+          font-size: 1.5rem !important;
+          font-weight: 800 !important;
+          line-height: 1 !important;
+          color: #10b981 !important;
+        }
+        html body #view-overview .vault-stat-unit,
+        .dashboard-container .vault-stat-unit {
+          font-size: 0.75rem !important;
+          font-weight: 600 !important;
+          color: #475569 !important;
+        }
+        html body #view-overview .vault-stat-tag,
+        .dashboard-container .vault-stat-tag {
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          padding: 2px 7px !important;
+          border-radius: 999px !important;
+          font-size: 0.65rem !important;
+          font-weight: 700 !important;
+          line-height: 1.2 !important;
         }
         html body #view-overview .preview-item-meta,
         .dashboard-container .preview-item-meta {
@@ -3243,14 +3348,14 @@ class DashboardController {
 
       const heroes = container.querySelectorAll('.dashboard-hero');
       heroes.forEach((hero) => {
-        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%)', 'important');
+        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 82%, #ecfdf5 100%)', 'important');
         hero.style.setProperty('background-color', '#ffffff', 'important');
-        hero.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        hero.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
         hero.style.setProperty('border-top', '4px solid #34d399', 'important');
         hero.style.setProperty('border-radius', '24px', 'important');
         hero.style.setProperty('padding', '32px 36px', 'important');
         hero.style.setProperty('color', '#0f172a', 'important');
-        hero.style.setProperty('filter', 'brightness(1.15)', 'important');
+        hero.style.setProperty('filter', 'none', 'important');
       });
 
       const heroActions = container.querySelectorAll('.dashboard-hero .hero-actions');
@@ -3259,20 +3364,20 @@ class DashboardController {
         actions.setAttribute('aria-hidden', 'true');
       });
 
-      const cards = container.querySelectorAll('.summary-card, .mew-offer-card, .panel-card, [data-testid="recent-research"], [data-testid="vault-summary"], [data-testid="remix-drafts"], [data-testid="continue-work"], #card-recent-research, #card-vault-summary, #card-remix-drafts, #card-continue-work, .summary-grid > article, .summary-grid > div');
+      const cards = container.querySelectorAll('.summary-card, .mew-offer-card, .panel-card, .card, .dashboard-card, .overview-card, .stat-card, .kpi-card, .bento-card, [data-testid="recent-research"], [data-testid="vault-summary"], [data-testid="remix-drafts"], [data-testid="continue-work"], #card-recent-research, #card-vault-summary, #card-remix-drafts, #card-continue-work, .summary-grid > article, .summary-grid > div');
       cards.forEach((card) => {
         if (card.classList.contains('summary-card-inner') || card.classList.contains('summary-card-header') || card.classList.contains('summary-card-footer') || card.classList.contains('card-preview-box') || card.classList.contains('card-step-kicker') || card.classList.contains('summary-card-title') || card.classList.contains('summary-card-desc')) return;
         if (card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
         card.style.setProperty('background', '#ffffff', 'important');
         card.style.setProperty('background-color', '#ffffff', 'important');
-        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%)', 'important');
-        card.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #ecfdf5 100%)', 'important');
+        card.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
         card.style.setProperty('border-top', '4px solid #34d399', 'important');
         card.style.setProperty('border-radius', '20px', 'important');
-        card.style.setProperty('box-shadow', '0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff', 'important');
+        card.style.setProperty('box-shadow', '0 12px 28px rgba(16, 185, 129, 0.12), 0 2px 8px rgba(15, 23, 42, 0.04), inset 0 1px 0 #ffffff', 'important');
         card.style.setProperty('color', '#0f172a', 'important');
         card.style.setProperty('opacity', '1', 'important');
-        card.style.setProperty('filter', 'brightness(1.15)', 'important');
+        card.style.setProperty('filter', 'none', 'important');
         if (card.classList.contains('summary-card') || card.closest('.summary-grid')) {
           card.style.setProperty('display', 'flex', 'important');
           card.style.setProperty('flex-direction', 'column', 'important');
@@ -3302,10 +3407,10 @@ class DashboardController {
       subBoxes.forEach((box) => {
         box.style.setProperty('background', '#ffffff', 'important');
         box.style.setProperty('background-color', '#ffffff', 'important');
-        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%)', 'important');
-        box.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 82%, #ecfdf5 100%)', 'important');
+        box.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
         box.style.setProperty('border-radius', '12px', 'important');
-        box.style.setProperty('box-shadow', '0 4px 16px rgba(52, 211, 153, 0.1), inset 0 0 18px #ffffff', 'important');
+        box.style.setProperty('box-shadow', '0 6px 18px rgba(52, 211, 153, 0.14), inset 0 0 24px #ffffff', 'important');
         box.style.setProperty('color', '#0f172a', 'important');
       });
 
@@ -3338,10 +3443,15 @@ class DashboardController {
              document.getElementById('typewriter-text') ||
              (this.root && this.root.querySelector('.hero-title .mew-gradient-text'));
     if (!el && typeof document !== 'undefined') {
-      const heroTitle = (this.root && this.root.querySelector('#overview-heading, .hero-title')) ||
+      const heroTitle = (this.root && this.root.querySelector('#overview-heading, .hero-title, .dashboard-hero h1')) ||
                         document.getElementById('overview-heading');
       if (heroTitle) {
-        const existingSpan = heroTitle.querySelector('span, em');
+        let existingSpan = heroTitle.querySelector('span, em');
+        if (!existingSpan && heroTitle.textContent && heroTitle.textContent.includes('into ')) {
+          const parts = heroTitle.textContent.split('into ');
+          heroTitle.innerHTML = `${parts[0]}into <span id="typewriter-text" class="mew-gradient-text">${parts.slice(1).join('into ').trim() || 'Actionable DNA'}</span>`;
+          existingSpan = heroTitle.querySelector('#typewriter-text');
+        }
         if (existingSpan) {
           existingSpan.id = 'typewriter-text';
           existingSpan.classList.add('mew-gradient-text');
@@ -8863,7 +8973,9 @@ function getSavedReferencesFromStore(state = null) {
 
   // Strictly filter only notes with a valid lens ('content' or 'packaging')
   // Clips that are "Analyzed · Not saved" have no คลังโน้ต entries and are strictly excluded!
-  return savedNotes.map(note => {
+  return savedNotes
+    .filter(note => note && (note.lens === 'content' || note.lens === 'packaging'))
+    .map(note => {
     const source = sourcesMap.get(note.sourceId) || {};
     const lensesForSource = sourceLensesMap.get(note.sourceId);
     const savedOrigin = (lensesForSource && lensesForSource.has('content') && lensesForSource.has('packaging'))
@@ -9457,7 +9569,7 @@ class LibraryController {
     });
 
     // Attach card action listeners
-    gridEl.querySelectorAll('.btn-card-review').forEach(btn => {
+    gridEl.querySelectorAll('.btn-card-review, .card-thumbnail-wrap, .card-title-heading').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const card = e.target.closest('[data-id]');
         if (card) {
@@ -9521,6 +9633,10 @@ class LibraryController {
 
     const tagsHtml = (item.tags || []).slice(0, 4).map(tag => 
       `<span class="card-tag-pill">${this.escapeHtml(tag)}</span>`
+    ).join('');
+
+    const beatsPreviewHtml = (item.beats || []).slice(0, 2).map(b =>
+      `<span class="beat-preview-chip"><span class="beat-preview-time font-num">${this.escapeHtml(b.time)}</span> ${this.escapeHtml(b.title)}</span>`
     ).join('');
 
     const whyText = item.founderWhy || item.why || 'บันทึกเหตุผลโดย Founder';
@@ -9620,6 +9736,8 @@ class LibraryController {
           </div>
           <p class="ai-strip-text">${this.escapeHtml(item.aiInsight)}</p>
         </div>
+
+        ${beatsPreviewHtml ? `<div class="card-beats-preview">${beatsPreviewHtml}</div>` : ''}
 
         <!-- Actions Footer -->
         <div class="card-actions-footer">
