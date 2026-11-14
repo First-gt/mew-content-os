@@ -2673,15 +2673,15 @@ class DashboardController {
         #view-overview .dashboard-hero,
         #dashboard-root .dashboard-hero,
         .dashboard-container .dashboard-hero {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f4fbf7 100%) !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
           background-color: #ffffff !important;
-          border: 1.5px solid #bbf7d0 !important;
+          border: 1.5px solid #a7f3d0 !important;
           border-top: 4px solid #34d399 !important;
           border-radius: 24px !important;
           padding: 32px 36px !important;
-          box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(52, 211, 153, 0.08), 0 0 28px rgba(255, 255, 255, 0.98), 0 0 0 2px #ffffff, inset 0 0 0 2px #ffffff, inset 0 0 80px #ffffff !important;
+          box-shadow: 0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff !important;
           color: #0f172a !important;
-          filter: brightness(1.12) !important;
+          filter: brightness(1.16) !important;
           display: flex !important;
           flex-direction: column !important;
           justify-content: center !important;
@@ -2816,16 +2816,16 @@ class DashboardController {
         .dashboard-container .summary-card,
         .dashboard-container .mew-offer-card,
         .dashboard-container .panel-card {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f4fbf7 100%) !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f4fbf7 100%) !important;
-          border: 1.5px solid #bbf7d0 !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+          border: 1.5px solid #a7f3d0 !important;
           border-top: 4px solid #34d399 !important;
           border-radius: 20px !important;
-          box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(52, 211, 153, 0.08), 0 0 28px rgba(255, 255, 255, 0.98), 0 0 0 2px #ffffff, inset 0 0 0 2px #ffffff, inset 0 0 80px #ffffff !important;
+          box-shadow: 0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff !important;
           color: #0f172a !important;
           opacity: 1 !important;
-          filter: brightness(1.12) !important;
+          filter: brightness(1.16) !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
         html body #view-overview .summary-card-inner,
@@ -2885,13 +2885,13 @@ class DashboardController {
         .dashboard-container .pipeline-item,
         .dashboard-container .vault-mini-card,
         .dashboard-container .empty-state {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 85%, #f4fbf7 100%) !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 85%, #f4fbf7 100%) !important;
-          border: 1.5px solid #bbf7d0 !important;
-          box-shadow: 0 6px 18px rgba(52, 211, 153, 0.12), inset 0 0 44px #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+          border: 1.5px solid #a7f3d0 !important;
+          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.1), 0 0 20px rgba(255, 255, 255, 1), inset 0 0 60px #ffffff !important;
           color: #0f172a !important;
-          filter: brightness(1.1) !important;
+          filter: brightness(1.14) !important;
         }
         html body #view-overview .summary-card-title,
         html body #view-overview .preview-item-title,
@@ -3044,6 +3044,7 @@ class DashboardController {
           padding: 0 !important;
           margin: 0 !important;
         }
+        html body #view-overview #card-recent-research[data-step="ข้อ 1"],
         #card-recent-research[data-step="ข้อ 1"],
         .card-recent-research[data-step="ข้อ 1"],
         [data-step="ข้อ 1"] {
@@ -3051,6 +3052,7 @@ class DashboardController {
           border-radius: 20px !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
+        html body #view-overview #card-recent-research[data-step="ข้อ 1"]:hover,
         #card-recent-research[data-step="ข้อ 1"]:hover,
         .card-recent-research[data-step="ข้อ 1"]:hover,
         [data-step="ข้อ 1"]:hover {
@@ -3369,15 +3371,15 @@ class DashboardController {
 
       const heroes = container.querySelectorAll('.dashboard-hero');
       heroes.forEach((hero) => {
-        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f4fbf7 100%)', 'important');
+        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
         hero.style.setProperty('background-color', '#ffffff', 'important');
-        hero.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        hero.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
         hero.style.setProperty('border-top', '4px solid #34d399', 'important');
         hero.style.setProperty('border-radius', '24px', 'important');
         hero.style.setProperty('padding', '32px 36px', 'important');
-        hero.style.setProperty('box-shadow', '0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(52, 211, 153, 0.08), 0 0 28px rgba(255, 255, 255, 0.98), 0 0 0 2px #ffffff, inset 0 0 0 2px #ffffff, inset 0 0 80px #ffffff', 'important');
+        hero.style.setProperty('box-shadow', '0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff', 'important');
         hero.style.setProperty('color', '#0f172a', 'important');
-        hero.style.setProperty('filter', 'brightness(1.12)', 'important');
+        hero.style.setProperty('filter', 'brightness(1.16)', 'important');
       });
 
       const heroActions = container.querySelectorAll('.dashboard-hero .hero-actions');
@@ -3390,16 +3392,16 @@ class DashboardController {
       cards.forEach((card) => {
         if (card.classList.contains('summary-card-inner') || card.classList.contains('summary-card-header') || card.classList.contains('summary-card-footer') || card.classList.contains('card-preview-box') || card.classList.contains('card-step-kicker') || card.classList.contains('summary-card-title') || card.classList.contains('summary-card-desc')) return;
         if (card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
-        card.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f4fbf7 100%)', 'important');
+        card.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
         card.style.setProperty('background-color', '#ffffff', 'important');
-        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f4fbf7 100%)', 'important');
-        card.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        card.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
         card.style.setProperty('border-top', '4px solid #34d399', 'important');
         card.style.setProperty('border-radius', '20px', 'important');
-        card.style.setProperty('box-shadow', '0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(52, 211, 153, 0.08), 0 0 28px rgba(255, 255, 255, 0.98), 0 0 0 2px #ffffff, inset 0 0 0 2px #ffffff, inset 0 0 80px #ffffff', 'important');
+        card.style.setProperty('box-shadow', '0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff', 'important');
         card.style.setProperty('color', '#0f172a', 'important');
         card.style.setProperty('opacity', '1', 'important');
-        card.style.setProperty('filter', 'brightness(1.12)', 'important');
+        card.style.setProperty('filter', 'brightness(1.16)', 'important');
         if (card.classList.contains('summary-card') || card.closest('.summary-grid')) {
           card.style.setProperty('display', 'flex', 'important');
           card.style.setProperty('flex-direction', 'column', 'important');
@@ -3445,14 +3447,14 @@ class DashboardController {
 
       const subBoxes = container.querySelectorAll('.card-preview-box, .continue-box, .vault-sub-stat, .pipeline-item, .vault-mini-card, .mini-card, .empty-state');
       subBoxes.forEach((box) => {
-        box.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 85%, #f4fbf7 100%)', 'important');
+        box.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
         box.style.setProperty('background-color', '#ffffff', 'important');
-        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 85%, #f4fbf7 100%)', 'important');
-        box.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        box.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
         box.style.setProperty('border-radius', '12px', 'important');
-        box.style.setProperty('box-shadow', '0 6px 18px rgba(52, 211, 153, 0.12), inset 0 0 44px #ffffff', 'important');
+        box.style.setProperty('box-shadow', '0 4px 16px rgba(52, 211, 153, 0.1), 0 0 20px rgba(255, 255, 255, 1), inset 0 0 60px #ffffff', 'important');
         box.style.setProperty('color', '#0f172a', 'important');
-        box.style.setProperty('filter', 'brightness(1.1)', 'important');
+        box.style.setProperty('filter', 'brightness(1.14)', 'important');
       });
     });
   }
@@ -9837,6 +9839,14 @@ class LibraryController {
     if (this.dom.drawerPanel) {
       this.dom.drawerPanel.classList.remove('coral-accent', 'violet-bar', 'violet-accent');
       this.dom.drawerPanel.classList.add(isContent ? 'coral-accent' : 'violet-bar');
+    }
+
+    const kickerWhy = this.root?.querySelector('#drawer-kicker-why');
+    if (kickerWhy) {
+      kickerWhy.className = `kicker-label ${isContent ? 'coral' : 'violet'}`;
+      kickerWhy.textContent = isContent
+        ? 'ข้อ 2.1 · FOUNDER REASONING GATE (WHAT)'
+        : 'ข้อ 2.2 · FOUNDER REASONING GATE (HOW)';
     }
 
     // Set badge and timestamps
