@@ -885,7 +885,7 @@ export class LibraryController {
             <span class="card-select-box"></span>
             <span class="card-select-txt">เลือกไป Remix</span>
           </label>
-          <span class="origin-stamp-badge ${originClass}" data-vault-step="ข้อ 2">${originLabel}</span>
+          <span class="origin-stamp-badge ${originClass}" data-vault-step="ข้อ 2" title="ข้อ 2 · Dual-Vault">${originLabel}</span>
         </div>
 
         <!-- Card Creator Info & Vault Tag -->
