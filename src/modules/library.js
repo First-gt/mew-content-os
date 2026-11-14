@@ -1,7 +1,7 @@
 /**
  * ==============================================================================
  * MEW CONTENT OS - S04 & S05 Dual-Vault Reference Library & Detail Controller
- * Theme: mewteetawat.com V6.3 (Warm Stone, Coral, Violet & Deep Ink)
+ * Theme: mewteetawat.com V6.3 (Warm Stone, Emerald Green, Violet & Deep Ink)
  * 100% Pure Client-Side JavaScript (Vanilla ES6+)
  * Zero Server Dependencies · Zero Fake Metrics · Accessible WCAG UI
  * ==============================================================================
@@ -67,6 +67,7 @@ export const FOUNDER_SAMPLE_REFERENCES = [
     sourceId: 'source-e',
     lens: 'content',
     vaultType: 'content',
+    savedOrigin: 'both',
     title: 'Myth vs Reality: การสร้างแบรนด์ที่แท้จริง',
     subtitle: 'แยกแยะความเชื่อผิดๆ เรื่องการปั้นช่อง กับระบบหลังบ้านที่ทำให้ธุรกิจเติบโตจริง',
     creator: 'Mew Teetawat',
@@ -140,6 +141,7 @@ export const FOUNDER_SAMPLE_REFERENCES = [
     sourceId: 'source-e',
     lens: 'packaging',
     vaultType: 'packaging',
+    savedOrigin: 'both',
     title: 'Myth vs Reality: Split-Screen Contrast',
     subtitle: 'โครงสร้างสลับฉาก 2 ขั้ว (ความเชื่อเดิม vs ความจริง) พร้อมเสียงชัตเตอร์เปลี่ยนมุมกล้อง',
     creator: 'Mew Teetawat',
@@ -161,8 +163,8 @@ export const FOUNDER_SAMPLE_REFERENCES = [
 ];
 
 /**
- * Extracts and maps saved notes from the central store into standardized library references.
- * Strictly excludes any source with status "Analyzed · Not saved" or without saved notes.
+ * Extracts and maps คลังโน้ต items from the central store into standardized library references.
+ * Strictly excludes any source with status "Analyzed · Not saved" or without คลังโน้ต entries.
  * Sources saved to Both appear with their same sourceId, but separate cards and respective lens notes.
  * @param {Object} [state] Optional state override
  * @returns {Array<Object>}
@@ -175,11 +177,21 @@ export function getSavedReferencesFromStore(state = null) {
 
   const { sources = [], savedNotes = [], analyses = [] } = currentState;
   const sourcesMap = new Map(sources.map(s => [s.id, s]));
+  const sourceLensesMap = new Map();
+  savedNotes.forEach(n => {
+    if (!n || !n.sourceId) return;
+    if (!sourceLensesMap.has(n.sourceId)) sourceLensesMap.set(n.sourceId, new Set());
+    if (n.lens) sourceLensesMap.get(n.sourceId).add(n.lens);
+  });
 
   // Strictly filter only notes with a valid lens ('content' or 'packaging')
-  // Clips that are "Analyzed · Not saved" have no saved notes and are strictly excluded!
+  // Clips that are "Analyzed · Not saved" have no คลังโน้ต entries and are strictly excluded!
   return savedNotes.map(note => {
     const source = sourcesMap.get(note.sourceId) || {};
+    const lensesForSource = sourceLensesMap.get(note.sourceId);
+    const savedOrigin = (lensesForSource && lensesForSource.has('content') && lensesForSource.has('packaging'))
+      ? 'both'
+      : (note.lens === 'packaging' ? 'packaging' : 'content');
     const sourceAnalyses = analyses.filter(a => a.sourceId === note.sourceId);
     const analysis = sourceAnalyses.find(a => a.isCurrent) || sourceAnalyses[sourceAnalyses.length - 1] || null;
 
@@ -200,6 +212,7 @@ export function getSavedReferencesFromStore(state = null) {
       sourceId: note.sourceId,
       lens: note.lens,
       vaultType: note.lens,
+      savedOrigin: savedOrigin,
       title: source.title || 'Untitled Reference',
       subtitle: source.subtitle || source.title || '',
       creator: source.creator || 'Anonymous Creator',
@@ -442,12 +455,13 @@ export class LibraryController {
       btnDismissToast: this.root.querySelector('#btn-library-toast-dismiss'),
 
       // Multi-Select Remix Action Bar & Overview Blocks
-      remixActionBar: document.getElementById('library-remix-action-bar'),
-      actionBarSelectionText: document.getElementById('action-bar-selection-text'),
-      btnBatchRemix: document.getElementById('btn-batch-remix'),
-      btnClearSelection: document.getElementById('btn-clear-selection'),
-      overviewCountContent: document.getElementById('overview-count-content'),
-      overviewCountPackaging: document.getElementById('overview-count-packaging')
+      remixActionBar: this.root.querySelector('#library-remix-action-bar') || document.getElementById('library-remix-action-bar'),
+      actionBarSelectionText: this.root.querySelector('#action-bar-selection-text') || document.getElementById('action-bar-selection-text'),
+      btnBatchRemix: this.root.querySelector('#btn-batch-remix') || document.getElementById('btn-batch-remix'),
+      btnClearSelection: this.root.querySelector('#btn-clear-selection') || document.getElementById('btn-clear-selection'),
+      overviewCountContent: this.root.querySelector('#overview-count-content') || document.getElementById('overview-count-content'),
+      overviewCountPackaging: this.root.querySelector('#overview-count-packaging') || document.getElementById('overview-count-packaging'),
+      overviewSwitchCards: this.root.querySelectorAll('[data-vault-switch]')
     };
   }
 
@@ -460,6 +474,19 @@ export class LibraryController {
     // Vault Tab clicks
     this.dom.tabContent?.addEventListener('click', () => this.switchVault('content'));
     this.dom.tabPackaging?.addEventListener('click', () => this.switchVault('packaging'));
+    this.dom.overviewSwitchCards?.forEach(card => {
+      card.addEventListener('click', () => {
+        const targetVault = card.getAttribute('data-vault-switch');
+        if (targetVault) this.switchVault(targetVault);
+      });
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const targetVault = card.getAttribute('data-vault-switch');
+          if (targetVault) this.switchVault(targetVault);
+        }
+      });
+    });
 
     // Keyboard navigation on tabs (Arrow Left / Right)
     this.dom.tabContent?.addEventListener('keydown', (e) => this.handleTabKey(e, 'content'));
@@ -547,13 +574,25 @@ export class LibraryController {
       if (selectedItems.length === 0) return;
 
       selectedItems.forEach(item => {
+        const noteId = item.noteId || item.id;
+        const lens = item.lens || item.vaultType || 'content';
+        try {
+          if (typeof dispatch === 'function') {
+            dispatch({
+              type: 'ADD_REMIX_INGREDIENT',
+              payload: { lens, noteId }
+            });
+          }
+        } catch (err) {
+          console.warn('[LibraryController] Failed to dispatch ADD_REMIX_INGREDIENT in batch:', err);
+        }
         window.dispatchEvent(new CustomEvent('mew:remix-select-ingredient', {
           bubbles: true,
-          detail: item
+          detail: { ...item, noteId, lens }
         }));
         window.dispatchEvent(new CustomEvent('mew_send_to_remix', {
           bubbles: true,
-          detail: item
+          detail: { ...item, noteId, lens }
         }));
       });
 
@@ -637,6 +676,22 @@ export class LibraryController {
       this.dom.panelPackaging.hidden = isContent;
     }
 
+    // Sync overview cards active state
+    this.dom.overviewSwitchCards?.forEach(card => {
+      const isCardActive = card.getAttribute('data-vault-switch') === vault;
+      card.classList.toggle('active', isCardActive);
+      card.setAttribute('aria-pressed', isCardActive ? 'true' : 'false');
+    });
+
+    if (this.root) {
+      this.root.setAttribute('data-active-vault', vault);
+      const switcherSection = this.root.querySelector('.vault-switcher-section');
+      if (switcherSection) {
+        switcherSection.classList.toggle('emerald-tone', isContent);
+        switcherSection.classList.toggle('violet-tone', !isContent);
+      }
+    }
+
     this.render();
   }
 
@@ -695,7 +750,7 @@ export class LibraryController {
 
     // Update summary text
     if (this.dom.summaryText) {
-      this.dom.summaryText.textContent = `แสดง ${filteredItems.length} รายการคัดสรร`;
+      this.dom.summaryText.textContent = `คลังโน้ต: แสดง ${filteredItems.length} รายการคัดสรร`;
     }
 
     if (filteredItems.length === 0) {
@@ -718,7 +773,7 @@ export class LibraryController {
         } else {
           this.selectedCardIds.delete(id);
         }
-        const card = document.getElementById(`vault-card-${id}`);
+        const card = (this.root || document).querySelector(`#vault-card-${id}`);
         if (card) card.classList.toggle('card-selected', chk.checked);
         this.updateRemixActionBar();
       });
@@ -797,8 +852,8 @@ export class LibraryController {
     const originLabel = item.savedOrigin === 'both' || item.lens === 'both'
       ? '✓ คอนเฟิร์มจาก Both Vaults'
       : isContent
-      ? '✓ คอนเฟิร์มเข้า Content ID'
-      : '✓ คอนเฟิร์มเข้า Packaging';
+      ? '✓ คอนเฟิร์มเข้า Content Vault'
+      : '✓ คอนเฟิร์มเข้า Packaging Vault';
     const originClass = item.savedOrigin === 'both' || item.lens === 'both'
       ? 'origin-both'
       : isContent
@@ -813,6 +868,7 @@ export class LibraryController {
         data-note-id="${item.noteId || item.id}"
         data-source-id="${item.sourceId || ''}"
         data-lens="${item.lens || item.vaultType}"
+        data-step="2"
         tabindex="0"
       >
         
@@ -823,7 +879,7 @@ export class LibraryController {
             <span class="card-select-box"></span>
             <span class="card-select-txt">เลือกไป Remix</span>
           </label>
-          <span class="origin-stamp-badge ${originClass}">${originLabel}</span>
+          <span class="origin-stamp-badge ${originClass}" data-vault-step="ข้อ 2">${originLabel}</span>
         </div>
 
         <!-- Card Creator Info & Vault Tag -->
@@ -841,7 +897,7 @@ export class LibraryController {
         <!-- Card Thumbnail Preview (V6 Styled) -->
         <div class="card-thumbnail-wrap">
           <div class="card-thumbnail-media ${isContent ? 'coral-bg' : 'violet-bg'}">
-            ${item.thumbnailUrl ? `<img src="${item.thumbnailUrl}" alt="${this.escapeHtml(item.title)}" class="card-thumbnail-img" />` : ''}
+            ${item.thumbnailUrl ? `<img src="${item.thumbnailUrl}" alt="${this.escapeHtml(item.title)}" class="card-thumbnail-img" loading="lazy" onerror="this.style.display='none'" />` : ''}
             <div class="thumbnail-overlay">
               <span class="thumbnail-play-badge" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -869,7 +925,7 @@ export class LibraryController {
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
-              FOUNDER WHY NOTE
+              FOUNDER WHY NOTE · ${isContent ? 'WHAT' : 'HOW'}
             </span>
             <span class="founder-why-date">Verified Decision</span>
           </div>
@@ -899,7 +955,7 @@ export class LibraryController {
             </svg>
           </a>
 
-          <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <div class="card-actions-group" style="display: flex; gap: 0.5rem; align-items: center;">
             <button type="button" class="btn-card-review" aria-label="ดูรายละเอียดคลิป ${this.escapeHtml(item.title)}">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
