@@ -201,13 +201,10 @@ export class ResearchDetailController {
       }
       styleEl.textContent = `
         :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_a__#__s02_nav_b__#__s02_nav_c__):not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]):not(.detail-top-nav) {
-          position: relative !important;
           z-index: 1000 !important;
           isolation: isolate !important;
         }
-        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_icon_a__#__s02_icon_b__#__s02_icon_c__) *,
-        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_icon_a__#__s02_icon_b__#__s02_icon_c__) *::before,
-        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_icon_a__#__s02_icon_b__#__s02_icon_c__) *::after {
+        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_icon_a__#__s02_icon_b__#__s02_icon_c__) :is(svg, [class*="icon"], [class*="badge"], .btn-video-play-overlay) {
           position: static !important;
           top: auto !important;
           left: auto !important;
@@ -216,11 +213,12 @@ export class ResearchDetailController {
           inset: auto !important;
           transform: none !important;
           translate: none !important;
-          margin-top: 0 !important;
           z-index: auto !important;
           float: none !important;
         }
         :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, #__s02_svg_a__#__s02_svg_b__#__s02_svg_c__) svg:not([hidden]):not(.is-hidden) {
+          position: static !important;
+          display: inline-block !important;
           vertical-align: middle !important;
           width: 16px !important;
           height: 16px !important;
@@ -228,6 +226,7 @@ export class ResearchDetailController {
           max-height: 18px !important;
           flex-shrink: 0 !important;
           overflow: hidden !important;
+          transform: none !important;
         }
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_root_a__#__s02_root_b__#__s02_root_c__) {
           position: relative !important;
@@ -238,7 +237,7 @@ export class ResearchDetailController {
           margin-top: 0 !important;
           transform: none !important;
         }
-        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *,
+        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *:not(.video-scrub-progress):not(#video-scrub-progress):not(.video-scrub-handle):not(#video-scrub-handle):not(.timeline-marker):not(.video-scrubber-track):not(#video-scrubber-track),
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::before,
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::after {
           position: static !important;
@@ -247,11 +246,9 @@ export class ResearchDetailController {
           right: auto !important;
           bottom: auto !important;
           inset: auto !important;
-          transform: none !important;
           translate: none !important;
           z-index: auto !important;
           float: none !important;
-          margin-top: 0 !important;
         }
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, [data-testid="video-player"], #analysis-panel, [data-testid="analysis-panel"], #__s02_hide_a__#__s02_hide_b__#__s02_hide_c__) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], .video-markers-layer, .timeline-marker, [class*="floating"]:not([data-testid]):not([id]), [class*="float-"]:not([data-testid]):not([id])) {
           display: none !important;
@@ -263,7 +260,6 @@ export class ResearchDetailController {
           flex-wrap: wrap !important;
           gap: 12px !important;
           width: 100% !important;
-          margin-top: 0 !important;
           box-sizing: border-box !important;
           overflow: hidden !important;
         }
@@ -271,13 +267,11 @@ export class ResearchDetailController {
           display: inline-flex !important;
           align-items: center !important;
           gap: 8px !important;
-          margin-top: 0 !important;
         }
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_call_a__#__s02_call_b__#__s02_call_c__) :is(.detail-gate-callout, .creator-profile-badge, .save-gate-reminder-box) {
           display: flex !important;
           align-items: center !important;
           gap: 12px !important;
-          margin-top: 0 !important;
           overflow: hidden !important;
         }
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_tabs_a__#__s02_tabs_b__#__s02_tabs_c__) .pill-tabs-list {
@@ -286,7 +280,6 @@ export class ResearchDetailController {
           flex-wrap: wrap !important;
           gap: 10px !important;
           width: 100% !important;
-          margin-top: 0 !important;
         }
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_vid_a__#__s02_vid_b__#__s02_vid_c__) :is(#video-player, [data-testid="video-player"], .video-player-card, .video-canvas-container, .video-viewport, .video-mockup-content) {
           display: flex !important;
@@ -296,10 +289,10 @@ export class ResearchDetailController {
           gap: 10px !important;
           overflow: hidden !important;
           width: 100% !important;
-          margin-top: 0 !important;
           box-sizing: border-box !important;
         }
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, [data-testid="video-player"], #__s02_play_a__#__s02_play_b__#__s02_play_c__) :is(.btn-video-play-overlay, #btn-video-play) {
+          position: static !important;
           display: inline-flex !important;
           align-items: center !important;
           justify-content: center !important;
@@ -309,16 +302,20 @@ export class ResearchDetailController {
           border-radius: 999px !important;
           overflow: hidden !important;
           flex-shrink: 0 !important;
+          transform: none !important;
         }
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_glyph_a__#__s02_glyph_b__#__s02_glyph_c__) :is(.gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot) {
+          position: static !important;
           display: inline-flex !important;
           align-items: center !important;
           justify-content: center !important;
           flex-shrink: 0 !important;
-          margin-top: 0 !important;
           overflow: hidden !important;
+          transform: none !important;
         }
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_svg2_a__#__s02_svg2_b__#__s02_svg2_c__) svg:not([hidden]):not(.is-hidden) {
+          position: static !important;
+          display: inline-block !important;
           vertical-align: middle !important;
           width: 16px !important;
           height: 16px !important;
@@ -326,7 +323,7 @@ export class ResearchDetailController {
           max-height: 16px !important;
           flex-shrink: 0 !important;
           overflow: hidden !important;
-          margin-top: 0 !important;
+          transform: none !important;
         }
         #btn-video-play svg:not([hidden]):not(.is-hidden) {
           width: 24px !important;
@@ -335,17 +332,17 @@ export class ResearchDetailController {
           max-height: 24px !important;
         }
         .video-scrubber-track, #video-scrubber-track {
+          position: relative !important;
           display: flex !important;
           align-items: center !important;
           overflow: hidden !important;
           width: 100% !important;
           height: 8px !important;
-          margin-top: 0 !important;
         }
       `;
     }
 
-    const applyStaticImportant = (node) => {
+    const applyStaticIconStyle = (node) => {
       if (!node || !node.style || typeof node.style.setProperty !== 'function') return;
       node.style.setProperty('position', 'static', 'important');
       node.style.setProperty('top', 'auto', 'important');
@@ -357,12 +354,11 @@ export class ResearchDetailController {
       node.style.setProperty('translate', 'none', 'important');
       node.style.setProperty('z-index', 'auto', 'important');
       node.style.setProperty('float', 'none', 'important');
-      node.style.setProperty('margin-top', '0px', 'important');
     };
 
     const applySvgSizeImportant = (svg, sizePx = 16) => {
       if (!svg || !svg.style || typeof svg.style.setProperty !== 'function') return;
-      applyStaticImportant(svg);
+      applyStaticIconStyle(svg);
       if (!svg.getAttribute('width')) svg.setAttribute('width', String(sizePx));
       if (!svg.getAttribute('height')) svg.setAttribute('height', String(sizePx));
       svg.style.setProperty('width', `${sizePx}px`, 'important');
@@ -384,13 +380,12 @@ export class ResearchDetailController {
       topNavs.forEach((navEl) => {
         if (!navEl || (scopeRoot && typeof scopeRoot.contains === 'function' && scopeRoot.contains(navEl))) return;
         if (navEl.style && typeof navEl.style.setProperty === 'function') {
-          navEl.style.setProperty('position', 'relative', 'important');
           navEl.style.setProperty('z-index', '1000', 'important');
           navEl.style.setProperty('isolation', 'isolate', 'important');
         }
         if (typeof navEl.querySelectorAll === 'function') {
-          navEl.querySelectorAll('*').forEach((childEl) => {
-            applyStaticImportant(childEl);
+          navEl.querySelectorAll('svg, [class*="icon"], [class*="badge"]').forEach((childEl) => {
+            applyStaticIconStyle(childEl);
             if (childEl.tagName && childEl.tagName.toLowerCase() === 'svg') {
               applySvgSizeImportant(childEl, 16);
             }
@@ -425,16 +420,20 @@ export class ResearchDetailController {
         target.style.setProperty('transform', 'none', 'important');
       }
       if (typeof target.querySelectorAll === 'function') {
-        target.querySelectorAll('*').forEach((node) => {
-          applyStaticImportant(node);
-          if (node.tagName && node.tagName.toLowerCase() === 'svg') {
-            const isPlayIcon =
-              node.id === 'icon-play' ||
-              node.id === 'icon-pause' ||
-              (node.closest && node.closest('#btn-video-play, .btn-video-play-overlay'));
-            applySvgSizeImportant(node, isPlayIcon ? 24 : 16);
-          }
-        });
+        target
+          .querySelectorAll(
+            'svg, [class*="icon"], .btn-video-play-overlay, #btn-video-play, .video-overlay-chrome, .gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot'
+          )
+          .forEach((node) => {
+            applyStaticIconStyle(node);
+            if (node.tagName && node.tagName.toLowerCase() === 'svg') {
+              const isPlayIcon =
+                node.id === 'icon-play' ||
+                node.id === 'icon-pause' ||
+                (node.closest && node.closest('#btn-video-play, .btn-video-play-overlay'));
+              applySvgSizeImportant(node, isPlayIcon ? 24 : 16);
+            }
+          });
       }
     });
   }
