@@ -963,7 +963,7 @@ export class LibraryController {
             </svg>
           </a>
 
-          <div class="card-actions-group" style="display: flex; gap: 0.5rem; align-items: center;">
+          <div class="card-actions-group">
             <button type="button" class="btn-card-review" aria-label="ดูรายละเอียดคลิป ${this.escapeHtml(item.title)}">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
