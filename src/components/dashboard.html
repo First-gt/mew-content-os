@@ -7,10 +7,10 @@
 <div class="dashboard-container" id="dashboard-root" data-testid="dashboard-root">
 
   <style>
-    /* S00: Dashboard & Overview - Ultra Bright & Luminous Card Theme (V4 Radiant Ultra-Bright) */
-    html body #view-overview,
-    html body #screen-s00,
-    html body [data-screen="S00"],
+    /* S00: Dashboard & Overview - Ultra Bright & Luminous Card Theme (V5 Crystal Ultra-Bright) */
+    html body #view-overview#view-overview,
+    html body #screen-s00#screen-s00,
+    html body [data-screen="S00"][data-screen="S00"],
     #view-overview,
     #screen-s00,
     [data-screen="S00"],
@@ -18,7 +18,7 @@
     .dashboard-container {
       --bg-primary: #ffffff !important;
       --bg-secondary: #ffffff !important;
-      --bg-tertiary: #f8fafc !important;
+      --bg-tertiary: #f0fdf4 !important;
       --bg-elevated: #ffffff !important;
       --bg-surface: #ffffff !important;
       --bg-panel: #ffffff !important;
@@ -33,31 +33,32 @@
       --mew-bg: #ffffff !important;
       --surface-1: #ffffff !important;
       --surface-2: #ffffff !important;
-      --surface-3: #f0fdf4 !important;
+      --surface-3: #ecfdf5 !important;
       --text-primary: #0f172a !important;
       --text-secondary: #1e293b !important;
-      --text-muted: #475569 !important;
-      --border-color: #bbf7d0 !important;
-      --border-subtle: #dcfce7 !important;
+      --text-muted: #334155 !important;
+      --border-color: #6ee7b7 !important;
+      --border-subtle: #a7f3d0 !important;
       background: #ffffff !important;
       background-color: #ffffff !important;
-      background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #ffffff 85%, #f0fdf4 100%) !important;
+      background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #ffffff 80%, #ecfdf5 100%) !important;
       color: #0f172a !important;
     }
+    html body #view-overview#view-overview .dashboard-hero.mew-hero-bg,
     html body #view-overview .dashboard-hero.mew-hero-bg,
     html body #screen-s00 .dashboard-hero,
     html body [data-screen="S00"] .dashboard-hero,
     #view-overview .dashboard-hero.mew-hero-bg,
     #dashboard-root .dashboard-hero.mew-hero-bg,
     .dashboard-container .dashboard-hero.mew-hero-bg {
-      background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important;
+      background: linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%) !important;
       background-color: #ffffff !important;
-      border: 1.5px solid #bbf7d0 !important;
-      border-top: 4px solid #34d399 !important;
+      border: 1.5px solid #6ee7b7 !important;
+      border-top: 4px solid #10b981 !important;
       border-radius: 24px !important;
       padding: 32px 36px !important;
-      box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 12px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important;
-      filter: brightness(1.15) !important;
+      box-shadow: 0 14px 36px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff !important;
+      filter: none !important;
       display: flex !important;
       flex-direction: column !important;
       justify-content: center !important;
@@ -82,10 +83,18 @@
     #view-overview .dashboard-hero .badge-pill,
     .dashboard-container .dashboard-hero .badge-kicker,
     .dashboard-container .dashboard-hero .badge-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      padding: 5px 12px !important;
+      border-radius: 999px !important;
+      font-size: 0.75rem !important;
+      font-weight: 700 !important;
+      line-height: 1.25 !important;
       background: #ecfdf5 !important;
       color: #047857 !important;
       border: 1px solid #6ee7b7 !important;
-      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.1) !important;
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.08) !important;
     }
     #view-overview .dashboard-hero .hero-title,
     .dashboard-container .dashboard-hero .hero-title {
@@ -130,11 +139,36 @@
     #view-overview .summary-grid,
     .dashboard-container .summary-grid {
       display: grid !important;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
-      gap: 20px !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      gap: 18px !important;
       align-items: stretch !important;
       margin-top: 24px !important;
     }
+    @media (max-width: 1100px) {
+      #view-overview .summary-grid,
+      .dashboard-container .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+    }
+    @media (max-width: 640px) {
+      #view-overview .summary-grid,
+      .dashboard-container .summary-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+    }
+    html body #view-overview#view-overview .summary-card,
+    html body #view-overview#view-overview .mew-offer-card,
+    html body #view-overview#view-overview .panel-card,
+    html body #view-overview#view-overview .card,
+    html body #view-overview#view-overview .dashboard-card,
+    html body #view-overview#view-overview .overview-card,
+    html body #view-overview#view-overview .stat-card,
+    html body #view-overview#view-overview .kpi-card,
+    html body #view-overview#view-overview .bento-card,
+    html body #view-overview#view-overview .coral-accent,
+    html body #view-overview#view-overview .violet-bar,
+    html body #view-overview#view-overview .violet-accent,
+    html body #view-overview#view-overview .ink-accent,
     html body #view-overview .summary-card,
     html body #view-overview .mew-offer-card,
     html body #view-overview .panel-card,
@@ -159,14 +193,14 @@
     .dashboard-container article.mew-offer-card {
       background: #ffffff !important;
       background-color: #ffffff !important;
-      background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important;
-      border: 1.5px solid #bbf7d0 !important;
-      border-top: 4px solid #34d399 !important;
+      background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%) !important;
+      border: 1.5px solid #6ee7b7 !important;
+      border-top: 4px solid #10b981 !important;
       border-radius: 20px !important;
-      box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important;
+      box-shadow: 0 14px 32px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 24px #ffffff !important;
       color: #0f172a !important;
       opacity: 1 !important;
-      filter: brightness(1.15) !important;
+      filter: none !important;
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
     }
     #view-overview .summary-card::before,
@@ -270,9 +304,9 @@
     .dashboard-container .pipeline-item {
       background: #ffffff !important;
       background-color: #ffffff !important;
-      background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important;
-      border: 1.5px solid #bbf7d0 !important;
-      box-shadow: 0 4px 16px rgba(52, 211, 153, 0.1), inset 0 0 18px #ffffff !important;
+      background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 82%, #ecfdf5 100%) !important;
+      border: 1.5px solid #6ee7b7 !important;
+      box-shadow: 0 6px 18px rgba(52, 211, 153, 0.14), inset 0 0 24px #ffffff !important;
       color: #0f172a !important;
     }
     #view-overview .preview-item-title,
@@ -339,31 +373,69 @@
     }
     #view-overview .btn-continue-work,
     .dashboard-container .btn-continue-work {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 8px !important;
+      width: 100% !important;
+      padding: 10px 16px !important;
+      border-radius: 999px !important;
+      font-size: 0.875rem !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
       background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
       color: #ffffff !important;
       border: none !important;
-      box-shadow: 0 6px 16px rgba(52, 211, 153, 0.35) !important;
+      box-shadow: 0 6px 18px rgba(52, 211, 153, 0.35) !important;
+    }
+    #view-overview .btn-continue-work span,
+    #view-overview .btn-continue-work .footer-arrow,
+    .dashboard-container .btn-continue-work span,
+    .dashboard-container .btn-continue-work .footer-arrow {
+      color: #ffffff !important;
+    }
+    #view-overview .summary-status-pill,
+    .dashboard-container .summary-status-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      padding: 5px 12px !important;
+      border-radius: 999px !important;
+      font-size: 0.8125rem !important;
+      font-weight: 700 !important;
+      line-height: 1.25 !important;
+    }
+    #view-overview .status-dot.green,
+    .dashboard-container .status-dot.green {
+      width: 8px !important;
+      height: 8px !important;
+      border-radius: 999px !important;
+      background: #10b981 !important;
+      display: inline-block !important;
+      flex-shrink: 0 !important;
     }
     .card-step-kicker {
-      display: inline;
-      font-weight: 800;
-      letter-spacing: 0.02em;
+      display: inline !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.02em !important;
       color: #047857 !important;
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
     }
     #card-recent-research[data-step="ข้อ 1"],
     .card-recent-research[data-step="ข้อ 1"],
     [data-step="ข้อ 1"] {
-      border-top: 4px solid #34d399 !important;
+      border-top: 4px solid #10b981 !important;
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
     }
     #card-recent-research[data-step="ข้อ 1"]:hover,
     .card-recent-research[data-step="ข้อ 1"]:hover,
     [data-step="ข้อ 1"]:hover {
-      border-color: #10b981 !important;
-      box-shadow: 0 18px 40px rgba(52, 211, 153, 0.22), 0 4px 12px rgba(15, 23, 42, 0.04) !important;
+      border-color: #059669 !important;
+      box-shadow: 0 18px 40px rgba(16, 185, 129, 0.22), 0 4px 12px rgba(15, 23, 42, 0.04) !important;
       transform: translateY(-2px) !important;
     }
     html body #view-overview .summary-card,
@@ -375,7 +447,7 @@
     html body #view-overview .summary-grid > [data-navigate="research"],
     .dashboard-container #card-recent-research {
       position: relative;
-      border-top: 4px solid #34d399 !important;
+      border-top: 4px solid #10b981 !important;
       display: flex !important;
       flex-direction: column !important;
       justify-content: space-between !important;
@@ -522,8 +594,40 @@
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
-      gap: 6px !important;
+      flex-wrap: wrap !important;
+      gap: 4px !important;
       width: 100% !important;
+    }
+    html body #view-overview .vault-stat-metric,
+    .dashboard-container .vault-stat-metric {
+      display: flex !important;
+      align-items: baseline !important;
+      gap: 6px !important;
+      margin-top: 2px !important;
+    }
+    html body #view-overview .vault-stat-number,
+    .dashboard-container .vault-stat-number {
+      font-size: 1.5rem !important;
+      font-weight: 800 !important;
+      line-height: 1 !important;
+      color: #10b981 !important;
+    }
+    html body #view-overview .vault-stat-unit,
+    .dashboard-container .vault-stat-unit {
+      font-size: 0.75rem !important;
+      font-weight: 600 !important;
+      color: #475569 !important;
+    }
+    html body #view-overview .vault-stat-tag,
+    .dashboard-container .vault-stat-tag {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 2px 7px !important;
+      border-radius: 999px !important;
+      font-size: 0.65rem !important;
+      font-weight: 700 !important;
+      line-height: 1.2 !important;
     }
     html body #view-overview .preview-item-meta,
     .dashboard-container .preview-item-meta {
@@ -725,7 +829,7 @@
              data-step="ข้อ 1"
              tabindex="0" 
              role="button" 
-             style="background: #ffffff !important; background-color: #ffffff !important; background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important; border: 1.5px solid #bbf7d0 !important; border-top: 4px solid #34d399 !important; box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important; color: #0f172a !important; filter: brightness(1.15) !important;"
+             style="background: #ffffff !important; background-color: #ffffff !important; background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%) !important; border: 1.5px solid #6ee7b7 !important; border-top: 4px solid #10b981 !important; box-shadow: 0 14px 32px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 24px #ffffff !important; color: #0f172a !important; filter: none !important;"
              aria-label="ข้อ 1: การ์ดวิจัยล่าสุด: เปิดดูรายการวิจัยและผลการวิเคราะห์">
       <div class="summary-card-inner" style="background: transparent !important; background-color: transparent !important; color: #0f172a !important;">
         <div class="summary-card-header">
@@ -749,7 +853,7 @@
         </p>
 
         <!-- Preview snippet of the latest research item -->
-        <div class="card-preview-box" id="recent-research-preview" data-testid="recent-research-preview" style="background: #ffffff !important; border: 1.5px solid #bbf7d0 !important; color: #0f172a !important;">
+        <div class="card-preview-box" id="recent-research-preview" data-testid="recent-research-preview" style="background: #ffffff !important; border: 1.5px solid #6ee7b7 !important; color: #0f172a !important;">
           <div class="preview-item-meta">
             <span class="preview-badge" id="recent-research-status">รอเริ่มวิจัย</span>
             <span class="preview-date" id="recent-research-date">-</span>
@@ -770,9 +874,11 @@
     <article class="mew-offer-card summary-card card-vault-summary violet-bar" 
              id="card-vault-summary" 
              data-testid="vault-summary" 
+             data-navigate="library"
+             data-step="ข้อ 2"
              tabindex="0" 
              role="button" 
-             style="background: #ffffff !important; background-color: #ffffff !important; background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important; border: 1.5px solid #bbf7d0 !important; border-top: 4px solid #34d399 !important; box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important; color: #0f172a !important; filter: brightness(1.15) !important;"
+             style="background: #ffffff !important; background-color: #ffffff !important; background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%) !important; border: 1.5px solid #6ee7b7 !important; border-top: 4px solid #10b981 !important; box-shadow: 0 14px 32px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 24px #ffffff !important; color: #0f172a !important; filter: none !important;"
              aria-label="ข้อ 2: การ์ดสรุปคลังวัตถุดิบ: แสดงจำนวน Saved Content และ Saved Packaging แยกกัน">
       <div class="summary-card-inner" style="background: transparent !important; background-color: transparent !important; color: #0f172a !important;">
         <div class="summary-card-header">
@@ -794,7 +900,7 @@
         <div class="vault-breakdown-container">
           
           <!-- Content Vault (WHAT) -->
-          <div class="vault-sub-stat content-stat" data-testid="stat-saved-content" style="background: #ffffff !important; border: 1.5px solid #bbf7d0 !important; color: #0f172a !important;">
+          <div class="vault-sub-stat content-stat" data-testid="stat-saved-content" style="background: #ffffff !important; border: 1.5px solid #6ee7b7 !important; color: #0f172a !important;">
             <div class="vault-sub-header">
               <span class="vault-stat-dot coral" aria-hidden="true"></span>
               <span class="vault-stat-label">Saved Content</span>
@@ -807,7 +913,7 @@
           </div>
 
           <!-- Packaging Vault (HOW) -->
-          <div class="vault-sub-stat packaging-stat" data-testid="stat-saved-packaging" style="background: #ffffff !important; border: 1.5px solid #bbf7d0 !important; color: #0f172a !important;">
+          <div class="vault-sub-stat packaging-stat" data-testid="stat-saved-packaging" style="background: #ffffff !important; border: 1.5px solid #6ee7b7 !important; color: #0f172a !important;">
             <div class="vault-sub-header">
               <span class="vault-stat-dot violet" aria-hidden="true"></span>
               <span class="vault-stat-label">Saved Packaging</span>
@@ -834,9 +940,11 @@
     <article class="mew-offer-card summary-card card-remix-drafts violet-bar violet-accent" 
              id="card-remix-drafts" 
              data-testid="remix-drafts" 
+             data-navigate="remix"
+             data-step="ข้อ 3"
              tabindex="0" 
              role="button" 
-             style="background: #ffffff !important; background-color: #ffffff !important; background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important; border: 1.5px solid #bbf7d0 !important; border-top: 4px solid #34d399 !important; box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important; color: #0f172a !important; filter: brightness(1.15) !important;"
+             style="background: #ffffff !important; background-color: #ffffff !important; background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%) !important; border: 1.5px solid #6ee7b7 !important; border-top: 4px solid #10b981 !important; box-shadow: 0 14px 32px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 24px #ffffff !important; color: #0f172a !important; filter: none !important;"
              aria-label="ข้อ 3: การ์ดดราฟต์รีมิกซ์: ดูแนวคิดที่สังเคราะห์จากวัตถุดิบ">
       <div class="summary-card-inner" style="background: transparent !important; background-color: transparent !important; color: #0f172a !important;">
         <div class="summary-card-header">
@@ -859,7 +967,7 @@
         </p>
 
         <!-- Preview snippet of latest draft concept -->
-        <div class="card-preview-box" id="remix-drafts-preview" data-testid="remix-drafts-preview" style="background: #ffffff !important; border: 1.5px solid #bbf7d0 !important; color: #0f172a !important;">
+        <div class="card-preview-box" id="remix-drafts-preview" data-testid="remix-drafts-preview" style="background: #ffffff !important; border: 1.5px solid #6ee7b7 !important; color: #0f172a !important;">
           <div class="preview-item-meta">
             <span class="preview-badge violet" id="remix-drafts-status">Original Concept</span>
             <span class="preview-date" id="remix-drafts-date">-</span>
@@ -880,9 +988,10 @@
     <article class="mew-offer-card summary-card card-continue-work ink-accent" 
              id="card-continue-work" 
              data-testid="continue-work" 
+             data-step="ข้อ 4"
              tabindex="0" 
              role="button" 
-             style="background: #ffffff !important; background-color: #ffffff !important; background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f0fdf4 100%) !important; border: 1.5px solid #bbf7d0 !important; border-top: 4px solid #34d399 !important; box-shadow: 0 14px 36px rgba(52, 211, 153, 0.16), 0 4px 14px rgba(16, 185, 129, 0.06), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important; color: #0f172a !important; filter: brightness(1.15) !important;"
+             style="background: #ffffff !important; background-color: #ffffff !important; background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%) !important; border: 1.5px solid #6ee7b7 !important; border-top: 4px solid #10b981 !important; box-shadow: 0 14px 32px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 24px #ffffff !important; color: #0f172a !important; filter: none !important;"
              aria-label="ข้อ 4: การ์ดทำงานต่อ: กลับไปทำงานค้างต่อจากสเตทเดิม">
       <div class="summary-card-inner" style="background: transparent !important; background-color: transparent !important; color: #0f172a !important;">
         <div class="summary-card-header">
@@ -908,7 +1017,7 @@
         </p>
 
         <!-- Dynamic Context Snippet -->
-        <div class="card-preview-box continue-box" id="continue-work-context" data-testid="continue-work-context" style="background: #ffffff !important; border: 1.5px solid #bbf7d0 !important; color: #0f172a !important;">
+        <div class="card-preview-box continue-box" id="continue-work-context" data-testid="continue-work-context" style="background: #ffffff !important; border: 1.5px solid #6ee7b7 !important; color: #0f172a !important;">
           <div class="continue-context-headline" id="continue-work-title">กลับสู่ขั้นตอนที่ค้างไว้</div>
           <div class="continue-context-sub" id="continue-work-sub">เลือกไว้: 0 วัตถุดิบในตะกร้า</div>
         </div>
