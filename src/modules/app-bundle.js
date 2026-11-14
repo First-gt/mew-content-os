@@ -2673,13 +2673,13 @@ class DashboardController {
         #view-overview .dashboard-hero,
         #dashboard-root .dashboard-hero,
         .dashboard-container .dashboard-hero {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 82%, #ecfdf5 100%) !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%) !important;
           background-color: #ffffff !important;
           border: 1.5px solid #6ee7b7 !important;
-          border-top: 4px solid #34d399 !important;
+          border-top: 4px solid #10b981 !important;
           border-radius: 24px !important;
           padding: 32px 36px !important;
-          box-shadow: 0 12px 32px rgba(16, 185, 129, 0.12), 0 4px 12px rgba(15, 23, 42, 0.04), inset 0 1px 0 #ffffff !important;
+          box-shadow: 0 14px 36px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff !important;
           color: #0f172a !important;
           filter: none !important;
           display: flex !important;
@@ -2818,11 +2818,11 @@ class DashboardController {
         .dashboard-container .panel-card {
           background: #ffffff !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #ecfdf5 100%) !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%) !important;
           border: 1.5px solid #6ee7b7 !important;
-          border-top: 4px solid #34d399 !important;
+          border-top: 4px solid #10b981 !important;
           border-radius: 20px !important;
-          box-shadow: 0 12px 28px rgba(16, 185, 129, 0.12), 0 2px 8px rgba(15, 23, 42, 0.04), inset 0 1px 0 #ffffff !important;
+          box-shadow: 0 14px 32px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 24px #ffffff !important;
           color: #0f172a !important;
           opacity: 1 !important;
           filter: none !important;
@@ -3030,25 +3030,27 @@ class DashboardController {
           flex-shrink: 0 !important;
         }
         .card-step-kicker {
-          display: inline;
-          font-weight: 800;
-          letter-spacing: 0.02em;
+          display: inline !important;
+          font-weight: 800 !important;
+          letter-spacing: 0.02em !important;
           color: #047857 !important;
           background: transparent !important;
           border: none !important;
           box-shadow: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
         }
         #card-recent-research[data-step="ข้อ 1"],
         .card-recent-research[data-step="ข้อ 1"],
         [data-step="ข้อ 1"] {
-          border-top: 4px solid #34d399 !important;
+          border-top: 4px solid #10b981 !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
         #card-recent-research[data-step="ข้อ 1"]:hover,
         .card-recent-research[data-step="ข้อ 1"]:hover,
         [data-step="ข้อ 1"]:hover {
-          border-color: #10b981 !important;
-          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.22), 0 4px 12px rgba(15, 23, 42, 0.04) !important;
+          border-color: #059669 !important;
+          box-shadow: 0 18px 40px rgba(16, 185, 129, 0.22), 0 4px 12px rgba(15, 23, 42, 0.04) !important;
           transform: translateY(-2px) !important;
         }
         html body #view-overview .summary-card,
@@ -3060,7 +3062,7 @@ class DashboardController {
         html body #view-overview .summary-grid > [data-navigate="research"],
         .dashboard-container #card-recent-research {
           position: relative;
-          border-top: 4px solid #34d399 !important;
+          border-top: 4px solid #10b981 !important;
           display: flex !important;
           flex-direction: column !important;
           justify-content: space-between !important;
@@ -3345,15 +3347,20 @@ class DashboardController {
       container.style.setProperty('--card-bg', '#ffffff', 'important');
       container.style.setProperty('--surface-bg', '#ffffff', 'important');
       container.style.setProperty('--mew-surface', '#ffffff', 'important');
+      container.style.setProperty('background', '#ffffff', 'important');
+      container.style.setProperty('background-color', '#ffffff', 'important');
+      container.style.setProperty('opacity', '1', 'important');
+      container.style.setProperty('filter', 'none', 'important');
 
       const heroes = container.querySelectorAll('.dashboard-hero');
       heroes.forEach((hero) => {
-        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 82%, #ecfdf5 100%)', 'important');
+        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%)', 'important');
         hero.style.setProperty('background-color', '#ffffff', 'important');
         hero.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
-        hero.style.setProperty('border-top', '4px solid #34d399', 'important');
+        hero.style.setProperty('border-top', '4px solid #10b981', 'important');
         hero.style.setProperty('border-radius', '24px', 'important');
         hero.style.setProperty('padding', '32px 36px', 'important');
+        hero.style.setProperty('box-shadow', '0 14px 36px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff', 'important');
         hero.style.setProperty('color', '#0f172a', 'important');
         hero.style.setProperty('filter', 'none', 'important');
       });
@@ -3370,11 +3377,11 @@ class DashboardController {
         if (card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
         card.style.setProperty('background', '#ffffff', 'important');
         card.style.setProperty('background-color', '#ffffff', 'important');
-        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #ecfdf5 100%)', 'important');
+        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 88%, #f0fdf4 100%)', 'important');
         card.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
-        card.style.setProperty('border-top', '4px solid #34d399', 'important');
+        card.style.setProperty('border-top', '4px solid #10b981', 'important');
         card.style.setProperty('border-radius', '20px', 'important');
-        card.style.setProperty('box-shadow', '0 12px 28px rgba(16, 185, 129, 0.12), 0 2px 8px rgba(15, 23, 42, 0.04), inset 0 1px 0 #ffffff', 'important');
+        card.style.setProperty('box-shadow', '0 14px 32px rgba(52, 211, 153, 0.18), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 0 2px #ffffff, inset 0 0 24px #ffffff', 'important');
         card.style.setProperty('color', '#0f172a', 'important');
         card.style.setProperty('opacity', '1', 'important');
         card.style.setProperty('filter', 'none', 'important');
@@ -3387,6 +3394,24 @@ class DashboardController {
           card.style.setProperty('padding', '24px', 'important');
           card.style.setProperty('box-sizing', 'border-box', 'important');
           card.style.setProperty('text-align', 'left', 'important');
+        }
+      });
+
+      const summaryCards = container.querySelectorAll('.summary-grid > article, .summary-grid > div, .summary-card');
+      const stepMap = [
+        { selector: '#card-recent-research, [data-testid="recent-research"], .summary-grid > [data-navigate="research"]', label: 'ข้อ 1', idx: 0 },
+        { selector: '#card-vault-summary, [data-testid="vault-summary"], .summary-grid > [data-navigate="library"]', label: 'ข้อ 2', idx: 1 },
+        { selector: '#card-remix-drafts, [data-testid="remix-drafts"], .summary-grid > [data-navigate="remix"]', label: 'ข้อ 3', idx: 2 },
+        { selector: '#card-continue-work, [data-testid="continue-work"]', label: 'ข้อ 4', idx: 3 }
+      ];
+      stepMap.forEach(({ selector, label, idx }) => {
+        const cardEl = container.querySelector(selector) || summaryCards[idx];
+        if (!cardEl) return;
+        cardEl.setAttribute('data-step', label);
+        const badgeEl = cardEl.querySelector('.summary-card-header .badge-pill, .badge-pill');
+        if (badgeEl && !badgeEl.querySelector('.card-step-kicker') && !badgeEl.textContent.includes(label)) {
+          const rawText = badgeEl.textContent.trim();
+          badgeEl.innerHTML = `<strong class="card-step-kicker">${label}</strong> · ${rawText}`;
         }
       });
 
@@ -3412,24 +3437,6 @@ class DashboardController {
         box.style.setProperty('border-radius', '12px', 'important');
         box.style.setProperty('box-shadow', '0 6px 18px rgba(52, 211, 153, 0.14), inset 0 0 24px #ffffff', 'important');
         box.style.setProperty('color', '#0f172a', 'important');
-      });
-
-      const summaryCards = container.querySelectorAll('.summary-grid > article, .summary-grid > div, .summary-card');
-      const stepMap = [
-        { selector: '#card-recent-research, [data-testid="recent-research"], .summary-grid > [data-navigate="research"]', label: 'ข้อ 1', idx: 0 },
-        { selector: '#card-vault-summary, [data-testid="vault-summary"], .summary-grid > [data-navigate="library"]', label: 'ข้อ 2', idx: 1 },
-        { selector: '#card-remix-drafts, [data-testid="remix-drafts"], .summary-grid > [data-navigate="remix"]', label: 'ข้อ 3', idx: 2 },
-        { selector: '#card-continue-work, [data-testid="continue-work"]', label: 'ข้อ 4', idx: 3 }
-      ];
-      stepMap.forEach(({ selector, label, idx }) => {
-        const cardEl = container.querySelector(selector) || summaryCards[idx];
-        if (!cardEl) return;
-        cardEl.setAttribute('data-step', label);
-        const badgeEl = cardEl.querySelector('.summary-card-header .badge-pill, .badge-pill');
-        if (badgeEl && !badgeEl.querySelector('.card-step-kicker') && !badgeEl.textContent.includes(label)) {
-          const rawText = badgeEl.textContent.trim();
-          badgeEl.innerHTML = `<strong class="card-step-kicker">${label}</strong> · ${rawText}`;
-        }
       });
     });
   }
@@ -9750,7 +9757,7 @@ class LibraryController {
             </svg>
           </a>
 
-          <div class="card-actions-group" style="display: flex; gap: 0.5rem; align-items: center;">
+          <div class="card-actions-group">
             <button type="button" class="btn-card-review" aria-label="ดูรายละเอียดคลิป ${this.escapeHtml(item.title)}">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
