@@ -186,7 +186,9 @@ export function getSavedReferencesFromStore(state = null) {
 
   // Strictly filter only notes with a valid lens ('content' or 'packaging')
   // Clips that are "Analyzed · Not saved" have no คลังโน้ต entries and are strictly excluded!
-  return savedNotes.map(note => {
+  return savedNotes
+    .filter(note => note && (note.lens === 'content' || note.lens === 'packaging'))
+    .map(note => {
     const source = sourcesMap.get(note.sourceId) || {};
     const lensesForSource = sourceLensesMap.get(note.sourceId);
     const savedOrigin = (lensesForSource && lensesForSource.has('content') && lensesForSource.has('packaging'))
@@ -780,7 +782,7 @@ export class LibraryController {
     });
 
     // Attach card action listeners
-    gridEl.querySelectorAll('.btn-card-review').forEach(btn => {
+    gridEl.querySelectorAll('.btn-card-review, .card-thumbnail-wrap, .card-title-heading').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const card = e.target.closest('[data-id]');
         if (card) {
@@ -844,6 +846,10 @@ export class LibraryController {
 
     const tagsHtml = (item.tags || []).slice(0, 4).map(tag => 
       `<span class="card-tag-pill">${this.escapeHtml(tag)}</span>`
+    ).join('');
+
+    const beatsPreviewHtml = (item.beats || []).slice(0, 2).map(b =>
+      `<span class="beat-preview-chip"><span class="beat-preview-time font-num">${this.escapeHtml(b.time)}</span> ${this.escapeHtml(b.title)}</span>`
     ).join('');
 
     const whyText = item.founderWhy || item.why || 'บันทึกเหตุผลโดย Founder';
@@ -943,6 +949,8 @@ export class LibraryController {
           </div>
           <p class="ai-strip-text">${this.escapeHtml(item.aiInsight)}</p>
         </div>
+
+        ${beatsPreviewHtml ? `<div class="card-beats-preview">${beatsPreviewHtml}</div>` : ''}
 
         <!-- Actions Footer -->
         <div class="card-actions-footer">
