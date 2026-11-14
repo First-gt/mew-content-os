@@ -19,20 +19,21 @@
 >
   <div class="research-detail-container" id="research-detail-root" data-testid="research-detail-root" data-s02-scope="true" style="position: relative; z-index: 1; isolation: isolate; overflow-x: hidden;">
     <style>
-      body > header:not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]),
-      body > nav:not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]),
+      header:not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]):not(.detail-top-nav),
+      nav:not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]),
       .app-header,
       .global-header,
+      .os-header,
+      .os-nav,
       .top-nav,
       .topbar,
       .navbar,
       .screen-nav,
       .screen-switcher {
-        position: relative !important;
         z-index: 200 !important;
         isolation: isolate !important;
       }
-      :is(body > header, body > nav, .app-header, .global-header, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher) :is(svg, i, .icon, [class*="icon"]) {
+      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .detail-top-nav, .analysis-panel-top, .dual-lens-tabs-container) :is(svg, i, .icon, [class*="icon"], .badge-icon-box, .gate-callout-icon, .reminder-icon) {
         position: static !important;
         top: auto !important;
         left: auto !important;
@@ -46,7 +47,9 @@
         float: none !important;
         flex-shrink: 0 !important;
       }
-      :is(body > header, body > nav, .app-header, .global-header, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher) svg:not([hidden]):not(.is-hidden) {
+      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .detail-top-nav, .analysis-panel-top, .dual-lens-tabs-container) svg:not([hidden]):not(.is-hidden) {
+        display: inline-block !important;
+        vertical-align: middle !important;
         width: 16px !important;
         height: 16px !important;
         max-width: 18px !important;
@@ -359,11 +362,12 @@
                 id="btn-video-play" 
                 data-testid="btn-video-play" 
                 aria-label="เล่นหรือหยุดวิดีโอ"
+                style="position: static; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; margin: 8px auto; transform: none; z-index: auto;"
               >
-                <svg class="icon-play" id="icon-play" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <svg class="icon-play" id="icon-play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="position: static; width: 24px; height: 24px; max-width: 24px; max-height: 24px; flex-shrink: 0; transform: none;">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
                 </svg>
-                <svg class="icon-pause is-hidden" id="icon-pause" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden>
+                <svg class="icon-pause is-hidden" id="icon-pause" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden style="display: none; position: static; width: 24px; height: 24px; max-width: 24px; max-height: 24px; flex-shrink: 0; transform: none;">
                   <rect x="6" y="4" width="4" height="16"></rect>
                   <rect x="14" y="4" width="4" height="16"></rect>
                 </svg>
