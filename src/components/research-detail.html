@@ -20,13 +20,10 @@
   <div class="research-detail-container" id="research-detail-root" data-testid="research-detail-root" data-s02-scope="true" style="position: relative; z-index: 1; isolation: isolate; overflow-x: hidden;">
     <style>
       :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_a__#__s02_nav_b__#__s02_nav_c__):not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]):not(.detail-top-nav) {
-        position: relative !important;
         z-index: 1000 !important;
         isolation: isolate !important;
       }
-      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_icon_a__#__s02_nav_icon_b__#__s02_nav_icon_c__) *,
-      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_icon_a__#__s02_nav_icon_b__#__s02_nav_icon_c__) *::before,
-      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_icon_a__#__s02_nav_icon_b__#__s02_nav_icon_c__) *::after {
+      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_icon_a__#__s02_nav_icon_b__#__s02_nav_icon_c__) :is(svg, [class*="icon"], [class*="badge"], .btn-video-play-overlay) {
         position: static !important;
         top: auto !important;
         left: auto !important;
@@ -35,11 +32,12 @@
         inset: auto !important;
         transform: none !important;
         translate: none !important;
-        margin-top: 0 !important;
         z-index: auto !important;
         float: none !important;
       }
       :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, #__s02_svg_a__#__s02_svg_b__#__s02_svg_c__) svg:not([hidden]):not(.is-hidden) {
+        position: static !important;
+        display: inline-block !important;
         vertical-align: middle !important;
         width: 16px !important;
         height: 16px !important;
@@ -47,6 +45,7 @@
         max-height: 18px !important;
         flex-shrink: 0 !important;
         overflow: hidden !important;
+        transform: none !important;
       }
       :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_root_a__#__s02_root_b__#__s02_root_c__) {
         position: relative !important;
@@ -57,7 +56,7 @@
         margin-top: 0 !important;
         transform: none !important;
       }
-      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_all_a__#__s02_all_b__#__s02_all_c__) *,
+      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_all_a__#__s02_all_b__#__s02_all_c__) *:not(.video-scrub-progress):not(#video-scrub-progress):not(.video-scrub-handle):not(#video-scrub-handle):not(.timeline-marker):not(.video-scrubber-track):not(#video-scrubber-track),
       :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_all_a__#__s02_all_b__#__s02_all_c__) *::before,
       :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_all_a__#__s02_all_b__#__s02_all_c__) *::after {
         position: static !important;
@@ -66,16 +65,16 @@
         right: auto !important;
         bottom: auto !important;
         inset: auto !important;
-        transform: none !important;
         translate: none !important;
         z-index: auto !important;
         float: none !important;
-        margin-top: 0 !important;
       }
       :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, [data-testid="video-player"], #analysis-panel, [data-testid="analysis-panel"], #__s02_hide_a__#__s02_hide_b__#__s02_hide_c__) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], .video-markers-layer, .timeline-marker, [class*="floating"]:not([data-testid]):not([id]), [class*="float-"]:not([data-testid]):not([id])) {
         display: none !important;
       }
       .detail-top-nav {
+        position: relative !important;
+        z-index: 2 !important;
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
@@ -88,6 +87,8 @@
         overflow: hidden !important;
       }
       .detail-hero-header {
+        position: relative !important;
+        z-index: 2 !important;
         display: flex !important;
         align-items: flex-start !important;
         justify-content: space-between !important;
@@ -120,7 +121,6 @@
         flex-wrap: wrap !important;
         gap: 12px !important;
         width: 100% !important;
-        margin-top: 0 !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
       }
@@ -128,17 +128,17 @@
         display: inline-flex !important;
         align-items: center !important;
         gap: 8px !important;
-        margin-top: 0 !important;
         vertical-align: middle !important;
       }
       :is(.detail-gate-callout, .creator-profile-badge, .save-gate-reminder-box) {
         display: flex !important;
         align-items: center !important;
         gap: 12px !important;
-        margin-top: 0 !important;
         overflow: hidden !important;
       }
       .dual-lens-tabs-container {
+        position: relative !important;
+        z-index: 2 !important;
         width: 100% !important;
         margin: 12px 0 !important;
         overflow: hidden !important;
@@ -149,7 +149,6 @@
         flex-wrap: wrap !important;
         gap: 10px !important;
         width: 100% !important;
-        margin-top: 0 !important;
       }
       :is(#video-player, [data-testid="video-player"], .video-player-card, .video-canvas-container, .video-viewport, #video-viewport, .video-mockup-content) {
         display: flex !important;
@@ -159,10 +158,10 @@
         gap: 10px !important;
         overflow: hidden !important;
         width: 100% !important;
-        margin-top: 0 !important;
         box-sizing: border-box !important;
       }
       :is(.btn-video-play-overlay, #btn-video-play) {
+        position: static !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -172,16 +171,20 @@
         border-radius: 999px !important;
         overflow: hidden !important;
         flex-shrink: 0 !important;
+        transform: none !important;
       }
       :is(.gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot) {
+        position: static !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         flex-shrink: 0 !important;
-        margin-top: 0 !important;
         overflow: hidden !important;
+        transform: none !important;
       }
       :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_svg2_a__#__s02_svg2_b__#__s02_svg2_c__) svg:not([hidden]):not(.is-hidden) {
+        position: static !important;
+        display: inline-block !important;
         vertical-align: middle !important;
         width: 16px !important;
         height: 16px !important;
@@ -189,7 +192,7 @@
         max-height: 16px !important;
         flex-shrink: 0 !important;
         overflow: hidden !important;
-        margin-top: 0 !important;
+        transform: none !important;
       }
       #btn-video-play svg:not([hidden]):not(.is-hidden) {
         width: 24px !important;
@@ -198,12 +201,12 @@
         max-height: 24px !important;
       }
       .video-scrubber-track, #video-scrubber-track {
+        position: relative !important;
         display: flex !important;
         align-items: center !important;
         overflow: hidden !important;
         width: 100% !important;
         height: 8px !important;
-        margin-top: 0 !important;
       }
     </style>
 
