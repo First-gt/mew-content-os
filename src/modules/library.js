@@ -856,10 +856,10 @@ export class LibraryController {
 
     // Origin Stamp Badge (คอนเฟิร์มมาจากไหน)
     const originLabel = item.savedOrigin === 'both' || item.lens === 'both'
-      ? '✓ คอนเฟิร์มจาก Both Vaults'
+      ? '✓ ข้อ 2 · คอนเฟิร์มจาก Both Vaults'
       : isContent
-      ? '✓ คอนเฟิร์มเข้า Content Vault'
-      : '✓ คอนเฟิร์มเข้า Packaging Vault';
+      ? '✓ ข้อ 2.1 · คอนเฟิร์มเข้า Content Vault'
+      : '✓ ข้อ 2.2 · คอนเฟิร์มเข้า Packaging Vault';
     const originClass = item.savedOrigin === 'both' || item.lens === 'both'
       ? 'origin-both'
       : isContent
