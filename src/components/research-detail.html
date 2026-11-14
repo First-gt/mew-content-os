@@ -19,11 +19,14 @@
 >
   <div class="research-detail-container" id="research-detail-root" data-testid="research-detail-root" data-s02-scope="true" style="position: relative; z-index: 1; isolation: isolate; overflow-x: hidden;">
     <style>
-      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, [role="navigation"], [role="banner"], #__s02_nav_a__#__s02_nav_b__#__s02_nav_c__):not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]):not(.detail-top-nav) {
+      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_a__#__s02_nav_b__#__s02_nav_c__):not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]):not(.detail-top-nav) {
+        position: relative !important;
         z-index: 1000 !important;
         isolation: isolate !important;
       }
-      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, [role="navigation"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, .pill-tabs-list, #__s02_icon_a__#__s02_icon_b__#__s02_icon_c__) :is(svg, i, .icon, [class*="icon"], .badge-icon-box, .gate-callout-icon, .reminder-icon, .tab-indicator-dot, .badge-kicker, .badge-step-code) {
+      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_icon_a__#__s02_nav_icon_b__#__s02_nav_icon_c__) *,
+      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_icon_a__#__s02_nav_icon_b__#__s02_nav_icon_c__) *::before,
+      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_icon_a__#__s02_nav_icon_b__#__s02_nav_icon_c__) *::after {
         position: static !important;
         top: auto !important;
         left: auto !important;
@@ -35,40 +38,28 @@
         margin-top: 0 !important;
         z-index: auto !important;
         float: none !important;
-        flex-shrink: 0 !important;
       }
-      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, [role="navigation"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, #__s02_svg_a__#__s02_svg_b__#__s02_svg_c__) svg:not([hidden]):not(.is-hidden) {
-        display: inline-block !important;
+      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, #__s02_svg_a__#__s02_svg_b__#__s02_svg_c__) svg:not([hidden]):not(.is-hidden) {
         vertical-align: middle !important;
         width: 16px !important;
         height: 16px !important;
         max-width: 18px !important;
         max-height: 18px !important;
+        flex-shrink: 0 !important;
         overflow: hidden !important;
       }
-      :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_root_a__#__s02_root_b__#__s02_root_c__) {
+      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_root_a__#__s02_root_b__#__s02_root_c__) {
         position: relative !important;
         z-index: 1 !important;
         isolation: isolate !important;
         contain: layout style paint !important;
         overflow: hidden !important;
-      }
-      :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_box_a__#__s02_box_b__#__s02_box_c__) :is(.detail-top-nav, .detail-hero-header, .research-detail-grid, .detail-col-left, .detail-col-right, .mew-offer-card, #video-player, .video-player-card, .video-canvas-container, .video-viewport, #video-viewport, .video-mockup-content, .video-controls-bar, .video-scrubber-track, #source-meta, .source-meta-card, #analysis-panel, .analysis-panel-card, .analysis-panel-top, .dual-lens-tabs-container, .pill-tabs-list, .pill-tab-button, .analysis-panels-body, .analysis-tab-panel, .analysis-section, #detail-action-footer, .detail-action-footer) {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        inset: auto !important;
+        margin-top: 0 !important;
         transform: none !important;
-        translate: none !important;
-        z-index: 1 !important;
-        float: none !important;
-        overflow: hidden !important;
       }
-      :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_child_a__#__s02_child_b__#__s02_child_c__) :is(svg, i, .icon, [class*="icon"], .btn-video-play-overlay, #btn-video-play, .gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, #video-avatar-glyph, .creator-avatar-circle, #meta-avatar, .tab-indicator-dot, .pulse-dot, .video-overlay-chrome, .video-badge-ratio, .video-badge-watermark, .video-beat-badge, .badge-kicker, .badge-step-code, .section-step-num, .beat-index, .detail-gate-callout),
-      :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::before,
-      :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::after {
+      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_all_a__#__s02_all_b__#__s02_all_c__) *,
+      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_all_a__#__s02_all_b__#__s02_all_c__) *::before,
+      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_all_a__#__s02_all_b__#__s02_all_c__) *::after {
         position: static !important;
         top: auto !important;
         left: auto !important;
@@ -81,7 +72,7 @@
         float: none !important;
         margin-top: 0 !important;
       }
-      :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, #analysis-panel, #__s02_hide_a__#__s02_hide_b__#__s02_hide_c__) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], [class*="floating"]:not([data-testid]):not([id]), [class*="float-"]:not([data-testid]):not([id])) {
+      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, [data-testid="video-player"], #analysis-panel, [data-testid="analysis-panel"], #__s02_hide_a__#__s02_hide_b__#__s02_hide_c__) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], .video-markers-layer, .timeline-marker, [class*="floating"]:not([data-testid]):not([id]), [class*="float-"]:not([data-testid]):not([id])) {
         display: none !important;
       }
       .detail-top-nav {
@@ -160,7 +151,7 @@
         width: 100% !important;
         margin-top: 0 !important;
       }
-      :is(#video-player, .video-player-card, .video-canvas-container, .video-viewport, #video-viewport, .video-mockup-content) {
+      :is(#video-player, [data-testid="video-player"], .video-player-card, .video-canvas-container, .video-viewport, #video-viewport, .video-mockup-content) {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
@@ -190,8 +181,7 @@
         margin-top: 0 !important;
         overflow: hidden !important;
       }
-      :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, #source-meta, #analysis-panel, #detail-action-footer, #__s02_svg2_a__#__s02_svg2_b__#__s02_svg2_c__) svg:not([hidden]):not(.is-hidden) {
-        display: inline-block !important;
+      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_svg2_a__#__s02_svg2_b__#__s02_svg2_c__) svg:not([hidden]):not(.is-hidden) {
         vertical-align: middle !important;
         width: 16px !important;
         height: 16px !important;
@@ -212,6 +202,7 @@
         align-items: center !important;
         overflow: hidden !important;
         width: 100% !important;
+        height: 8px !important;
         margin-top: 0 !important;
       }
     </style>
