@@ -5,6 +5,693 @@
      ============================================================================== -->
 
 <div class="library-container" id="library-root">
+  <style>
+    #library-root {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+    #library-root .library-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.25rem;
+      padding: 1.35rem 1.5rem;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8faf7 65%, #f5f3ff 100%);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+    }
+    #library-root .library-header-main {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      max-width: 760px;
+    }
+    #library-root .library-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    #library-root .library-title {
+      margin: 0;
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    #library-root .library-subtitle {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #475569;
+    }
+    #library-root .library-header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    #library-root .library-step-badge {
+      background: linear-gradient(135deg, #edf0e4 0%, #e8ecdd 100%);
+      color: #3c5540;
+      border: 1px solid #b8c0ae;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      box-shadow: 0 2px 6px rgba(105, 123, 85, 0.12);
+    }
+    #library-root .dual-vault-overview-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.875rem;
+      margin-bottom: 0.25rem;
+    }
+    #library-root .vault-overview-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.875rem 1.125rem;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    #library-root .vault-overview-card.content-overview {
+      border-left: 4px solid #697b55;
+      background: linear-gradient(135deg, rgba(244, 242, 235, 0.55) 0%, #ffffff 100%);
+    }
+    #library-root .vault-overview-card.content-overview.active {
+      border-color: #697b55;
+      box-shadow: 0 0 0 2px rgba(105, 123, 85, 0.18), 0 6px 16px rgba(105, 123, 85, 0.1);
+    }
+    #library-root .vault-overview-card.packaging-overview {
+      border-left: 4px solid #8b5cf6;
+      background: linear-gradient(135deg, rgba(245, 243, 255, 0.6) 0%, #ffffff 100%);
+    }
+    #library-root .vault-overview-card.packaging-overview.active {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2), 0 6px 16px rgba(139, 92, 246, 0.12);
+    }
+    #library-root .vault-overview-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.07);
+    }
+    #library-root .vault-overview-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    #library-root .vault-overview-kicker {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #64748b;
+    }
+    #library-root .vault-overview-label {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    #library-root .vault-overview-pill {
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    #library-root .vault-overview-pill.emerald {
+      background: #edf0e4;
+      color: #3c5540;
+      border: 1px solid #dcded2;
+    }
+    #library-root .vault-overview-pill.violet {
+      background: #f5f3ff;
+      color: #6d28d9;
+      border: 1px solid #ddd6fe;
+    }
+    #library-root .vault-tabs-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    #library-root .vault-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 1rem 1.25rem;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 14px;
+    }
+    #library-root .vault-tab-btn:hover {
+      transform: translateY(-1px);
+      border-color: #cbd5e1;
+    }
+    #library-root .vault-tab-btn.content-tab.active {
+      border-color: #697b55;
+      background: linear-gradient(180deg, rgba(237, 240, 228, 0.78) 0%, #ffffff 100%);
+      box-shadow: 0 8px 22px rgba(105, 123, 85, 0.14);
+    }
+    #library-root .vault-tab-btn.packaging-tab.active {
+      border-color: #8b5cf6;
+      background: linear-gradient(180deg, rgba(245, 243, 255, 0.82) 0%, #ffffff 100%);
+      box-shadow: 0 8px 22px rgba(139, 92, 246, 0.15);
+    }
+    #library-root .vault-tab-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #edf0e4;
+      color: #3c5540;
+      border: 1px solid #dcded2;
+    }
+    #library-root .vault-tab-icon-wrap.violet {
+      background: #f5f3ff;
+      color: #6d28d9;
+      border-color: #ddd6fe;
+    }
+    #library-root .vault-tab-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      min-width: 0;
+      flex: 1;
+    }
+    #library-root .vault-tab-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    #library-root .vault-tab-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    #library-root .vault-tab-caption {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+    #library-root .vault-count-badge {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: #edf0e4;
+      color: #3c5540;
+      border: 1px solid #dcded2;
+    }
+    #library-root .vault-count-badge.violet {
+      background: #f5f3ff;
+      color: #6d28d9;
+      border-color: #ddd6fe;
+    }
+    #library-root .vault-controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin: 0.25rem 0;
+      padding: 0.875rem 1.125rem;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+    }
+    #library-root .search-input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex: 1 1 240px;
+      max-width: 340px;
+    }
+    #library-root .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      color: #64748b;
+      pointer-events: none;
+    }
+    #library-root .library-search-field {
+      width: 100%;
+      padding: 0.48rem 2rem 0.48rem 2.25rem;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 0.82rem;
+      color: #0f172a;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    #library-root .library-search-field:focus {
+      background: #ffffff;
+      border-color: #697b55;
+      box-shadow: 0 0 0 3px rgba(105, 123, 85, 0.15);
+    }
+    #library-root .btn-clear-search {
+      position: absolute;
+      right: 0.55rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      cursor: pointer;
+    }
+    #library-root .vault-status-summary {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+    #library-root .vault-total-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #475569;
+    }
+    #library-root .vault-panel-view[hidden],
+    #library-root .vault-empty-state[hidden] {
+      display: none !important;
+    }
+    #library-root .tag-filters-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    #library-root .tag-filter-chip {
+      padding: 0.32rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      background: #f8fafc;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    #library-root .tag-filter-chip:hover {
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+    #library-root .tag-filter-chip.active {
+      background: #3c5540;
+      color: #ffffff;
+      border-color: #3c5540;
+    }
+    #library-root .card-select-chk {
+      width: 15px;
+      height: 15px;
+      accent-color: #697b55;
+      cursor: pointer;
+      margin: 0;
+    }
+    #library-root .reference-card.violet-accent .card-select-chk {
+      accent-color: #7c3aed;
+    }
+    #library-root .reference-card.mew-offer-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+    #library-root .reference-card.mew-offer-card:hover {
+      transform: translateY(-2px);
+      border-color: #b8c0ae;
+      box-shadow: 0 12px 28px rgba(105, 123, 85, 0.1);
+    }
+    #library-root .reference-card.mew-offer-card.violet-accent:hover {
+      border-color: #c4b5fd;
+      box-shadow: 0 12px 28px rgba(124, 58, 237, 0.12);
+    }
+    #library-root .reference-card.card-selected {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2), 0 10px 24px rgba(139, 92, 246, 0.12);
+    }
+    #library-root .card-select-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    #library-root .card-select-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+    }
+    #library-root .origin-stamp-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    #library-root .origin-stamp-badge.origin-content {
+      background: #edf0e4;
+      color: #3c5540;
+      border: 1px solid #dcded2;
+    }
+    #library-root .origin-stamp-badge.origin-packaging {
+      background: #f5f3ff;
+      color: #6d28d9;
+      border: 1px solid #ddd6fe;
+    }
+    #library-root .origin-stamp-badge.origin-both {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+    #library-root .card-actions-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    #library-root .reference-card.mew-offer-card.coral-accent {
+      border-top: 3px solid #697b55;
+    }
+    #library-root .reference-card.mew-offer-card.violet-accent {
+      border-top: 3px solid #8b5cf6;
+    }
+    #library-root .vault-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+    #library-root .card-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    #library-root .card-creator-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-width: 0;
+    }
+    #library-root .card-creator-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.76rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      background: #edf0e4;
+      color: #3c5540;
+      border: 1px solid #dcded2;
+    }
+    #library-root .card-creator-avatar.violet {
+      background: #f5f3ff;
+      color: #6d28d9;
+      border-color: #ddd6fe;
+    }
+    #library-root .card-creator-info {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    #library-root .card-creator-name {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #library-root .card-creator-meta {
+      font-size: 0.74rem;
+      color: #64748b;
+    }
+    #library-root .card-vault-pill {
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+      background: #edf0e4;
+      color: #3c5540;
+      border: 1px solid #dcded2;
+    }
+    #library-root .card-vault-pill.violet {
+      background: #f5f3ff;
+      color: #6d28d9;
+      border-color: #ddd6fe;
+    }
+    #library-root .card-title-heading {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+      line-height: 1.35;
+    }
+    #library-root .card-subtitle-text {
+      font-size: 0.84rem;
+      color: #475569;
+      margin: 0;
+      line-height: 1.5;
+    }
+    #library-root .card-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    #library-root .card-tag-pill {
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: #f8fafc;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+    }
+    #library-root .card-founder-why-block {
+      padding: 0.75rem 0.875rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(237, 240, 228, 0.65) 0%, rgba(248, 250, 252, 0.9) 100%);
+      border-left: 3px solid #697b55;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    #library-root .card-founder-why-block.violet {
+      background: linear-gradient(135deg, rgba(245, 243, 255, 0.75) 0%, rgba(248, 250, 252, 0.9) 100%);
+      border-left-color: #8b5cf6;
+    }
+    #library-root .founder-why-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #3c5540;
+    }
+    #library-root .founder-why-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    #library-root .card-founder-why-block.violet .founder-why-eyebrow {
+      color: #6d28d9;
+    }
+    #library-root .founder-why-quote {
+      margin: 0;
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: #1e293b;
+      font-weight: 500;
+    }
+    #library-root .card-thumbnail-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+    #library-root .card-thumbnail-media {
+      position: relative;
+      height: 136px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #edf0e4 0%, #dcded2 100%);
+    }
+    #library-root .card-thumbnail-media.violet-bg {
+      background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+    }
+    #library-root .card-thumbnail-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    #library-root .thumbnail-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.04) 0%, rgba(15, 23, 42, 0.55) 100%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0.6rem 0.75rem;
+      color: #ffffff;
+    }
+    #library-root .thumbnail-play-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      color: #0f172a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+    }
+    #library-root .thumbnail-duration {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.18rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.75);
+      color: #f8fafc;
+    }
+    #library-root .card-ai-insight-strip {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      font-size: 0.8rem;
+      color: #475569;
+      line-height: 1.45;
+    }
+    #library-root .ai-strip-icon {
+      color: #64748b;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    #library-root .ai-strip-text {
+      margin: 0;
+    }
+    #library-root .btn-card-review,
+    #library-root .btn-card-remix {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.38rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    #library-root .btn-card-review {
+      background: #f8fafc;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    #library-root .btn-card-review:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    #library-root .btn-card-remix {
+      background: #697b55;
+      color: #ffffff;
+      border: 1px solid #697b55;
+    }
+    #library-root .reference-card.violet-accent .btn-card-remix {
+      background: #7c3aed;
+      border-color: #7c3aed;
+    }
+    #library-root .btn-card-remix:hover {
+      filter: brightness(0.95);
+    }
+    #library-root .card-actions-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding-top: 0.65rem;
+      margin-top: auto;
+      border-top: 1px solid #f1f5f9;
+    }
+    #library-root .link-source {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #475569;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    #library-root .link-source:hover {
+      color: #0f172a;
+      text-decoration: underline;
+    }
+    #library-root .library-remix-action-bar {
+      position: sticky;
+      bottom: 1rem;
+      z-index: 30;
+      margin-top: 1.25rem;
+      padding: 0.85rem 1.25rem;
+      border-radius: 16px;
+      background: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.24);
+    }
+    #library-root .library-remix-action-bar[hidden] {
+      display: none !important;
+    }
+    #library-root .remix-action-bar-info {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    #library-root .remix-action-bar-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  </style>
 
   <!-- ============================================================================
        TOP HEADER & WORKFLOW CONTEXT
@@ -19,7 +706,8 @@
           </svg>
           S04 Reference Library
         </span>
-        <span class="badge-pill soft">Founder-Curated Decisions</span>
+        <span class="badge-pill soft library-step-badge">ข้อ 2 · Dual-Vault</span>
+        <span class="badge-pill soft">คลังโน้ต</span>
         <span class="badge-pill soft">Dual-Vault Architecture</span>
       </div>
 
@@ -55,7 +743,24 @@
   <!-- ============================================================================
        VAULT TAB SWITCHER (DUAL-VAULT TABS: CONTENT VS PACKAGING)
        ============================================================================ -->
-  <section class="vault-switcher-section" aria-label="สลับคลังอ้างอิง">
+  <section class="dual-vault-overview-bar" aria-label="สรุปคลังวัตถุดิบข้อ 2 Dual-Vault">
+    <div class="vault-overview-card content-overview active" data-vault-switch="content" role="button" tabindex="0" aria-pressed="true">
+      <div class="vault-overview-meta">
+        <span class="vault-overview-kicker">ข้อ 2.1 · Content Vault (WHAT)</span>
+        <span class="vault-overview-label">สาระ · แก่นคิด · ปรัชญา</span>
+      </div>
+      <span class="vault-overview-pill emerald font-num" id="overview-count-content">0 ชิ้น</span>
+    </div>
+    <div class="vault-overview-card packaging-overview" data-vault-switch="packaging" role="button" tabindex="0" aria-pressed="false">
+      <div class="vault-overview-meta">
+        <span class="vault-overview-kicker">ข้อ 2.2 · Packaging Vault (HOW)</span>
+        <span class="vault-overview-label">วิธีเล่า · จังหวะตัดต่อ · Hook</span>
+      </div>
+      <span class="vault-overview-pill violet font-num" id="overview-count-packaging">0 ชิ้น</span>
+    </div>
+  </section>
+
+  <section class="vault-switcher-section emerald-tone" aria-label="สลับคลังอ้างอิง">
     <div class="vault-tabs-wrapper" role="tablist" aria-label="คลังอ้างอิง 2 คลัง">
       
       <!-- Tab 1: Content Vault (WHAT) -->
@@ -69,8 +774,8 @@
         aria-controls="panel-content-vault" 
         tabindex="0"
       >
-        <div class="tab-indicator-bar coral" aria-hidden="true"></div>
-        <div class="vault-tab-icon-wrap coral" aria-hidden="true">
+        <div class="tab-indicator-bar coral emerald" aria-hidden="true"></div>
+        <div class="vault-tab-icon-wrap coral emerald" aria-hidden="true">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
@@ -82,7 +787,7 @@
         <div class="vault-tab-info">
           <div class="vault-tab-title-row">
             <span class="vault-tab-title">Content Vault</span>
-            <span class="vault-count vault-count-badge coral font-num" id="count-content-vault" data-testid="vault-count">0 ชิ้น</span>
+            <span class="vault-count vault-count-badge coral emerald font-num" id="count-content-vault" data-testid="vault-count">0 ชิ้น</span>
           </div>
           <span class="vault-tab-caption">แก่นเนื้อหา · ประเด็นคิด · ปรัชญา (WHAT)</span>
         </div>
@@ -156,7 +861,7 @@
 
     <!-- Status & Quick Action Link to Remix -->
     <div class="vault-status-summary">
-      <span class="vault-total-label" id="vault-summary-text">แสดง 0 รายการคัดสรร</span>
+      <span class="vault-total-label" id="vault-summary-text">คลังโน้ต: แสดง 0 รายการคัดสรร</span>
       <button type="button" class="btn-pill btn-violet btn-sm" data-navigate="remix" id="btn-goto-remix-top">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
@@ -252,6 +957,24 @@
       </div>
     </section>
 
+  </div>
+
+  <!-- ============================================================================
+       STICKY MULTI-SELECT REMIX ACTION BAR
+       ============================================================================ -->
+  <div id="library-remix-action-bar" class="library-remix-action-bar" hidden>
+    <div class="remix-action-bar-info">
+      <span class="badge-pill soft library-step-badge">ข้อ 2 → Remix</span>
+      <span id="action-bar-selection-text">0 คลิปจาก Content (WHAT) · 0 คลิปจาก Packaging (HOW)</span>
+    </div>
+    <div class="remix-action-bar-buttons">
+      <button type="button" class="btn-pill btn-ghost btn-sm" id="btn-clear-selection">
+        <span>ล้างที่เลือก</span>
+      </button>
+      <button type="button" class="btn-pill btn-violet btn-sm" id="btn-batch-remix">
+        <span>ส่งไป Remix Studio</span>
+      </button>
+    </div>
   </div>
 
   <!-- ============================================================================
