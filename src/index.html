@@ -168,9 +168,771 @@
     <div class="ob-brand-badge">
       <span class="ob-brand-icon">⚡</span>
       <span class="ob-brand-name">MEW CONTENT OS</span>
-      <span class="ob-brand-tag">Brand Brain V6.3</span>
+      <span class="ob-brand-tag" style="background: #edf0e4; color: #3c5540; border-color: #dcded2;">Brand Brain V6.3</span>
     </div>
   </header>
+
+  <style id="emerald-theme-override">
+    :root, header.app-header, #main-content, .ob-viewport {
+      --emerald-50: #edf0e4;
+      --emerald-100: #e8ecdd;
+      --emerald-200: #dcded2;
+      --emerald-500: #697b55;
+      --emerald-600: #26392d;
+      --emerald-700: #3c5540;
+      --emerald-800: #26392d;
+      --emerald-900: #252c27;
+      --accent: #26392d;
+      --accent-hover: #3c5540;
+      --accent-soft: rgba(105, 123, 85, 0.14);
+    }
+    header.app-header {
+      background: linear-gradient(135deg, rgba(244, 242, 235, 0.96) 0%, rgba(237, 240, 228, 0.96) 55%, rgba(249, 248, 242, 0.96) 100%) !important;
+      border-bottom: 1.5px solid #b8c0ae !important;
+      box-shadow: 0 4px 16px rgba(38, 57, 45, 0.08) !important;
+      font-family: var(--v6-font-sans, 'DM Sans', 'Prompt', 'Noto Sans Thai', sans-serif) !important;
+    }
+    header.app-header * {
+      font-family: var(--v6-font-sans, 'DM Sans', 'Prompt', 'Noto Sans Thai', sans-serif) !important;
+      font-style: normal !important;
+    }
+    header.app-header .brand-monogram,
+    header.app-header .founder-avatar {
+      background: linear-gradient(135deg, #26392d 0%, #26392d 100%) !important;
+      color: #edf0e4 !important;
+      border-color: #697b55 !important;
+    }
+    header.app-header .brand-name,
+    header.app-header .founder-pill {
+      color: #252c27 !important;
+    }
+    header.app-header .brand-version,
+    header.app-header .status-pill {
+      color: #3c5540 !important;
+    }
+    header.app-header .app-nav {
+      background-color: #edf0e4 !important;
+      border: 1px solid #dcded2 !important;
+    }
+    header.app-header .nav-link {
+      color: #26392d !important;
+    }
+    header.app-header .nav-link:hover {
+      color: #252c27 !important;
+      background-color: #e8ecdd !important;
+      border-color: #b8c0ae !important;
+    }
+    header.app-header .nav-link.active {
+      background: linear-gradient(135deg, #26392d 0%, #3c5540 100%) !important;
+      border-color: #697b55 !important;
+      color: #ffffff !important;
+    }
+    header.app-header .nav-step-num {
+      background-color: #e8ecdd !important;
+      color: #3c5540 !important;
+    }
+    header.app-header .nav-link.active .nav-step-num {
+      background-color: #edf0e4 !important;
+      color: #252c27 !important;
+    }
+    #main-content, #ob-screen-0 .ob-hero-wrapper {
+      background: radial-gradient(circle at 50% 0%, rgba(105, 123, 85, 0.14) 0%, rgba(244, 242, 235, 0.5) 45%, transparent 80%);
+    }
+    #main-content .badge-kicker, #ob-screen-0 .badge-kicker {
+      background: linear-gradient(135deg, #26392d 0%, #26392d 100%) !important;
+      color: #edf0e4 !important;
+      border: 1px solid #697b55 !important;
+      box-shadow: 0 2px 10px rgba(38, 57, 45, 0.22) !important;
+    }
+    #main-content .badge-pill.soft, #ob-screen-0 .badge-pill.soft, .ob-step-badge {
+      background: #edf0e4 !important;
+      color: #3c5540 !important;
+      border: 1px solid #dcded2 !important;
+    }
+    #main-content .mew-gradient-text, #ob-screen-0 .mew-gradient-text {
+      background: linear-gradient(135deg, #252c27 0%, #26392d 50%, #697b55 100%) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+    #main-content .typewriter-cursor, #ob-screen-0 .typewriter-cursor {
+      background-color: #697b55 !important;
+    }
+    #ob-screen-0 .btn-ob-hero-primary, #main-content .btn-primary {
+      background: linear-gradient(135deg, #26392d 0%, #3c5540 100%) !important;
+      border-color: #697b55 !important;
+      color: #ffffff !important;
+      box-shadow: 0 8px 24px rgba(38, 57, 45, 0.28) !important;
+    }
+    #ob-screen-0 .ob-hero-input-box {
+      border-color: rgba(105, 123, 85, 0.35) !important;
+      box-shadow: 0 10px 30px rgba(38, 57, 45, 0.1) !important;
+    }
+
+    /* ======================================================================
+       S02: DUAL-LENS AI ANALYSIS DETAIL — EMERALD THEME & READABILITY LAYOUT
+       ====================================================================== */
+    #section-dual-lens-detail {
+      margin-top: 28px;
+      padding: 28px;
+      background: linear-gradient(180deg, #f4f2eb 0%, #ffffff 100%);
+      border: 1.5px solid #dcded2;
+      border-radius: 24px;
+      box-shadow: 0 14px 36px rgba(38, 57, 45, 0.08);
+      color: #252c27;
+    }
+    #section-dual-lens-detail .detail-status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 22px;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #252c27 0%, #3c5540 100%);
+      border: 1px solid #697b55;
+      border-radius: 16px;
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(6, 78, 59, 0.18);
+    }
+    #section-dual-lens-detail .status-left {
+      display: flex;
+       flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+    #section-dual-lens-detail .detail-step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 12px;
+      background: #697b55;
+      color: #252c27;
+      font-weight: 800;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+    #section-dual-lens-detail .detail-heading {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff !important;
+      letter-spacing: -0.01em;
+    }
+    #section-dual-lens-detail .clip-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(167, 243, 208, 0.45);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #edf0e4;
+    }
+    #section-dual-lens-detail .status-dot-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #829c63;
+      box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.28);
+    }
+    #section-dual-lens-detail .human-gate-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      background: rgba(105, 123, 85, 0.22);
+      border: 1px solid #829c63;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #e8ecdd;
+    }
+    #section-dual-lens-detail .research-two-col-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 390px) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 980px) {
+      #section-dual-lens-detail .research-two-col-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    #section-dual-lens-detail .video-card,
+    #section-dual-lens-detail .analysis-card {
+      background: #ffffff;
+      border: 1.5px solid #dcded2 !important;
+      border-top: 4px solid #26392d !important;
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(38, 57, 45, 0.06);
+    }
+    #section-dual-lens-detail .video-container {
+      background: linear-gradient(160deg, #022c22 0%, #252c27 60%, #3c5540 100%);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #26392d;
+      color: #edf0e4;
+      margin-bottom: 18px;
+    }
+    #section-dual-lens-detail .video-preview-overlay {
+      position: relative;
+      padding: 20px;
+      min-height: 270px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    #section-dual-lens-detail .video-tag-pill {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 4px 10px;
+      background: rgba(105, 123, 85, 0.25);
+      border: 1px solid rgba(110, 231, 183, 0.45);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #dcded2;
+    }
+    #section-dual-lens-detail .video-watermark {
+      position: absolute;
+      top: 22px;
+      right: 20px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: rgba(167, 243, 208, 0.55);
+    }
+    #section-dual-lens-detail .video-canvas-content {
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #section-dual-lens-detail .video-founder-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+      padding: 4px 12px 4px 6px;
+      background: rgba(6, 78, 59, 0.75);
+      border: 1px solid #697b55;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #edf0e4;
+    }
+    #section-dual-lens-detail .founder-glyph {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #697b55;
+      color: #022c22;
+      font-weight: 800;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #section-dual-lens-detail .video-onscreen-hook {
+      font-size: 1.02rem;
+      font-weight: 700;
+      line-height: 1.5;
+      color: #ffffff;
+      background: rgba(2, 44, 34, 0.6);
+      padding: 12px 14px;
+      border-left: 3px solid #829c63;
+      border-radius: 10px;
+    }
+    #section-dual-lens-detail .video-beat-tracker {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #b8c0ae;
+    }
+    #section-dual-lens-detail .btn-play-pause {
+      align-self: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #697b55;
+      color: #022c22;
+      border: 2px solid #dcded2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(105, 123, 85, 0.4);
+    }
+    #section-dual-lens-detail .video-controls-bar {
+      padding: 12px 16px;
+      background: #022c22;
+      border-top: 1px solid rgba(105, 123, 85, 0.3);
+    }
+    #section-dual-lens-detail .scrub-container {
+      position: relative;
+      height: 6px;
+      background: rgba(167, 243, 208, 0.2);
+      border-radius: 999px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    #section-dual-lens-detail .scrub-progress {
+      height: 100%;
+      background: linear-gradient(90deg, #697b55, #829c63);
+      border-radius: 999px;
+    }
+    #section-dual-lens-detail .scrub-handle {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #edf0e4;
+      border: 2px solid #697b55;
+    }
+    #section-dual-lens-detail .controls-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #dcded2;
+    }
+    #section-dual-lens-detail .controls-buttons {
+      display: flex;
+      gap: 8px;
+    }
+    #section-dual-lens-detail .btn-control-icon {
+      background: rgba(105, 123, 85, 0.16);
+      border: 1px solid rgba(167, 243, 208, 0.3);
+      color: #e8ecdd;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    #section-dual-lens-detail .creator-profile-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #e8ecdd;
+    }
+    #section-dual-lens-detail .creator-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #26392d, #697b55);
+      color: #ffffff;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    #section-dual-lens-detail .creator-info {
+      flex: 1;
+      min-width: 0;
+    }
+    #section-dual-lens-detail .creator-name-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 700;
+      color: #252c27;
+    }
+    #section-dual-lens-detail .verified-icon {
+      color: #26392d;
+      display: inline-flex;
+    }
+    #section-dual-lens-detail .creator-handle {
+      display: block;
+      font-size: 0.82rem;
+      color: #3c5540;
+    }
+    #section-dual-lens-detail .meta-data-list {
+      margin: 0 0 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #section-dual-lens-detail .meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 12px;
+      background: #f4f2eb;
+      border: 1px solid #e8ecdd;
+      border-radius: 10px;
+      font-size: 0.85rem;
+    }
+    #section-dual-lens-detail .meta-row dt {
+      font-weight: 600;
+      color: #3c5540;
+    }
+    #section-dual-lens-detail .meta-row dd {
+      margin: 0;
+      font-weight: 600;
+      color: #252c27;
+      text-align: right;
+    }
+    #section-dual-lens-detail .source-url-link {
+      color: #26392d;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    #section-dual-lens-detail .structure-badge-inline {
+      padding: 2px 9px;
+      background: #e8ecdd;
+      color: #26392d;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    #section-dual-lens-detail .status-text-highlight {
+      color: #3c5540;
+    }
+    #section-dual-lens-detail .human-gate-callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      background: #edf0e4;
+      border: 1px solid #b8c0ae;
+      border-left: 4px solid #26392d;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      color: #26392d;
+    }
+    #section-dual-lens-detail .callout-icon {
+      color: #26392d;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    #section-dual-lens-detail .dual-lens-tab-header {
+      margin-bottom: 20px;
+    }
+    #section-dual-lens-detail .pill-tabs-nav {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      background: #f4f2eb;
+      padding: 8px;
+      border-radius: 16px;
+      border: 1px solid #dcded2;
+    }
+    #section-dual-lens-detail .pill-tab-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1.5px solid transparent;
+      background: transparent;
+      color: #26392d;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+    #section-dual-lens-detail .pill-tab-btn.active,
+    #section-dual-lens-detail .pill-tab-btn[aria-selected="true"] {
+      background: linear-gradient(135deg, #26392d 0%, #3c5540 100%);
+      color: #ffffff;
+      border-color: #697b55;
+      box-shadow: 0 6px 16px rgba(38, 57, 45, 0.24);
+    }
+    #section-dual-lens-detail .pill-tab-title {
+      font-size: 0.96rem;
+      font-weight: 700;
+    }
+    #section-dual-lens-detail .pill-tab-desc {
+      font-size: 0.78rem;
+      opacity: 0.88;
+    }
+    #section-dual-lens-detail .lens-guiding-banner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      margin-bottom: 22px;
+      background: linear-gradient(135deg, #edf0e4 0%, #e8ecdd 100%);
+      border: 1px solid #b8c0ae;
+      border-left: 5px solid #26392d;
+      border-radius: 14px;
+    }
+    #section-dual-lens-detail .banner-badge {
+      padding: 5px 12px;
+      background: #26392d;
+      color: #edf0e4;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      border-radius: 999px;
+    }
+    #section-dual-lens-detail .banner-content {
+      flex: 1;
+      min-width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    #section-dual-lens-detail .banner-question {
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: #252c27;
+    }
+    #section-dual-lens-detail .banner-hint {
+      font-size: 0.84rem;
+      color: #3c5540;
+      line-height: 1.5;
+    }
+    #section-dual-lens-detail .lens-content-body {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    #section-dual-lens-detail .analysis-block {
+      background: #f8fafc;
+      background: linear-gradient(180deg, #ffffff 0%, #f4f2eb 100%);
+      border: 1px solid #bbf7d0;
+      border-radius: 16px;
+      padding: 18px 20px;
+    }
+    #section-dual-lens-detail .block-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    #section-dual-lens-detail .block-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #26392d;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.84rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    #section-dual-lens-detail .block-title {
+      margin: 0;
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #252c27 !important;
+    }
+    #section-dual-lens-detail .highlight-quote,
+    #section-dual-lens-detail .hook-quote-text {
+      margin: 0 0 12px 0;
+      font-size: 0.98rem;
+      font-weight: 600;
+      line-height: 1.65;
+      color: #252c27;
+      padding: 14px 16px;
+      background: #edf0e4;
+      border-left: 4px solid #697b55;
+      border-radius: 10px;
+    }
+    #section-dual-lens-detail .quote-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #section-dual-lens-detail .tag-item {
+      padding: 4px 12px;
+      background: #e8ecdd;
+      color: #26392d;
+      border: 1px solid #b8c0ae;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    #section-dual-lens-detail .bullet-insight-list {
+      margin: 0;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      color: #252c27;
+      line-height: 1.65;
+      font-size: 0.92rem;
+    }
+    #section-dual-lens-detail .principles-grid,
+    #section-dual-lens-detail .sfx-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    #section-dual-lens-detail .principle-box,
+    #section-dual-lens-detail .sfx-card {
+      padding: 14px 16px;
+      background: #ffffff;
+      border: 1px solid #dcded2;
+      border-radius: 12px;
+      line-height: 1.55;
+      font-size: 0.88rem;
+      color: #26392d;
+    }
+    #section-dual-lens-detail .principle-name,
+    #section-dual-lens-detail .sfx-name {
+      display: block;
+      margin-bottom: 6px;
+      color: #3c5540;
+      font-size: 0.92rem;
+    }
+    #section-dual-lens-detail .sfx-time {
+      display: inline-block;
+      margin-bottom: 6px;
+      padding: 2px 8px;
+      background: #edf0e4;
+      color: #26392d;
+      border: 1px solid #dcded2;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    #section-dual-lens-detail .callout-conclusion,
+    #section-dual-lens-detail .hook-psychology {
+      padding: 14px 16px;
+      background: #edf0e4;
+      border: 1px solid #b8c0ae;
+      border-radius: 12px;
+      color: #252c27;
+      font-weight: 600;
+      line-height: 1.6;
+      font-size: 0.92rem;
+    }
+    #section-dual-lens-detail .hook-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    #section-dual-lens-detail .hook-timing {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #3c5540;
+    }
+    #section-dual-lens-detail .interactive-timestamps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #section-dual-lens-detail .timestamp-row-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      padding: 12px 16px;
+      background: #ffffff;
+      border: 1px solid #dcded2;
+      border-radius: 12px;
+      text-align: left;
+      cursor: pointer;
+      color: #252c27;
+      transition: all 0.18s ease;
+    }
+    #section-dual-lens-detail .timestamp-row-btn:hover {
+      background: #edf0e4;
+      border-color: #697b55;
+      transform: translateX(2px);
+    }
+    #section-dual-lens-detail .ts-badge {
+      padding: 4px 10px;
+      background: #26392d;
+      color: #ffffff;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    #section-dual-lens-detail .ts-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    #section-dual-lens-detail .ts-title {
+      font-size: 0.9rem;
+      color: #252c27;
+    }
+    #section-dual-lens-detail .ts-quote {
+      font-size: 0.82rem;
+      color: #3c5540;
+    }
+    #section-dual-lens-detail .ts-arrow {
+      color: #26392d;
+      font-weight: 800;
+    }
+    #section-dual-lens-detail .analysis-action-footer {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1.5px solid #e8ecdd;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    #section-dual-lens-detail .footer-status-summary {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    #section-dual-lens-detail .save-gate-bullet {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #697b55;
+      box-shadow: 0 0 0 4px #e8ecdd;
+      flex-shrink: 0;
+    }
+    #section-dual-lens-detail .footer-text-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    #section-dual-lens-detail .footer-status-title {
+      font-size: 0.9rem;
+      color: #252c27;
+    }
+    #section-dual-lens-detail .footer-status-sub {
+      font-size: 0.8rem;
+      color: #3c5540;
+    }
+    #section-dual-lens-detail .footer-actions-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+    #section-dual-lens-detail .btn-action-badge {
+      padding: 2px 8px;
+      background: rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+  </style>
 
   <!-- Main Viewport Container -->
   <div class="ob-viewport" role="region" aria-label="พื้นที่ตั้งค่า Brand Brain">
@@ -841,8 +1603,122 @@
            ==================================================================== -->
       <section id="view-overview" class="view-section active" aria-labelledby="overview-heading">
         <div class="dashboard-container">
+          <style id="s00-emerald-hero-override">
+            #view-overview .dashboard-hero.mew-hero-bg,
+            .dashboard-container .dashboard-hero.mew-hero-bg {
+              background: linear-gradient(135deg, #edf0e4 0%, #e8ecdd 55%, #f4f2eb 100%) !important;
+              border: 1.5px solid #b8c0ae !important;
+              border-top: 4px solid #26392d !important;
+              border-radius: 24px !important;
+              padding: 32px 36px !important;
+              box-shadow: 0 14px 34px rgba(38, 57, 45, 0.12), 0 2px 6px rgba(6, 78, 59, 0.05) !important;
+              display: flex !important;
+              flex-direction: column !important;
+              justify-content: center !important;
+            }
+            #view-overview .dashboard-hero .hero-content,
+            .dashboard-container .dashboard-hero .hero-content {
+              display: flex !important;
+              flex-direction: column !important;
+              gap: 14px !important;
+              max-width: 860px !important;
+              margin: 0 !important;
+            }
+            #view-overview .dashboard-hero .hero-eyebrow-row,
+            .dashboard-container .dashboard-hero .hero-eyebrow-row {
+              display: flex !important;
+              flex-wrap: wrap !important;
+              align-items: center !important;
+              gap: 10px !important;
+              margin-bottom: 2px !important;
+            }
+            #view-overview .dashboard-hero .hero-title,
+            .dashboard-container .dashboard-hero .hero-title {
+              color: #252c27 !important;
+              margin: 0 !important;
+              line-height: 1.2 !important;
+            }
+            #view-overview .dashboard-hero .hero-subtitle,
+            .dashboard-container .dashboard-hero .hero-subtitle {
+              color: #26392d !important;
+              margin: 0 !important;
+              line-height: 1.65 !important;
+              font-size: 1.02rem !important;
+            }
+            #view-overview .dashboard-hero .hero-subtitle strong,
+            .dashboard-container .dashboard-hero .hero-subtitle strong {
+              color: #3c5540 !important;
+              background: rgba(105, 123, 85, 0.15) !important;
+              padding: 1px 6px !important;
+              border-radius: 6px !important;
+            }
+            #view-overview .dashboard-hero .hero-actions,
+            .dashboard-container .dashboard-hero .hero-actions {
+              display: none !important;
+            }
+            #view-overview .summary-grid .summary-card,
+            .dashboard-container .summary-grid .summary-card {
+              background: linear-gradient(180deg, #ffffff 0%, #f4f2eb 100%) !important;
+              border: 1px solid #dcded2 !important;
+              border-top: 4px solid #26392d !important;
+              border-radius: 20px !important;
+              box-shadow: 0 8px 24px rgba(38, 57, 45, 0.08) !important;
+            }
+            #view-overview .summary-grid .summary-card:hover,
+            .dashboard-container .summary-grid .summary-card:hover {
+              border-color: #829c63 !important;
+              box-shadow: 0 14px 30px rgba(38, 57, 45, 0.15) !important;
+            }
+            #view-overview .summary-card .summary-icon-wrap,
+            .dashboard-container .summary-card .summary-icon-wrap {
+              background: #e8ecdd !important;
+              color: #3c5540 !important;
+              border-color: #b8c0ae !important;
+            }
+            #view-overview .summary-card .badge-pill,
+            .dashboard-container .summary-card .badge-pill {
+              background: #edf0e4 !important;
+              color: #3c5540 !important;
+              border: 1px solid #b8c0ae !important;
+            }
+            #view-overview .summary-card .summary-metric-number,
+            #view-overview .summary-card .summary-card-title,
+            #view-overview .summary-card .summary-card-footer,
+            .dashboard-container .summary-card .summary-metric-number,
+            .dashboard-container .summary-card .summary-card-title,
+            .dashboard-container .summary-card .summary-card-footer {
+              color: #252c27 !important;
+            }
+            #view-overview .panel-card .pipeline-item-meta,
+            .dashboard-container .panel-card .pipeline-item-meta {
+              display: flex !important;
+              flex-wrap: wrap !important;
+              align-items: center !important;
+              gap: 8px !important;
+              color: #6b7280 !important;
+              font-size: 0.8125rem !important;
+            }
+            #view-overview .panel-card .pipeline-item-meta span,
+            #view-overview .panel-card .pipeline-item-meta .pipeline-item-tag,
+            #view-overview .panel-card .pipeline-item-meta .badge-pill,
+            #view-overview .panel-card .pipeline-item-meta .pipeline-item-time,
+            .dashboard-container .panel-card .pipeline-item-meta span,
+            .dashboard-container .panel-card .pipeline-item-meta .pipeline-item-tag,
+            .dashboard-container .panel-card .pipeline-item-meta .badge-pill,
+            .dashboard-container .panel-card .pipeline-item-meta .pipeline-item-time {
+              background: transparent !important;
+              background-color: transparent !important;
+              border: none !important;
+              box-shadow: none !important;
+              padding: 0 !important;
+              border-radius: 0 !important;
+              color: #6b7280 !important;
+              font-weight: 400 !important;
+              font-size: 0.8125rem !important;
+            }
+          </style>
           
-          <!-- Hero Banner with V6 Mesh Gradient Background -->
+          <!-- Hero Banner with Emerald Green Theme -->
           <div class="dashboard-hero mew-hero-bg">
             <div class="hero-content">
               
@@ -862,8 +1738,8 @@
                 วิจัยคลิปต้นฉบับ แยกสาระ (<strong>WHAT</strong>) และลีลา (<strong>HOW</strong>) สังเคราะห์วัตถุดิบสู่ไอเดียสดใหม่ เพื่อสร้างสรรค์เนื้อหาที่เป็นคุณอย่างแท้จริง
               </p>
 
-              <!-- Quick Action Buttons (3 Main Pills) -->
-              <div class="hero-actions">
+              <!-- Quick Action Buttons (Hidden per Boss instruction) -->
+              <div class="hero-actions" style="display: none !important;" hidden aria-hidden="true">
                 <button type="button" class="btn-pill btn-primary" data-navigate="research" aria-label="ข้อ 1: เริ่มวิจัยคลิปต้นฉบับ">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                   <span>Research a Clip</span>
@@ -933,7 +1809,7 @@
                 <p class="summary-card-desc">วิเคราะห์แบบ Dual-Lens เสร็จสิ้น พร้อมตรวจสอบและตัดสินใจเก็บ</p>
                 
                 <div class="summary-card-footer">
-                  <span>Review Analysis</span>
+                  <span class="footer-action-label">Review Analysis</span>
                   <span class="footer-arrow" aria-hidden="true">&rarr;</span>
                 </div>
               </div>
@@ -1043,9 +1919,9 @@
                     <div class="pipeline-item-content">
                       <h3 class="pipeline-item-title">How top creators maintain pacing in educational shorts</h3>
                       <div class="pipeline-item-meta">
-                        <span class="pipeline-item-tag tag-dual-lens">Dual-Lens Analyzed</span>
-                        <span class="badge-pill soft" style="color: var(--v6-coral-text);">Analyzed · Not saved</span>
-                        <span class="pipeline-item-time">วันนี้ · 15 นาทีที่แล้ว</span>
+                        <span class="pipeline-item-tag tag-dual-lens" style="background: transparent; border: none; padding: 0; color: #6b7280; font-weight: 400;">Dual-Lens Analyzed</span>
+                        <span class="badge-pill soft" style="background: transparent; border: none; padding: 0; color: #6b7280; font-weight: 400;">· Analyzed · Not saved ·</span>
+                        <span class="pipeline-item-time" style="color: #6b7280;">วันนี้ · 15 นาทีที่แล้ว</span>
                       </div>
                     </div>
                   </div>
@@ -1064,9 +1940,9 @@
                     <div class="pipeline-item-content">
                       <h3 class="pipeline-item-title">Post and forget it — ทำไมคอนเทนต์ที่ดีไม่ควรพึ่งพากระแสระยะสั้น</h3>
                       <div class="pipeline-item-meta">
-                        <span class="pipeline-item-tag tag-content-lens">Content Vault</span>
-                        <span class="badge-pill green">Saved by Founder</span>
-                        <span class="pipeline-item-time">วานนี้ · Note: Evergreen logic</span>
+                        <span class="pipeline-item-tag tag-content-lens" style="background: transparent; border: none; padding: 0; color: #6b7280; font-weight: 400;">Content Vault</span>
+                        <span class="badge-pill green" style="background: transparent; border: none; padding: 0; color: #6b7280; font-weight: 400;">· Saved by Founder ·</span>
+                        <span class="pipeline-item-time" style="color: #6b7280;">วานนี้ · Note: Evergreen logic</span>
                       </div>
                     </div>
                   </div>
@@ -1085,9 +1961,9 @@
                     <div class="pipeline-item-content">
                       <h3 class="pipeline-item-title">The Ticking Clock — เทคนิคสร้างความตื่นเต้นด้วยเสียงนาฬิกา 3 วินาทีแรก</h3>
                       <div class="pipeline-item-meta">
-                        <span class="pipeline-item-tag tag-packaging-lens">Packaging Vault</span>
-                        <span class="badge-pill green">Saved by Founder</span>
-                        <span class="pipeline-item-time">2 วันที่แล้ว · Note: Sound beat</span>
+                        <span class="pipeline-item-tag tag-packaging-lens" style="background: transparent; border: none; padding: 0; color: #6b7280; font-weight: 400;">Packaging Vault</span>
+                        <span class="badge-pill green" style="background: transparent; border: none; padding: 0; color: #6b7280; font-weight: 400;">· Saved by Founder ·</span>
+                        <span class="pipeline-item-time" style="color: #6b7280;">2 วันที่แล้ว · Note: Sound beat</span>
                       </div>
                     </div>
                   </div>
@@ -1325,7 +2201,7 @@
     
     <!-- S01: RESEARCH ENTRY SECTION (3 INGESTION MODES) -->
     <section class="research-entry-section" aria-labelledby="s01-section-title">
-      <div class="mew-offer-card entry-card coral-accent">
+      <div class="mew-offer-card entry-card green-accent emerald-accent">
         <div class="entry-card-header">
           <div class="entry-header-left">
             <div class="entry-step-badge">S01</div>
@@ -2222,7 +3098,7 @@
           </svg>
           S04 Reference Library
         </span>
-        <span class="badge-pill soft">Founder-Curated Decisions</span>
+        <span class="badge-pill soft">คลังโน้ต</span>
         <span class="badge-pill soft">Dual-Vault Architecture</span>
       </div>
 
@@ -2287,7 +3163,7 @@
   <!-- ============================================================================
        VAULT TAB SWITCHER (DUAL-VAULT TABS: CONTENT VS PACKAGING)
        ============================================================================ -->
-  <section class="vault-switcher-section" aria-label="สลับคลังอ้างอิง">
+  <section class="vault-switcher-section emerald-tone" aria-label="สลับคลังอ้างอิง">
     <div class="vault-tabs-wrapper" role="tablist" aria-label="คลังอ้างอิง 2 คลัง">
       
       <!-- Tab 1: Content Vault (WHAT) -->
@@ -2301,8 +3177,8 @@
         aria-controls="panel-content-vault" 
         tabindex="0"
       >
-        <div class="tab-indicator-bar coral" aria-hidden="true"></div>
-        <div class="vault-tab-icon-wrap coral" aria-hidden="true">
+        <div class="tab-indicator-bar coral emerald" aria-hidden="true"></div>
+        <div class="vault-tab-icon-wrap coral emerald" aria-hidden="true">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
@@ -2314,7 +3190,7 @@
         <div class="vault-tab-info">
           <div class="vault-tab-title-row">
             <span class="vault-tab-title">Content Vault</span>
-            <span class="vault-count vault-count-badge coral font-num" id="count-content-vault" data-testid="vault-count">0 ชิ้น</span>
+            <span class="vault-count vault-count-badge coral emerald font-num" id="count-content-vault" data-testid="vault-count">0 ชิ้น</span>
           </div>
           <span class="vault-tab-caption">แก่นเนื้อหา · ประเด็นคิด · ปรัชญา (WHAT)</span>
         </div>
@@ -2388,7 +3264,7 @@
 
     <!-- Status & Quick Action Link to Remix -->
     <div class="vault-status-summary">
-      <span class="vault-total-label" id="vault-summary-text">แสดง 0 รายการคัดสรร</span>
+      <span class="vault-total-label" id="vault-summary-text">คลังโน้ต: แสดง 0 รายการคัดสรร</span>
       <button type="button" class="btn-pill btn-violet btn-sm" data-navigate="remix" id="btn-goto-remix-top">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
@@ -4256,7 +5132,7 @@
               <div class="keep-going-real-stats" aria-label="สถิติจริงจากคลังข้อมูล">
                 <div class="keep-going-stat-item">
                   <span class="keep-going-stat-val font-num" id="keep-going-stat-notes" data-testid="keep-going-stat-notes">7</span>
-                  <span class="keep-going-stat-lbl">Saved Notes</span>
+                  <span class="keep-going-stat-lbl">คลังโน้ต</span>
                 </div>
                 <div class="keep-going-stat-item">
                   <span class="keep-going-stat-val font-num" id="keep-going-stat-concepts" data-testid="keep-going-stat-concepts">2</span>
@@ -4356,37 +5232,27 @@
         overview: {
           badge: 'ขั้นที่ 1 / 5 · Overview',
           badgeClass: 'stage-step-pill',
-          desc: 'ดูภาพรวมคลังข้อมูล สถานะงานล่าสุด และเลือกเริ่มต้นวิจัยคลิปหรือสร้างสรรค์ไอเดียต่อได้ทันที',
-          nextView: 'research',
-          nextLabel: 'ถัดไป: 2. Research คลิปไวรัล'
+          desc: 'ดูภาพรวมคลังข้อมูล สถานะงานล่าสุด และเลือกเริ่มต้นวิจัยคลิปหรือสร้างสรรค์ไอเดียต่อได้ทันที'
         },
         research: {
           badge: 'ขั้นที่ 2 / 5 · Research Studio',
           badgeClass: 'stage-step-pill coral',
-          desc: 'วางลิงก์คลิปเพื่อแยกสาระสำคัญ (WHAT) ออกจากวิธีเล่า (HOW) หรือสลับไปโหมด Channel Scan เพื่อสแกนช่องครีเอเตอร์',
-          nextView: 'library',
-          nextLabel: 'ถัดไป: 3. เปิดคลัง My Library'
+          desc: 'วางลิงก์คลิปเพื่อแยกสาระสำคัญ (WHAT) ออกจากวิธีเล่า (HOW) หรือสลับไปโหมด Channel Scan เพื่อสแกนช่องครีเอเตอร์'
         },
         library: {
           badge: 'ขั้นที่ 3 / 5 · My Library (2 คลัง)',
           badgeClass: 'stage-step-pill coral',
-          desc: 'คลังวัตถุดิบที่คัดกรองแล้ว — สลับดูระหว่าง Content Vault (สาระ WHAT) กับ Packaging Vault (วิธีเล่า HOW) แล้วกด Use in Remix',
-          nextView: 'remix',
-          nextLabel: 'ถัดไป: 4. ไปที่ Remix Studio'
+          desc: 'คลังวัตถุดิบที่คัดกรองแล้ว — สลับดูระหว่าง Content Vault (สาระ WHAT) กับ Packaging Vault (วิธีเล่า HOW) แล้วกด Use in Remix'
         },
         remix: {
           badge: 'ขั้นที่ 4 / 5 · Remix Studio',
           badgeClass: 'stage-step-pill violet',
-          desc: 'ทำตาม 3 ขั้นตอนจากซ้ายไปขวา: (1) เลือกวัตถุดิบ WHAT+HOW → (2) กำหนดทิศทางแบรนด์ → (3) กด Generate Concepts',
-          nextView: 'board',
-          nextLabel: 'ถัดไป: 5. เปิด Content Board'
+          desc: 'ทำตาม 3 ขั้นตอนจากซ้ายไปขวา: (1) เลือกวัตถุดิบ WHAT+HOW → (2) กำหนดทิศทางแบรนด์ → (3) กด Generate Concepts'
         },
         board: {
           badge: 'ขั้นที่ 5 / 5 · Content Board',
           badgeClass: 'stage-step-pill violet',
-          desc: 'บอร์ดบริหารการผลิต 4 ขั้นตอน — คลิกที่การ์ดเพื่อตรวจทานบทพูด อนุมัติ Revision และเปิดใบสั่งถ่ายทำ (Director Brief)',
-          nextView: 'overview',
-          nextLabel: 'กลับไปหน้า 1. Overview'
+          desc: 'บอร์ดบริหารการผลิต 4 ขั้นตอน — คลิกที่การ์ดเพื่อตรวจทานบทพูด อนุมัติ Revision และเปิดใบสั่งถ่ายทำ (Director Brief)'
         }
       };
 
@@ -4394,8 +5260,6 @@
         var meta = STAGE_META[cleanId] || STAGE_META.overview;
         var badgeEl = document.getElementById('stage-context-badge');
         var descEl = document.getElementById('stage-context-desc');
-        var nextBtn = document.getElementById('stage-context-next-btn');
-        var nextLabel = document.getElementById('stage-context-next-label');
 
         if (badgeEl) {
           badgeEl.textContent = meta.badge;
@@ -4403,12 +5267,6 @@
         }
         if (descEl) {
           descEl.textContent = meta.desc;
-        }
-        if (nextBtn) {
-          nextBtn.setAttribute('data-navigate', meta.nextView);
-        }
-        if (nextLabel) {
-          nextLabel.textContent = meta.nextLabel;
         }
       }
 
