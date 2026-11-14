@@ -102,59 +102,63 @@ export class ResearchDetailController {
   resolveS02Root() {
     if (typeof document === 'undefined') return null;
 
+    if (typeof document.querySelector === 'function') {
+      const landmarks = [
+        '#video-player',
+        '#source-meta',
+        '#analysis-panel',
+        '#tab-content-what',
+        '#tab-packaging-how',
+        '#btn-save-to-library',
+        '#status-badge'
+      ]
+        .map((sel) => document.querySelector(sel))
+        .filter(Boolean);
+
+      if (landmarks.length > 0) {
+        let lca = landmarks[0];
+        while (
+          lca &&
+          lca.parentElement &&
+          lca.parentElement !== document.body &&
+          lca.parentElement !== document.documentElement &&
+          !landmarks.every((node) => typeof lca.contains === 'function' && lca.contains(node))
+        ) {
+          lca = lca.parentElement;
+        }
+
+        while (
+          lca &&
+          lca.parentElement &&
+          lca.parentElement !== document.body &&
+          lca.parentElement !== document.documentElement &&
+          lca.parentElement.tagName !== 'MAIN' &&
+          typeof lca.parentElement.querySelector === 'function' &&
+          !lca.parentElement.querySelector(
+            '#screen-s01, #screen-S01, #s01, #S01, #screen-s04, #screen-S04, #s04, #S04, #screen-s05, #screen-S05, #s05, #S05, [data-screen="S01"], [data-screen="S04"], [data-screen="S05"]'
+          )
+        ) {
+          lca = lca.parentElement;
+        }
+
+        return lca;
+      }
+    }
+
     const explicit =
       document.getElementById('screen-research-detail') ||
       document.getElementById('screen-s02') ||
+      document.getElementById('screen-S02') ||
       document.getElementById('s02') ||
+      document.getElementById('S02') ||
       document.getElementById('s02-research-detail') ||
       document.getElementById('research-detail-root') ||
+      document.getElementById('research-detail') ||
       (document.querySelector &&
         document.querySelector(
-          '[data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], .research-detail-view'
+          ':is(section, div, main, article):is([data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], .research-detail-view)'
         ));
-    if (explicit) return explicit;
-
-    if (typeof document.querySelector !== 'function') return null;
-    const landmarks = [
-      '#video-player',
-      '#source-meta',
-      '#analysis-panel',
-      '#tab-content-what',
-      '#tab-packaging-how',
-      '#btn-save-to-library',
-      '#status-badge'
-    ]
-      .map((sel) => document.querySelector(sel))
-      .filter(Boolean);
-
-    if (landmarks.length === 0) return null;
-
-    let lca = landmarks[0];
-    while (
-      lca &&
-      lca.parentElement &&
-      lca.parentElement !== document.body &&
-      lca.parentElement !== document.documentElement &&
-      !landmarks.every((node) => typeof lca.contains === 'function' && lca.contains(node))
-    ) {
-      lca = lca.parentElement;
-    }
-
-    // Walk up one more level if parent is the S02 screen wrapper (without absorbing other screens)
-    if (
-      lca &&
-      lca.parentElement &&
-      lca.parentElement !== document.body &&
-      lca.parentElement !== document.documentElement &&
-      typeof lca.parentElement.querySelector === 'function' &&
-      !lca.parentElement.querySelector(
-        '#screen-s01, #screen-s04, #screen-s05, [data-screen="S01"], [data-screen="S04"], [data-screen="S05"]'
-      )
-    ) {
-      lca = lca.parentElement;
-    }
-
-    return lca;
+    return explicit || null;
   }
 
   /**
@@ -176,9 +180,11 @@ export class ResearchDetailController {
         .global-header,
         .top-nav,
         .topbar,
-        .navbar {
+        .navbar,
+        .screen-nav,
+        .screen-switcher {
           position: relative !important;
-          z-index: 100 !important;
+          z-index: 200 !important;
           isolation: isolate !important;
         }
         :is(body > header, body > nav, .app-header, .global-header, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher) :is(svg, i, .icon, [class*="icon"]) {
@@ -202,7 +208,7 @@ export class ResearchDetailController {
           max-height: 18px !important;
           overflow: hidden !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, :is(section, div, main, article):is([data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"])) {
           position: relative !important;
           z-index: 1 !important;
           isolation: isolate !important;
@@ -210,9 +216,9 @@ export class ResearchDetailController {
           overflow: hidden !important;
           margin-top: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *,
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *::before,
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *::after {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *,
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *::before,
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #video-player, #source-meta, #analysis-panel, #detail-action-footer) *::after {
           position: static !important;
           top: auto !important;
           left: auto !important;
@@ -225,13 +231,13 @@ export class ResearchDetailController {
           float: none !important;
           margin-top: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, #analysis-panel) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], .video-markers-layer, .timeline-marker, .video-scrub-handle, [class*="floating"]:not([data-testid]):not([id])) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, #analysis-panel) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], .video-markers-layer, .timeline-marker, .video-scrub-handle, [class*="floating"]:not([data-testid]):not([id]), [class*="float-"]:not([data-testid]):not([id])) {
           display: none !important;
           width: 0 !important;
           height: 0 !important;
           overflow: hidden !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.detail-top-nav, .detail-hero-header, .analysis-panel-top, .video-overlay-chrome, .video-meta-controls, .source-meta-header, .detail-action-footer) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.detail-top-nav, .detail-hero-header, .analysis-panel-top, .video-overlay-chrome, .video-meta-controls, .source-meta-header, .detail-action-footer) {
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
@@ -242,20 +248,20 @@ export class ResearchDetailController {
           box-sizing: border-box !important;
           overflow: hidden !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.nav-left-group, .nav-quick-source, .detail-step-badge-group, .hero-kicker-row, .analysis-badge-row, .analysis-version-actions, .footer-status-group, .footer-cta-group, .video-actions-group, .btn-back-to-research, .top-link-original, .link-original, .badge-kicker, .badge-rights-verified, .btn-analyze-again, .pill-tab-button, .btn-ctrl-action, .status-badge, .btn-save-to-library, .source-meta-heading, .section-badge-title) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.nav-left-group, .nav-quick-source, .detail-step-badge-group, .hero-kicker-row, .analysis-badge-row, .analysis-version-actions, .footer-status-group, .footer-cta-group, .video-actions-group, .btn-back-to-research, .top-link-original, .link-original, .badge-kicker, .badge-rights-verified, .btn-analyze-again, .pill-tab-button, .btn-ctrl-action, .status-badge, .btn-save-to-library, .source-meta-heading, .section-badge-title) {
           display: inline-flex !important;
           align-items: center !important;
           gap: 8px !important;
           margin-top: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.detail-gate-callout, .creator-profile-badge, .save-gate-reminder-box) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.detail-gate-callout, .creator-profile-badge, .save-gate-reminder-box) {
           display: flex !important;
           align-items: center !important;
           gap: 12px !important;
           margin-top: 0 !important;
           overflow: hidden !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-s02-scope="true"], .research-detail-view, .research-detail-container) .pill-tabs-list {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) .pill-tabs-list {
           display: flex !important;
           align-items: stretch !important;
           flex-wrap: wrap !important;
@@ -263,7 +269,7 @@ export class ResearchDetailController {
           width: 100% !important;
           margin-top: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(#video-player, .video-player-card, .video-canvas-container, .video-viewport, .video-mockup-content) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(#video-player, .video-player-card, .video-canvas-container, .video-viewport, .video-mockup-content) {
           display: flex !important;
           flex-direction: column !important;
           align-items: center !important;
@@ -274,7 +280,7 @@ export class ResearchDetailController {
           margin-top: 0 !important;
           box-sizing: border-box !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.btn-video-play-overlay, #btn-video-play) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.btn-video-play-overlay, #btn-video-play) {
           display: inline-flex !important;
           align-items: center !important;
           justify-content: center !important;
@@ -285,7 +291,7 @@ export class ResearchDetailController {
           overflow: hidden !important;
           flex-shrink: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(.gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot) {
           display: inline-flex !important;
           align-items: center !important;
           justify-content: center !important;
@@ -293,7 +299,7 @@ export class ResearchDetailController {
           margin-top: 0 !important;
           overflow: hidden !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-route="S02"], [data-route="s02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, #source-meta, #analysis-panel, #detail-action-footer) svg:not([hidden]):not(.is-hidden) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, #source-meta, #analysis-panel, #detail-action-footer) svg:not([hidden]):not(.is-hidden) {
           display: inline-block !important;
           vertical-align: middle !important;
           width: 16px !important;
@@ -304,13 +310,13 @@ export class ResearchDetailController {
           overflow: hidden !important;
           margin-top: 0 !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-s02-scope="true"], .research-detail-view, .research-detail-container) #btn-video-play svg:not([hidden]):not(.is-hidden) {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) #btn-video-play svg:not([hidden]):not(.is-hidden) {
           width: 24px !important;
           height: 24px !important;
           max-width: 24px !important;
           max-height: 24px !important;
         }
-        :is(#screen-research-detail, #screen-s02, #s02, #s02-research-detail, #research-detail-root, [data-s02-scope="true"], .research-detail-view, .research-detail-container) .video-scrubber-track {
+        :is(#screen-research-detail, #screen-s02, #screen-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) .video-scrubber-track {
           display: flex !important;
           align-items: center !important;
           overflow: hidden !important;
@@ -333,7 +339,7 @@ export class ResearchDetailController {
       }
       if (typeof scopeRoot.querySelectorAll === 'function') {
         const iconNodes = scopeRoot.querySelectorAll(
-          'svg, i, .icon, [class*="icon"], .btn-video-play-overlay, #btn-video-play, .video-scrub-handle, .timeline-marker, .gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot'
+          'svg, i, .icon, [class*="icon"], .btn-video-play-overlay, #btn-video-play, .gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot'
         );
         iconNodes.forEach((node) => {
           if (node && node.style) {
