@@ -2584,11 +2584,11 @@ class DashboardController {
       if (!this.root.getAttribute('data-step')) {
         this.root.setAttribute('data-step', 'ข้อ 1');
       }
-      this.root.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+      this.root.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh');
       const viewOverview = (typeof document !== 'undefined' ? document.getElementById('view-overview') : null) || (this.root.parentElement && this.root.parentElement.id === 'view-overview' ? this.root.parentElement : null);
       if (viewOverview) {
         viewOverview.setAttribute('data-step', 'ข้อ 1');
-        viewOverview.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+        viewOverview.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh');
       }
     }
 
@@ -2867,7 +2867,7 @@ class DashboardController {
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
           color: #0f172a !important;
           opacity: 1 !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
         html body #view-overview .summary-card-inner,
@@ -3113,7 +3113,7 @@ class DashboardController {
           background-color: #ffffff !important;
           background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
           transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
         }
         html body #view-overview .summary-card:hover,
@@ -3146,7 +3146,7 @@ class DashboardController {
           background-color: #ffffff !important;
           background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
           transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
         }
         html body #view-overview #card-recent-research .summary-metric-number,
@@ -3371,7 +3371,7 @@ class DashboardController {
           text-align: left !important;
           overflow: hidden !important;
         }
-        /* ข้อ 1: Dual-Lens Research (Ultra-Bright Emerald Accent - rev-1794843392199-2ike5 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7) explicit top border & luminous theme */
+        /* ข้อ 1: Dual-Lens Research (Ultra-Bright Emerald Accent - rev-1794843392199-2ike5 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh) explicit top border & luminous theme */
         html body #view-overview #card-recent-research,
         html body #view-overview .card-recent-research,
         html body #view-overview article[data-step="ข้อ 1"],
@@ -3388,7 +3388,7 @@ class DashboardController {
           background-color: #ffffff !important;
           background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
         }
         html body #view-overview .summary-card-inner,
         .dashboard-container .summary-card-inner {
@@ -3659,7 +3659,7 @@ class DashboardController {
           font-weight: 400 !important;
           font-size: 0.8125rem !important;
         }
-        /* ข้อ 1 & S00 Ultra-Bright Luminous Card Overrides (rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7) */
+        /* ข้อ 1 & S00 Ultra-Bright Luminous Card Overrides (rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh) */
         html body #view-overview .dashboard-hero .hero-eyebrow-row .dashboard-step-badge,
         html body #view-overview .dashboard-hero .badge-pill.dashboard-step-badge,
         #dashboard-root .dashboard-hero .dashboard-step-badge,
@@ -3695,7 +3695,7 @@ class DashboardController {
           border: 1.5px solid #a7f3d0 !important;
           border-top: 4px solid #34d399 !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
         }
         html body #view-overview #card-recent-research,
         html body #view-overview .card-recent-research,
@@ -3710,7 +3710,7 @@ class DashboardController {
           border: 1.5px solid #a7f3d0 !important;
           border-top: 4px solid #34d399 !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
         }
         html body #view-overview #card-recent-research:hover,
         html body #view-overview .card-recent-research:hover,
@@ -3820,7 +3820,7 @@ class DashboardController {
           font-weight: 600 !important;
         }
 
-        /* rev-1794958140927-iq7vj rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7: ข้อ 1 (Ultra-bright luminous cards - ข้อ 1 Dual-Lens) */
+        /* rev-1794958140927-iq7vj rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh: ข้อ 1 (Ultra-bright luminous cards - ข้อ 1 Dual-Lens) */
         html body #view-overview .summary-card,
         html body #view-overview .stat-card,
         html body #view-overview .kpi-card,
@@ -3838,7 +3838,7 @@ class DashboardController {
           background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           border-color: #a7f3d0 !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
         }
       `;
     }
@@ -3904,7 +3904,7 @@ class DashboardController {
         const isPrimaryCard = card.classList.contains('summary-card') || card.classList.contains('mew-offer-card') || card.classList.contains('panel-card') || (card.id && card.id.startsWith('card-'));
         if (!isPrimaryCard && card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
         const isItemOne = card.id === 'card-recent-research' || card.getAttribute('data-step') === 'ข้อ 1';
-        card.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+        card.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh');
         card.style.setProperty('background', '#ffffff', 'important');
         card.style.setProperty('background-color', '#ffffff', 'important');
         card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)', 'important');
@@ -3914,7 +3914,7 @@ class DashboardController {
         card.style.setProperty('box-shadow', '0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff', 'important');
         card.style.setProperty('color', '#0f172a', 'important');
         card.style.setProperty('opacity', '1', 'important');
-        card.style.setProperty('filter', 'brightness(9.5)', 'important');
+        card.style.setProperty('filter', 'brightness(14)', 'important');
         if (card.classList.contains('summary-card') || card.closest('.summary-grid')) {
           card.style.setProperty('display', 'flex', 'important');
           card.style.setProperty('flex-direction', 'column', 'important');
@@ -4001,8 +4001,8 @@ class DashboardController {
         cardEl.style.setProperty('background-color', '#ffffff', 'important');
         cardEl.style.setProperty('background-image', 'linear-gradient(180deg, #ffffff 0%, #ffffff 100%)', 'important');
         cardEl.style.setProperty('box-shadow', '0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff', 'important');
-        cardEl.style.setProperty('filter', 'brightness(9.5)', 'important');
-        cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+        cardEl.style.setProperty('filter', 'brightness(14)', 'important');
+        cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh');
         const metricNum = cardEl.querySelector('.summary-metric-number, .metric-number, .stat-value, .font-num');
         if (metricNum) {
           metricNum.style.setProperty('color', '#10b981', 'important');
@@ -4054,7 +4054,7 @@ class DashboardController {
         }
         if (label === 'ข้อ 1') {
           cardEl.setAttribute('data-step', 'ข้อ 1');
-          cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+          cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh');
           cardEl.setAttribute('title', 'ข้อ 1: Dual-Lens Research (S01)');
           cardEl.setAttribute('aria-label', 'ข้อ 1: การ์ดวิจัยล่าสุด: เปิดดูรายการวิจัยและผลการวิเคราะห์');
           const previewMeta = cardEl.querySelector('.preview-item-meta');
@@ -8020,6 +8020,1329 @@ if (typeof document !== 'undefined') {
 
 });
 
+  // ===== research-detail.js =====
+__define("research-detail.js", function (__exports, __require) {
+  Object.defineProperty(__exports, "DETAIL_TABS", { enumerable: true, get: function () { return DETAIL_TABS; } });
+  Object.defineProperty(__exports, "formatTime", { enumerable: true, get: function () { return formatTime; } });
+  Object.defineProperty(__exports, "parseTimecode", { enumerable: true, get: function () { return parseTimecode; } });
+  Object.defineProperty(__exports, "ResearchDetailController", { enumerable: true, get: function () { return ResearchDetailController; } });
+  Object.defineProperty(__exports, "initResearchDetail", { enumerable: true, get: function () { return initResearchDetail; } });
+/**
+ * ==============================================================================
+ * MEW CONTENT OS — S02 Research Detail Controller (Topic T08)
+ * Pure Client-Side JavaScript (ES6+ Module) · Zero Server Dependencies
+ * Theme: mewteetawat.com V6.3
+ * 
+ * Definition of Done (DOD) Checklist:
+ * - HTML: ซ้าย `video-player` + `source-meta` (creator, ลิงก์ต้นฉบับ `link-original`, เวลา);
+ *         ขวา `analysis-panel` มี 2 แท็บ `tab-content-what` และ `tab-packaging-how`
+ * - HTML: ด้านล่างมี `btn-save-to-library` และ badge `status-badge` (เริ่มต้น `Analyzed · Not saved`)
+ * - CSS: wireframe 1 ในสเปกข้อ 8 — สองคอลัมน์บนเดสก์ท็อป ซ้อนเป็นคอลัมน์เดียวบนมือถือ
+ * - JS: สลับแท็บไม่ reload ไม่ทำให้ analysis หาย;
+ *       ปุ่ม Back กลับ S01 โดยไม่ทำให้ source เข้า Vault (D1)
+ * - JS: ปุ่ม `btn-save-to-library` เปิด Save Modal (T12) เท่านั้น ไม่ save เอง
+ * 
+ * Strict Negative Constraint:
+ * Absolutely NO fake or arbitrary statistics or fake percentage badges.
+ * ==============================================================================
+ */
+const __mod_1 = __require("./store.js"); const { getState, dispatch, subscribe, computeSourceStatus } = __mod_1;
+const __mod_2 = __require("./router.js"); const { router, go: routerGo } = __mod_2;
+const __mod_3 = __require("./sample-data.js"); const { SAMPLE_SOURCES, SAMPLE_ANALYSES } = __mod_3;
+
+/**
+ * Canonical Tab Identifiers for Dual-Lens Analysis
+ */
+const DETAIL_TABS = Object.freeze({
+  CONTENT: 'content',
+  PACKAGING: 'packaging'
+});
+
+/**
+ * Format seconds into mm:ss string
+ * @param {number} sec 
+ * @returns {string}
+ */
+function formatTime(sec) {
+  if (isNaN(sec) || sec < 0) return '00:00';
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+/**
+ * Parses timecode string (e.g., "01:30", "45s", 45) to seconds
+ * @param {string|number} timecode 
+ * @returns {number}
+ */
+function parseTimecode(timecode) {
+  if (typeof timecode === 'number') return timecode;
+  if (!timecode || typeof timecode !== 'string') return 0;
+  
+  const clean = timecode.trim().toLowerCase().replace('s', '');
+  if (clean.includes(':')) {
+    const parts = clean.split(':').map(Number);
+    if (parts.length === 2) return (parts[0] * 60) + parts[1];
+    if (parts.length === 3) return (parts[0] * 3600) + (parts[1] * 60) + parts[2];
+  }
+  const parsed = Number(clean);
+  return isNaN(parsed) ? 0 : parsed;
+}
+
+/**
+ * Controller class managing the S02 Research Detail screen
+ */
+class ResearchDetailController {
+  /**
+   * @param {HTMLElement|string} [container=null]
+   */
+  constructor(container = null) {
+    this.root = typeof container === 'string'
+      ? document.querySelector(container)
+      : (
+          container ||
+          (typeof document !== 'undefined'
+            ? (document.getElementById('screen-research-detail') || document.getElementById('view-research-detail') || this.resolveS02Root() || document.body)
+            : null)
+        );
+
+    this.activeTab = DETAIL_TABS.CONTENT;
+    this.currentSourceId = null;
+    this.currentSource = null;
+    this.currentAnalysis = null;
+    this.isPlaying = false;
+    this.currentTime = 35; // default preview offset (00:35)
+    this.duration = 135;   // default 2:15 = 135 sec
+    this.unsubscribeStore = null;
+
+    if (this.root) {
+      this.ensureLayoutContainment();
+      this.cacheDom();
+      this.bindEvents();
+      this.initFromStore();
+    }
+  }
+
+  /**
+   * Resolves the true S02 screen container using explicit selectors and
+   * lowest common ancestor of S02 landmarks (#video-player, #source-meta, #analysis-panel).
+   * @returns {HTMLElement|null}
+   */
+  resolveS02Root() {
+    if (typeof document === 'undefined') return null;
+
+    const explicitSelectors = [
+      '#screen-research-detail',
+      '#view-research-detail',
+      '#section-dual-lens-detail',
+      '.research-detail-section',
+      '[data-section="view-research-detail"]',
+      '[data-screen="S02"]',
+      '[data-screen="s02"]',
+      '[data-screen-id="S02"]',
+      '[data-screen-id="s02"]',
+      '[data-view="S02"]',
+      '[data-view="s02"]',
+      '[data-step="S02"]',
+      '[data-route="S02"]',
+      '[data-testid="screen-research-detail"]',
+      '#screen-s02',
+      '#screen-S02',
+      '#view-s02',
+      '#view-S02',
+      '#view-research-detail',
+      '#s02',
+      '#S02',
+      '#s02-screen',
+      '#s02-view',
+      '#s02-research-detail',
+      '#research-detail-root',
+      '#research-detail',
+      '.research-detail-view',
+      '.screen-s02',
+      '.s02-screen'
+    ];
+
+    if (typeof document.querySelector === 'function') {
+      for (const sel of explicitSelectors) {
+        const found = document.querySelector(sel);
+        if (found && found !== document.body && found !== document.documentElement) {
+          return found;
+        }
+      }
+
+      const anchor = document.querySelector(
+        '#video-player, [data-testid="video-player"], #analysis-panel, [data-testid="analysis-panel"], #tab-content-what, [data-testid="tab-content-what"], #source-meta, [data-testid="source-meta"], #btn-back-to-research, [data-action="btn-back-to-research"]'
+      );
+      if (anchor && typeof anchor.closest === 'function') {
+        const closestScreen = anchor.closest(
+          '[data-screen], [data-screen-id], [data-view], [data-route], .screen-view, .screen, .app-screen, .view-panel, [id*="s02" i], [id*="research-detail" i]'
+        );
+        if (
+          closestScreen &&
+          closestScreen !== document.body &&
+          closestScreen !== document.documentElement
+        ) {
+          return closestScreen;
+        }
+      }
+
+      const coreLandmarks = [
+        document.querySelector('#btn-back-to-research, [data-action="btn-back-to-research"], .detail-top-nav'),
+        document.querySelector('#detail-main-title, .detail-hero-header'),
+        document.querySelector('#video-player, [data-testid="video-player"]'),
+        document.querySelector('#analysis-panel, [data-testid="analysis-panel"]'),
+        document.querySelector('#source-meta, [data-testid="source-meta"]'),
+        document.querySelector('#btn-save-to-library, [data-testid="btn-save-to-library"], #detail-action-footer')
+      ].filter(Boolean);
+
+      if (coreLandmarks.length >= 2) {
+        let lca = coreLandmarks[0];
+        while (
+          lca &&
+          lca.parentElement &&
+          lca.parentElement !== document.body &&
+          lca.parentElement !== document.documentElement &&
+          !coreLandmarks.every((node) => typeof lca.contains === 'function' && lca.contains(node))
+        ) {
+          lca = lca.parentElement;
+        }
+
+        if (
+          lca &&
+          lca !== document.body &&
+          lca !== document.documentElement &&
+          coreLandmarks.every((node) => typeof lca.contains === 'function' && lca.contains(node))
+        ) {
+          if (typeof lca.closest === 'function') {
+            const outerSection = lca.closest(
+              'section, .screen-view, .screen, .app-screen, [data-screen], [data-screen-id], [data-view], [id*="s02" i], [id*="research" i], [id*="detail" i]'
+            );
+            if (
+              outerSection &&
+              outerSection !== document.body &&
+              outerSection !== document.documentElement
+            ) {
+              return outerSection;
+            }
+          }
+          return lca;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Injects S02 stacking/icon containment CSS and clears floating inline styles
+   * so icons inside S02 or top navigation never float over the top menu or analysis tabs.
+   */
+  ensureLayoutContainment() {
+    if (typeof document !== 'undefined' && (document.body || document.head)) {
+      let styleEl = document.getElementById('mew-s02-layout-containment');
+      if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = 'mew-s02-layout-containment';
+        (document.body || document.head).appendChild(styleEl);
+      }
+      styleEl.textContent = `
+        :is(body > header, body > nav, #app > header, #app > nav, .app-shell > header, .app-shell > nav, .app-header, header.app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .top-bar, .navbar, .nav-bar, .site-header, .main-header, .main-nav, .workflow-nav, .screen-nav, .screen-switcher, .stage-context-bar, #app-stage-context-bar):not(main *):not(section *):not(article *):not(#screen-research-detail):not(#screen-research-detail *):not([data-s02-scope="true"]):not([data-s02-scope="true"] *):not(.detail-top-nav):not(#view-research-detail):not(#view-research-detail *) {
+          z-index: 99999 !important;
+          isolation: isolate !important;
+        }
+        :is(main, section, article, #screen-research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(header, nav, [role="navigation"], [role="banner"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, .source-meta-header) {
+          position: relative !important;
+          top: auto !important;
+          bottom: auto !important;
+          left: auto !important;
+          right: auto !important;
+          inset: auto !important;
+          z-index: 2 !important;
+          transform: none !important;
+          translate: none !important;
+        }
+        :is(header, nav, .app-header, header.app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_icon_a__#__s02_icon_b__#__s02_icon_c__) :is(svg, [class*="icon"], [class*="badge"], .btn-video-play-overlay, .btn-play-pause, #btn-video-play) {
+          position: static !important;
+          top: auto !important;
+          left: auto !important;
+          right: auto !important;
+          bottom: auto !important;
+          inset: auto !important;
+          transform: none !important;
+          translate: none !important;
+          z-index: auto !important;
+          float: none !important;
+          margin-top: 0 !important;
+        }
+        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, #__s02_svg_a__#__s02_svg_b__#__s02_svg_c__) svg:not([hidden]):not(.is-hidden) {
+          position: static !important;
+          vertical-align: middle !important;
+          width: 16px !important;
+          height: 16px !important;
+          max-width: 18px !important;
+          max-height: 18px !important;
+          flex-shrink: 0 !important;
+          overflow: hidden !important;
+          transform: none !important;
+          translate: none !important;
+          margin: 0 !important;
+        }
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_root_a__#__s02_root_b__#__s02_root_c__) {
+          position: relative !important;
+          z-index: 1 !important;
+          isolation: isolate !important;
+          contain: layout style paint !important;
+          overflow: hidden !important;
+          margin-top: 0 !important;
+          transform: none !important;
+          translate: none !important;
+        }
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *:not(.video-scrub-progress):not(#video-scrub-progress):not(.video-scrub-handle):not(#video-scrub-handle):not(.timeline-marker):not(.video-scrubber-track):not(#video-scrubber-track):not(.founder-dropped-pin),
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::before,
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::after {
+          position: static !important;
+          top: auto !important;
+          left: auto !important;
+          right: auto !important;
+          bottom: auto !important;
+          inset: auto !important;
+          transform: none !important;
+          translate: none !important;
+          z-index: auto !important;
+          float: none !important;
+        }
+        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, [data-testid="video-player"], #analysis-panel, [data-testid="analysis-panel"], #__s02_hide_a__#__s02_hide_b__#__s02_hide_c__) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], .video-markers-layer, .timeline-marker, [class*="floating"]:not([data-testid]):not([id]), [class*="float-"]:not([data-testid]):not([id])) {
+          display: none !important;
+        }
+        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_flex_a__#__s02_flex_b__#__s02_flex_c__) :is(.detail-top-nav, .detail-hero-header, .analysis-panel-top, .video-overlay-chrome, .video-meta-controls, .source-meta-header, .detail-action-footer) {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          flex-wrap: wrap !important;
+          gap: 12px !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+          overflow: hidden !important;
+        }
+        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_inflex_a__#__s02_inflex_b__#__s02_inflex_c__) :is(.nav-left-group, .nav-quick-source, .detail-step-badge-group, .hero-kicker-row, .analysis-badge-row, .analysis-version-actions, .footer-status-group, .footer-cta-group, .video-actions-group, .btn-back-to-research, #btn-back-to-research, .top-link-original, #top-link-original, .link-original, #link-original, .badge-kicker, .badge-rights-verified, #meta-rights, .btn-analyze-again, #btn-analyze-again, .pill-tab-button, #tab-content-what, #tab-packaging-how, .btn-ctrl-action, .status-badge, #status-badge, .btn-save-to-library, #btn-save-to-library, .source-meta-heading, .section-badge-title) {
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 8px !important;
+        }
+        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_call_a__#__s02_call_b__#__s02_call_c__) :is(.detail-gate-callout, .creator-profile-badge, .save-gate-reminder-box) {
+          display: flex !important;
+          align-items: center !important;
+          gap: 12px !important;
+          overflow: hidden !important;
+        }
+        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_tabs_a__#__s02_tabs_b__#__s02_tabs_c__) .pill-tabs-list {
+          display: flex !important;
+          align-items: stretch !important;
+          flex-wrap: wrap !important;
+          gap: 10px !important;
+          width: 100% !important;
+        }
+        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_vid_a__#__s02_vid_b__#__s02_vid_c__) :is(#video-player, [data-testid="video-player"], .video-player-card, .video-canvas-container, .video-viewport, .video-mockup-content) {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          gap: 10px !important;
+          overflow: hidden !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, [data-testid="video-player"], #__s02_play_a__#__s02_play_b__#__s02_play_c__) :is(.btn-video-play-overlay, .btn-play-pause, #btn-video-play) {
+          position: static !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          margin: 8px auto !important;
+          width: 48px !important;
+          height: 48px !important;
+          border-radius: 999px !important;
+          overflow: hidden !important;
+          flex-shrink: 0 !important;
+          transform: none !important;
+          translate: none !important;
+        }
+        .founder-dropped-pin,
+        .founder-dropped-pin[data-review-id],
+        .founder-dropped-pin[data-review-id*="7wpy6"],
+        .founder-dropped-pin[data-review-id*="rev-1795197469734-7wpy6"],
+        .founder-dropped-pin[data-review-id*="dfaxu"],
+        .founder-dropped-pin[data-review-id*="rev-1795195188272-dfaxu"],
+        .founder-dropped-pin[data-review-id*="pdfmf"],
+        .founder-dropped-pin[data-review-id*="hzj5b"],
+        .founder-dropped-pin[data-review-id*="5dbok"],
+        .founder-dropped-pin[data-review-id*="q1k1a"],
+        .founder-dropped-pin[data-review-id*="7tqmf"],
+        .founder-dropped-pin[data-review-id*="w3lma"],
+        .founder-dropped-pin[data-review-id*="hdvby"],
+        .founder-dropped-pin[data-review-id*="xgnnj"],
+        .founder-dropped-pin[data-review-id*="cd2h0"],
+        .founder-dropped-pin[data-review-id*="ke7ni"],
+        .founder-dropped-pin[data-review-id*="vvemf"],
+        .founder-dropped-pin[data-review-id*="6n1hg"],
+        button.founder-dropped-pin,
+        button[class*="founder-dropped-pin"],
+        [class*="founder-dropped-pin"],
+        :is(body, html, main, section, div) .founder-dropped-pin,
+        :is(body, html, main, section, div) [class*="founder-dropped-pin"],
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container) .founder-dropped-pin,
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container) [class*="founder-dropped-pin"] {
+          top: auto !important;
+          bottom: 16px !important;
+          right: 16px !important;
+          z-index: 10 !important;
+          pointer-events: auto;
+        }
+        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .top-bar, .navbar, .nav-bar, .site-header, .main-header, .main-nav, .screen-nav, .screen-switcher, .workflow-nav, .stage-context-bar, #app-stage-context-bar, [role="navigation"], .detail-top-nav, .nav-quick-source, .nav-left-group) :is(.founder-dropped-pin, [class*="founder-dropped-pin"]) {
+          position: static !important;
+          top: auto !important;
+          right: auto !important;
+          bottom: auto !important;
+          inset: auto !important;
+          margin-left: auto !important;
+          z-index: 10 !important;
+          float: none !important;
+        }
+        .detail-top-nav :is(.founder-dropped-pin, [class*="founder-dropped-pin"]) {
+          position: static !important;
+          top: auto !important;
+          right: auto !important;
+          bottom: auto !important;
+          margin-left: auto !important;
+          z-index: 10 !important;
+        }
+        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_glyph_a__#__s02_glyph_b__#__s02_glyph_c__) :is(.gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot) {
+          position: static !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          flex-shrink: 0 !important;
+          overflow: hidden !important;
+          transform: none !important;
+          translate: none !important;
+          margin: 0 !important;
+        }
+        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_svg2_a__#__s02_svg2_b__#__s02_svg2_c__) svg:not([hidden]):not(.is-hidden) {
+          position: static !important;
+          vertical-align: middle !important;
+          width: 16px !important;
+          height: 16px !important;
+          max-width: 16px !important;
+          max-height: 16px !important;
+          flex-shrink: 0 !important;
+          overflow: hidden !important;
+          transform: none !important;
+          translate: none !important;
+          margin: 0 !important;
+        }
+        #btn-video-play svg:not([hidden]):not(.is-hidden) {
+          width: 24px !important;
+          height: 24px !important;
+          max-width: 24px !important;
+          max-height: 24px !important;
+        }
+        .video-scrubber-track, #video-scrubber-track {
+          position: relative !important;
+          display: flex !important;
+          align-items: center !important;
+          overflow: hidden !important;
+          width: 100% !important;
+          height: 8px !important;
+        }
+      `;
+    }
+
+    const applyStaticIconStyle = (node) => {
+      if (!node || !node.style || typeof node.style.setProperty !== 'function') return;
+      node.style.setProperty('position', 'static', 'important');
+      node.style.setProperty('top', 'auto', 'important');
+      node.style.setProperty('left', 'auto', 'important');
+      node.style.setProperty('right', 'auto', 'important');
+      node.style.setProperty('bottom', 'auto', 'important');
+      node.style.setProperty('inset', 'auto', 'important');
+      node.style.setProperty('transform', 'none', 'important');
+      node.style.setProperty('translate', 'none', 'important');
+      node.style.setProperty('z-index', 'auto', 'important');
+      node.style.setProperty('float', 'none', 'important');
+    };
+
+    const applySvgSizeImportant = (svg, sizePx = 16) => {
+      if (!svg || !svg.style || typeof svg.style.setProperty !== 'function') return;
+      applyStaticIconStyle(svg);
+      if (!svg.getAttribute('width')) svg.setAttribute('width', String(sizePx));
+      if (!svg.getAttribute('height')) svg.setAttribute('height', String(sizePx));
+      svg.style.setProperty('width', `${sizePx}px`, 'important');
+      svg.style.setProperty('height', `${sizePx}px`, 'important');
+      svg.style.setProperty('max-width', `${sizePx}px`, 'important');
+      svg.style.setProperty('max-height', `${sizePx}px`, 'important');
+      svg.style.setProperty('flex-shrink', '0', 'important');
+      svg.style.setProperty('overflow', 'hidden', 'important');
+      svg.style.setProperty('margin', '0', 'important');
+    };
+
+    const scopeRoot =
+      this.resolveS02Root() ||
+      (this.root && this.root !== (typeof document !== 'undefined' ? document.body : null) ? this.root : null);
+
+    if (typeof document !== 'undefined' && typeof document.querySelectorAll === 'function') {
+      const topNavs = document.querySelectorAll(
+        '.app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .top-bar, .navbar, .nav-bar, .site-header, .main-header, .main-nav, .workflow-nav, .screen-nav, .screen-switcher, .stage-context-bar, #app-stage-context-bar, header, nav, [role="navigation"], [role="banner"], body > header, body > nav'
+      );
+      topNavs.forEach((navEl) => {
+        if (!navEl || (scopeRoot && typeof scopeRoot.contains === 'function' && scopeRoot.contains(navEl))) return;
+        if (typeof navEl.closest === 'function' && navEl.closest('main, section, article, [data-screen], .screen-view')) return;
+        if (navEl.style && typeof navEl.style.setProperty === 'function') {
+          navEl.style.setProperty('z-index', '99999', 'important');
+          navEl.style.setProperty('isolation', 'isolate', 'important');
+        }
+        if (typeof navEl.querySelectorAll === 'function') {
+          navEl.querySelectorAll('svg, [class*="icon"], [class*="badge"]').forEach((childEl) => {
+            applyStaticIconStyle(childEl);
+            if (childEl.tagName && childEl.tagName.toLowerCase() === 'svg') {
+              applySvgSizeImportant(childEl, 16);
+            }
+          });
+        }
+      });
+    }
+
+    const s02Targets = new Set();
+    if (scopeRoot) s02Targets.add(scopeRoot);
+    if (typeof document !== 'undefined' && typeof document.querySelectorAll === 'function') {
+      document
+        .querySelectorAll(
+          '#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-view="S02"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"]'
+        )
+        .forEach((el) => {
+          if (el && el !== document.body && el !== document.documentElement) {
+            s02Targets.add(el);
+          }
+        });
+    }
+
+    s02Targets.forEach((target) => {
+      if (typeof target.setAttribute === 'function') {
+        target.setAttribute('data-s02-scope', 'true');
+        target.setAttribute('data-review-id', 'rev-1795197469734-7wpy6');
+      }
+      if (target.style && typeof target.style.setProperty === 'function') {
+        target.style.setProperty('position', 'relative', 'important');
+        target.style.setProperty('top', 'auto', 'important');
+        target.style.setProperty('z-index', '1', 'important');
+        target.style.setProperty('isolation', 'isolate', 'important');
+        target.style.setProperty('contain', 'layout style paint', 'important');
+        target.style.setProperty('overflow', 'hidden', 'important');
+        target.style.setProperty('transform', 'none', 'important');
+      }
+      if (typeof target.querySelectorAll === 'function') {
+        target
+          .querySelectorAll(
+            'header, nav, [role="navigation"], [role="banner"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, .source-meta-header'
+          )
+          .forEach((hdr) => {
+            if (hdr.style && typeof hdr.style.setProperty === 'function') {
+              hdr.style.setProperty('position', 'relative', 'important');
+              hdr.style.setProperty('top', 'auto', 'important');
+              hdr.style.setProperty('z-index', '2', 'important');
+              hdr.style.setProperty('transform', 'none', 'important');
+            }
+          });
+        target
+          .querySelectorAll(
+            'svg, [class*="icon"], .btn-video-play-overlay, .btn-play-pause, #btn-video-play, .founder-dropped-pin, .video-overlay-chrome, .gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot'
+          )
+          .forEach((node) => {
+            if (node.classList && node.classList.contains('founder-dropped-pin')) {
+              if (node.style && typeof node.style.setProperty === 'function') {
+                if (node.closest && node.closest('.detail-top-nav, header, nav')) {
+                  node.style.setProperty('position', 'static', 'important');
+                  node.style.setProperty('top', 'auto', 'important');
+                  node.style.setProperty('right', 'auto', 'important');
+                  node.style.setProperty('bottom', 'auto', 'important');
+                } else {
+                  node.style.setProperty('top', 'auto', 'important');
+                  node.style.setProperty('bottom', '16px', 'important');
+                  node.style.setProperty('right', '16px', 'important');
+                }
+                node.style.setProperty('z-index', '10', 'important');
+              }
+              return;
+            }
+            applyStaticIconStyle(node);
+            if (node.tagName && node.tagName.toLowerCase() === 'svg') {
+              const isPlayIcon =
+                node.id === 'icon-play' ||
+                node.id === 'icon-pause' ||
+                (node.closest && node.closest('#btn-video-play, .btn-video-play-overlay, .btn-play-pause'));
+              applySvgSizeImportant(node, isPlayIcon ? 24 : 16);
+            }
+          });
+      }
+    });
+
+    if (typeof document !== 'undefined' && typeof document.querySelectorAll === 'function') {
+      document.querySelectorAll('.founder-dropped-pin').forEach((pinNode) => {
+        if (pinNode.style && typeof pinNode.style.setProperty === 'function') {
+          if (pinNode.closest && pinNode.closest('.detail-top-nav, header, nav, .app-header, .top-nav, .topbar')) {
+            pinNode.style.setProperty('position', 'static', 'important');
+            pinNode.style.setProperty('top', 'auto', 'important');
+            pinNode.style.setProperty('right', 'auto', 'important');
+            pinNode.style.setProperty('bottom', 'auto', 'important');
+          } else {
+            pinNode.style.setProperty('top', 'auto', 'important');
+            pinNode.style.setProperty('bottom', '16px', 'important');
+            pinNode.style.setProperty('right', '16px', 'important');
+          }
+          pinNode.style.setProperty('z-index', '10', 'important');
+        }
+      });
+
+      if (typeof MutationObserver !== 'undefined' && (document.body || document.documentElement) && !this._pinObserver) {
+        this._pinObserver = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            for (const n of m.addedNodes) {
+              if (n && n.nodeType === 1) {
+                if (n.classList && n.classList.contains('founder-dropped-pin')) {
+                  if (n.closest && n.closest('.detail-top-nav, header, nav, .app-header, .top-nav, .topbar')) {
+                    n.style.setProperty('position', 'static', 'important');
+                    n.style.setProperty('top', 'auto', 'important');
+                    n.style.setProperty('right', 'auto', 'important');
+                    n.style.setProperty('bottom', 'auto', 'important');
+                  } else {
+                    n.style.setProperty('top', 'auto', 'important');
+                    n.style.setProperty('bottom', '16px', 'important');
+                    n.style.setProperty('right', '16px', 'important');
+                  }
+                  n.style.setProperty('z-index', '10', 'important');
+                } else if (typeof n.querySelectorAll === 'function') {
+                  n.querySelectorAll('.founder-dropped-pin').forEach((p) => {
+                    if (p.closest && p.closest('.detail-top-nav, header, nav, .app-header, .top-nav, .topbar')) {
+                      p.style.setProperty('position', 'static', 'important');
+                      p.style.setProperty('top', 'auto', 'important');
+                      p.style.setProperty('right', 'auto', 'important');
+                      p.style.setProperty('bottom', 'auto', 'important');
+                    } else {
+                      p.style.setProperty('top', 'auto', 'important');
+                      p.style.setProperty('bottom', '16px', 'important');
+                      p.style.setProperty('right', '16px', 'important');
+                    }
+                    p.style.setProperty('z-index', '10', 'important');
+                  });
+                }
+              }
+            }
+          }
+        });
+        try {
+          this._pinObserver.observe(document.body || document.documentElement, { childList: true, subtree: true });
+        } catch (e) {}
+      }
+    }
+  }
+
+  /**
+   * Caches internal DOM nodes for optimal performance
+   */
+  cacheDom() {
+    if (!this.root) return;
+
+    this.dom = {
+      // Navigation / Header
+      btnBack: this.root.querySelector('#btn-back-to-research, [data-action="btn-back-to-research"]'),
+      btnFooterBack: this.root.querySelector('#btn-footer-back'),
+      topCreatorSnippet: this.root.querySelector('#top-creator-snippet'),
+      topLinkOriginal: this.root.querySelector('#top-link-original'),
+      detailMainTitle: this.root.querySelector('#detail-main-title'),
+
+      // Left Column: Video Player
+      videoPlayer: this.root.querySelector('#video-player, [data-testid="video-player"]'),
+      btnPlay: this.root.querySelector('#btn-video-play'),
+      iconPlay: this.root.querySelector('#icon-play'),
+      iconPause: this.root.querySelector('#icon-pause'),
+      videoScrubber: this.root.querySelector('#video-scrubber-track'),
+      videoProgress: this.root.querySelector('#video-scrub-progress'),
+      videoHandle: this.root.querySelector('#video-scrub-handle'),
+      currentTimeText: this.root.querySelector('#current-time-text'),
+      durationTimeText: this.root.querySelector('#duration-time-text'),
+      btnToggleSound: this.root.querySelector('#btn-toggle-sound'),
+      btnReplay: this.root.querySelector('#btn-replay-video'),
+      videoAvatarGlyph: this.root.querySelector('#video-avatar-glyph'),
+      videoCreatorTag: this.root.querySelector('#video-creator-tag'),
+      videoHookCaption: this.root.querySelector('#video-hook-caption'),
+      videoBeatText: this.root.querySelector('#video-beat-text'),
+
+      // Left Column: Source Meta
+      sourceMeta: this.root.querySelector('#source-meta, [data-testid="source-meta"]'),
+      metaAvatar: this.root.querySelector('#meta-avatar'),
+      metaCreator: this.root.querySelector('#meta-creator'),
+      metaCreatorHandle: this.root.querySelector('#meta-creator-handle'),
+      linkOriginal: this.root.querySelector('#link-original, [data-testid="link-original"]'),
+      linkOriginalText: this.root.querySelector('#link-original-text'),
+      metaDuration: this.root.querySelector('#meta-duration'),
+      metaRights: this.root.querySelector('#meta-rights'),
+      metaTagsList: this.root.querySelector('#meta-tags-list'),
+
+      // Right Column: Analysis Panel & Tabs
+      analysisPanel: this.root.querySelector('#analysis-panel, [data-testid="analysis-panel"]'),
+      tabContentWhat: this.root.querySelector('#tab-content-what, [data-testid="tab-content-what"]'),
+      tabPackagingHow: this.root.querySelector('#tab-packaging-how, [data-testid="tab-packaging-how"]'),
+      panelContentWhat: this.root.querySelector('#panel-content-what, [data-testid="panel-content-what"]'),
+      panelPackagingHow: this.root.querySelector('#panel-packaging-how, [data-testid="panel-packaging-how"]'),
+      btnAnalyzeAgain: this.root.querySelector('#btn-analyze-again, [data-testid="btn-analyze-again"]'),
+      analysisVersionBadge: this.root.querySelector('#analysis-version-badge'),
+
+      // Content (WHAT) fields
+      contentCoreIdea: this.root.querySelector('#content-core-idea'),
+      contentAudience: this.root.querySelector('#content-audience'),
+      contentKeyPoints: this.root.querySelector('#content-key-points'),
+      contentClaimsEvidence: this.root.querySelector('#content-claims-evidence'),
+      contentExamples: this.root.querySelector('#content-examples'),
+      contentExtendableAngles: this.root.querySelector('#content-extendable-angles'),
+      contentWhatIsGood: this.root.querySelector('#content-what-is-good'),
+
+      // Packaging (HOW) fields
+      packagingHook: this.root.querySelector('#packaging-hook'),
+      packagingOpeningPattern: this.root.querySelector('#packaging-opening-pattern'),
+      packagingNarrativeBeats: this.root.querySelector('#packaging-narrative-beats'),
+      packagingPacing: this.root.querySelector('#packaging-pacing'),
+      packagingMusicSfx: this.root.querySelector('#packaging-music-sfx'),
+      packagingEditingMechanics: this.root.querySelector('#packaging-editing-mechanics'),
+      packagingTimestampHighlights: this.root.querySelector('#packaging-timestamp-highlights'),
+      packagingWhatIsGood: this.root.querySelector('#packaging-what-is-good'),
+
+      // Bottom Action Footer
+      statusBadge: this.root.querySelector('#status-badge, [data-testid="status-badge"]'),
+      statusBadgeText: this.root.querySelector('#status-badge-text'),
+      statusExplanationText: this.root.querySelector('#status-explanation-text'),
+      btnSaveToLibrary: this.root.querySelector('#btn-save-to-library, [data-testid="btn-save-to-library"]')
+    };
+  }
+
+  /**
+   * Binds user event listeners (click, keyboard tabs, video controls)
+   */
+  bindEvents() {
+    if (!this.dom) return;
+
+    // 1. Dual-Lens Tab Switching
+    this.dom.tabContentWhat?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.switchTab(DETAIL_TABS.CONTENT);
+    });
+
+    this.dom.tabPackagingHow?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.switchTab(DETAIL_TABS.PACKAGING);
+    });
+
+    // Keyboard ARIA tab navigation
+    [this.dom.tabContentWhat, this.dom.tabPackagingHow].forEach(btn => {
+      btn?.addEventListener('keydown', (e) => this.handleTabKeydown(e));
+    });
+
+    // 2. Back Navigation (D1: Returns to S01 without saving to Vault)
+    this.dom.btnBack?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.handleBackToResearch();
+    });
+
+    this.dom.btnFooterBack?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.handleBackToResearch();
+    });
+
+    // 3. Save to Library CTA (T12: Opens Save Modal only, does not save directly)
+    this.dom.btnSaveToLibrary?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.handleSaveToLibrary();
+    });
+
+    // 4. Re-analyze button
+    this.dom.btnAnalyzeAgain?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.handleAnalyzeAgain();
+    });
+
+    // 5. Video Player interactions
+    this.dom.btnPlay?.addEventListener('click', () => this.togglePlayPause());
+    this.dom.btnReplay?.addEventListener('click', () => this.seekToTime(0));
+    this.dom.btnToggleSound?.addEventListener('click', () => this.toggleSound());
+
+    // Scrubber click / drag
+    this.dom.videoScrubber?.addEventListener('click', (e) => {
+      const rect = this.dom.videoScrubber.getBoundingClientRect();
+      const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      this.seekToTime(pos * this.duration);
+    });
+
+    // Timestamp highlights chips
+    this.dom.packagingTimestampHighlights?.addEventListener('click', (e) => {
+      const chip = e.target.closest('.btn-time-chip, [data-time]');
+      if (chip) {
+        const timeVal = chip.getAttribute('data-time');
+        const seconds = parseTimecode(timeVal);
+        this.seekToTime(seconds);
+      }
+    });
+
+    // Subscribe to store updates for live status synchronization
+    if (typeof subscribe === 'function') {
+      this.unsubscribeStore = subscribe(() => {
+        this.syncStatusWithStore();
+      });
+    }
+  }
+
+  /**
+   * Initializes source and analysis data from router context or central store
+   * @param {string} [sourceId]
+   */
+  initFromStore(sourceId = null) {
+    const state = typeof getState === 'function' ? getState() : null;
+    const sources = state?.sources || SAMPLE_SOURCES;
+    
+    // Resolve target source
+    const targetId = sourceId || this.currentSourceId || sources[0]?.id || 'source-a';
+    this.loadSource(targetId);
+  }
+
+  /**
+   * Loads a specific source and its corresponding dual-lens analysis
+   * @param {string} sourceId 
+   */
+  loadSource(sourceId) {
+    this.currentSourceId = sourceId;
+    const state = typeof getState === 'function' ? getState() : null;
+
+    // 1. Find source
+    const sources = state?.sources || SAMPLE_SOURCES;
+    this.currentSource = sources.find(s => s.id === sourceId) || sources[0] || {
+      id: sourceId,
+      title: 'Post and forget it (อย่าเฝ้ายอด)',
+      creator: 'Creator A',
+      url: 'https://example.com/watch?v=post-and-forget',
+      duration: '02:15',
+      tags: ['Mindset', 'Workflow', 'Content Creation']
+    };
+
+    // 2. Find analysis (support versioning, pick latest)
+    const analyses = state?.analyses || SAMPLE_ANALYSES;
+    const matchingAnalyses = analyses.filter(a => a.sourceId === this.currentSource.id);
+    this.currentAnalysis = matchingAnalyses.length > 0
+      ? matchingAnalyses[matchingAnalyses.length - 1]
+      : (SAMPLE_ANALYSES.find(a => a.sourceId === 'source-a') || SAMPLE_ANALYSES[0]);
+
+    // Parse duration
+    this.duration = parseTimecode(this.currentSource.duration) || 135;
+    this.currentTime = Math.min(35, this.duration);
+
+    // Render to DOM
+    this.renderSource();
+  }
+
+  /**
+   * Renders the current source and analysis into DOM
+   */
+  renderSource() {
+    if (!this.dom || !this.currentSource) return;
+
+    const source = this.currentSource;
+    const analysis = this.currentAnalysis;
+
+    // Header & Titles
+    if (this.dom.detailMainTitle) {
+      this.dom.detailMainTitle.textContent = source.title || 'Untitled Reference Clip';
+    }
+    if (this.dom.topCreatorSnippet) {
+      this.dom.topCreatorSnippet.textContent = source.creator ? `@${source.creator.toLowerCase().replace(/\s+/g, '')}` : '@creator';
+    }
+    if (this.dom.topLinkOriginal) {
+      this.dom.topLinkOriginal.href = source.url || '#';
+    }
+
+    // Video Player Viewport
+    if (this.dom.videoAvatarGlyph) {
+      this.dom.videoAvatarGlyph.textContent = (source.creator || 'M').charAt(0).toUpperCase();
+    }
+    if (this.dom.videoCreatorTag) {
+      this.dom.videoCreatorTag.textContent = `@${(source.creator || 'creator').toLowerCase().replace(/\s+/g, '')}`;
+    }
+    if (this.dom.videoHookCaption) {
+      this.dom.videoHookCaption.textContent = analysis?.packaging?.hook || `"${source.title}"`;
+    }
+    if (this.dom.durationTimeText) {
+      this.dom.durationTimeText.textContent = formatTime(this.duration);
+    }
+    this.updateScrubberDisplay();
+
+    // Source Meta Card
+    if (this.dom.metaAvatar) {
+      this.dom.metaAvatar.textContent = (source.creator || 'C').charAt(0).toUpperCase();
+    }
+    if (this.dom.metaCreator) {
+      this.dom.metaCreator.textContent = source.creator || 'Creator';
+    }
+    if (this.dom.metaCreatorHandle) {
+      this.dom.metaCreatorHandle.textContent = `@${(source.creator || 'creator').toLowerCase().replace(/\s+/g, '')}`;
+    }
+    if (this.dom.linkOriginal) {
+      this.dom.linkOriginal.href = source.url || 'https://example.com';
+    }
+    if (this.dom.linkOriginalText) {
+      this.dom.linkOriginalText.textContent = source.url || 'https://example.com';
+    }
+    if (this.dom.metaDuration) {
+      this.dom.metaDuration.textContent = `${source.duration || formatTime(this.duration)} นาที`;
+    }
+
+    // Tags
+    if (this.dom.metaTagsList && Array.isArray(source.tags)) {
+      this.dom.metaTagsList.innerHTML = source.tags
+        .map(tag => `<span class="meta-tag-pill">${escapeHtml(tag)}</span>`)
+        .join('');
+    }
+
+    // Version Badge
+    if (this.dom.analysisVersionBadge && analysis?.version) {
+      this.dom.analysisVersionBadge.textContent = `v${analysis.version}.0 (Active)`;
+    }
+
+    // Content (WHAT) fields
+    if (analysis?.content) {
+      const c = analysis.content;
+      if (this.dom.contentCoreIdea) this.dom.contentCoreIdea.textContent = c.coreIdea || 'ไม่มีข้อมูล';
+      if (this.dom.contentAudience) this.dom.contentAudience.textContent = c.audience || 'ผู้ชมทั่วไป';
+      
+      if (this.dom.contentKeyPoints && Array.isArray(c.keyPoints)) {
+        this.dom.contentKeyPoints.innerHTML = c.keyPoints
+          .map(kp => `<li>${escapeHtml(kp)}</li>`)
+          .join('');
+      }
+
+      if (this.dom.contentClaimsEvidence && Array.isArray(c.claimsAndEvidence)) {
+        if (c.claimsAndEvidence.length === 0) {
+          this.dom.contentClaimsEvidence.innerHTML = `
+            <div class="claim-item-card">
+              <p class="claim-statement" style="color: var(--v6-muted);">ไม่มีข้ออ้างเชิงตัวเลขหรือการอ้างอิงสถิติในคลิปนี้</p>
+            </div>`;
+        } else {
+          this.dom.contentClaimsEvidence.innerHTML = c.claimsAndEvidence
+            .map(item => `
+              <div class="claim-item-card">
+                <div class="claim-row">
+                  <span class="claim-tag">ข้ออ้าง (Claim)</span>
+                  <p class="claim-statement">${escapeHtml(item.claim || '')}</p>
+                </div>
+                <div class="evidence-row">
+                  <span class="evidence-tag">หลักฐาน (Evidence)</span>
+                  <p class="evidence-statement">${escapeHtml(item.evidence || 'ไม่มีหลักฐานยืนยันชัดเจน')}</p>
+                </div>
+              </div>
+            `).join('');
+        }
+      }
+
+      if (this.dom.contentExamples) {
+        const ex = Array.isArray(c.examples) ? c.examples.join(', ') : (c.examples || 'ไม่มีการยกตัวอย่างชัดเจน');
+        this.dom.contentExamples.textContent = ex;
+      }
+
+      if (this.dom.contentExtendableAngles && Array.isArray(c.extendableAngles)) {
+        this.dom.contentExtendableAngles.innerHTML = c.extendableAngles
+          .map(angle => `<li>${escapeHtml(angle)}</li>`)
+          .join('');
+      }
+
+      if (this.dom.contentWhatIsGood) {
+        this.dom.contentWhatIsGood.textContent = c.whatIsGood || 'เนื้อหาและแก่นความคิดมีความชัดเจน';
+      }
+    }
+
+    // Packaging (HOW) fields
+    if (analysis?.packaging) {
+      const p = analysis.packaging;
+      if (this.dom.packagingHook) this.dom.packagingHook.textContent = `"${p.hook || source.title}"`;
+      if (this.dom.packagingOpeningPattern) this.dom.packagingOpeningPattern.textContent = p.openingPattern || 'Direct Opening';
+
+      if (this.dom.packagingNarrativeBeats) {
+        const beats = Array.isArray(p.beats)
+          ? p.beats
+          : (typeof p.beats === 'string' ? p.beats.split('->').map(s => s.trim()) : []);
+        
+        if (beats.length > 0) {
+          this.dom.packagingNarrativeBeats.innerHTML = beats
+            .map((beat, idx) => `
+              <li class="beat-step-item">
+                <span class="beat-index">${idx + 1}</span>
+                <span class="beat-desc">${escapeHtml(beat)}</span>
+              </li>
+            `).join('');
+        }
+      }
+
+      if (this.dom.packagingPacing) this.dom.packagingPacing.textContent = p.pacing || 'จังหวะเร็วปานกลาง';
+      if (this.dom.packagingMusicSfx) this.dom.packagingMusicSfx.textContent = p.musicSfx || 'ดนตรีคลอเบาๆ';
+      if (this.dom.packagingEditingMechanics) this.dom.packagingEditingMechanics.textContent = p.editingMechanics || 'ตัดต่อกระชับ';
+
+      if (this.dom.packagingTimestampHighlights && Array.isArray(p.timestampHighlights)) {
+        this.dom.packagingTimestampHighlights.innerHTML = p.timestampHighlights
+          .map(th => `
+            <button type="button" class="btn-time-chip" data-time="${escapeHtml(th.time)}" title="คลิกเพื่อกระโดดไปยัง ${escapeHtml(th.time)}">
+              <span class="font-num chip-code">${escapeHtml(th.time)}</span>
+              <span class="chip-label">${escapeHtml(th.label)}</span>
+            </button>
+          `).join('');
+      }
+
+      if (this.dom.packagingWhatIsGood) {
+        this.dom.packagingWhatIsGood.textContent = p.whatIsGood || 'โครงสร้างการเล่ากระชับและดึงดูดสายตา';
+      }
+    }
+
+    // Status Badge Synchronization
+    this.syncStatusWithStore();
+    this.ensureLayoutContainment();
+  }
+
+  /**
+   * Synchronizes the status badge with current store state
+   * Default initial status: 'Analyzed · Not saved'
+   */
+  syncStatusWithStore() {
+    if (!this.dom?.statusBadge || !this.currentSource) return;
+
+    const state = typeof getState === 'function' ? getState() : null;
+    const notes = state?.savedNotes || [];
+    
+    // Check if source has notes saved in Vaults
+    const status = computeSourceStatus
+      ? computeSourceStatus(this.currentSource.id, notes)
+      : 'Analyzed · Not saved';
+
+    // Update status badge UI
+    this.dom.statusBadge.className = 'status-badge';
+    
+    if (status === 'Saved to Both') {
+      this.dom.statusBadge.classList.add('status-saved-both');
+      if (this.dom.statusBadgeText) this.dom.statusBadgeText.textContent = 'Saved to Both Vaults';
+      if (this.dom.statusExplanationText) this.dom.statusExplanationText.textContent = 'บันทึกแล้วใน Content Vault และ Packaging Vault';
+    } else if (status === 'Saved to Content') {
+      this.dom.statusBadge.classList.add('status-saved-content');
+      if (this.dom.statusBadgeText) this.dom.statusBadgeText.textContent = 'Saved to Content';
+      if (this.dom.statusExplanationText) this.dom.statusExplanationText.textContent = 'บันทึกแล้วใน Content Vault พร้อม Founder WHY';
+    } else if (status === 'Saved to Packaging') {
+      this.dom.statusBadge.classList.add('status-saved-packaging');
+      if (this.dom.statusBadgeText) this.dom.statusBadgeText.textContent = 'Saved to Packaging';
+      if (this.dom.statusExplanationText) this.dom.statusExplanationText.textContent = 'บันทึกแล้วใน Packaging Vault พร้อม Founder WHY';
+    } else {
+      // Default: Analyzed · Not saved (strictly NOT library styled)
+      this.dom.statusBadge.classList.add('status-analyzed-not-saved');
+      if (this.dom.statusBadgeText) this.dom.statusBadgeText.textContent = 'Analyzed \u00B7 Not saved';
+      if (this.dom.statusExplanationText) this.dom.statusExplanationText.textContent = 'วิเคราะห์เสร็จสิ้น \u2022 คลิปยังไม่ได้ถูกบันทึกเข้าสู่ Vault ใดๆ';
+    }
+  }
+
+  /**
+   * Switches active analysis tab between 'content' and 'packaging'
+   * CRITICAL GUARANTEE: Does NOT reload page, does NOT destroy or lose analysis data.
+   * 
+   * @param {'content'|'packaging'} tab 
+   */
+  switchTab(tab) {
+    if (tab !== DETAIL_TABS.CONTENT && tab !== DETAIL_TABS.PACKAGING) {
+      tab = DETAIL_TABS.CONTENT;
+    }
+
+    this.activeTab = tab;
+
+    const isContent = tab === DETAIL_TABS.CONTENT;
+
+    // 1. Update Tab Buttons
+    if (this.dom?.tabContentWhat) {
+      toggleElementClass(this.dom.tabContentWhat, 'active', isContent);
+      this.dom.tabContentWhat.setAttribute('aria-selected', isContent ? 'true' : 'false');
+      this.dom.tabContentWhat.setAttribute('tabindex', isContent ? '0' : '-1');
+    }
+
+    if (this.dom?.tabPackagingHow) {
+      toggleElementClass(this.dom.tabPackagingHow, 'active', !isContent);
+      this.dom.tabPackagingHow.setAttribute('aria-selected', !isContent ? 'true' : 'false');
+      this.dom.tabPackagingHow.setAttribute('tabindex', !isContent ? '0' : '-1');
+    }
+
+    // 2. Update Tab Panels visibility (No data is discarded)
+    if (this.dom?.panelContentWhat) {
+      toggleElementClass(this.dom.panelContentWhat, 'is-hidden', !isContent);
+      if (isContent) {
+        this.dom.panelContentWhat.removeAttribute('hidden');
+      } else {
+        this.dom.panelContentWhat.setAttribute('hidden', 'true');
+      }
+    }
+
+    if (this.dom?.panelPackagingHow) {
+      toggleElementClass(this.dom.panelPackagingHow, 'is-hidden', isContent);
+      if (!isContent) {
+        this.dom.panelPackagingHow.removeAttribute('hidden');
+      } else {
+        this.dom.panelPackagingHow.setAttribute('hidden', 'true');
+      }
+    }
+
+    // Dispatch custom tab switch event for testing or sub-modules
+    this.ensureLayoutContainment();
+    if (typeof window !== 'undefined') {
+      const tabEvent = new CustomEvent('mew:tab-changed', {
+        bubbles: true,
+        detail: { activeTab: tab, sourceId: this.currentSourceId }
+      });
+      window.dispatchEvent(tabEvent);
+    }
+  }
+
+  /**
+   * Handles keyboard navigation (ArrowLeft / ArrowRight) for WCAG tablist
+   * @param {KeyboardEvent} e 
+   */
+  handleTabKeydown(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      this.switchTab(DETAIL_TABS.PACKAGING);
+      this.dom?.tabPackagingHow?.focus();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      this.switchTab(DETAIL_TABS.CONTENT);
+      this.dom?.tabContentWhat?.focus();
+    }
+  }
+
+  /**
+   * Back Button Handler
+   * CRITICAL GUARANTEE (D1):
+   * Returns to S01 (Research Entry / Inbox) WITHOUT saving source to Vault.
+   * Source remains in Inbox as 'Analyzed · Not saved'.
+   */
+  handleBackToResearch() {
+    // Navigate back to S01
+    if (typeof router !== 'undefined' && typeof router.go === 'function') {
+      router.go('S01');
+    } else if (typeof routerGo === 'function') {
+      routerGo('S01');
+    } else if (typeof window !== 'undefined') {
+      window.location.hash = '#S01';
+    }
+  }
+
+  /**
+   * Save to Library CTA Handler
+   * CRITICAL GUARANTEE (T12):
+   * Opens Save Modal (S03) ONLY. Does NOT save or create notes directly!
+   */
+  handleSaveToLibrary() {
+    const clipPayload = {
+      id: this.currentSource?.id || 'source-temp',
+      title: this.currentSource?.title || 'Untitled Reference Clip',
+      author: this.currentSource?.creator || 'Creator',
+      duration: this.currentSource?.duration || formatTime(this.duration),
+      url: this.currentSource?.url || '',
+      tags: this.currentSource?.tags || [],
+      avatar: (this.currentSource?.creator || 'C').charAt(0).toUpperCase()
+    };
+
+    // 1. Dispatch custom event for modal opener
+    const openModalEvent = new CustomEvent('mew:open-save-modal', {
+      bubbles: true,
+      detail: clipPayload
+    });
+    window.dispatchEvent(openModalEvent);
+
+    // 2. Direct invocation if SaveModalController instance is globally available
+    if (typeof window !== 'undefined' && window.saveModalController && typeof window.saveModalController.open === 'function') {
+      window.saveModalController.open(clipPayload);
+      return;
+    }
+
+    // 3. Fallback: Check if modal DOM exists and unhide it
+    const modalEl = document.getElementById('save-decision-modal') || document.querySelector('[data-testid="save-modal"]');
+    if (modalEl) {
+      modalEl.removeAttribute('hidden');
+      modalEl.style.display = 'flex';
+      const input = modalEl.querySelector('textarea, input');
+      input?.focus();
+    }
+  }
+
+  /**
+   * Re-analyzes source and creates an appended version without mutating savedNotes
+   */
+  handleAnalyzeAgain() {
+    if (!this.currentSource) return;
+
+    const nextVersion = (this.currentAnalysis?.version || 1) + 1;
+    const newAnalysis = {
+      ...this.currentAnalysis,
+      id: `analysis-${this.currentSource.id}-v${nextVersion}`,
+      version: nextVersion,
+      createdAt: new Date().toISOString()
+    };
+
+    // If store available, dispatch ADD_ANALYSIS
+    if (typeof dispatch === 'function') {
+      dispatch({
+        type: 'ADD_ANALYSIS',
+        payload: newAnalysis
+      });
+    }
+
+    this.currentAnalysis = newAnalysis;
+    if (this.dom?.analysisVersionBadge) {
+      this.dom.analysisVersionBadge.textContent = `v${nextVersion}.0 (Active)`;
+    }
+
+    // Visual pulse confirmation
+    if (this.dom?.btnAnalyzeAgain) {
+      this.dom.btnAnalyzeAgain.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        if (this.dom?.btnAnalyzeAgain) this.dom.btnAnalyzeAgain.style.transform = '';
+      }, 150);
+    }
+  }
+
+  /**
+   * Toggles video playback simulation
+   */
+  togglePlayPause() {
+    this.isPlaying = !this.isPlaying;
+    if (this.dom?.iconPlay && this.dom?.iconPause) {
+      if (this.isPlaying) {
+        this.dom.iconPlay.classList.add('is-hidden');
+        this.dom.iconPlay.setAttribute('hidden', 'true');
+        this.dom.iconPause.classList.remove('is-hidden');
+        this.dom.iconPause.removeAttribute('hidden');
+      } else {
+        this.dom.iconPlay.classList.remove('is-hidden');
+        this.dom.iconPlay.removeAttribute('hidden');
+        this.dom.iconPause.classList.add('is-hidden');
+        this.dom.iconPause.setAttribute('hidden', 'true');
+      }
+    }
+  }
+
+  /**
+   * Seeks player to a target timestamp in seconds
+   * @param {number} sec 
+   */
+  seekToTime(sec) {
+    this.currentTime = Math.max(0, Math.min(this.duration, sec));
+    this.updateScrubberDisplay();
+  }
+
+  /**
+   * Updates scrubber bar and timecode labels
+   */
+  updateScrubberDisplay() {
+    if (!this.dom) return;
+
+    const progressRatio = this.duration > 0 ? (this.currentTime / this.duration) : 0;
+    const percent = Math.min(100, Math.max(0, progressRatio * 100));
+
+    if (this.dom.videoProgress) {
+      this.dom.videoProgress.style.width = `${percent}%`;
+    }
+    if (this.dom.videoHandle) {
+      this.dom.videoHandle.style.left = `${percent}%`;
+    }
+    if (this.dom.currentTimeText) {
+      this.dom.currentTimeText.textContent = formatTime(this.currentTime);
+    }
+    if (this.dom.videoScrubber) {
+      this.dom.videoScrubber.setAttribute('aria-valuenow', String(Math.round(this.currentTime)));
+    }
+  }
+
+  /**
+   * Toggles mute state
+   */
+  toggleSound() {
+    if (this.dom?.btnToggleSound) {
+      this.dom.btnToggleSound.classList.toggle('is-muted');
+    }
+  }
+
+  /**
+   * Cleans up listeners and subscriptions
+   */
+  destroy() {
+    if (typeof this.unsubscribeStore === 'function') {
+      this.unsubscribeStore();
+      this.unsubscribeStore = null;
+    }
+  }
+}
+
+/**
+ * Helper to safely toggle CSS classes across both standard DOM and test environments
+ * @param {HTMLElement} el 
+ * @param {string} className 
+ * @param {boolean} force 
+ */
+function toggleElementClass(el, className, force) {
+  if (!el || !className) return;
+  if (el.classList && typeof el.classList.toggle === 'function') {
+    el.classList.toggle(className, force);
+  } else if (el.classList) {
+    if (force) {
+      el.classList.add(className);
+    } else {
+      el.classList.remove(className);
+    }
+  }
+}
+
+/**
+ * Escapes HTML characters safely to prevent XSS
+ * @param {string} str 
+ * @returns {string}
+ */
+function escapeHtml(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/**
+ * Factory initializer helper for browser DOM
+ * @param {HTMLElement|string} [container]
+ * @returns {ResearchDetailController}
+ */
+function initResearchDetail(container = null) {
+  const ctrl = new ResearchDetailController(container);
+  if (typeof window !== 'undefined') {
+    window.researchDetailController = ctrl;
+  }
+  return ctrl;
+}
+
+// Auto initialize on DOM ready in browser environments
+if (typeof window !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initResearchDetail());
+  } else {
+    initResearchDetail();
+  }
+}
+
+});
+
   // ===== save-success.js =====
 __define("save-success.js", function (__exports, __require) {
   Object.defineProperty(__exports, "SAVE_STATUS_TITLES", { enumerable: true, get: function () { return SAVE_STATUS_TITLES; } });
@@ -9884,14 +11207,14 @@ class LibraryController {
   cacheDom() {
     if (!this.root) return;
 
-    /* ข้อ 2: Dual-Vault Reference Library Design (rev-1794839585767-ypor9, rev-1794839585772-5tmfm, rev-1794841080045-potbk, rev-1794841080058-z10pv, rev-1794841304251-xmtja, rev-1794841304227-bvkdw, rev-1794841886796-0a5sh, rev-1794841886806-9yzrm, rev-1794842739820-f0y0a, rev-1794842739824-anj3x, rev-1794843138157-d6exy, rev-1794843138152-gbnap, rev-1794843392194-ckrhi, rev-1794843392200-naczn, rev-1794844171638-s6sit, rev-1794844171633-rlmzr, rev-1794845015990-f6fnr, rev-1794845015984-5rrwe, rev-1794845258790-eh56n, rev-1794845371423-n77ip, rev-1794958140994-7jzd0, rev-1795002899133-ln113, rev-1795003651827-tro1c, rev-1795003940582-abwrm, rev-1795005894507-lalzz, rev-1795005894510-az7m0, rev-1795011652999-fkzz0, rev-1795011653002-ll35r, rev-1795043208047-7k0sy, rev-1795043420123-9tq4i, rev-1795043420119-j0km1, rev-1795045312513-3ti2l, rev-1795101264800-623na, rev-1795101264808-gh061, rev-1795171060102-ql9ri, rev-1795171060095-61u2q, rev-1795171372395-aioeh, rev-1795171372390-mhm5w, rev-1795175105747-zvuwh, rev-1795175105751-6yar3, rev-1795177797590-b0kto, rev-1795177797585-c9u36, rev-1795192509526-dwwat, rev-1795192509528-gbdv5) */
+    /* ข้อ 2: Dual-Vault Reference Library Design (rev-1794839585767-ypor9, rev-1794839585772-5tmfm, rev-1794841080045-potbk, rev-1794841080058-z10pv, rev-1794841304251-xmtja, rev-1794841304227-bvkdw, rev-1794841886796-0a5sh, rev-1794841886806-9yzrm, rev-1794842739820-f0y0a, rev-1794842739824-anj3x, rev-1794843138157-d6exy, rev-1794843138152-gbnap, rev-1794843392194-ckrhi, rev-1794843392200-naczn, rev-1794844171638-s6sit, rev-1794844171633-rlmzr, rev-1794845015990-f6fnr, rev-1794845015984-5rrwe, rev-1794845258790-eh56n, rev-1794845371423-n77ip, rev-1794958140994-7jzd0, rev-1795002899133-ln113, rev-1795003651827-tro1c, rev-1795003940582-abwrm, rev-1795005894507-lalzz, rev-1795005894510-az7m0, rev-1795011652999-fkzz0, rev-1795011653002-ll35r, rev-1795043208047-7k0sy, rev-1795043420123-9tq4i, rev-1795043420119-j0km1, rev-1795045312513-3ti2l, rev-1795101264800-623na, rev-1795101264808-gh061, rev-1795171060102-ql9ri, rev-1795171060095-61u2q, rev-1795171372395-aioeh, rev-1795171372390-mhm5w, rev-1795175105747-zvuwh, rev-1795175105751-6yar3, rev-1795177797590-b0kto, rev-1795177797585-c9u36, rev-1795192509526-dwwat, rev-1795192509528-gbdv5, rev-1795194835200-216w8, rev-1795194835196-kmnjv, rev-1795195188207-hleay, rev-1795195188210-u96xt, rev-1795196231019-7k9p4, rev-1795196231023-mzkwn, rev-1795197469680-ojxb7, rev-1795197469683-xudt2) */
     this.root.setAttribute('data-step', 'ข้อ 2');
-    this.root.setAttribute('data-review-id', 'rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5');
+    this.root.setAttribute('data-review-id', 'rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5 rev-1795194835200-216w8 rev-1795194835196-kmnjv rev-1795195188207-hleay rev-1795195188210-u96xt rev-1795196231019-7k9p4 rev-1795196231023-mzkwn rev-1795197469680-ojxb7 rev-1795197469683-xudt2');
     this.root.setAttribute('data-active-vault', this.activeVault || 'content');
     const viewLibrary = (typeof document !== 'undefined' ? document.getElementById('view-library') : null) || (this.root.parentElement && this.root.parentElement.id === 'view-library' ? this.root.parentElement : null);
     if (viewLibrary) {
       viewLibrary.setAttribute('data-step', 'ข้อ 2');
-      viewLibrary.setAttribute('data-review-id', 'rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5');
+      viewLibrary.setAttribute('data-review-id', 'rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5 rev-1795194835200-216w8 rev-1795194835196-kmnjv rev-1795195188207-hleay rev-1795195188210-u96xt rev-1795196231019-7k9p4 rev-1795196231023-mzkwn rev-1795197469680-ojxb7 rev-1795197469683-xudt2');
       viewLibrary.setAttribute('data-active-vault', this.activeVault || 'content');
     }
     if (typeof document !== 'undefined' && !document.getElementById('mew-s04-step2-design-styles')) {
@@ -9948,7 +11271,7 @@ class LibraryController {
         headerBadges.appendChild(stepBadge);
       }
     }
-    /* Fix rev-1794839585767-ypor9, rev-1794839585772-5tmfm, rev-1794841080045-potbk, rev-1794841080058-z10pv, rev-1794841304251-xmtja, rev-1794841304227-bvkdw, rev-1794841886796-0a5sh, rev-1794841886806-9yzrm, rev-1794842739820-f0y0a, rev-1794842739824-anj3x, rev-1794843138157-d6exy, rev-1794843138152-gbnap, rev-1794843392194-ckrhi, rev-1794843392200-naczn, rev-1794844171638-s6sit, rev-1794844171633-rlmzr, rev-1794845015990-f6fnr, rev-1794845015984-5rrwe, rev-1794845258790-eh56n, rev-1794845371423-n77ip, rev-1794958140994-7jzd0, rev-1795002899133-ln113, rev-1795003651827-tro1c, rev-1795002899130-6864t, rev-1795003651824-sz497, rev-1795003940579-vqxj7, rev-1795003940582-abwrm, rev-1795005894507-lalzz, rev-1795005894510-az7m0, rev-1795011652999-fkzz0, rev-1795011653002-ll35r, rev-1795043208045-2dgwp, rev-1795043208047-7k0sy, rev-1795043420123-9tq4i, rev-1795043420119-j0km1, rev-1795045312513-3ti2l, rev-1795101264800-623na, rev-1795101264808-gh061, rev-1795171060102-ql9ri, rev-1795171060095-61u2q, rev-1795171372395-aioeh, rev-1795171372390-mhm5w, rev-1795175105747-zvuwh, rev-1795175105751-6yar3, rev-1795177797590-b0kto, rev-1795177797585-c9u36, rev-1795192509526-dwwat, rev-1795192509528-gbdv5 (rev-1794762096866-c1ql7): เปลี่ยนคำว่า Saved Notes เป็น คลังโน้ต */
+    /* Fix rev-1794839585767-ypor9, rev-1794839585772-5tmfm, rev-1794841080045-potbk, rev-1794841080058-z10pv, rev-1794841304251-xmtja, rev-1794841304227-bvkdw, rev-1794841886796-0a5sh, rev-1794841886806-9yzrm, rev-1794842739820-f0y0a, rev-1794842739824-anj3x, rev-1794843138157-d6exy, rev-1794843138152-gbnap, rev-1794843392194-ckrhi, rev-1794843392200-naczn, rev-1794844171638-s6sit, rev-1794844171633-rlmzr, rev-1794845015990-f6fnr, rev-1794845015984-5rrwe, rev-1794845258790-eh56n, rev-1794845371423-n77ip, rev-1794958140994-7jzd0, rev-1795002899133-ln113, rev-1795003651827-tro1c, rev-1795002899130-6864t, rev-1795003651824-sz497, rev-1795003940579-vqxj7, rev-1795003940582-abwrm, rev-1795005894507-lalzz, rev-1795005894510-az7m0, rev-1795011652999-fkzz0, rev-1795011653002-ll35r, rev-1795043208045-2dgwp, rev-1795043208047-7k0sy, rev-1795043420123-9tq4i, rev-1795043420119-j0km1, rev-1795045312513-3ti2l, rev-1795101264800-623na, rev-1795101264808-gh061, rev-1795171060102-ql9ri, rev-1795171060095-61u2q, rev-1795171372395-aioeh, rev-1795171372390-mhm5w, rev-1795175105747-zvuwh, rev-1795175105751-6yar3, rev-1795177797590-b0kto, rev-1795177797585-c9u36, rev-1795192509526-dwwat, rev-1795192509528-gbdv5, rev-1795194835200-216w8, rev-1795194835196-kmnjv, rev-1795195188207-hleay, rev-1795195188210-u96xt, rev-1795196231019-7k9p4, rev-1795196231023-mzkwn, rev-1795197469680-ojxb7, rev-1795197469683-xudt2 (rev-1794762096866-c1ql7): เปลี่ยนคำว่า Saved Notes เป็น คลังโน้ต */
     const SAVED_NOTES_MATCH = /[\x53\x73]aved[\s_-]*(?:to[\s_-]+)?[\x4e\x6e]otes?/i;
     const SAVED_NOTES_REPLACE = /[\x53\x73]aved[\s_-]*(?:to[\s_-]+)?[\x4e\x6e]otes?/gi;
 
@@ -10611,7 +11934,7 @@ class LibraryController {
         data-lens="${item.lens || item.vaultType}"
         data-vault-type="${isContent ? 'content' : 'packaging'}"
         data-step="ข้อ 2"
-        data-review-id="rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940579-vqxj7 rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5"
+        data-review-id="rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940579-vqxj7 rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5 rev-1795194835200-216w8 rev-1795194835196-kmnjv"
         tabindex="0"
       >
         
@@ -17049,7 +18372,7 @@ if (typeof window !== 'undefined') {
 }
 
 });
-  var __entries = ["dashboard.js","research.js","save_modal.js","library.js","remix.js","content_board.js","founder-review-widget.js","keep-going-modal.js"];
+  var __entries = ["dashboard.js","research.js","research-detail.js","save_modal.js","library.js","remix.js","content_board.js","founder-review-widget.js","keep-going-modal.js"];
   __entries.forEach(function (id) {
     try { __require(id); }
     catch (err) { console.error('[app-bundle] Failed to initialise ' + id, err); }
