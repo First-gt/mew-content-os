@@ -1,5 +1,6 @@
 <!-- ==============================================================================
      MEW CONTENT OS — S02 RESEARCH DETAIL & DUAL-LENS AI ANALYSIS (Topic T08)
+     Review Fix: rev-1795177797688-5dbok / rev-1795192509578-hzj5b / rev-1795175105831-7tqmf / rev-1795171372543-q1k1a / rev-1795171060196-w3lma / rev-1795043420171-hdvby / rev-1795043208117-xgnnj / rev-1795005894561-cd2h0 / rev-1794958141101-ke7ni (แก้ปัญหาไอคอนลอยทับเมนูด้านบน - ควบคุม z-index ขององค์ประกอบและแถบนำทาง S02 ให้อยู่ระดับ 1-2 ไม่เท่ากับหรือสูงกว่าเมนูหลัก z-index 50/99999 และจัดขอบเขต isolation ให้ไอคอนทั้งหมดเลื่อนมุดใต้เมนูด้านบนอย่างสมบูรณ์)
      Wireframe 1 Layout:
        Left Column:  video-player + source-meta (creator, link-original, time, rights)
        Right Column: analysis-panel (2 tabs: tab-content-what, tab-packaging-how)
@@ -13,17 +14,19 @@
   id="screen-research-detail" 
   data-screen-id="S02" 
   data-screen="S02" 
+  data-section="view-research-detail"
   data-testid="screen-research-detail"
   data-s02-scope="true"
-  style="position: relative; z-index: 1; isolation: isolate; contain: layout style; overflow-x: hidden;"
+  data-review-id="rev-1795192509578-hzj5b"
+  style="position: relative; z-index: 1; isolation: isolate; contain: layout style paint; overflow: hidden;"
 >
-  <div class="research-detail-container" id="research-detail-root" data-testid="research-detail-root" data-s02-scope="true" style="position: relative; z-index: 1; isolation: isolate; overflow-x: hidden;">
+  <div class="research-detail-container" id="view-research-detail" data-testid="research-detail-root" data-s02-scope="true" data-review-id="rev-1795192509578-hzj5b" style="position: relative; z-index: 1; isolation: isolate; contain: layout style paint; overflow: hidden;">
     <style>
-      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_a__#__s02_nav_b__#__s02_nav_c__):not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]):not(.detail-top-nav) {
-        z-index: 1000 !important;
+      :is(body > header, body > nav, #app > header, #app > nav, .app-shell > header, .app-shell > nav, .app-header, header.app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .top-bar, .navbar, .nav-bar, .site-header, .main-header, .main-nav, .workflow-nav, .screen-nav, .screen-switcher, .stage-context-bar, #app-stage-context-bar):not(#screen-research-detail):not(#screen-research-detail *):not([data-s02-scope="true"]):not([data-s02-scope="true"] *):not(.detail-top-nav):not(#view-research-detail):not(#view-research-detail *) {
+        z-index: 99999 !important;
         isolation: isolate !important;
       }
-      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_icon_a__#__s02_nav_icon_b__#__s02_nav_icon_c__) :is(svg, [class*="icon"], [class*="badge"], .btn-video-play-overlay) {
+      :is(header, nav, .app-header, header.app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .top-bar, .navbar, .nav-bar, .site-header, .main-header, .main-nav, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_icon_a__#__s02_nav_icon_b__#__s02_nav_icon_c__) :is(svg, i, [class*="icon"], .btn-video-play-overlay, .btn-play-pause, #btn-video-play) {
         position: static !important;
         top: auto !important;
         left: auto !important;
@@ -34,10 +37,10 @@
         translate: none !important;
         z-index: auto !important;
         float: none !important;
+        margin-top: 0 !important;
       }
-      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, #__s02_svg_a__#__s02_svg_b__#__s02_svg_c__) svg:not([hidden]):not(.is-hidden) {
+      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .top-bar, .navbar, .nav-bar, .site-header, .main-header, .main-nav, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, #__s02_svg_a__#__s02_svg_b__#__s02_svg_c__) svg:not([hidden]):not(.is-hidden) {
         position: static !important;
-        display: inline-block !important;
         vertical-align: middle !important;
         width: 16px !important;
         height: 16px !important;
@@ -46,35 +49,115 @@
         flex-shrink: 0 !important;
         overflow: hidden !important;
         transform: none !important;
+        translate: none !important;
+        margin: 0 !important;
       }
-      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_root_a__#__s02_root_b__#__s02_root_c__) {
+      :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_root_a__#__s02_root_b__#__s02_root_c__) {
         position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        inset: auto !important;
         z-index: 1 !important;
         isolation: isolate !important;
         contain: layout style paint !important;
         overflow: hidden !important;
-        margin-top: 0 !important;
         transform: none !important;
+        translate: none !important;
       }
-      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_all_a__#__s02_all_b__#__s02_all_c__) *:not(.video-scrub-progress):not(#video-scrub-progress):not(.video-scrub-handle):not(#video-scrub-handle):not(.timeline-marker):not(.video-scrubber-track):not(#video-scrubber-track),
-      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_all_a__#__s02_all_b__#__s02_all_c__) *::before,
-      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_all_a__#__s02_all_b__#__s02_all_c__) *::after {
+      :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_box_a__#__s02_box_b__#__s02_box_c__) :is(.research-detail-grid, #research-detail-grid, .detail-col-left, .detail-col-right, #video-player, [data-testid="video-player"], .video-player-card, .video-canvas-container, .video-viewport, #video-viewport, .video-controls-bar, #source-meta, [data-testid="source-meta"], .source-meta-card, .source-meta-header, #analysis-panel, [data-testid="analysis-panel"], .analysis-panel-card, .analysis-panels-body, .analysis-tab-panel, #detail-action-footer, [data-testid="detail-action-footer"]) {
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
+        inset: auto !important;
+        z-index: 1 !important;
+        isolation: isolate !important;
+        overflow: hidden !important;
+        transform: none !important;
+        translate: none !important;
+      }
+      :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_Menu_a__#__s02_Menu_b__#__s02_Menu_c__) :is(.detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, .pill-tabs-list) {
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
+        inset: auto !important;
+        z-index: 2 !important;
+        isolation: isolate !important;
+        overflow: hidden !important;
+        transform: none !important;
+        translate: none !important;
+      }
+      :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_all_a__#__s02_all_b__#__s02_all_c__) :is(svg, i, [class*="icon"], .btn-video-play-overlay, .btn-play-pause, #btn-video-play, .video-overlay-chrome, .gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot, .pulse-dot):not(.founder-dropped-pin),
+      :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_all_a__#__s02_all_b__#__s02_all_c__) *::before,
+      :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_all_a__#__s02_all_b__#__s02_all_c__) *::after {
         position: static !important;
         top: auto !important;
         left: auto !important;
         right: auto !important;
         bottom: auto !important;
         inset: auto !important;
+        transform: none !important;
         translate: none !important;
         z-index: auto !important;
         float: none !important;
+        margin-top: 0 !important;
       }
-      :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, [data-testid="video-player"], #analysis-panel, [data-testid="analysis-panel"], #__s02_hide_a__#__s02_hide_b__#__s02_hide_c__) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], .video-markers-layer, .timeline-marker, [class*="floating"]:not([data-testid]):not([id]), [class*="float-"]:not([data-testid]):not([id])) {
+      :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, [data-testid="video-player"], #analysis-panel, [data-testid="analysis-panel"], #__s02_hide_a__#__s02_hide_b__#__s02_hide_c__) :is(.is-hidden, [hidden], svg.is-hidden, svg[hidden], .video-markers-layer, .timeline-marker, [class*="floating"]:not([data-testid]):not([id]), [class*="float-"]:not([data-testid]):not([id])) {
         display: none !important;
+      }
+      .founder-dropped-pin,
+      .founder-dropped-pin[data-review-id],
+      .founder-dropped-pin[data-review-id*="5dbok"],
+      .founder-dropped-pin[data-review-id*="hzj5b"],
+      .founder-dropped-pin[data-review-id*="q1k1a"],
+      .founder-dropped-pin[data-review-id*="7tqmf"],
+      .founder-dropped-pin[data-review-id*="w3lma"],
+      .founder-dropped-pin[data-review-id*="hdvby"],
+      .founder-dropped-pin[data-review-id*="xgnnj"],
+      .founder-dropped-pin[data-review-id*="cd2h0"],
+      .founder-dropped-pin[data-review-id*="ke7ni"],
+      .founder-dropped-pin[data-review-id*="vvemf"],
+      .founder-dropped-pin[data-review-id*="6n1hg"],
+      button.founder-dropped-pin,
+      button[class*="founder-dropped-pin"],
+      [class*="founder-dropped-pin"],
+      :is(body, html, main, section, div) .founder-dropped-pin,
+      :is(body, html, main, section, div) [class*="founder-dropped-pin"],
+      :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container) .founder-dropped-pin,
+      :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container) [class*="founder-dropped-pin"] {
+        top: auto !important;
+        bottom: 16px !important;
+        right: 16px !important;
+        z-index: 10 !important;
+        pointer-events: auto;
+      }
+      :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .top-bar, .navbar, .nav-bar, .site-header, .main-header, .main-nav, .screen-nav, .screen-switcher, .workflow-nav, .stage-context-bar, #app-stage-context-bar, [role="navigation"], .detail-top-nav, .nav-quick-source, .nav-left-group) :is(.founder-dropped-pin, [class*="founder-dropped-pin"]) {
+        position: static !important;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        inset: auto !important;
+        margin-left: auto !important;
+        z-index: 10 !important;
+        float: none !important;
+      }
+      .detail-top-nav :is(.founder-dropped-pin, [class*="founder-dropped-pin"]) {
+        position: static !important;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        margin-left: auto !important;
+        z-index: 10 !important;
       }
       .detail-top-nav {
         position: relative !important;
         z-index: 2 !important;
+        isolation: isolate !important;
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
@@ -89,6 +172,7 @@
       .detail-hero-header {
         position: relative !important;
         z-index: 2 !important;
+        isolation: isolate !important;
         display: flex !important;
         align-items: flex-start !important;
         justify-content: space-between !important;
@@ -139,6 +223,7 @@
       .dual-lens-tabs-container {
         position: relative !important;
         z-index: 2 !important;
+        isolation: isolate !important;
         width: 100% !important;
         margin: 12px 0 !important;
         overflow: hidden !important;
@@ -160,7 +245,7 @@
         width: 100% !important;
         box-sizing: border-box !important;
       }
-      :is(.btn-video-play-overlay, #btn-video-play) {
+      :is(.btn-video-play-overlay, .btn-play-pause, #btn-video-play) {
         position: static !important;
         display: inline-flex !important;
         align-items: center !important;
@@ -172,6 +257,7 @@
         overflow: hidden !important;
         flex-shrink: 0 !important;
         transform: none !important;
+        translate: none !important;
       }
       :is(.gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot) {
         position: static !important;
@@ -181,10 +267,16 @@
         flex-shrink: 0 !important;
         overflow: hidden !important;
         transform: none !important;
+        translate: none !important;
+        margin: 0 !important;
+      }
+      .tab-indicator-dot {
+        width: 8px !important;
+        height: 8px !important;
+        border-radius: 999px !important;
       }
       :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_svg2_a__#__s02_svg2_b__#__s02_svg2_c__) svg:not([hidden]):not(.is-hidden) {
         position: static !important;
-        display: inline-block !important;
         vertical-align: middle !important;
         width: 16px !important;
         height: 16px !important;
@@ -193,6 +285,8 @@
         flex-shrink: 0 !important;
         overflow: hidden !important;
         transform: none !important;
+        translate: none !important;
+        margin: 0 !important;
       }
       #btn-video-play svg:not([hidden]):not(.is-hidden) {
         width: 24px !important;
@@ -214,7 +308,7 @@
          TOP BAR: BREADCRUMBS, BACK TO S01 & CLIP SUMMARY
          Wireframe 1: [Back to Research]  CREATOR / SOURCE / ORIGINAL LINK
          ========================================================================== -->
-    <div class="detail-top-nav" role="region" aria-label="แถบนำทางส่วนหัวและข้อมูลต้นทาง S02" style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; overflow: hidden;">
+    <div class="detail-top-nav" role="region" aria-label="แถบนำทางส่วนหัวและข้อมูลต้นทาง S02" style="position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; overflow: hidden;">
       <div class="nav-left-group" style="display: inline-flex; align-items: center; gap: 8px;">
         <!-- Back Button (D1: Returns to S01 without saving to Vault) -->
         <button 
@@ -312,12 +406,12 @@
            Column 1 (Left):  video-player + source-meta
            Column 2 (Right): analysis-panel (tab-content-what, tab-packaging-how)
          ========================================================================== -->
-    <main class="research-detail-grid" id="research-detail-grid" data-testid="research-detail-grid">
+    <main class="research-detail-grid" id="research-detail-grid" data-testid="research-detail-grid" style="position: relative; z-index: 1; overflow: hidden;">
 
       <!-- ======================================================================
            LEFT COLUMN: VIDEO PLAYER & SOURCE METADATA
            ====================================================================== -->
-      <section class="detail-col-left" aria-label="เครื่องเล่นวิดีโอและข้อมูลต้นฉบับ">
+      <section class="detail-col-left" aria-label="เครื่องเล่นวิดีโอและข้อมูลต้นฉบับ" style="position: relative; z-index: 1; overflow: hidden;">
 
         <!-- 1. VIDEO PLAYER CONTAINER -->
         <article 
@@ -325,25 +419,26 @@
           id="video-player" 
           data-testid="video-player"
           aria-label="เครื่องเล่นวิดีโออ้างอิง"
+          style="position: relative; z-index: 1; overflow: hidden;"
         >
           <!-- Video Screen Canvas (9:16 Vertical & 16:9 Adaptable) -->
-          <div class="video-canvas-container" id="video-canvas-container" tabindex="0" role="region" aria-label="พื้นที่แสดงภาพวิดีโอ">
+          <div class="video-canvas-container" id="video-canvas-container" tabindex="0" role="region" aria-label="พื้นที่แสดงภาพวิดีโอ" style="position: relative; z-index: 1; overflow: hidden;">
             
-            <div class="video-viewport" id="video-viewport">
-              <div class="video-overlay-chrome">
-                <span class="video-badge-ratio" id="video-badge-ratio">Vertical 9:16</span>
-                <span class="video-badge-watermark">MEW CONTENT OS</span>
+            <div class="video-viewport" id="video-viewport" style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 10px; overflow: hidden;">
+              <div class="video-overlay-chrome" style="position: static; display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 8px; transform: none; z-index: auto;">
+                <span class="video-badge-ratio" id="video-badge-ratio" style="position: static;">Vertical 9:16</span>
+                <span class="video-badge-watermark" style="position: static;">MEW CONTENT OS</span>
               </div>
 
               <!-- Animated / Interactive Canvas Overlay -->
-              <div class="video-mockup-content">
-                <div class="video-onscreen-avatar" id="video-avatar-glyph" aria-hidden="true">M</div>
-                <div class="video-creator-tag" id="video-creator-tag">@mewteetawat</div>
-                <div class="video-hook-caption" id="video-hook-caption" data-testid="video-hook-caption">
+              <div class="video-mockup-content" style="position: static; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; transform: none; z-index: auto;">
+                <div class="video-onscreen-avatar" id="video-avatar-glyph" aria-hidden="true" style="position: static; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transform: none;">M</div>
+                <div class="video-creator-tag" id="video-creator-tag" style="position: static;">@mewteetawat</div>
+                <div class="video-hook-caption" id="video-hook-caption" data-testid="video-hook-caption" style="position: static;">
                   "อย่าเฝ้ายอดหลังโพสต์ เอาเวลาไปสร้างสรรค์งานถัดไป"
                 </div>
-                <div class="video-beat-badge" id="video-beat-indicator">
-                  <span class="pulse-dot" aria-hidden="true"></span>
+                <div class="video-beat-badge" id="video-beat-indicator" style="position: static; display: inline-flex; align-items: center; gap: 6px; transform: none;">
+                  <span class="pulse-dot" aria-hidden="true" style="position: static; display: inline-block; width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; transform: none;"></span>
                   <span id="video-beat-text">Beat 1: Hook &amp; Problem Agitation</span>
                 </div>
               </div>
@@ -368,7 +463,7 @@
             </div>
 
             <!-- Video Timeline / Scrubber Bar -->
-            <div class="video-controls-bar" id="video-controls-bar">
+            <div class="video-controls-bar" id="video-controls-bar" style="position: relative; z-index: 1; overflow: hidden; width: 100%;">
               <div 
                 class="video-scrubber-track" 
                 id="video-scrubber-track" 
@@ -379,12 +474,13 @@
                 aria-valuemax="135" 
                 aria-valuenow="35"
                 data-testid="video-scrubber-track"
+                style="position: relative; overflow: hidden; width: 100%; height: 8px;"
               >
                 <div class="video-scrub-progress" id="video-scrub-progress" style="width: 26%;"></div>
                 <div class="video-scrub-handle" id="video-scrub-handle" style="left: 26%;"></div>
 
                 <!-- Timeline Highlight Markers from Packaging Analysis -->
-                <div class="video-markers-layer" id="video-markers-layer" aria-hidden="true">
+                <div class="video-markers-layer" id="video-markers-layer" aria-hidden="true" style="display: none;">
                   <span class="timeline-marker" style="left: 0%;" title="00:00 Hook"></span>
                   <span class="timeline-marker" style="left: 33%;" title="00:45 Pivot"></span>
                   <span class="timeline-marker" style="left: 66%;" title="01:30 Takeaway"></span>
@@ -392,20 +488,20 @@
               </div>
 
               <!-- Controls Toolbar -->
-              <div class="video-meta-controls">
+              <div class="video-meta-controls" style="position: static; display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%;">
                 <div class="video-time-display font-num" id="source-time" data-testid="source-time">
                   <span id="current-time-text">00:35</span> / <span id="duration-time-text" data-testid="duration-time-text">02:15</span>
                 </div>
 
-                <div class="video-actions-group">
-                  <button type="button" class="btn-ctrl-action" id="btn-toggle-sound" aria-label="เปิดหรือปิดเสียง" title="เปิด/ปิดเสียง">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <div class="video-actions-group" style="display: inline-flex; align-items: center; gap: 8px;">
+                  <button type="button" class="btn-ctrl-action" id="btn-toggle-sound" aria-label="เปิดหรือปิดเสียง" title="เปิด/ปิดเสียง" style="position: static; display: inline-flex; align-items: center; justify-content: center;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: static; width: 16px; height: 16px; max-width: 16px; max-height: 16px; flex-shrink: 0; transform: none;">
                       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                       <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                     </svg>
                   </button>
-                  <button type="button" class="btn-ctrl-action" id="btn-replay-video" aria-label="เล่นคลิปซ้ำจากจุดเริ่มต้น" title="Replay">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <button type="button" class="btn-ctrl-action" id="btn-replay-video" aria-label="เล่นคลิปซ้ำจากจุดเริ่มต้น" title="Replay" style="position: static; display: inline-flex; align-items: center; justify-content: center;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: static; width: 16px; height: 16px; max-width: 16px; max-height: 16px; flex-shrink: 0; transform: none;">
                       <polyline points="1 4 1 10 7 10"></polyline>
                       <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
                     </svg>
@@ -423,18 +519,19 @@
           id="source-meta" 
           data-testid="source-meta"
           aria-label="ข้อมูลอภิพันธุ์ของคลิปต้นทาง"
+          style="position: relative; z-index: 1; overflow: hidden;"
         >
-          <div class="source-meta-header">
-            <h2 class="source-meta-heading">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <div class="source-meta-header" style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; overflow: hidden;">
+            <h2 class="source-meta-heading" style="position: static; display: inline-flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: static; width: 16px; height: 16px; max-width: 16px; max-height: 16px; flex-shrink: 0; transform: none;">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M12 16v-4"></path>
                 <path d="M12 8h.01"></path>
               </svg>
               <span>Source Metadata &amp; Rights</span>
             </h2>
-            <span class="badge-rights-verified" id="meta-rights" data-testid="meta-rights">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <span class="badge-rights-verified" id="meta-rights" data-testid="meta-rights" style="position: static; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: static; width: 12px; height: 12px; max-width: 12px; max-height: 12px; flex-shrink: 0; transform: none;">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
               Permission Verified
@@ -444,13 +541,13 @@
           <div class="source-meta-body">
             
             <!-- Creator Profile Row -->
-            <div class="creator-profile-badge">
-              <div class="creator-avatar-circle" id="meta-avatar" aria-hidden="true">C</div>
+            <div class="creator-profile-badge" style="position: static; display: flex; align-items: center; gap: 12px; overflow: hidden;">
+              <div class="creator-avatar-circle" id="meta-avatar" aria-hidden="true" style="position: static; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transform: none;">C</div>
               <div class="creator-details">
-                <div class="creator-title-row">
+                <div class="creator-title-row" style="display: inline-flex; align-items: center; gap: 6px;">
                   <span class="creator-display-name" id="meta-creator" data-testid="meta-creator">Creator A</span>
-                  <span class="verified-badge-glyph" title="Verified source" aria-label="Verified creator">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <span class="verified-badge-glyph" title="Verified source" aria-label="Verified creator" style="position: static; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transform: none;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="position: static; width: 12px; height: 12px; max-width: 12px; max-height: 12px; flex-shrink: 0; transform: none;">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                     </svg>
                   </span>
@@ -473,9 +570,10 @@
                     id="link-original" 
                     data-testid="link-original"
                     title="คลิกเพื่อเปิดดูวิดีโอต้นฉบับ"
+                    style="position: static; display: inline-flex; align-items: center; gap: 6px;"
                   >
                     <span class="link-original-text" id="link-original-text">https://example.com/watch?v=post-and-forget</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: static; width: 12px; height: 12px; max-width: 12px; max-height: 12px; flex-shrink: 0; transform: none;">
                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                       <polyline points="15 3 21 3 21 9"></polyline>
                       <line x1="10" y1="14" x2="21" y2="3"></line>
@@ -512,9 +610,9 @@
             </dl>
 
             <!-- Non-negotiable Reminder Box -->
-            <div class="save-gate-reminder-box">
-              <div class="reminder-icon" aria-hidden="true">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="save-gate-reminder-box" style="position: static; display: flex; align-items: center; gap: 12px; overflow: hidden;">
+              <div class="reminder-icon" aria-hidden="true" style="position: static; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transform: none;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="position: static; width: 15px; height: 15px; max-width: 15px; max-height: 15px; flex-shrink: 0; transform: none;">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
               </div>
@@ -538,18 +636,19 @@
         id="analysis-panel" 
         data-testid="analysis-panel"
         aria-label="แผงผลวิเคราะห์ปัญญาประดิษฐ์สองเลนส์"
+        style="position: relative; z-index: 1; overflow: hidden;"
       >
-        <article class="mew-offer-card analysis-panel-card violet-bar">
+        <article class="mew-offer-card analysis-panel-card violet-bar" style="position: relative; z-index: 1; overflow: hidden;">
           
           <!-- Analysis Header & Re-analysis Toolbar -->
-          <div class="analysis-panel-top">
-            <div class="analysis-badge-row">
-              <span class="badge-pill violet-accent">Dual-Lens AI Analysis</span>
-              <span class="version-pill font-num" id="analysis-version-badge" data-testid="analysis-version-badge">v1.0 (Active)</span>
+          <div class="analysis-panel-top" style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; overflow: hidden;">
+            <div class="analysis-badge-row" style="display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span class="badge-pill violet-accent" style="position: static;">Dual-Lens AI Analysis</span>
+              <span class="version-pill font-num" id="analysis-version-badge" data-testid="analysis-version-badge" style="position: static;">v1.0 (Active)</span>
             </div>
 
             <!-- Version Switcher / Re-Analyze Trigger -->
-            <div class="analysis-version-actions">
+            <div class="analysis-version-actions" style="display: inline-flex; align-items: center; gap: 8px;">
               <button 
                 type="button" 
                 class="btn-analyze-again" 
@@ -557,8 +656,9 @@
                 data-testid="btn-analyze-again" 
                 data-action="btn-analyze-again"
                 title="วิเคราะห์คลิปนี้ใหม่อีกครั้งโดยไม่เปลี่ยนแปลงบันทึกที่มีอยู่เดิม"
+                style="position: static; display: inline-flex; align-items: center; gap: 8px;"
               >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: static; width: 13px; height: 13px; max-width: 13px; max-height: 13px; flex-shrink: 0; transform: none;">
                   <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
                 </svg>
                 <span>Analyze Again</span>
@@ -567,8 +667,8 @@
           </div>
 
           <!-- TAB SWITCHER NAVIGATION: tab-content-what vs tab-packaging-how -->
-          <div class="dual-lens-tabs-container">
-            <div class="pill-tabs-list" role="tablist" aria-label="สลับดูมิติการวิเคราะห์สาระ (WHAT) หรือลีลา (HOW)">
+          <div class="dual-lens-tabs-container" style="position: relative; z-index: 1; width: 100%; overflow: hidden;">
+            <div class="pill-tabs-list" role="tablist" aria-label="สลับดูมิติการวิเคราะห์สาระ (WHAT) หรือลีลา (HOW)" style="position: relative; z-index: 1; display: flex; align-items: stretch; flex-wrap: wrap; gap: 10px; width: 100%;">
               
               <!-- TAB 1: Content (WHAT) -->
               <button 
@@ -582,8 +682,9 @@
                 aria-selected="true" 
                 aria-controls="panel-content-what" 
                 tabindex="0"
+                style="position: static; display: inline-flex; align-items: center; gap: 8px;"
               >
-                <span class="tab-indicator-dot coral" aria-hidden="true"></span>
+                <span class="tab-indicator-dot coral" aria-hidden="true" style="position: static; display: inline-block; width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; transform: none;"></span>
                 <span class="tab-label-text">
                   <span class="tab-title">Content (WHAT)</span>
                   <span class="tab-sub">สาระสำคัญ &amp; สิ่งที่พูด</span>
@@ -602,8 +703,9 @@
                 aria-selected="false" 
                 aria-controls="panel-packaging-how" 
                 tabindex="-1"
+                style="position: static; display: inline-flex; align-items: center; gap: 8px;"
               >
-                <span class="tab-indicator-dot violet" aria-hidden="true"></span>
+                <span class="tab-indicator-dot violet" aria-hidden="true" style="position: static; display: inline-block; width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; transform: none;"></span>
                 <span class="tab-label-text">
                   <span class="tab-title">Packaging (HOW)</span>
                   <span class="tab-sub">วิธีเล่า &amp; จังหวะ Hook</span>
@@ -614,7 +716,7 @@
           </div>
 
           <!-- TAB PANELS CONTENT AREA -->
-          <div class="analysis-panels-body">
+          <div class="analysis-panels-body" style="position: relative; z-index: 1; overflow: hidden;">
 
             <!-- ================================================================
                  TAB PANEL 1: CONTENT (WHAT)
