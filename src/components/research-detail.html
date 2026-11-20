@@ -1,6 +1,6 @@
 <!-- ==============================================================================
      MEW CONTENT OS — S02 RESEARCH DETAIL & DUAL-LENS AI ANALYSIS (Topic T08)
-     Review Fix: rev-1795177797688-5dbok / rev-1795192509578-hzj5b / rev-1795175105831-7tqmf / rev-1795171372543-q1k1a / rev-1795171060196-w3lma / rev-1795043420171-hdvby / rev-1795043208117-xgnnj / rev-1795005894561-cd2h0 / rev-1794958141101-ke7ni (แก้ปัญหาไอคอนลอยทับเมนูด้านบน - ควบคุม z-index ขององค์ประกอบและแถบนำทาง S02 ให้อยู่ระดับ 1-2 ไม่เท่ากับหรือสูงกว่าเมนูหลัก z-index 50/99999 และจัดขอบเขต isolation ให้ไอคอนทั้งหมดเลื่อนมุดใต้เมนูด้านบนอย่างสมบูรณ์)
+     Review Fix: rev-1795197469734-7wpy6 / rev-1795195188272-dfaxu / rev-1795194835259-pdfmf / rev-1795192509578-hzj5b / rev-1795177797688-5dbok / rev-1795175105831-7tqmf / rev-1795171372543-q1k1a / rev-1795171060196-w3lma / rev-1795043420171-hdvby / rev-1795043208117-xgnnj / rev-1795005894561-cd2h0 / rev-1794958141101-ke7ni (แก้ปัญหาไอคอนลอยทับเมนูด้านบน - ควบคุม z-index ขององค์ประกอบและแถบนำทาง S02 ให้อยู่ระดับ 1-2 ไม่เท่ากับหรือสูงกว่าเมนูหลัก z-index 50/99999 และจัดขอบเขต isolation ให้ไอคอนทั้งหมดเลื่อนมุดใต้เมนูด้านบนอย่างสมบูรณ์)
      Wireframe 1 Layout:
        Left Column:  video-player + source-meta (creator, link-original, time, rights)
        Right Column: analysis-panel (2 tabs: tab-content-what, tab-packaging-how)
@@ -17,10 +17,10 @@
   data-section="view-research-detail"
   data-testid="screen-research-detail"
   data-s02-scope="true"
-  data-review-id="rev-1795192509578-hzj5b"
+  data-review-id="rev-1795197469734-7wpy6"
   style="position: relative; z-index: 1; isolation: isolate; contain: layout style paint; overflow: hidden;"
 >
-  <div class="research-detail-container" id="view-research-detail" data-testid="research-detail-root" data-s02-scope="true" data-review-id="rev-1795192509578-hzj5b" style="position: relative; z-index: 1; isolation: isolate; contain: layout style paint; overflow: hidden;">
+  <div class="research-detail-container" id="view-research-detail" data-testid="research-detail-root" data-s02-scope="true" data-review-id="rev-1795197469734-7wpy6" style="position: relative; z-index: 1; isolation: isolate; contain: layout style paint; overflow: hidden;">
     <style>
       :is(body > header, body > nav, #app > header, #app > nav, .app-shell > header, .app-shell > nav, .app-header, header.app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .top-bar, .navbar, .nav-bar, .site-header, .main-header, .main-nav, .workflow-nav, .screen-nav, .screen-switcher, .stage-context-bar, #app-stage-context-bar):not(#screen-research-detail):not(#screen-research-detail *):not([data-s02-scope="true"]):not([data-s02-scope="true"] *):not(.detail-top-nav):not(#view-research-detail):not(#view-research-detail *) {
         z-index: 99999 !important;
@@ -112,8 +112,13 @@
       }
       .founder-dropped-pin,
       .founder-dropped-pin[data-review-id],
-      .founder-dropped-pin[data-review-id*="5dbok"],
+      .founder-dropped-pin[data-review-id*="7wpy6"],
+      .founder-dropped-pin[data-review-id*="rev-1795197469734-7wpy6"],
+      .founder-dropped-pin[data-review-id*="dfaxu"],
+      .founder-dropped-pin[data-review-id*="rev-1795195188272-dfaxu"],
+      .founder-dropped-pin[data-review-id*="pdfmf"],
       .founder-dropped-pin[data-review-id*="hzj5b"],
+      .founder-dropped-pin[data-review-id*="5dbok"],
       .founder-dropped-pin[data-review-id*="q1k1a"],
       .founder-dropped-pin[data-review-id*="7tqmf"],
       .founder-dropped-pin[data-review-id*="w3lma"],
