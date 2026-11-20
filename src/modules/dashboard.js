@@ -227,11 +227,11 @@ export class DashboardController {
       if (!this.root.getAttribute('data-step')) {
         this.root.setAttribute('data-step', 'ข้อ 1');
       }
-      this.root.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+      this.root.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh');
       const viewOverview = (typeof document !== 'undefined' ? document.getElementById('view-overview') : null) || (this.root.parentElement && this.root.parentElement.id === 'view-overview' ? this.root.parentElement : null);
       if (viewOverview) {
         viewOverview.setAttribute('data-step', 'ข้อ 1');
-        viewOverview.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+        viewOverview.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh');
       }
     }
 
@@ -510,7 +510,7 @@ export class DashboardController {
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
           color: #0f172a !important;
           opacity: 1 !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
         html body #view-overview .summary-card-inner,
@@ -756,7 +756,7 @@ export class DashboardController {
           background-color: #ffffff !important;
           background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
           transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
         }
         html body #view-overview .summary-card:hover,
@@ -789,7 +789,7 @@ export class DashboardController {
           background-color: #ffffff !important;
           background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
           transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
         }
         html body #view-overview #card-recent-research .summary-metric-number,
@@ -1014,7 +1014,7 @@ export class DashboardController {
           text-align: left !important;
           overflow: hidden !important;
         }
-        /* ข้อ 1: Dual-Lens Research (Ultra-Bright Emerald Accent - rev-1794843392199-2ike5 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7) explicit top border & luminous theme */
+        /* ข้อ 1: Dual-Lens Research (Ultra-Bright Emerald Accent - rev-1794843392199-2ike5 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh) explicit top border & luminous theme */
         html body #view-overview #card-recent-research,
         html body #view-overview .card-recent-research,
         html body #view-overview article[data-step="ข้อ 1"],
@@ -1031,7 +1031,7 @@ export class DashboardController {
           background-color: #ffffff !important;
           background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
         }
         html body #view-overview .summary-card-inner,
         .dashboard-container .summary-card-inner {
@@ -1302,7 +1302,7 @@ export class DashboardController {
           font-weight: 400 !important;
           font-size: 0.8125rem !important;
         }
-        /* ข้อ 1 & S00 Ultra-Bright Luminous Card Overrides (rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7) */
+        /* ข้อ 1 & S00 Ultra-Bright Luminous Card Overrides (rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh) */
         html body #view-overview .dashboard-hero .hero-eyebrow-row .dashboard-step-badge,
         html body #view-overview .dashboard-hero .badge-pill.dashboard-step-badge,
         #dashboard-root .dashboard-hero .dashboard-step-badge,
@@ -1338,7 +1338,7 @@ export class DashboardController {
           border: 1.5px solid #a7f3d0 !important;
           border-top: 4px solid #34d399 !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
         }
         html body #view-overview #card-recent-research,
         html body #view-overview .card-recent-research,
@@ -1353,7 +1353,7 @@ export class DashboardController {
           border: 1.5px solid #a7f3d0 !important;
           border-top: 4px solid #34d399 !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
         }
         html body #view-overview #card-recent-research:hover,
         html body #view-overview .card-recent-research:hover,
@@ -1463,7 +1463,7 @@ export class DashboardController {
           font-weight: 600 !important;
         }
 
-        /* rev-1794958140927-iq7vj rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7: ข้อ 1 (Ultra-bright luminous cards - ข้อ 1 Dual-Lens) */
+        /* rev-1794958140927-iq7vj rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh: ข้อ 1 (Ultra-bright luminous cards - ข้อ 1 Dual-Lens) */
         html body #view-overview .summary-card,
         html body #view-overview .stat-card,
         html body #view-overview .kpi-card,
@@ -1481,7 +1481,7 @@ export class DashboardController {
           background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           border-color: #a7f3d0 !important;
           box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
-          filter: brightness(9.5) !important;
+          filter: brightness(14) !important;
         }
       `;
     }
@@ -1547,7 +1547,7 @@ export class DashboardController {
         const isPrimaryCard = card.classList.contains('summary-card') || card.classList.contains('mew-offer-card') || card.classList.contains('panel-card') || (card.id && card.id.startsWith('card-'));
         if (!isPrimaryCard && card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
         const isItemOne = card.id === 'card-recent-research' || card.getAttribute('data-step') === 'ข้อ 1';
-        card.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+        card.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh');
         card.style.setProperty('background', '#ffffff', 'important');
         card.style.setProperty('background-color', '#ffffff', 'important');
         card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)', 'important');
@@ -1557,7 +1557,7 @@ export class DashboardController {
         card.style.setProperty('box-shadow', '0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff', 'important');
         card.style.setProperty('color', '#0f172a', 'important');
         card.style.setProperty('opacity', '1', 'important');
-        card.style.setProperty('filter', 'brightness(9.5)', 'important');
+        card.style.setProperty('filter', 'brightness(14)', 'important');
         if (card.classList.contains('summary-card') || card.closest('.summary-grid')) {
           card.style.setProperty('display', 'flex', 'important');
           card.style.setProperty('flex-direction', 'column', 'important');
@@ -1644,8 +1644,8 @@ export class DashboardController {
         cardEl.style.setProperty('background-color', '#ffffff', 'important');
         cardEl.style.setProperty('background-image', 'linear-gradient(180deg, #ffffff 0%, #ffffff 100%)', 'important');
         cardEl.style.setProperty('box-shadow', '0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff', 'important');
-        cardEl.style.setProperty('filter', 'brightness(9.5)', 'important');
-        cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+        cardEl.style.setProperty('filter', 'brightness(14)', 'important');
+        cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh');
         const metricNum = cardEl.querySelector('.summary-metric-number, .metric-number, .stat-value, .font-num');
         if (metricNum) {
           metricNum.style.setProperty('color', '#10b981', 'important');
@@ -1697,7 +1697,7 @@ export class DashboardController {
         }
         if (label === 'ข้อ 1') {
           cardEl.setAttribute('data-step', 'ข้อ 1');
-          cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+          cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7 rev-1795194835199-mpfjt rev-1795194835080-vobxl rev-1795195188209-84dmy rev-1795195188136-nn9t9 rev-1795196231022-bs4k4 rev-1795196230951-pqi0o rev-1795197469683-yirtq rev-1795197469614-yfyoh');
           cardEl.setAttribute('title', 'ข้อ 1: Dual-Lens Research (S01)');
           cardEl.setAttribute('aria-label', 'ข้อ 1: การ์ดวิจัยล่าสุด: เปิดดูรายการวิจัยและผลการวิเคราะห์');
           const previewMeta = cardEl.querySelector('.preview-item-meta');
