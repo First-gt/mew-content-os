@@ -341,8 +341,13 @@ export class ResearchDetailController {
         }
         .founder-dropped-pin,
         .founder-dropped-pin[data-review-id],
-        .founder-dropped-pin[data-review-id*="5dbok"],
+        .founder-dropped-pin[data-review-id*="7wpy6"],
+        .founder-dropped-pin[data-review-id*="rev-1795197469734-7wpy6"],
+        .founder-dropped-pin[data-review-id*="dfaxu"],
+        .founder-dropped-pin[data-review-id*="rev-1795195188272-dfaxu"],
+        .founder-dropped-pin[data-review-id*="pdfmf"],
         .founder-dropped-pin[data-review-id*="hzj5b"],
+        .founder-dropped-pin[data-review-id*="5dbok"],
         .founder-dropped-pin[data-review-id*="q1k1a"],
         .founder-dropped-pin[data-review-id*="7tqmf"],
         .founder-dropped-pin[data-review-id*="w3lma"],
@@ -495,7 +500,7 @@ export class ResearchDetailController {
     s02Targets.forEach((target) => {
       if (typeof target.setAttribute === 'function') {
         target.setAttribute('data-s02-scope', 'true');
-        target.setAttribute('data-review-id', 'rev-1795192509578-hzj5b');
+        target.setAttribute('data-review-id', 'rev-1795197469734-7wpy6');
       }
       if (target.style && typeof target.style.setProperty === 'function') {
         target.style.setProperty('position', 'relative', 'important');
