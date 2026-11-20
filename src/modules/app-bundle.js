@@ -2580,6 +2580,18 @@ class DashboardController {
       return this;
     }
 
+    if (this.root && typeof this.root.setAttribute === 'function') {
+      if (!this.root.getAttribute('data-step')) {
+        this.root.setAttribute('data-step', 'ข้อ 1');
+      }
+      this.root.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+      const viewOverview = (typeof document !== 'undefined' ? document.getElementById('view-overview') : null) || (this.root.parentElement && this.root.parentElement.id === 'view-overview' ? this.root.parentElement : null);
+      if (viewOverview) {
+        viewOverview.setAttribute('data-step', 'ข้อ 1');
+        viewOverview.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+      }
+    }
+
     this.bindEvents();
     this.applyBrightCardTheme();
     this.render();
@@ -2622,11 +2634,12 @@ class DashboardController {
       styleEl = document.createElement('style');
       styleEl.id = styleId;
       targetParent.appendChild(styleEl);
-    } else if (styleEl && document.body && styleEl.parentNode !== document.body) {
-      document.body.appendChild(styleEl);
+    } else if (styleEl && targetParent && (styleEl.parentNode !== targetParent || targetParent.lastElementChild !== styleEl)) {
+      targetParent.appendChild(styleEl);
     }
     if ( styleEl ) {
       styleEl.textContent = `
+        html body #view-overview#view-overview#view-overview,
         html body #view-overview#view-overview,
         html body #screen-s00#screen-s00,
         html body [data-screen="S00"][data-screen="S00"],
@@ -2653,19 +2666,25 @@ class DashboardController {
           --mew-surface: #ffffff !important;
           --mew-card: #ffffff !important;
           --mew-bg: #ffffff !important;
+          --v6-bg: #ffffff !important;
+          --v6-bg-elevated: #ffffff !important;
+          --v6-bg-card: #ffffff !important;
+          --v6-surface: #ffffff !important;
+          --v6-card: #ffffff !important;
           --surface-1: #ffffff !important;
           --surface-2: #ffffff !important;
           --surface-3: #ffffff !important;
           --text-primary: #0f172a !important;
           --text-secondary: #1e293b !important;
           --text-muted: #334155 !important;
-          --border-color: #bbf7d0 !important;
-          --border-subtle: #dcfce7 !important;
+          --border-color: #6ee7b7 !important;
+          --border-subtle: #a7f3d0 !important;
           background: #ffffff !important;
           background-color: #ffffff !important;
           background-image: linear-gradient(180deg, #ffffff 0%, #ffffff 100%) !important;
           color: #0f172a !important;
         }
+        html body #view-overview#view-overview#view-overview .dashboard-hero,
         html body #view-overview#view-overview .dashboard-hero,
         html body #view-overview .dashboard-hero,
         html body #screen-s00 .dashboard-hero,
@@ -2673,15 +2692,16 @@ class DashboardController {
         #view-overview .dashboard-hero,
         #dashboard-root .dashboard-hero,
         .dashboard-container .dashboard-hero {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+          background: #ffffff !important;
           background-color: #ffffff !important;
-          border: 1.5px solid #a7f3d0 !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #6ee7b7 !important;
           border-top: 4px solid #34d399 !important;
           border-radius: 24px !important;
           padding: 32px 36px !important;
-          box-shadow: 0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff !important;
+          box-shadow: 0 16px 48px rgba(52, 211, 153, 0.14), 0 4px 16px rgba(52, 211, 153, 0.06), 0 0 140px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 200px #ffffff !important;
           color: #0f172a !important;
-          filter: brightness(1.16) !important;
+          filter: brightness(1.25) !important;
           display: flex !important;
           flex-direction: column !important;
           justify-content: center !important;
@@ -2714,10 +2734,10 @@ class DashboardController {
           font-size: 0.75rem !important;
           font-weight: 700 !important;
           line-height: 1.25 !important;
-          background: #f0fdf4 !important;
+          background: #ffffff !important;
           color: #059669 !important;
-          border: 1px solid #a7f3d0 !important;
-          box-shadow: 0 2px 6px rgba(52, 211, 153, 0.08) !important;
+          border: 1px solid #6ee7b7 !important;
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12) !important;
         }
         #view-overview .dashboard-hero .hero-title,
         .dashboard-container .dashboard-hero .hero-title {
@@ -2752,8 +2772,8 @@ class DashboardController {
         #view-overview .dashboard-hero .hero-subtitle strong,
         .dashboard-container .dashboard-hero .hero-subtitle strong {
           color: #059669 !important;
-          background: #f0fdf4 !important;
-          border: 1px solid #a7f3d0 !important;
+          background: #ffffff !important;
+          border: 1px solid #6ee7b7 !important;
           padding: 1px 6px !important;
           border-radius: 6px !important;
         }
@@ -2782,6 +2802,19 @@ class DashboardController {
             grid-template-columns: minmax(0, 1fr) !important;
           }
         }
+        html body #view-overview#view-overview#view-overview .summary-card,
+        html body #view-overview#view-overview#view-overview .mew-offer-card,
+        html body #view-overview#view-overview#view-overview .panel-card,
+        html body #view-overview#view-overview#view-overview .card,
+        html body #view-overview#view-overview#view-overview .dashboard-card,
+        html body #view-overview#view-overview#view-overview .overview-card,
+        html body #view-overview#view-overview#view-overview .stat-card,
+        html body #view-overview#view-overview#view-overview .kpi-card,
+        html body #view-overview#view-overview#view-overview .bento-card,
+        html body #view-overview#view-overview#view-overview .coral-accent,
+        html body #view-overview#view-overview#view-overview .violet-bar,
+        html body #view-overview#view-overview#view-overview .violet-accent,
+        html body #view-overview#view-overview#view-overview .ink-accent,
         html body #view-overview#view-overview .summary-card,
         html body #view-overview#view-overview .mew-offer-card,
         html body #view-overview#view-overview .panel-card,
@@ -2798,12 +2831,16 @@ class DashboardController {
         html body #view-overview .summary-card,
         html body #view-overview .mew-offer-card,
         html body #view-overview .panel-card,
+        html body #view-overview .keep-going-s00-card,
+        html body #view-overview #s00-keep-going-card,
         html body #view-overview .summary-grid > [data-navigate="research"],
         html body #view-overview .summary-grid > [data-navigate="library"],
         html body #view-overview .summary-grid > [data-navigate="remix"],
         #view-overview .summary-card,
         #view-overview .mew-offer-card,
         #view-overview .panel-card,
+        #view-overview .keep-going-s00-card,
+        #view-overview #s00-keep-going-card,
         #view-overview .summary-grid > article,
         #view-overview .summary-grid > div,
         #view-overview #card-recent-research,
@@ -2813,19 +2850,24 @@ class DashboardController {
         #dashboard-root .summary-card,
         #dashboard-root .mew-offer-card,
         #dashboard-root .panel-card,
+        #dashboard-root .keep-going-s00-card,
+        #dashboard-root #s00-keep-going-card,
         .dashboard-container .summary-card,
         .dashboard-container .mew-offer-card,
-        .dashboard-container .panel-card {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+        .dashboard-container .panel-card,
+        .dashboard-container .keep-going-s00-card,
+        .dashboard-container #s00-keep-going-card,
+        .dashboard-container article.mew-offer-card {
+          background: #ffffff !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           border: 1.5px solid #a7f3d0 !important;
           border-top: 4px solid #34d399 !important;
           border-radius: 20px !important;
-          box-shadow: 0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
           color: #0f172a !important;
           opacity: 1 !important;
-          filter: brightness(1.16) !important;
+          filter: brightness(9.5) !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
         html body #view-overview .summary-card-inner,
@@ -2854,11 +2896,17 @@ class DashboardController {
         #view-overview .mew-offer-card:hover,
         .dashboard-container .mew-offer-card:hover {
           background: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           border-color: #34d399 !important;
-          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.2), 0 4px 12px rgba(52, 211, 153, 0.08), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.15), 0 6px 14px rgba(52, 211, 153, 0.05), inset 0 0 64px #ffffff, 0 0 48px rgba(255, 255, 255, 1) !important;
           transform: translateY(-2px);
         }
+        html body #view-overview#view-overview#view-overview .summary-card::before,
+        html body #view-overview#view-overview#view-overview .summary-card::after,
+        html body #view-overview#view-overview#view-overview .mew-offer-card::before,
+        html body #view-overview#view-overview#view-overview .mew-offer-card::after,
+        html body #view-overview#view-overview#view-overview .panel-card::before,
+        html body #view-overview#view-overview#view-overview .panel-card::after,
         #view-overview .summary-card::before,
         #view-overview .summary-card::after,
         #view-overview .mew-offer-card::before,
@@ -2872,6 +2920,7 @@ class DashboardController {
           background: none !important;
           opacity: 0 !important;
           display: none !important;
+          content: none !important;
         }
         html body #view-overview .card-preview-box,
         html body #view-overview .card-preview-box.continue-box,
@@ -2885,13 +2934,13 @@ class DashboardController {
         .dashboard-container .pipeline-item,
         .dashboard-container .vault-mini-card,
         .dashboard-container .empty-state {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+          background: #ffffff !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
-          border: 1.5px solid #a7f3d0 !important;
-          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.1), 0 0 20px rgba(255, 255, 255, 1), inset 0 0 60px #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #d1fae5 !important;
+          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.04), 0 0 48px rgba(255, 255, 255, 1), inset 0 0 64px #ffffff !important;
           color: #0f172a !important;
-          filter: brightness(1.14) !important;
+          filter: none !important;
         }
         html body #view-overview .summary-card-title,
         html body #view-overview .preview-item-title,
@@ -2971,7 +3020,7 @@ class DashboardController {
           align-items: center !important;
           justify-content: center !important;
           flex-shrink: 0 !important;
-          background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           background-color: #ffffff !important;
           color: #10b981 !important;
           border: 1.5px solid #a7f3d0 !important;
@@ -2984,7 +3033,7 @@ class DashboardController {
         .dashboard-container .summary-status-pill,
         .dashboard-container .preview-badge,
         .dashboard-container .vault-stat-tag {
-          background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           background-color: #ffffff !important;
           color: #059669 !important;
           border: 1px solid #a7f3d0 !important;
@@ -3036,38 +3085,280 @@ class DashboardController {
           display: inline-flex !important;
           align-items: center !important;
           font-weight: 800 !important;
+          font-size: 0.8125rem !important;
           letter-spacing: 0.02em !important;
-          color: #047857 !important;
+          color: #059669 !important;
           background: transparent !important;
           border: none !important;
           box-shadow: none !important;
           padding: 0 !important;
           margin: 0 !important;
         }
-        html body #view-overview #card-recent-research[data-step="ข้อ 1"],
-        #card-recent-research[data-step="ข้อ 1"],
-        .card-recent-research[data-step="ข้อ 1"],
-        [data-step="ข้อ 1"] {
-          border-top: 4px solid #10b981 !important;
-          border-radius: 20px !important;
-          transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
-        }
-        html body #view-overview #card-recent-research[data-step="ข้อ 1"]:hover,
-        #card-recent-research[data-step="ข้อ 1"]:hover,
-        .card-recent-research[data-step="ข้อ 1"]:hover,
-        [data-step="ข้อ 1"]:hover {
-          border-color: #10b981 !important;
-          box-shadow: 0 18px 40px rgba(16, 185, 129, 0.22), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 36px #ffffff !important;
-          transform: translateY(-2px) !important;
-        }
         html body #view-overview .summary-card,
-        .dashboard-container .summary-card,
-        html body #view-overview #card-recent-research,
+        html body #view-overview .mew-offer-card,
         html body #view-overview #card-vault-summary,
         html body #view-overview #card-remix-drafts,
         html body #view-overview #card-continue-work,
-        html body #view-overview .summary-grid > [data-navigate="research"],
-        .dashboard-container #card-recent-research {
+        #card-vault-summary,
+        #card-remix-drafts,
+        #card-continue-work,
+        article[data-step="ข้อ 2"],
+        article[data-step="ข้อ 3"],
+        article[data-step="ข้อ 4"] {
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
+          border-radius: 20px !important;
+          position: relative !important;
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
+        }
+        html body #view-overview .summary-card:hover,
+        html body #view-overview .mew-offer-card:hover,
+        html body #view-overview #card-vault-summary:hover,
+        html body #view-overview #card-remix-drafts:hover,
+        html body #view-overview #card-continue-work:hover,
+        #card-vault-summary:hover,
+        #card-remix-drafts:hover,
+        #card-continue-work:hover,
+        article[data-step="ข้อ 2"]:hover,
+        article[data-step="ข้อ 3"]:hover,
+        article[data-step="ข้อ 4"]:hover {
+          border-color: #34d399 !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.15), 0 6px 14px rgba(52, 211, 153, 0.05), inset 0 0 64px #ffffff, 0 0 48px rgba(255, 255, 255, 1) !important;
+          transform: translateY(-2px) !important;
+        }
+        html body #view-overview #card-recent-research,
+        #card-recent-research,
+        .card-recent-research,
+        html body #view-overview #card-recent-research[data-step="ข้อ 1"],
+        #card-recent-research[data-step="ข้อ 1"],
+        .card-recent-research[data-step="ข้อ 1"],
+        article[data-step="ข้อ 1"] {
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
+          border-radius: 20px !important;
+          position: relative !important;
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
+        }
+        html body #view-overview #card-recent-research .summary-metric-number,
+        #card-recent-research .summary-metric-number,
+        article[data-step="ข้อ 1"] .summary-metric-number {
+          color: #10b981 !important;
+        }
+        html body #view-overview #card-recent-research .footer-action-label,
+        #card-recent-research .footer-action-label,
+        article[data-step="ข้อ 1"] .footer-action-label,
+        html body #view-overview #card-recent-research .footer-arrow,
+        #card-recent-research .footer-arrow,
+        article[data-step="ข้อ 1"] .footer-arrow {
+          color: #10b981 !important;
+          font-weight: 600 !important;
+        }
+        #card-recent-research .card-step-kicker,
+        .card-recent-research .card-step-kicker,
+        article[data-step="ข้อ 1"] .card-step-kicker {
+          display: inline-flex !important;
+          align-items: center !important;
+          font-weight: 800 !important;
+          font-size: 0.8125rem !important;
+          letter-spacing: 0.02em !important;
+          color: #059669 !important;
+          background: transparent !important;
+          padding: 0 !important;
+          border-radius: 0 !important;
+          border: none !important;
+          box-shadow: none !important;
+          text-transform: none !important;
+        }
+        html body #view-overview #card-recent-research .summary-icon-wrap,
+        #card-recent-research .summary-icon-wrap,
+        article[data-step="ข้อ 1"] .summary-icon-wrap {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          border: 1.5px solid #6ee7b7 !important;
+          color: #10b981 !important;
+          box-shadow: 0 4px 12px rgba(52, 211, 153, 0.12), inset 0 0 16px #ffffff !important;
+        }
+        html body #view-overview #card-recent-research .badge-pill,
+        #card-recent-research .badge-pill,
+        article[data-step="ข้อ 1"] .badge-pill,
+        html body #view-overview #card-recent-research .preview-badge,
+        #card-recent-research .preview-badge,
+        article[data-step="ข้อ 1"] .preview-badge {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          box-shadow: none !important;
+        }
+        html body #view-overview #card-recent-research .card-preview-box,
+        #card-recent-research .card-preview-box,
+        article[data-step="ข้อ 1"] .card-preview-box {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #d1fae5 !important;
+          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.04), 0 0 48px rgba(255, 255, 255, 1), inset 0 0 64px #ffffff !important;
+        }
+        html body #view-overview #card-recent-research .preview-date,
+        #card-recent-research .preview-date,
+        article[data-step="ข้อ 1"] .preview-date {
+          color: #10b981 !important;
+          font-weight: 600 !important;
+        }
+        html body #view-overview #card-recent-research .summary-card-footer,
+        #card-recent-research .summary-card-footer,
+        article[data-step="ข้อ 1"] .summary-card-footer {
+          border-top: 1px solid #dcfce7 !important;
+        }
+        html body #view-overview #card-recent-research:hover,
+        #card-recent-research:hover,
+        .card-recent-research:hover,
+        html body #view-overview #card-recent-research[data-step="ข้อ 1"]:hover,
+        #card-recent-research[data-step="ข้อ 1"]:hover,
+        .card-recent-research[data-step="ข้อ 1"]:hover,
+        article[data-step="ข้อ 1"]:hover {
+          border-color: #34d399 !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.15), 0 6px 14px rgba(52, 211, 153, 0.05), inset 0 0 64px #ffffff, 0 0 48px rgba(255, 255, 255, 1) !important;
+          transform: translateY(-2px) !important;
+        }
+        html body #view-overview #card-recent-research:focus-visible,
+        #card-recent-research:focus-visible,
+        .card-recent-research:focus-visible,
+        html body #view-overview #card-recent-research[data-step="ข้อ 1"]:focus-visible,
+        #card-recent-research[data-step="ข้อ 1"]:focus-visible,
+        .card-recent-research[data-step="ข้อ 1"]:focus-visible,
+        article[data-step="ข้อ 1"]:focus-visible {
+          outline: 2px solid #34d399 !important;
+          outline-offset: 2px !important;
+          border-color: #10b981 !important;
+        }
+        #dashboard-root .hero-eyebrow-row > .badge-pill:first-child,
+        #dashboard-root .dashboard-step-badge,
+        [data-step="ข้อ 1"] .hero-eyebrow-row > .badge-pill:first-child,
+        [data-step="ข้อ 1"] .dashboard-step-badge,
+        .dashboard-step-badge[data-step="ข้อ 1"] {
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 0.45rem !important;
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          font-weight: 700 !important;
+          font-size: 0.75rem !important;
+          letter-spacing: 0.02em !important;
+          padding: 5px 12px !important;
+          border-radius: 999px !important;
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12) !important;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        #dashboard-root .dashboard-step-badge:hover,
+        [data-step="ข้อ 1"] .dashboard-step-badge:hover,
+        .dashboard-step-badge[data-step="ข้อ 1"]:hover {
+          transform: translateY(-1px) !important;
+          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.18) !important;
+        }
+        #dashboard-root .dashboard-step-badge .card-step-kicker,
+        [data-step="ข้อ 1"] .dashboard-step-badge .card-step-kicker,
+        .dashboard-step-badge[data-step="ข้อ 1"] .card-step-kicker {
+          display: inline-flex !important;
+          align-items: center !important;
+          font-weight: 800 !important;
+          font-size: 0.75rem !important;
+          letter-spacing: 0.02em !important;
+          color: #059669 !important;
+          background: transparent !important;
+          border: none !important;
+          border-radius: 0 !important;
+          padding: 0 !important;
+          box-shadow: none !important;
+        }
+        #dashboard-root .dashboard-step-badge::before,
+        [data-step="ข้อ 1"] .dashboard-step-badge::before,
+        .dashboard-step-badge[data-step="ข้อ 1"]::before {
+          content: '' !important;
+          display: inline-block !important;
+          width: 7px !important;
+          height: 7px !important;
+          border-radius: 50% !important;
+          background: #10b981 !important;
+          box-shadow: 0 0 6px rgba(16, 185, 129, 0.5) !important;
+        }
+        #dashboard-root .step-subkicker,
+        [data-step="ข้อ 1"] .step-subkicker {
+          display: inline-flex !important;
+          align-items: center !important;
+          font-weight: 700 !important;
+          font-size: 0.6875rem !important;
+          padding: 2px 8px !important;
+          border-radius: 999px !important;
+          background: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #a7f3d0 !important;
+          box-shadow: none !important;
+        }
+        #dashboard-root .step-title-badge,
+        [data-step="ข้อ 1"] .step-title-badge,
+        .step-title-badge[data-step="ข้อ 1"] {
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 0.35rem !important;
+          font-size: 0.75rem !important;
+          vertical-align: middle !important;
+          padding: 2px 8px !important;
+          border-radius: 999px !important;
+          background: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          font-weight: 800 !important;
+          margin-right: 0.45rem !important;
+          box-shadow: none !important;
+          transition: all 0.2s ease !important;
+        }
+        .btn-action-badge {
+          display: inline-flex !important;
+          align-items: center !important;
+          margin-left: 8px !important;
+          padding: 2px 8px !important;
+          font-size: 0.72rem !important;
+          font-weight: 750 !important;
+          border-radius: 999px !important;
+          background: rgba(255, 255, 255, 0.22) !important;
+          border: 1px solid rgba(255, 255, 255, 0.4) !important;
+          line-height: 1.2 !important;
+          letter-spacing: 0.02em !important;
+        }
+        .btn-pill.btn-primary .btn-action-badge {
+          background: rgba(255, 255, 255, 0.25) !important;
+          border-color: rgba(255, 255, 255, 0.45) !important;
+          color: #ffffff !important;
+        }
+        .btn-pill.btn-ghost .btn-action-badge {
+          background: #f1f5f9 !important;
+          border-color: #cbd5e1 !important;
+          color: #334155 !important;
+        }
+        .btn-pill.btn-violet .btn-action-badge {
+          background: rgba(255, 255, 255, 0.25) !important;
+          border-color: rgba(255, 255, 255, 0.45) !important;
+          color: #ffffff !important;
+        }
+        html body #view-overview .summary-card,
+        .dashboard-container .summary-card,
+        html body #view-overview #card-vault-summary,
+        html body #view-overview #card-remix-drafts,
+        html body #view-overview #card-continue-work {
           position: relative;
           border-top: 4px solid #34d399 !important;
           display: flex !important;
@@ -3079,6 +3370,25 @@ class DashboardController {
           box-sizing: border-box !important;
           text-align: left !important;
           overflow: hidden !important;
+        }
+        /* ข้อ 1: Dual-Lens Research (Ultra-Bright Emerald Accent - rev-1794843392199-2ike5 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7) explicit top border & luminous theme */
+        html body #view-overview #card-recent-research,
+        html body #view-overview .card-recent-research,
+        html body #view-overview article[data-step="ข้อ 1"],
+        html body #view-overview .summary-grid > [data-navigate="research"],
+        #dashboard-root #card-recent-research,
+        #card-recent-research,
+        .card-recent-research,
+        article[data-step="ข้อ 1"] {
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
+          border-radius: 20px !important;
+          position: relative !important;
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
         }
         html body #view-overview .summary-card-inner,
         .dashboard-container .summary-card-inner {
@@ -3301,7 +3611,7 @@ class DashboardController {
           font-weight: 700 !important;
           line-height: 1.25 !important;
           white-space: nowrap !important;
-          background: #f0fdf4 !important;
+          background: #ffffff !important;
           color: #059669 !important;
           border: 1px solid #a7f3d0 !important;
         }
@@ -3349,6 +3659,187 @@ class DashboardController {
           font-weight: 400 !important;
           font-size: 0.8125rem !important;
         }
+        /* ข้อ 1 & S00 Ultra-Bright Luminous Card Overrides (rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7) */
+        html body #view-overview .dashboard-hero .hero-eyebrow-row .dashboard-step-badge,
+        html body #view-overview .dashboard-hero .badge-pill.dashboard-step-badge,
+        #dashboard-root .dashboard-hero .dashboard-step-badge,
+        .dashboard-container .dashboard-hero .dashboard-step-badge {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12) !important;
+        }
+        html body #view-overview .dashboard-hero .dashboard-step-badge .card-step-kicker,
+        #dashboard-root .dashboard-hero .dashboard-step-badge .card-step-kicker {
+          background: transparent !important;
+          color: #059669 !important;
+          border: none !important;
+          border-radius: 0 !important;
+          padding: 0 !important;
+          font-weight: 800 !important;
+          box-shadow: none !important;
+        }
+        html body #view-overview .summary-card,
+        html body #view-overview .mew-offer-card,
+        html body #view-overview .panel-card,
+        html body #view-overview #card-vault-summary,
+        html body #view-overview #card-remix-drafts,
+        html body #view-overview #card-continue-work,
+        #dashboard-root .summary-card,
+        #dashboard-root .mew-offer-card {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
+        }
+        html body #view-overview #card-recent-research,
+        html body #view-overview .card-recent-research,
+        html body #view-overview [data-testid="recent-research"],
+        html body #view-overview .summary-grid > [data-navigate="research"],
+        html body #view-overview .summary-card[data-step="ข้อ 1"],
+        html body #view-overview article[data-step="ข้อ 1"],
+        #dashboard-root #card-recent-research {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
+        }
+        html body #view-overview #card-recent-research:hover,
+        html body #view-overview .card-recent-research:hover,
+        html body #view-overview [data-testid="recent-research"]:hover,
+        html body #view-overview .summary-grid > [data-navigate="research"]:hover,
+        html body #view-overview .summary-card[data-step="ข้อ 1"]:hover,
+        html body #view-overview article[data-step="ข้อ 1"]:hover,
+        #dashboard-root #card-recent-research:hover {
+          border-color: #34d399 !important;
+          border-top: 4px solid #10b981 !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.16), 0 6px 14px rgba(52, 211, 153, 0.06), inset 0 0 80px #ffffff, 0 0 64px rgba(255, 255, 255, 1) !important;
+          transform: translateY(-2px) !important;
+        }
+        html body #view-overview #card-recent-research .summary-icon-wrap,
+        html body #view-overview [data-testid="recent-research"] .summary-icon-wrap,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .summary-icon-wrap,
+        html body #view-overview article[data-step="ข้อ 1"] .summary-icon-wrap {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          border: 1.5px solid #6ee7b7 !important;
+          color: #10b981 !important;
+          box-shadow: 0 4px 12px rgba(52, 211, 153, 0.12), inset 0 0 12px #ffffff !important;
+        }
+        html body #view-overview #card-recent-research .badge-pill,
+        html body #view-overview [data-testid="recent-research"] .badge-pill,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .badge-pill,
+        html body #view-overview article[data-step="ข้อ 1"] .badge-pill {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          box-shadow: none !important;
+        }
+        html body #view-overview #card-recent-research .card-step-kicker,
+        html body #view-overview [data-testid="recent-research"] .card-step-kicker,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .card-step-kicker,
+        html body #view-overview article[data-step="ข้อ 1"] .card-step-kicker {
+          background: transparent !important;
+          color: #059669 !important;
+          border: none !important;
+          border-radius: 0 !important;
+          padding: 0 !important;
+          font-weight: 800 !important;
+          box-shadow: none !important;
+        }
+        html body #view-overview #card-recent-research .summary-metric-number,
+        html body #view-overview [data-testid="recent-research"] .summary-metric-number,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .summary-metric-number,
+        html body #view-overview article[data-step="ข้อ 1"] .summary-metric-number {
+          color: #10b981 !important;
+        }
+        html body #view-overview #card-recent-research .step-title-badge,
+        html body #view-overview [data-testid="recent-research"] .step-title-badge,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .step-title-badge,
+        html body #view-overview article[data-step="ข้อ 1"] .step-title-badge {
+          background: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          border-radius: 999px !important;
+          padding: 1px 8px !important;
+          font-size: 0.75rem !important;
+          font-weight: 800 !important;
+          margin-right: 6px !important;
+        }
+        html body #view-overview #card-recent-research .card-preview-box,
+        html body #view-overview [data-testid="recent-research"] .card-preview-box,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .card-preview-box,
+        html body #view-overview article[data-step="ข้อ 1"] .card-preview-box {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #d1fae5 !important;
+          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.04), 0 0 48px rgba(255, 255, 255, 1), inset 0 0 64px #ffffff !important;
+        }
+        html body #view-overview #card-recent-research .preview-badge,
+        html body #view-overview [data-testid="recent-research"] .preview-badge,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .preview-badge,
+        html body #view-overview article[data-step="ข้อ 1"] .preview-badge {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+        }
+        html body #view-overview #card-recent-research .preview-date,
+        html body #view-overview [data-testid="recent-research"] .preview-date,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .preview-date,
+        html body #view-overview article[data-step="ข้อ 1"] .preview-date {
+          color: #10b981 !important;
+          font-weight: 600 !important;
+        }
+        html body #view-overview #card-recent-research .summary-card-footer,
+        html body #view-overview [data-testid="recent-research"] .summary-card-footer,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .summary-card-footer,
+        html body #view-overview article[data-step="ข้อ 1"] .summary-card-footer {
+          border-top: 1px solid #dcfce7 !important;
+          color: #10b981 !important;
+        }
+        html body #view-overview #card-recent-research .footer-action-label,
+        html body #view-overview #card-recent-research .footer-arrow,
+        html body #view-overview [data-testid="recent-research"] .footer-action-label,
+        html body #view-overview [data-testid="recent-research"] .footer-arrow,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .footer-action-label,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .footer-arrow,
+        html body #view-overview article[data-step="ข้อ 1"] .footer-action-label,
+        html body #view-overview article[data-step="ข้อ 1"] .footer-arrow {
+          color: #10b981 !important;
+          font-weight: 600 !important;
+        }
+
+        /* rev-1794958140927-iq7vj rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7: ข้อ 1 (Ultra-bright luminous cards - ข้อ 1 Dual-Lens) */
+        html body #view-overview .summary-card,
+        html body #view-overview .stat-card,
+        html body #view-overview .kpi-card,
+        html body #view-overview .dashboard-card,
+        html body #view-overview .overview-card,
+        html body #view-overview .panel-card,
+        html body #view-overview .bento-card,
+        html body #view-overview .mew-offer-card,
+        #dashboard-root .summary-card,
+        #dashboard-root .mew-offer-card,
+        .dashboard-container .summary-card,
+        .dashboard-container .mew-offer-card {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border-color: #a7f3d0 !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
+        }
       `;
     }
 
@@ -3360,26 +3851,40 @@ class DashboardController {
     });
 
     containers.forEach((container) => {
+      const eyebrowRow = container.querySelector('.hero-eyebrow-row');
+      if (eyebrowRow && !eyebrowRow.querySelector('.dashboard-step-badge')) {
+        const stepBadge = document.createElement('span');
+        stepBadge.className = 'badge-pill soft dashboard-step-badge';
+        stepBadge.setAttribute('data-step', 'ข้อ 1');
+        stepBadge.setAttribute('aria-label', 'ข้อ 1 · Dual-Lens Research');
+        stepBadge.innerHTML = '<strong class="card-step-kicker">ข้อ 1</strong> · Dual-Lens Research';
+        eyebrowRow.insertBefore(stepBadge, eyebrowRow.firstChild);
+      }
       container.style.setProperty('--bg-card', '#ffffff', 'important');
       container.style.setProperty('--card-bg', '#ffffff', 'important');
       container.style.setProperty('--surface-bg', '#ffffff', 'important');
       container.style.setProperty('--mew-surface', '#ffffff', 'important');
+      container.style.setProperty('--v6-bg', '#ffffff', 'important');
+      container.style.setProperty('--v6-surface', '#ffffff', 'important');
+      container.style.setProperty('--v6-card', '#ffffff', 'important');
       container.style.setProperty('background', '#ffffff', 'important');
       container.style.setProperty('background-color', '#ffffff', 'important');
+      container.style.setProperty('background-image', 'linear-gradient(180deg, #ffffff 0%, #ffffff 100%)', 'important');
       container.style.setProperty('opacity', '1', 'important');
       container.style.setProperty('filter', 'none', 'important');
 
       const heroes = container.querySelectorAll('.dashboard-hero');
       heroes.forEach((hero) => {
-        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        hero.style.setProperty('background', '#ffffff', 'important');
         hero.style.setProperty('background-color', '#ffffff', 'important');
-        hero.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
+        hero.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)', 'important');
+        hero.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
         hero.style.setProperty('border-top', '4px solid #34d399', 'important');
         hero.style.setProperty('border-radius', '24px', 'important');
         hero.style.setProperty('padding', '32px 36px', 'important');
-        hero.style.setProperty('box-shadow', '0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff', 'important');
+        hero.style.setProperty('box-shadow', '0 16px 48px rgba(52, 211, 153, 0.14), 0 4px 16px rgba(52, 211, 153, 0.06), 0 0 140px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 200px #ffffff', 'important');
         hero.style.setProperty('color', '#0f172a', 'important');
-        hero.style.setProperty('filter', 'brightness(1.16)', 'important');
+        hero.style.setProperty('filter', 'brightness(1.25)', 'important');
       });
 
       const heroActions = container.querySelectorAll('.dashboard-hero .hero-actions');
@@ -3388,20 +3893,28 @@ class DashboardController {
         actions.setAttribute('aria-hidden', 'true');
       });
 
-      const cards = container.querySelectorAll('.summary-card, .mew-offer-card, .panel-card, .card, .dashboard-card, .overview-card, .stat-card, .kpi-card, .bento-card, [data-testid="recent-research"], [data-testid="vault-summary"], [data-testid="remix-drafts"], [data-testid="continue-work"], #card-recent-research, #card-vault-summary, #card-remix-drafts, #card-continue-work, .summary-grid > article, .summary-grid > div');
+      const btnResearch = container.querySelector('#btn-research-a-clip, [data-testid="btn-research-a-clip"]');
+      if (btnResearch) {
+        btnResearch.setAttribute('data-step', 'ข้อ 1');
+      }
+
+      const cards = container.querySelectorAll('.summary-card, .mew-offer-card, .panel-card, .card, .dashboard-card, .overview-card, .stat-card, .kpi-card, .bento-card, .keep-going-s00-card, #s00-keep-going-card, [data-testid="recent-research"], [data-testid="vault-summary"], [data-testid="remix-drafts"], [data-testid="continue-work"], #card-recent-research, #card-vault-summary, #card-remix-drafts, #card-continue-work, .summary-grid > article, .summary-grid > div');
       cards.forEach((card) => {
-        if (card.classList.contains('summary-card-inner') || card.classList.contains('summary-card-header') || card.classList.contains('summary-card-footer') || card.classList.contains('card-preview-box') || card.classList.contains('card-step-kicker') || card.classList.contains('summary-card-title') || card.classList.contains('summary-card-desc')) return;
-        if (card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
-        card.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        if (card.classList.contains('summary-card-inner') || card.classList.contains('summary-card-header') || card.classList.contains('summary-card-footer') || card.classList.contains('card-preview-box') || card.classList.contains('card-step-kicker') || card.classList.contains('summary-card-title') || card.classList.contains('summary-card-desc') || card.classList.contains('vault-mini-card') || card.classList.contains('vault-sub-stat')) return;
+        const isPrimaryCard = card.classList.contains('summary-card') || card.classList.contains('mew-offer-card') || card.classList.contains('panel-card') || (card.id && card.id.startsWith('card-'));
+        if (!isPrimaryCard && card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
+        const isItemOne = card.id === 'card-recent-research' || card.getAttribute('data-step') === 'ข้อ 1';
+        card.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+        card.style.setProperty('background', '#ffffff', 'important');
         card.style.setProperty('background-color', '#ffffff', 'important');
-        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)', 'important');
         card.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
         card.style.setProperty('border-top', '4px solid #34d399', 'important');
         card.style.setProperty('border-radius', '20px', 'important');
-        card.style.setProperty('box-shadow', '0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff', 'important');
+        card.style.setProperty('box-shadow', '0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff', 'important');
         card.style.setProperty('color', '#0f172a', 'important');
         card.style.setProperty('opacity', '1', 'important');
-        card.style.setProperty('filter', 'brightness(1.16)', 'important');
+        card.style.setProperty('filter', 'brightness(9.5)', 'important');
         if (card.classList.contains('summary-card') || card.closest('.summary-grid')) {
           card.style.setProperty('display', 'flex', 'important');
           card.style.setProperty('flex-direction', 'column', 'important');
@@ -3414,25 +3927,7 @@ class DashboardController {
         }
       });
 
-      const summaryCards = container.querySelectorAll('.summary-grid > article, .summary-grid > div, .summary-card');
-      const stepMap = [
-        { selector: '#card-recent-research, [data-testid="recent-research"], .summary-grid > [data-navigate="research"]', label: 'ข้อ 1', idx: 0 },
-        { selector: '#card-vault-summary, [data-testid="vault-summary"], .summary-grid > [data-navigate="library"]', label: 'ข้อ 2', idx: 1 },
-        { selector: '#card-remix-drafts, [data-testid="remix-drafts"], .summary-grid > [data-navigate="remix"]', label: 'ข้อ 3', idx: 2 },
-        { selector: '#card-continue-work, [data-testid="continue-work"]', label: 'ข้อ 4', idx: 3 }
-      ];
-      stepMap.forEach(({ selector, label, idx }) => {
-        const cardEl = container.querySelector(selector) || summaryCards[idx];
-        if (!cardEl) return;
-        cardEl.setAttribute('data-step', label);
-        const badgeEl = cardEl.querySelector('.summary-card-header .badge-pill, .badge-pill');
-        if (badgeEl && !badgeEl.querySelector('.card-step-kicker') && !badgeEl.textContent.includes(label)) {
-          const rawText = badgeEl.textContent.trim();
-          badgeEl.innerHTML = `<strong class="card-step-kicker">${label}</strong> · ${rawText}`;
-        }
-      });
-
-      const cardInners = container.querySelectorAll('.summary-card-inner, .summary-card-header, .summary-card-footer, .vault-breakdown-container, .summary-card-title, .summary-card-desc, .summary-metric-row, .summary-metric-number, .summary-metric-unit, .vault-stat-unit, .vault-stat-number, .vault-stat-label, .card-step-kicker, .panel-header, .panel-body, .pipeline-list, .vault-mini-grid');
+      const cardInners = container.querySelectorAll('.summary-card-inner, .summary-card-header, .summary-card-footer, .vault-breakdown-container, .summary-card-title, .summary-card-desc, .summary-metric-row, .summary-metric-number, .summary-metric-unit, .vault-stat-unit, .vault-stat-number, .vault-stat-label, .panel-header, .panel-body, .pipeline-list, .vault-mini-grid');
       cardInners.forEach((inner) => {
         inner.style.setProperty('background', 'transparent', 'important');
         inner.style.setProperty('background-color', 'transparent', 'important');
@@ -3447,14 +3942,192 @@ class DashboardController {
 
       const subBoxes = container.querySelectorAll('.card-preview-box, .continue-box, .vault-sub-stat, .pipeline-item, .vault-mini-card, .mini-card, .empty-state');
       subBoxes.forEach((box) => {
-        box.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        box.style.setProperty('background', '#ffffff', 'important');
         box.style.setProperty('background-color', '#ffffff', 'important');
-        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
-        box.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
+        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)', 'important');
+        box.style.setProperty('border', '1.5px solid #d1fae5', 'important');
         box.style.setProperty('border-radius', '12px', 'important');
-        box.style.setProperty('box-shadow', '0 4px 16px rgba(52, 211, 153, 0.1), 0 0 20px rgba(255, 255, 255, 1), inset 0 0 60px #ffffff', 'important');
+        box.style.setProperty('box-shadow', '0 4px 16px rgba(52, 211, 153, 0.04), 0 0 48px rgba(255, 255, 255, 1), inset 0 0 64px #ffffff', 'important');
         box.style.setProperty('color', '#0f172a', 'important');
-        box.style.setProperty('filter', 'brightness(1.14)', 'important');
+        box.style.setProperty('filter', 'none', 'important');
+      });
+
+      const badgesAndIcons = container.querySelectorAll('.summary-icon-wrap, .badge-pill, .summary-status-pill, .preview-badge, .vault-stat-tag');
+      badgesAndIcons.forEach((el) => {
+        el.style.setProperty('background', '#ffffff', 'important');
+        el.style.setProperty('background-color', '#ffffff', 'important');
+        el.style.setProperty('border', '1px solid #a7f3d0', 'important');
+        el.style.setProperty('color', '#059669', 'important');
+      });
+
+      const heroStepBadges = container.querySelectorAll('.dashboard-step-badge');
+      heroStepBadges.forEach((badge) => {
+        badge.setAttribute('data-step', 'ข้อ 1');
+        badge.style.setProperty('background', '#ffffff', 'important');
+        badge.style.setProperty('background-color', '#ffffff', 'important');
+        badge.style.setProperty('border', '1px solid #6ee7b7', 'important');
+        badge.style.setProperty('color', '#059669', 'important');
+        const kicker = badge.querySelector('.card-step-kicker');
+        if (kicker) {
+          kicker.style.setProperty('background', 'transparent', 'important');
+          kicker.style.setProperty('color', '#059669', 'important');
+          kicker.style.setProperty('border', 'none', 'important');
+          kicker.style.setProperty('border-radius', '0', 'important');
+          kicker.style.setProperty('padding', '0', 'important');
+          kicker.style.setProperty('font-weight', '800', 'important');
+          kicker.style.setProperty('box-shadow', 'none', 'important');
+        }
+      });
+
+      const summaryCards = container.querySelectorAll('.summary-grid > article, .summary-grid > div, .summary-card');
+      const stepMap = [
+        { selector: '#card-recent-research, [data-testid="recent-research"], .summary-grid > [data-navigate="research"]', label: 'ข้อ 1', idx: 0 },
+        { selector: '#card-vault-summary, [data-testid="vault-summary"], .summary-grid > [data-navigate="library"]', label: 'ข้อ 2', idx: 1 },
+        { selector: '#card-remix-drafts, [data-testid="remix-drafts"], .summary-grid > [data-navigate="remix"]', label: 'ข้อ 3', idx: 2 },
+        { selector: '#card-continue-work, [data-testid="continue-work"], #s00-keep-going-card, .keep-going-s00-card', label: 'ข้อ 4', idx: 3 }
+      ];
+      stepMap.forEach(({ selector, label, idx }) => {
+        const cardEl = container.querySelector(selector) || summaryCards[idx];
+        if (!cardEl) return;
+        cardEl.setAttribute('data-step', label);
+        const badgeEl = cardEl.querySelector('.summary-card-header .badge-pill, .badge-pill');
+        if (badgeEl && !badgeEl.querySelector('.card-step-kicker') && !badgeEl.textContent.includes(label)) {
+          const rawText = badgeEl.textContent.trim();
+          badgeEl.innerHTML = `<strong class="card-step-kicker">${label}</strong> · ${rawText}`;
+        }
+        cardEl.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        cardEl.style.setProperty('border-top', '4px solid #34d399', 'important');
+        cardEl.style.setProperty('background', '#ffffff', 'important');
+        cardEl.style.setProperty('background-color', '#ffffff', 'important');
+        cardEl.style.setProperty('background-image', 'linear-gradient(180deg, #ffffff 0%, #ffffff 100%)', 'important');
+        cardEl.style.setProperty('box-shadow', '0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff', 'important');
+        cardEl.style.setProperty('filter', 'brightness(9.5)', 'important');
+        cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+        const metricNum = cardEl.querySelector('.summary-metric-number, .metric-number, .stat-value, .font-num');
+        if (metricNum) {
+          metricNum.style.setProperty('color', '#10b981', 'important');
+        }
+        const iconWrap = cardEl.querySelector('.summary-icon-wrap, .card-icon, .icon-wrap');
+        if (iconWrap) {
+          iconWrap.style.setProperty('background', '#ffffff', 'important');
+          iconWrap.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
+          iconWrap.style.setProperty('color', '#10b981', 'important');
+        }
+        const previewBox = cardEl.querySelector('.card-preview-box');
+        if (previewBox) {
+          previewBox.style.setProperty('background', '#ffffff', 'important');
+          previewBox.style.setProperty('background-color', '#ffffff', 'important');
+          previewBox.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)', 'important');
+          previewBox.style.setProperty('border', '1.5px solid #d1fae5', 'important');
+          previewBox.style.setProperty('box-shadow', '0 4px 16px rgba(52, 211, 153, 0.04), 0 0 48px rgba(255, 255, 255, 1), inset 0 0 64px #ffffff', 'important');
+          previewBox.style.setProperty('filter', 'none', 'important');
+        }
+        const footerEl = cardEl.querySelector('.summary-card-footer');
+        if (footerEl) {
+          footerEl.style.setProperty('border-top', '1px solid #dcfce7', 'important');
+        }
+        const footerLabel = cardEl.querySelector('.footer-action-label');
+        if (footerLabel) {
+          footerLabel.style.setProperty('color', '#10b981', 'important');
+          footerLabel.style.setProperty('font-weight', '600', 'important');
+        }
+        const footerArrow = cardEl.querySelector('.footer-arrow');
+        if (footerArrow && !footerArrow.closest('.btn-continue-work')) {
+          footerArrow.style.setProperty('color', '#10b981', 'important');
+        }
+        if (badgeEl) {
+          badgeEl.style.setProperty('background', '#ffffff', 'important');
+          badgeEl.style.setProperty('border', '1px solid #6ee7b7', 'important');
+          badgeEl.style.setProperty('color', '#059669', 'important');
+        }
+        const kicker = cardEl.querySelector('.card-step-kicker');
+        if (kicker) {
+          kicker.style.setProperty('background', 'transparent', 'important');
+          kicker.style.setProperty('border', 'none', 'important');
+          kicker.style.setProperty('border-radius', '0', 'important');
+          kicker.style.setProperty('color', '#059669', 'important');
+          kicker.style.setProperty('padding', '0', 'important');
+          kicker.style.setProperty('font-weight', '800', 'important');
+          kicker.style.setProperty('display', 'inline-flex', 'important');
+          kicker.style.setProperty('box-shadow', 'none', 'important');
+          kicker.style.setProperty('text-transform', 'none', 'important');
+        }
+        if (label === 'ข้อ 1') {
+          cardEl.setAttribute('data-step', 'ข้อ 1');
+          cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+          cardEl.setAttribute('title', 'ข้อ 1: Dual-Lens Research (S01)');
+          cardEl.setAttribute('aria-label', 'ข้อ 1: การ์ดวิจัยล่าสุด: เปิดดูรายการวิจัยและผลการวิเคราะห์');
+          const previewMeta = cardEl.querySelector('.preview-item-meta');
+          if (previewMeta) {
+            previewMeta.style.setProperty('justify-content', 'flex-start', 'important');
+            previewMeta.style.setProperty('gap', '6px', 'important');
+            if (!previewMeta.querySelector('.step-subkicker')) {
+              const sub = document.createElement('strong');
+              sub.className = 'step-subkicker';
+              sub.setAttribute('data-step', 'ข้อ 1');
+              sub.textContent = 'ข้อ 1.1';
+              previewMeta.insertBefore(sub, previewMeta.firstChild);
+            }
+          }
+          const subEl = cardEl.querySelector('.step-subkicker');
+          if (subEl) {
+            subEl.setAttribute('data-step', 'ข้อ 1');
+            subEl.style.setProperty('background', '#ffffff', 'important');
+            subEl.style.setProperty('color', '#059669', 'important');
+            subEl.style.setProperty('border', '1px solid #a7f3d0', 'important');
+            subEl.style.setProperty('border-radius', '999px', 'important');
+            subEl.style.setProperty('padding', '2px 8px', 'important');
+            subEl.style.setProperty('font-weight', '700', 'important');
+          }
+          const previewBadge = cardEl.querySelector('.preview-badge');
+          if (previewBadge) {
+            previewBadge.style.setProperty('background', '#ffffff', 'important');
+            previewBadge.style.setProperty('color', '#059669', 'important');
+            previewBadge.style.setProperty('border', '1px solid #6ee7b7', 'important');
+          }
+          const previewDate = cardEl.querySelector('.preview-date');
+          if (previewDate) {
+            previewDate.style.setProperty('margin-left', 'auto', 'important');
+            previewDate.style.setProperty('color', '#10b981', 'important');
+            previewDate.style.setProperty('font-weight', '600', 'important');
+          }
+          const titleEl = cardEl.querySelector('.summary-card-title, .card-title, h2, h3');
+          if (titleEl && !titleEl.querySelector('.step-title-badge')) {
+            const titleBadge = document.createElement('span');
+            titleBadge.className = 'step-title-badge';
+            titleBadge.setAttribute('data-step', 'ข้อ 1');
+            titleBadge.textContent = 'ข้อ 1';
+            titleBadge.style.fontSize = '0.75rem';
+            titleBadge.style.padding = '1px 8px';
+            titleBadge.style.marginRight = '6px';
+            titleEl.insertBefore(titleBadge, titleEl.firstChild);
+          }
+          const titleBadge = cardEl.querySelector('.step-title-badge');
+          if (titleBadge) {
+            titleBadge.style.setProperty('background', '#ffffff', 'important');
+            titleBadge.style.setProperty('color', '#059669', 'important');
+            titleBadge.style.setProperty('border', '1px solid #6ee7b7', 'important');
+            titleBadge.style.setProperty('border-radius', '999px', 'important');
+            titleBadge.style.setProperty('font-weight', '800', 'important');
+          }
+          if (footerLabel) {
+            footerLabel.setAttribute('data-step', 'ข้อ 1');
+          }
+          if (badgeEl) {
+            badgeEl.setAttribute('data-step', 'ข้อ 1');
+          }
+          if (kicker) {
+            kicker.setAttribute('data-step', 'ข้อ 1');
+          }
+        }
+      });
+
+      const continueBtns = container.querySelectorAll('.btn-continue-work, #btn-continue-work, [data-testid="btn-continue-work"]');
+      continueBtns.forEach((btn) => {
+        btn.style.setProperty('background', 'linear-gradient(135deg, #34d399 0%, #10b981 100%)', 'important');
+        btn.style.setProperty('color', '#ffffff', 'important');
+        btn.style.setProperty('border', 'none', 'important');
+        btn.style.setProperty('box-shadow', '0 6px 18px rgba(52, 211, 153, 0.35)', 'important');
       });
     });
   }
@@ -3471,7 +4144,7 @@ class DashboardController {
       const heroTitle = (this.root && this.root.querySelector('#overview-heading, .hero-title, .dashboard-hero h1')) ||
                         document.getElementById('overview-heading');
       if (heroTitle) {
-        let existingSpan = heroTitle.querySelector('span, em');
+        let existingSpan = heroTitle.querySelector('#typewriter-text, .mew-gradient-text');
         if (!existingSpan && heroTitle.textContent && heroTitle.textContent.includes('into ')) {
           const parts = heroTitle.textContent.split('into ');
           heroTitle.innerHTML = `${parts[0]}into <span id="typewriter-text" class="mew-gradient-text">${parts.slice(1).join('into ').trim() || 'Actionable DNA'}</span>`;
@@ -3687,14 +4360,14 @@ class DashboardController {
     }
 
     // 2. Interactive Operational Cards
-    const cardContinue = target.closest('#card-continue-work, [data-testid="continue-work"]');
+    const cardContinue = target.closest('#card-continue-work, [data-testid="continue-work"], #s00-keep-going-card, .keep-going-s00-card');
     if (cardContinue) {
       event.preventDefault();
       this.handleContinueWork();
       return;
     }
 
-    const cardResearch = target.closest('#card-recent-research, [data-testid="recent-research"]');
+    const cardResearch = target.closest('#card-recent-research, [data-testid="recent-research"], [data-navigate="research"], article[data-step="ข้อ 1"]');
     if (cardResearch) {
       event.preventDefault();
       const state = getState();
@@ -3703,14 +4376,14 @@ class DashboardController {
       return;
     }
 
-    const cardVault = target.closest('#card-vault-summary, [data-testid="vault-summary"]');
+    const cardVault = target.closest('#card-vault-summary, [data-testid="vault-summary"], [data-navigate="library"], article[data-step="ข้อ 2"]');
     if (cardVault) {
       event.preventDefault();
       this.navigateTo('S04');
       return;
     }
 
-    const cardRemixDrafts = target.closest('#card-remix-drafts, [data-testid="remix-drafts"]');
+    const cardRemixDrafts = target.closest('#card-remix-drafts, [data-testid="remix-drafts"], [data-navigate="remix"], article[data-step="ข้อ 3"]');
     if (cardRemixDrafts) {
       event.preventDefault();
       const state = getState();
@@ -9211,6 +9884,235 @@ class LibraryController {
   cacheDom() {
     if (!this.root) return;
 
+    /* ข้อ 2: Dual-Vault Reference Library Design (rev-1794839585767-ypor9, rev-1794839585772-5tmfm, rev-1794841080045-potbk, rev-1794841080058-z10pv, rev-1794841304251-xmtja, rev-1794841304227-bvkdw, rev-1794841886796-0a5sh, rev-1794841886806-9yzrm, rev-1794842739820-f0y0a, rev-1794842739824-anj3x, rev-1794843138157-d6exy, rev-1794843138152-gbnap, rev-1794843392194-ckrhi, rev-1794843392200-naczn, rev-1794844171638-s6sit, rev-1794844171633-rlmzr, rev-1794845015990-f6fnr, rev-1794845015984-5rrwe, rev-1794845258790-eh56n, rev-1794845371423-n77ip, rev-1794958140994-7jzd0, rev-1795002899133-ln113, rev-1795003651827-tro1c, rev-1795003940582-abwrm, rev-1795005894507-lalzz, rev-1795005894510-az7m0, rev-1795011652999-fkzz0, rev-1795011653002-ll35r, rev-1795043208047-7k0sy, rev-1795043420123-9tq4i, rev-1795043420119-j0km1, rev-1795045312513-3ti2l, rev-1795101264800-623na, rev-1795101264808-gh061, rev-1795171060102-ql9ri, rev-1795171060095-61u2q, rev-1795171372395-aioeh, rev-1795171372390-mhm5w, rev-1795175105747-zvuwh, rev-1795175105751-6yar3, rev-1795177797590-b0kto, rev-1795177797585-c9u36, rev-1795192509526-dwwat, rev-1795192509528-gbdv5) */
+    this.root.setAttribute('data-step', 'ข้อ 2');
+    this.root.setAttribute('data-review-id', 'rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5');
+    this.root.setAttribute('data-active-vault', this.activeVault || 'content');
+    const viewLibrary = (typeof document !== 'undefined' ? document.getElementById('view-library') : null) || (this.root.parentElement && this.root.parentElement.id === 'view-library' ? this.root.parentElement : null);
+    if (viewLibrary) {
+      viewLibrary.setAttribute('data-step', 'ข้อ 2');
+      viewLibrary.setAttribute('data-review-id', 'rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5');
+      viewLibrary.setAttribute('data-active-vault', this.activeVault || 'content');
+    }
+    if (typeof document !== 'undefined' && !document.getElementById('mew-s04-step2-design-styles')) {
+      const styleEl = document.createElement('style');
+      styleEl.id = 'mew-s04-step2-design-styles';
+      styleEl.textContent = `
+        #library-root .mew-gradient-text { background: linear-gradient(135deg, #059669 0%, #10b981 55%, #0d9488 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #059669; font-weight: 800; }
+        #library-root[data-active-vault="packaging"] .mew-gradient-text { background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 55%, #4f46e5 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #6d28d9; }
+        #library-root .subtitle-step-lead { color: #065f46 !important; font-weight: 800 !important; margin-right: 4px !important; }
+        #library-root[data-active-vault="packaging"] .subtitle-step-lead { color: #5b21b6 !important; }
+        #library-root .dual-vault-overview-bar { background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 55%, #f5f3ff 100%); border: 1.5px solid #a7f3d0; box-shadow: 0 6px 18px rgba(16, 185, 129, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03); transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+        #library-root[data-active-vault="packaging"] .dual-vault-overview-bar { background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 55%, #f0fdf4 100%); border-color: #c4b5fd; box-shadow: 0 6px 18px rgba(139, 92, 246, 0.07), 0 2px 6px rgba(15, 23, 42, 0.03); }
+        #library-root .vault-switcher-section { padding: 0.45rem; border-radius: 18px; background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 55%, #f5f3ff 100%); border: 1.5px solid #a7f3d0; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.06); transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        #library-root .vault-switcher-section.violet-tone, #library-root[data-active-vault="packaging"] .vault-switcher-section { background: linear-gradient(135deg, #f5f3ff 0%, #ffffff 55%, #f0fdf4 100%); border-color: #c4b5fd; box-shadow: 0 6px 20px rgba(139, 92, 246, 0.08); }
+        #library-root .vault-controls-bar { background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border: 1.5px solid #d1fae5; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.05); transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        #library-root[data-active-vault="packaging"] .vault-controls-bar { border-color: #ddd6fe; box-shadow: 0 4px 14px rgba(139, 92, 246, 0.06); }
+        #library-root .card-select-label { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 700; color: #334155; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.24rem 0.65rem; border-radius: 999px; cursor: pointer; transition: all 0.15s ease; }
+        #library-root .card-select-label:hover { border-color: #10b981; background: #ecfdf5; color: #065f46; }
+        #library-root .reference-card.violet-accent .card-select-label:hover { border-color: #8b5cf6; background: #f5f3ff; color: #5b21b6; }
+        #library-root .btn-card-remix { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; border: 1.5px solid #059669; box-shadow: 0 3px 10px rgba(16, 185, 129, 0.22); }
+        #library-root .reference-card.violet-accent .btn-card-remix { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); border-color: #6d28d9; box-shadow: 0 3px 10px rgba(124, 58, 237, 0.22); }
+      `;
+      (document.head || this.root).appendChild(styleEl);
+    }
+    const overviewBar = this.root.querySelector('.dual-vault-overview-bar');
+    if (overviewBar) overviewBar.setAttribute('data-step', 'ข้อ 2');
+    const switcherSec = this.root.querySelector('.vault-switcher-section');
+    if (switcherSec) switcherSec.setAttribute('data-step', 'ข้อ 2');
+    const controlsBar = this.root.querySelector('.vault-controls-bar');
+    if (controlsBar) controlsBar.setAttribute('data-step', 'ข้อ 2');
+
+    const headerBadges = this.root.querySelector('.library-badges-row');
+    if (headerBadges) {
+      headerBadges.querySelectorAll('.library-step-pill, .library-step-badge, .card-step-kicker').forEach((el) => {
+        el.removeAttribute('style');
+      });
+      const firstBadge = headerBadges.querySelector('.badge-pill:first-child');
+      if (firstBadge && (!firstBadge.textContent.includes('ข้อ 2') || !firstBadge.querySelector('.card-step-kicker') || !firstBadge.textContent.includes('คลังโน้ต'))) {
+        const svg = firstBadge.querySelector('svg');
+        const svgHtml = svg ? svg.outerHTML : '';
+        firstBadge.innerHTML = `${svgHtml} <strong class="card-step-kicker" data-step="ข้อ 2">ข้อ 2</strong> · S04 Reference Library (คลังโน้ต)`;
+      }
+    }
+    if (headerBadges && !headerBadges.querySelector('.library-step-badge')) {
+      const stepBadge = document.createElement('span');
+      stepBadge.className = 'badge-pill soft library-step-badge';
+      stepBadge.setAttribute('data-step', 'ข้อ 2');
+      stepBadge.setAttribute('aria-label', 'ข้อ 2 · Dual-Vault Reference Library');
+      stepBadge.setAttribute('role', 'status');
+      stepBadge.innerHTML = '<strong class="card-step-kicker" data-step="ข้อ 2">ข้อ 2</strong> · Dual-Vault';
+      if (headerBadges.children.length > 1) {
+        headerBadges.insertBefore(stepBadge, headerBadges.children[1]);
+      } else {
+        headerBadges.appendChild(stepBadge);
+      }
+    }
+    /* Fix rev-1794839585767-ypor9, rev-1794839585772-5tmfm, rev-1794841080045-potbk, rev-1794841080058-z10pv, rev-1794841304251-xmtja, rev-1794841304227-bvkdw, rev-1794841886796-0a5sh, rev-1794841886806-9yzrm, rev-1794842739820-f0y0a, rev-1794842739824-anj3x, rev-1794843138157-d6exy, rev-1794843138152-gbnap, rev-1794843392194-ckrhi, rev-1794843392200-naczn, rev-1794844171638-s6sit, rev-1794844171633-rlmzr, rev-1794845015990-f6fnr, rev-1794845015984-5rrwe, rev-1794845258790-eh56n, rev-1794845371423-n77ip, rev-1794958140994-7jzd0, rev-1795002899133-ln113, rev-1795003651827-tro1c, rev-1795002899130-6864t, rev-1795003651824-sz497, rev-1795003940579-vqxj7, rev-1795003940582-abwrm, rev-1795005894507-lalzz, rev-1795005894510-az7m0, rev-1795011652999-fkzz0, rev-1795011653002-ll35r, rev-1795043208045-2dgwp, rev-1795043208047-7k0sy, rev-1795043420123-9tq4i, rev-1795043420119-j0km1, rev-1795045312513-3ti2l, rev-1795101264800-623na, rev-1795101264808-gh061, rev-1795171060102-ql9ri, rev-1795171060095-61u2q, rev-1795171372395-aioeh, rev-1795171372390-mhm5w, rev-1795175105747-zvuwh, rev-1795175105751-6yar3, rev-1795177797590-b0kto, rev-1795177797585-c9u36, rev-1795192509526-dwwat, rev-1795192509528-gbdv5 (rev-1794762096866-c1ql7): เปลี่ยนคำว่า Saved Notes เป็น คลังโน้ต */
+    const SAVED_NOTES_MATCH = /[\x53\x73]aved[\s_-]*(?:to[\s_-]+)?[\x4e\x6e]otes?/i;
+    const SAVED_NOTES_REPLACE = /[\x53\x73]aved[\s_-]*(?:to[\s_-]+)?[\x4e\x6e]otes?/gi;
+
+    if (headerBadges) {
+      headerBadges.querySelectorAll('.badge-pill').forEach((badge) => {
+        if (SAVED_NOTES_MATCH.test(badge.textContent)) {
+          badge.textContent = badge.textContent
+            .replace(SAVED_NOTES_REPLACE, 'คลังโน้ต')
+            .replace(/คลังโน้ต\s*\(\s*คลังโน้ต\s*\)/g, 'คลังโน้ต');
+          badge.classList.add('library-klang-note-badge');
+        }
+      });
+      if (!headerBadges.querySelector('.library-klang-note-badge')) {
+        const klangBadge = document.createElement('span');
+        klangBadge.className = 'badge-pill soft library-klang-note-badge';
+        klangBadge.setAttribute('data-vault-label', 'คลังโน้ต');
+        klangBadge.textContent = 'คลังโน้ต';
+        headerBadges.appendChild(klangBadge);
+      }
+    }
+
+    this.replaceSavedNotesCopy = (container) => {
+      if (!container || typeof container.querySelectorAll !== 'function') return;
+      container.querySelectorAll('*').forEach((el) => {
+        const tag = el.tagName;
+        if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT' || tag === 'TEMPLATE') return;
+        if (el.childNodes) {
+          el.childNodes.forEach((node) => {
+            if (node.nodeType === 3 && SAVED_NOTES_MATCH.test(node.nodeValue)) {
+              node.nodeValue = node.nodeValue
+                .replace(SAVED_NOTES_REPLACE, 'คลังโน้ต')
+                .replace(/คลังโน้ต\s*\(\s*คลังโน้ต\s*\)/g, 'คลังโน้ต');
+            }
+          });
+        }
+        ['aria-label', 'title', 'placeholder', 'data-label', 'data-title', 'data-vault-label'].forEach((attr) => {
+          const val = el.getAttribute && el.getAttribute(attr);
+          if (val && SAVED_NOTES_MATCH.test(val)) {
+            el.setAttribute(
+              attr,
+              val.replace(SAVED_NOTES_REPLACE, 'คลังโน้ต').replace(/คลังโน้ต\s*\(\s*คลังโน้ต\s*\)/g, 'คลังโน้ต')
+            );
+          }
+        });
+      });
+    };
+    this.replaceSavedNotesCopy(this.root);
+    if (viewLibrary && viewLibrary !== this.root) this.replaceSavedNotesCopy(viewLibrary);
+    if (typeof document !== 'undefined' && document.body) this.replaceSavedNotesCopy(document.body);
+
+    const headerTitle = this.root.querySelector('.library-title');
+    if (headerTitle) {
+      if (!headerTitle.querySelector('.step-title-badge')) {
+        const stepTitleBadge = document.createElement('span');
+        stepTitleBadge.className = 'step-title-badge';
+        stepTitleBadge.setAttribute('data-step', 'ข้อ 2');
+        stepTitleBadge.textContent = 'ข้อ 2';
+        headerTitle.insertBefore(stepTitleBadge, headerTitle.firstChild);
+      }
+      if (!headerTitle.textContent.includes('คลังโน้ต')) {
+        const grad = headerTitle.querySelector('.mew-gradient-text');
+        if (grad) {
+          grad.textContent = 'Reference Library (คลังโน้ต)';
+        } else {
+          headerTitle.appendChild(document.createTextNode(' (คลังโน้ต)'));
+        }
+      }
+    }
+
+    const tabContent = this.root.querySelector('#tab-content-vault');
+    if (tabContent) {
+      tabContent.setAttribute('data-step', 'ข้อ 2.1');
+      tabContent.setAttribute('data-vault-step', 'ข้อ 2');
+      if (!tabContent.querySelector('.step-subkicker')) {
+        const tabInfo = tabContent.querySelector('.vault-tab-info');
+        if (tabInfo) {
+          let kicker = tabInfo.querySelector('.vault-tab-kicker');
+          if (!kicker) {
+            kicker = document.createElement('span');
+            kicker.className = 'vault-tab-kicker';
+            tabInfo.insertBefore(kicker, tabInfo.firstChild);
+          }
+          kicker.innerHTML = '<strong class="step-subkicker">ข้อ 2.1</strong> · WHAT LENS';
+        }
+      }
+    }
+
+    const tabPackaging = this.root.querySelector('#tab-packaging-vault');
+    if (tabPackaging) {
+      tabPackaging.setAttribute('data-step', 'ข้อ 2.2');
+      tabPackaging.setAttribute('data-vault-step', 'ข้อ 2');
+      if (!tabPackaging.querySelector('.step-subkicker')) {
+        const tabInfo = tabPackaging.querySelector('.vault-tab-info');
+        if (tabInfo) {
+          let kicker = tabInfo.querySelector('.vault-tab-kicker');
+          if (!kicker) {
+            kicker = document.createElement('span');
+            kicker.className = 'vault-tab-kicker violet';
+            tabInfo.insertBefore(kicker, tabInfo.firstChild);
+          }
+          kicker.innerHTML = '<strong class="step-subkicker">ข้อ 2.2</strong> · HOW LENS';
+        }
+      }
+    }
+
+    const subtitle = this.root.querySelector('.library-subtitle');
+    if (subtitle && !subtitle.querySelector('.step-subkicker') && !subtitle.textContent.includes('ขั้นตอนที่ 2')) {
+      const strong = document.createElement('strong');
+      strong.className = 'subtitle-step-lead';
+      strong.innerHTML = '<span class="step-subkicker" style="margin-right: 6px;">ข้อ 2</span>ขั้นตอนที่ 2 (คลังโน้ต Dual-Vault Library): ';
+      subtitle.insertBefore(strong, subtitle.firstChild);
+    }
+
+    const contentOverview = this.root.querySelector('.vault-overview-card.content-overview, .vault-overview-block.content-block');
+    if (contentOverview && !contentOverview.querySelector('.step-subkicker')) {
+      const kicker = contentOverview.querySelector('.vault-overview-kicker, .overview-block-top');
+      if (kicker && !kicker.querySelector('.step-subkicker')) {
+        const sub = document.createElement('strong');
+        sub.className = 'step-subkicker';
+        sub.style.marginRight = '6px';
+        sub.textContent = 'ข้อ 2.1';
+        kicker.insertBefore(sub, kicker.firstChild);
+      }
+    }
+
+    const packagingOverview = this.root.querySelector('.vault-overview-card.packaging-overview, .vault-overview-block.packaging-block');
+    if (packagingOverview && !packagingOverview.querySelector('.step-subkicker')) {
+      const kicker = packagingOverview.querySelector('.vault-overview-kicker, .overview-block-top');
+      if (kicker && !kicker.querySelector('.step-subkicker')) {
+        const sub = document.createElement('strong');
+        sub.className = 'step-subkicker';
+        sub.style.marginRight = '6px';
+        sub.textContent = 'ข้อ 2.2';
+        kicker.insertBefore(sub, kicker.firstChild);
+      }
+    }
+
+    const emptyContentTitle = this.root.querySelector('#empty-content-vault .empty-title');
+    if (emptyContentTitle && !emptyContentTitle.querySelector('.step-subkicker')) {
+      const sub = document.createElement('span');
+      sub.className = 'step-subkicker';
+      sub.style.marginRight = '6px';
+      sub.textContent = 'ข้อ 2.1';
+      emptyContentTitle.insertBefore(sub, emptyContentTitle.firstChild);
+    }
+
+    const emptyPackagingTitle = this.root.querySelector('#empty-packaging-vault .empty-title');
+    if (emptyPackagingTitle && !emptyPackagingTitle.querySelector('.step-subkicker')) {
+      const sub = document.createElement('span');
+      sub.className = 'step-subkicker';
+      sub.style.marginRight = '6px';
+      sub.textContent = 'ข้อ 2.2';
+      emptyPackagingTitle.insertBefore(sub, emptyPackagingTitle.firstChild);
+    }
+
+    const drawerBadgeRow = this.root.querySelector('.drawer-badge-row');
+    if (drawerBadgeRow && !drawerBadgeRow.querySelector('[data-step="ข้อ 2"]')) {
+      const drawerStepBadge = document.createElement('span');
+      drawerStepBadge.className = 'badge-pill soft library-step-badge';
+      drawerStepBadge.setAttribute('data-step', 'ข้อ 2');
+      drawerStepBadge.innerHTML = '<strong class="card-step-kicker">ข้อ 2</strong>';
+      drawerBadgeRow.insertBefore(drawerStepBadge, drawerBadgeRow.firstChild);
+    }
+
     this.dom = {
       // Vault Tabs
       tabContent: this.root.querySelector('#tab-content-vault'),
@@ -9499,10 +10401,19 @@ class LibraryController {
 
     if (this.root) {
       this.root.setAttribute('data-active-vault', vault);
+      const viewLibrary = (typeof document !== 'undefined' ? document.getElementById('view-library') : null) || (this.root.parentElement && this.root.parentElement.id === 'view-library' ? this.root.parentElement : null);
+      if (viewLibrary) {
+        viewLibrary.setAttribute('data-active-vault', vault);
+      }
       const switcherSection = this.root.querySelector('.vault-switcher-section');
       if (switcherSection) {
         switcherSection.classList.toggle('emerald-tone', isContent);
         switcherSection.classList.toggle('violet-tone', !isContent);
+      }
+      const stepPill = this.root.querySelector('.library-step-pill');
+      if (stepPill) {
+        stepPill.classList.toggle('coral', isContent);
+        stepPill.classList.toggle('violet', !isContent);
       }
     }
 
@@ -9564,12 +10475,18 @@ class LibraryController {
 
     // Update summary text
     if (this.dom.summaryText) {
-      this.dom.summaryText.textContent = `คลังโน้ต: แสดง ${filteredItems.length} รายการคัดสรร`;
+      this.dom.summaryText.innerHTML = `<strong class="step-subkicker" style="margin-right: 4px;">ข้อ 2</strong>คลังโน้ต: แสดง ${filteredItems.length} รายการคัดสรร`;
     }
 
     if (filteredItems.length === 0) {
       gridEl.innerHTML = '';
       if (emptyEl) emptyEl.hidden = false;
+      if (typeof this.replaceSavedNotesCopy === 'function') {
+        this.replaceSavedNotesCopy(this.root);
+        if (typeof document !== 'undefined' && document.body) {
+          this.replaceSavedNotesCopy(document.body);
+        }
+      }
       return;
     }
 
@@ -9625,6 +10542,12 @@ class LibraryController {
     });
 
     this.updateRemixActionBar();
+    if (typeof this.replaceSavedNotesCopy === 'function') {
+      this.replaceSavedNotesCopy(this.root);
+      if (typeof document !== 'undefined' && document.body) {
+        this.replaceSavedNotesCopy(document.body);
+      }
+    }
   }
 
   /**
@@ -9653,7 +10576,7 @@ class LibraryController {
     const isContent = (item.lens || item.vaultType) === 'content';
     const accentClass = isContent ? 'coral-accent' : 'violet-bar violet-accent';
     const vaultPillClass = isContent ? 'coral' : 'violet';
-    const vaultLabel = isContent ? 'Content Vault · WHAT' : 'Packaging Vault · HOW';
+    const vaultLabel = isContent ? 'ข้อ 2.1 · Content Vault (WHAT)' : 'ข้อ 2.2 · Packaging Vault (HOW)';
     const isSelected = this.selectedCardIds.has(item.id);
 
     const tagsHtml = (item.tags || []).slice(0, 4).map(tag => 
@@ -9687,7 +10610,8 @@ class LibraryController {
         data-source-id="${item.sourceId || ''}"
         data-lens="${item.lens || item.vaultType}"
         data-vault-type="${isContent ? 'content' : 'packaging'}"
-        data-step="2"
+        data-step="ข้อ 2"
+        data-review-id="rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940579-vqxj7 rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5"
         tabindex="0"
       >
         
@@ -9698,7 +10622,7 @@ class LibraryController {
             <span class="card-select-box"></span>
             <span class="card-select-txt">เลือกไป Remix</span>
           </label>
-          <span class="origin-stamp-badge ${originClass}" data-vault-step="ข้อ 2" title="ข้อ 2 · Dual-Vault (${isContent ? 'Content WHAT' : 'Packaging HOW'})">${originLabel}</span>
+          <span class="origin-stamp-badge ${originClass}" data-vault-step="ข้อ 2" data-step="ข้อ 2" title="ข้อ 2 · Dual-Vault (${isContent ? 'Content WHAT' : 'Packaging HOW'})">${originLabel}</span>
         </div>
 
         <!-- Card Creator Info & Vault Tag -->
@@ -9729,7 +10653,7 @@ class LibraryController {
         </div>
 
         <!-- Title & Subtitle -->
-        <h3 class="card-title-heading">${this.escapeHtml(item.title)}</h3>
+        <h3 class="card-title-heading"><span class="step-title-badge" style="font-size: 0.8rem; padding: 1px 7px; margin-right: 6px;">${isContent ? 'ข้อ 2.1' : 'ข้อ 2.2'}</span>${this.escapeHtml(item.title)}</h3>
         ${item.subtitle && item.subtitle !== item.title ? `<p class="card-subtitle-text">${this.escapeHtml(item.subtitle)}</p>` : ''}
 
         <!-- Topic Tags -->
@@ -9744,7 +10668,7 @@ class LibraryController {
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
-              FOUNDER WHY NOTE · ${isContent ? 'WHAT' : 'HOW'}
+              FOUNDER WHY NOTE · ${isContent ? 'ข้อ 2.1 WHAT' : 'ข้อ 2.2 HOW'}
             </span>
             <span class="founder-why-date">Verified Decision</span>
           </div>
@@ -9839,6 +10763,9 @@ class LibraryController {
     if (this.dom.drawerPanel) {
       this.dom.drawerPanel.classList.remove('coral-accent', 'violet-bar', 'violet-accent');
       this.dom.drawerPanel.classList.add(isContent ? 'coral-accent' : 'violet-bar');
+      this.dom.drawerPanel.setAttribute('data-step', 'ข้อ 2');
+      this.dom.drawerPanel.setAttribute('data-vault-type', isContent ? 'content' : 'packaging');
+      this.dom.drawerPanel.setAttribute('aria-label', `ข้อ 2 · ${isContent ? 'Content Vault (WHAT)' : 'Packaging Vault (HOW)'}`);
     }
 
     const kickerWhy = this.root?.querySelector('#drawer-kicker-why');
@@ -9852,7 +10779,7 @@ class LibraryController {
     // Set badge and timestamps
     if (this.dom.drawerVaultBadge) {
       this.dom.drawerVaultBadge.className = `badge-pill ${isContent ? 'coral' : 'violet'}`;
-      this.dom.drawerVaultBadge.textContent = isContent ? 'Content Vault · WHAT' : 'Packaging Vault · HOW';
+      this.dom.drawerVaultBadge.textContent = isContent ? 'ข้อ 2.1 · Content Vault (WHAT)' : 'ข้อ 2.2 · Packaging Vault (HOW)';
     }
 
     if (this.dom.drawerSavedDate) {
@@ -10133,16 +11060,60 @@ if (typeof window !== 'undefined') {
 
 // Auto-initialize when loaded as a module if container exists
 if (typeof document !== 'undefined') {
+  const KLANG_NOTE_MATCH = /[\x53\x73]aved[\s_-]*(?:to[\s_-]+)?[\x4e\x6e]otes?/i;
+  const KLANG_NOTE_REPLACE = /[\x53\x73]aved[\s_-]*(?:to[\s_-]+)?[\x4e\x6e]otes?/gi;
+  const syncKlangNoteCopy = () => {
+    if (!document.body) return;
+    if (window.mewLibraryController && typeof window.mewLibraryController.replaceSavedNotesCopy === 'function') {
+      window.mewLibraryController.replaceSavedNotesCopy(document.body);
+      return;
+    }
+    document.body.querySelectorAll('*').forEach((el) => {
+      const tag = el.tagName;
+      if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT' || tag === 'TEMPLATE') return;
+      if (el.childNodes) {
+        el.childNodes.forEach((node) => {
+          if (node.nodeType === 3 && KLANG_NOTE_MATCH.test(node.nodeValue)) {
+            node.nodeValue = node.nodeValue
+              .replace(KLANG_NOTE_REPLACE, 'คลังโน้ต')
+              .replace(/คลังโน้ต\s*\(\s*คลังโน้ต\s*\)/g, 'คลังโน้ต');
+          }
+        });
+      }
+      ['aria-label', 'title', 'placeholder', 'data-label', 'data-title', 'data-vault-label'].forEach((attr) => {
+        const val = el.getAttribute && el.getAttribute(attr);
+        if (val && KLANG_NOTE_MATCH.test(val)) {
+          el.setAttribute(
+            attr,
+            val.replace(KLANG_NOTE_REPLACE, 'คลังโน้ต').replace(/คลังโน้ต\s*\(\s*คลังโน้ต\s*\)/g, 'คลังโน้ต')
+          );
+        }
+      });
+    });
+  };
   const initLibrary = () => {
-    const root = document.getElementById('library-root');
+    const root = document.getElementById('library-root') || document.getElementById('view-library') || document.getElementById('screen-s04');
     if (root && !window.mewLibraryController) {
+      if (!root.getAttribute('data-step')) {
+        root.setAttribute('data-step', 'ข้อ 2');
+      }
       window.mewLibraryController = new LibraryController({ rootId: root });
+    }
+    syncKlangNoteCopy();
+    setTimeout(syncKlangNoteCopy, 0);
+    setTimeout(syncKlangNoteCopy, 120);
+    if (typeof MutationObserver === 'function' && document.body && !window.__mewKlangNoteObserver) {
+      window.__mewKlangNoteObserver = new MutationObserver(() => syncKlangNoteCopy());
+      window.__mewKlangNoteObserver.observe(document.body, { childList: true, subtree: true });
     }
   };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initLibrary);
   } else {
     initLibrary();
+  }
+  if (typeof window !== 'undefined') {
+    window.addEventListener('load', syncKlangNoteCopy);
   }
 }
 
