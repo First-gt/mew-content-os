@@ -74,7 +74,7 @@ export class ResearchDetailController {
       : (
           container ||
           (typeof document !== 'undefined'
-            ? (document.getElementById('screen-research-detail') || document.body)
+            ? (document.getElementById('screen-research-detail') || document.getElementById('view-research-detail') || this.resolveS02Root() || document.body)
             : null)
         );
 
@@ -105,6 +105,10 @@ export class ResearchDetailController {
 
     const explicitSelectors = [
       '#screen-research-detail',
+      '#view-research-detail',
+      '#section-dual-lens-detail',
+      '.research-detail-section',
+      '[data-section="view-research-detail"]',
       '[data-screen="S02"]',
       '[data-screen="s02"]',
       '[data-screen-id="S02"]',
@@ -140,7 +144,7 @@ export class ResearchDetailController {
       }
 
       const anchor = document.querySelector(
-        '#video-player, [data-testid="video-player"], #analysis-panel, [data-testid="analysis-panel"], #tab-content-what, [data-testid="tab-content-what"], #source-meta, [data-testid="source-meta"]'
+        '#video-player, [data-testid="video-player"], #analysis-panel, [data-testid="analysis-panel"], #tab-content-what, [data-testid="tab-content-what"], #source-meta, [data-testid="source-meta"], #btn-back-to-research, [data-action="btn-back-to-research"]'
       );
       if (anchor && typeof anchor.closest === 'function') {
         const closestScreen = anchor.closest(
@@ -156,9 +160,12 @@ export class ResearchDetailController {
       }
 
       const coreLandmarks = [
+        document.querySelector('#btn-back-to-research, [data-action="btn-back-to-research"], .detail-top-nav'),
+        document.querySelector('#detail-main-title, .detail-hero-header'),
         document.querySelector('#video-player, [data-testid="video-player"]'),
         document.querySelector('#analysis-panel, [data-testid="analysis-panel"]'),
-        document.querySelector('#source-meta, [data-testid="source-meta"]')
+        document.querySelector('#source-meta, [data-testid="source-meta"]'),
+        document.querySelector('#btn-save-to-library, [data-testid="btn-save-to-library"], #detail-action-footer')
       ].filter(Boolean);
 
       if (coreLandmarks.length >= 2) {
@@ -179,6 +186,18 @@ export class ResearchDetailController {
           lca !== document.documentElement &&
           coreLandmarks.every((node) => typeof lca.contains === 'function' && lca.contains(node))
         ) {
+          if (typeof lca.closest === 'function') {
+            const outerSection = lca.closest(
+              'section, .screen-view, .screen, .app-screen, [data-screen], [data-screen-id], [data-view], [id*="s02" i], [id*="research" i], [id*="detail" i]'
+            );
+            if (
+              outerSection &&
+              outerSection !== document.body &&
+              outerSection !== document.documentElement
+            ) {
+              return outerSection;
+            }
+          }
           return lca;
         }
       }
@@ -200,11 +219,22 @@ export class ResearchDetailController {
         (document.body || document.head).appendChild(styleEl);
       }
       styleEl.textContent = `
-        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_nav_a__#__s02_nav_b__#__s02_nav_c__):not(#screen-research-detail):not(.research-detail-view):not([data-s02-scope="true"]):not(.detail-top-nav) {
-          z-index: 1000 !important;
+        :is(body > header, body > nav, #app > header, #app > nav, .app-shell > header, .app-shell > nav, .app-header, header.app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .top-bar, .navbar, .nav-bar, .site-header, .main-header, .main-nav, .workflow-nav, .screen-nav, .screen-switcher, .stage-context-bar, #app-stage-context-bar):not(main *):not(section *):not(article *):not(#screen-research-detail):not(#screen-research-detail *):not([data-s02-scope="true"]):not([data-s02-scope="true"] *):not(.detail-top-nav):not(#view-research-detail):not(#view-research-detail *) {
+          z-index: 99999 !important;
           isolation: isolate !important;
         }
-        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_icon_a__#__s02_icon_b__#__s02_icon_c__) :is(svg, [class*="icon"], [class*="badge"], .btn-video-play-overlay) {
+        :is(main, section, article, #screen-research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container) :is(header, nav, [role="navigation"], [role="banner"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, .source-meta-header) {
+          position: relative !important;
+          top: auto !important;
+          bottom: auto !important;
+          left: auto !important;
+          right: auto !important;
+          inset: auto !important;
+          z-index: 2 !important;
+          transform: none !important;
+          translate: none !important;
+        }
+        :is(header, nav, .app-header, header.app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"], #__s02_icon_a__#__s02_icon_b__#__s02_icon_c__) :is(svg, [class*="icon"], [class*="badge"], .btn-video-play-overlay, .btn-play-pause, #btn-video-play) {
           position: static !important;
           top: auto !important;
           left: auto !important;
@@ -215,10 +245,10 @@ export class ResearchDetailController {
           translate: none !important;
           z-index: auto !important;
           float: none !important;
+          margin-top: 0 !important;
         }
         :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, #__s02_svg_a__#__s02_svg_b__#__s02_svg_c__) svg:not([hidden]):not(.is-hidden) {
           position: static !important;
-          display: inline-block !important;
           vertical-align: middle !important;
           width: 16px !important;
           height: 16px !important;
@@ -227,8 +257,10 @@ export class ResearchDetailController {
           flex-shrink: 0 !important;
           overflow: hidden !important;
           transform: none !important;
+          translate: none !important;
+          margin: 0 !important;
         }
-        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_root_a__#__s02_root_b__#__s02_root_c__) {
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_root_a__#__s02_root_b__#__s02_root_c__) {
           position: relative !important;
           z-index: 1 !important;
           isolation: isolate !important;
@@ -236,16 +268,18 @@ export class ResearchDetailController {
           overflow: hidden !important;
           margin-top: 0 !important;
           transform: none !important;
+          translate: none !important;
         }
-        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *:not(.video-scrub-progress):not(#video-scrub-progress):not(.video-scrub-handle):not(#video-scrub-handle):not(.timeline-marker):not(.video-scrubber-track):not(#video-scrubber-track),
-        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::before,
-        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::after {
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *:not(.video-scrub-progress):not(#video-scrub-progress):not(.video-scrub-handle):not(#video-scrub-handle):not(.timeline-marker):not(.video-scrubber-track):not(#video-scrubber-track):not(.founder-dropped-pin),
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::before,
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-screen-id="s02"], [data-view="S02"], [data-view="s02"], [data-step="S02"], #screen-s02, #screen-S02, #view-s02, #view-S02, #s02, #S02, #s02-research-detail, #research-detail-root, #research-detail, [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, .research-detail-grid, #research-detail-grid, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_child_a__#__s02_child_b__#__s02_child_c__) *::after {
           position: static !important;
           top: auto !important;
           left: auto !important;
           right: auto !important;
           bottom: auto !important;
           inset: auto !important;
+          transform: none !important;
           translate: none !important;
           z-index: auto !important;
           float: none !important;
@@ -291,7 +325,7 @@ export class ResearchDetailController {
           width: 100% !important;
           box-sizing: border-box !important;
         }
-        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, [data-testid="video-player"], #__s02_play_a__#__s02_play_b__#__s02_play_c__) :is(.btn-video-play-overlay, #btn-video-play) {
+        :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #video-player, [data-testid="video-player"], #__s02_play_a__#__s02_play_b__#__s02_play_c__) :is(.btn-video-play-overlay, .btn-play-pause, #btn-video-play) {
           position: static !important;
           display: inline-flex !important;
           align-items: center !important;
@@ -303,6 +337,51 @@ export class ResearchDetailController {
           overflow: hidden !important;
           flex-shrink: 0 !important;
           transform: none !important;
+          translate: none !important;
+        }
+        .founder-dropped-pin,
+        .founder-dropped-pin[data-review-id],
+        .founder-dropped-pin[data-review-id*="5dbok"],
+        .founder-dropped-pin[data-review-id*="hzj5b"],
+        .founder-dropped-pin[data-review-id*="q1k1a"],
+        .founder-dropped-pin[data-review-id*="7tqmf"],
+        .founder-dropped-pin[data-review-id*="w3lma"],
+        .founder-dropped-pin[data-review-id*="hdvby"],
+        .founder-dropped-pin[data-review-id*="xgnnj"],
+        .founder-dropped-pin[data-review-id*="cd2h0"],
+        .founder-dropped-pin[data-review-id*="ke7ni"],
+        .founder-dropped-pin[data-review-id*="vvemf"],
+        .founder-dropped-pin[data-review-id*="6n1hg"],
+        button.founder-dropped-pin,
+        button[class*="founder-dropped-pin"],
+        [class*="founder-dropped-pin"],
+        :is(body, html, main, section, div) .founder-dropped-pin,
+        :is(body, html, main, section, div) [class*="founder-dropped-pin"],
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container) .founder-dropped-pin,
+        :is(#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container) [class*="founder-dropped-pin"] {
+          top: auto !important;
+          bottom: 16px !important;
+          right: 16px !important;
+          z-index: 10 !important;
+          pointer-events: auto;
+        }
+        :is(header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .top-bar, .navbar, .nav-bar, .site-header, .main-header, .main-nav, .screen-nav, .screen-switcher, .workflow-nav, .stage-context-bar, #app-stage-context-bar, [role="navigation"], .detail-top-nav, .nav-quick-source, .nav-left-group) :is(.founder-dropped-pin, [class*="founder-dropped-pin"]) {
+          position: static !important;
+          top: auto !important;
+          right: auto !important;
+          bottom: auto !important;
+          inset: auto !important;
+          margin-left: auto !important;
+          z-index: 10 !important;
+          float: none !important;
+        }
+        .detail-top-nav :is(.founder-dropped-pin, [class*="founder-dropped-pin"]) {
+          position: static !important;
+          top: auto !important;
+          right: auto !important;
+          bottom: auto !important;
+          margin-left: auto !important;
+          z-index: 10 !important;
         }
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, #__s02_glyph_a__#__s02_glyph_b__#__s02_glyph_c__) :is(.gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot) {
           position: static !important;
@@ -312,10 +391,11 @@ export class ResearchDetailController {
           flex-shrink: 0 !important;
           overflow: hidden !important;
           transform: none !important;
+          translate: none !important;
+          margin: 0 !important;
         }
         :is(#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-s02-scope="true"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"], #__s02_svg2_a__#__s02_svg2_b__#__s02_svg2_c__) svg:not([hidden]):not(.is-hidden) {
           position: static !important;
-          display: inline-block !important;
           vertical-align: middle !important;
           width: 16px !important;
           height: 16px !important;
@@ -324,6 +404,8 @@ export class ResearchDetailController {
           flex-shrink: 0 !important;
           overflow: hidden !important;
           transform: none !important;
+          translate: none !important;
+          margin: 0 !important;
         }
         #btn-video-play svg:not([hidden]):not(.is-hidden) {
           width: 24px !important;
@@ -367,6 +449,7 @@ export class ResearchDetailController {
       svg.style.setProperty('max-height', `${sizePx}px`, 'important');
       svg.style.setProperty('flex-shrink', '0', 'important');
       svg.style.setProperty('overflow', 'hidden', 'important');
+      svg.style.setProperty('margin', '0', 'important');
     };
 
     const scopeRoot =
@@ -375,12 +458,13 @@ export class ResearchDetailController {
 
     if (typeof document !== 'undefined' && typeof document.querySelectorAll === 'function') {
       const topNavs = document.querySelectorAll(
-        'header, nav, .app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .navbar, .screen-nav, .screen-switcher, .workflow-nav, [role="navigation"], [role="banner"]'
+        '.app-header, .global-header, .os-header, .os-nav, .top-nav, .topbar, .top-bar, .navbar, .nav-bar, .site-header, .main-header, .main-nav, .workflow-nav, .screen-nav, .screen-switcher, .stage-context-bar, #app-stage-context-bar, header, nav, [role="navigation"], [role="banner"], body > header, body > nav'
       );
       topNavs.forEach((navEl) => {
         if (!navEl || (scopeRoot && typeof scopeRoot.contains === 'function' && scopeRoot.contains(navEl))) return;
+        if (typeof navEl.closest === 'function' && navEl.closest('main, section, article, [data-screen], .screen-view')) return;
         if (navEl.style && typeof navEl.style.setProperty === 'function') {
-          navEl.style.setProperty('z-index', '1000', 'important');
+          navEl.style.setProperty('z-index', '99999', 'important');
           navEl.style.setProperty('isolation', 'isolate', 'important');
         }
         if (typeof navEl.querySelectorAll === 'function') {
@@ -399,7 +483,7 @@ export class ResearchDetailController {
     if (typeof document !== 'undefined' && typeof document.querySelectorAll === 'function') {
       document
         .querySelectorAll(
-          '#screen-research-detail, [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-view="S02"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"]'
+          '#screen-research-detail, #view-research-detail, #section-dual-lens-detail, .research-detail-section, [data-section="view-research-detail"], [data-screen="S02"], [data-screen="s02"], [data-screen-id="S02"], [data-view="S02"], .research-detail-view, .research-detail-container, .detail-top-nav, .detail-hero-header, #video-player, [data-testid="video-player"], #source-meta, [data-testid="source-meta"], #analysis-panel, [data-testid="analysis-panel"], #detail-action-footer, [data-testid="detail-action-footer"]'
         )
         .forEach((el) => {
           if (el && el !== document.body && el !== document.documentElement) {
@@ -411,31 +495,121 @@ export class ResearchDetailController {
     s02Targets.forEach((target) => {
       if (typeof target.setAttribute === 'function') {
         target.setAttribute('data-s02-scope', 'true');
+        target.setAttribute('data-review-id', 'rev-1795192509578-hzj5b');
       }
       if (target.style && typeof target.style.setProperty === 'function') {
         target.style.setProperty('position', 'relative', 'important');
+        target.style.setProperty('top', 'auto', 'important');
         target.style.setProperty('z-index', '1', 'important');
         target.style.setProperty('isolation', 'isolate', 'important');
+        target.style.setProperty('contain', 'layout style paint', 'important');
         target.style.setProperty('overflow', 'hidden', 'important');
         target.style.setProperty('transform', 'none', 'important');
       }
       if (typeof target.querySelectorAll === 'function') {
         target
           .querySelectorAll(
-            'svg, [class*="icon"], .btn-video-play-overlay, #btn-video-play, .video-overlay-chrome, .gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot'
+            'header, nav, [role="navigation"], [role="banner"], .detail-top-nav, .detail-hero-header, .analysis-panel-top, .dual-lens-tabs-container, .source-meta-header'
+          )
+          .forEach((hdr) => {
+            if (hdr.style && typeof hdr.style.setProperty === 'function') {
+              hdr.style.setProperty('position', 'relative', 'important');
+              hdr.style.setProperty('top', 'auto', 'important');
+              hdr.style.setProperty('z-index', '2', 'important');
+              hdr.style.setProperty('transform', 'none', 'important');
+            }
+          });
+        target
+          .querySelectorAll(
+            'svg, [class*="icon"], .btn-video-play-overlay, .btn-play-pause, #btn-video-play, .founder-dropped-pin, .video-overlay-chrome, .gate-callout-icon, .reminder-icon, .badge-icon-box, .verified-badge-glyph, .video-onscreen-avatar, .creator-avatar-circle, .tab-indicator-dot'
           )
           .forEach((node) => {
+            if (node.classList && node.classList.contains('founder-dropped-pin')) {
+              if (node.style && typeof node.style.setProperty === 'function') {
+                if (node.closest && node.closest('.detail-top-nav, header, nav')) {
+                  node.style.setProperty('position', 'static', 'important');
+                  node.style.setProperty('top', 'auto', 'important');
+                  node.style.setProperty('right', 'auto', 'important');
+                  node.style.setProperty('bottom', 'auto', 'important');
+                } else {
+                  node.style.setProperty('top', 'auto', 'important');
+                  node.style.setProperty('bottom', '16px', 'important');
+                  node.style.setProperty('right', '16px', 'important');
+                }
+                node.style.setProperty('z-index', '10', 'important');
+              }
+              return;
+            }
             applyStaticIconStyle(node);
             if (node.tagName && node.tagName.toLowerCase() === 'svg') {
               const isPlayIcon =
                 node.id === 'icon-play' ||
                 node.id === 'icon-pause' ||
-                (node.closest && node.closest('#btn-video-play, .btn-video-play-overlay'));
+                (node.closest && node.closest('#btn-video-play, .btn-video-play-overlay, .btn-play-pause'));
               applySvgSizeImportant(node, isPlayIcon ? 24 : 16);
             }
           });
       }
     });
+
+    if (typeof document !== 'undefined' && typeof document.querySelectorAll === 'function') {
+      document.querySelectorAll('.founder-dropped-pin').forEach((pinNode) => {
+        if (pinNode.style && typeof pinNode.style.setProperty === 'function') {
+          if (pinNode.closest && pinNode.closest('.detail-top-nav, header, nav, .app-header, .top-nav, .topbar')) {
+            pinNode.style.setProperty('position', 'static', 'important');
+            pinNode.style.setProperty('top', 'auto', 'important');
+            pinNode.style.setProperty('right', 'auto', 'important');
+            pinNode.style.setProperty('bottom', 'auto', 'important');
+          } else {
+            pinNode.style.setProperty('top', 'auto', 'important');
+            pinNode.style.setProperty('bottom', '16px', 'important');
+            pinNode.style.setProperty('right', '16px', 'important');
+          }
+          pinNode.style.setProperty('z-index', '10', 'important');
+        }
+      });
+
+      if (typeof MutationObserver !== 'undefined' && (document.body || document.documentElement) && !this._pinObserver) {
+        this._pinObserver = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            for (const n of m.addedNodes) {
+              if (n && n.nodeType === 1) {
+                if (n.classList && n.classList.contains('founder-dropped-pin')) {
+                  if (n.closest && n.closest('.detail-top-nav, header, nav, .app-header, .top-nav, .topbar')) {
+                    n.style.setProperty('position', 'static', 'important');
+                    n.style.setProperty('top', 'auto', 'important');
+                    n.style.setProperty('right', 'auto', 'important');
+                    n.style.setProperty('bottom', 'auto', 'important');
+                  } else {
+                    n.style.setProperty('top', 'auto', 'important');
+                    n.style.setProperty('bottom', '16px', 'important');
+                    n.style.setProperty('right', '16px', 'important');
+                  }
+                  n.style.setProperty('z-index', '10', 'important');
+                } else if (typeof n.querySelectorAll === 'function') {
+                  n.querySelectorAll('.founder-dropped-pin').forEach((p) => {
+                    if (p.closest && p.closest('.detail-top-nav, header, nav, .app-header, .top-nav, .topbar')) {
+                      p.style.setProperty('position', 'static', 'important');
+                      p.style.setProperty('top', 'auto', 'important');
+                      p.style.setProperty('right', 'auto', 'important');
+                      p.style.setProperty('bottom', 'auto', 'important');
+                    } else {
+                      p.style.setProperty('top', 'auto', 'important');
+                      p.style.setProperty('bottom', '16px', 'important');
+                      p.style.setProperty('right', '16px', 'important');
+                    }
+                    p.style.setProperty('z-index', '10', 'important');
+                  });
+                }
+              }
+            }
+          }
+        });
+        try {
+          this._pinObserver.observe(document.body || document.documentElement, { childList: true, subtree: true });
+        } catch (e) {}
+      }
+    }
   }
 
   /**
