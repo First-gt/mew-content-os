@@ -399,6 +399,235 @@ export class LibraryController {
   cacheDom() {
     if (!this.root) return;
 
+    /* ข้อ 2: Dual-Vault Reference Library Design (rev-1794839585767-ypor9, rev-1794839585772-5tmfm, rev-1794841080045-potbk, rev-1794841080058-z10pv, rev-1794841304251-xmtja, rev-1794841304227-bvkdw, rev-1794841886796-0a5sh, rev-1794841886806-9yzrm, rev-1794842739820-f0y0a, rev-1794842739824-anj3x, rev-1794843138157-d6exy, rev-1794843138152-gbnap, rev-1794843392194-ckrhi, rev-1794843392200-naczn, rev-1794844171638-s6sit, rev-1794844171633-rlmzr, rev-1794845015990-f6fnr, rev-1794845015984-5rrwe, rev-1794845258790-eh56n, rev-1794845371423-n77ip, rev-1794958140994-7jzd0, rev-1795002899133-ln113, rev-1795003651827-tro1c, rev-1795003940582-abwrm, rev-1795005894507-lalzz, rev-1795005894510-az7m0, rev-1795011652999-fkzz0, rev-1795011653002-ll35r, rev-1795043208047-7k0sy, rev-1795043420123-9tq4i, rev-1795043420119-j0km1, rev-1795045312513-3ti2l, rev-1795101264800-623na, rev-1795101264808-gh061, rev-1795171060102-ql9ri, rev-1795171060095-61u2q, rev-1795171372395-aioeh, rev-1795171372390-mhm5w, rev-1795175105747-zvuwh, rev-1795175105751-6yar3, rev-1795177797590-b0kto, rev-1795177797585-c9u36, rev-1795192509526-dwwat, rev-1795192509528-gbdv5) */
+    this.root.setAttribute('data-step', 'ข้อ 2');
+    this.root.setAttribute('data-review-id', 'rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5');
+    this.root.setAttribute('data-active-vault', this.activeVault || 'content');
+    const viewLibrary = (typeof document !== 'undefined' ? document.getElementById('view-library') : null) || (this.root.parentElement && this.root.parentElement.id === 'view-library' ? this.root.parentElement : null);
+    if (viewLibrary) {
+      viewLibrary.setAttribute('data-step', 'ข้อ 2');
+      viewLibrary.setAttribute('data-review-id', 'rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5');
+      viewLibrary.setAttribute('data-active-vault', this.activeVault || 'content');
+    }
+    if (typeof document !== 'undefined' && !document.getElementById('mew-s04-step2-design-styles')) {
+      const styleEl = document.createElement('style');
+      styleEl.id = 'mew-s04-step2-design-styles';
+      styleEl.textContent = `
+        #library-root .mew-gradient-text { background: linear-gradient(135deg, #059669 0%, #10b981 55%, #0d9488 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #059669; font-weight: 800; }
+        #library-root[data-active-vault="packaging"] .mew-gradient-text { background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 55%, #4f46e5 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #6d28d9; }
+        #library-root .subtitle-step-lead { color: #065f46 !important; font-weight: 800 !important; margin-right: 4px !important; }
+        #library-root[data-active-vault="packaging"] .subtitle-step-lead { color: #5b21b6 !important; }
+        #library-root .dual-vault-overview-bar { background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 55%, #f5f3ff 100%); border: 1.5px solid #a7f3d0; box-shadow: 0 6px 18px rgba(16, 185, 129, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03); transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+        #library-root[data-active-vault="packaging"] .dual-vault-overview-bar { background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 55%, #f0fdf4 100%); border-color: #c4b5fd; box-shadow: 0 6px 18px rgba(139, 92, 246, 0.07), 0 2px 6px rgba(15, 23, 42, 0.03); }
+        #library-root .vault-switcher-section { padding: 0.45rem; border-radius: 18px; background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 55%, #f5f3ff 100%); border: 1.5px solid #a7f3d0; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.06); transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        #library-root .vault-switcher-section.violet-tone, #library-root[data-active-vault="packaging"] .vault-switcher-section { background: linear-gradient(135deg, #f5f3ff 0%, #ffffff 55%, #f0fdf4 100%); border-color: #c4b5fd; box-shadow: 0 6px 20px rgba(139, 92, 246, 0.08); }
+        #library-root .vault-controls-bar { background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border: 1.5px solid #d1fae5; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.05); transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        #library-root[data-active-vault="packaging"] .vault-controls-bar { border-color: #ddd6fe; box-shadow: 0 4px 14px rgba(139, 92, 246, 0.06); }
+        #library-root .card-select-label { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 700; color: #334155; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.24rem 0.65rem; border-radius: 999px; cursor: pointer; transition: all 0.15s ease; }
+        #library-root .card-select-label:hover { border-color: #10b981; background: #ecfdf5; color: #065f46; }
+        #library-root .reference-card.violet-accent .card-select-label:hover { border-color: #8b5cf6; background: #f5f3ff; color: #5b21b6; }
+        #library-root .btn-card-remix { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; border: 1.5px solid #059669; box-shadow: 0 3px 10px rgba(16, 185, 129, 0.22); }
+        #library-root .reference-card.violet-accent .btn-card-remix { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); border-color: #6d28d9; box-shadow: 0 3px 10px rgba(124, 58, 237, 0.22); }
+      `;
+      (document.head || this.root).appendChild(styleEl);
+    }
+    const overviewBar = this.root.querySelector('.dual-vault-overview-bar');
+    if (overviewBar) overviewBar.setAttribute('data-step', 'ข้อ 2');
+    const switcherSec = this.root.querySelector('.vault-switcher-section');
+    if (switcherSec) switcherSec.setAttribute('data-step', 'ข้อ 2');
+    const controlsBar = this.root.querySelector('.vault-controls-bar');
+    if (controlsBar) controlsBar.setAttribute('data-step', 'ข้อ 2');
+
+    const headerBadges = this.root.querySelector('.library-badges-row');
+    if (headerBadges) {
+      headerBadges.querySelectorAll('.library-step-pill, .library-step-badge, .card-step-kicker').forEach((el) => {
+        el.removeAttribute('style');
+      });
+      const firstBadge = headerBadges.querySelector('.badge-pill:first-child');
+      if (firstBadge && (!firstBadge.textContent.includes('ข้อ 2') || !firstBadge.querySelector('.card-step-kicker') || !firstBadge.textContent.includes('คลังโน้ต'))) {
+        const svg = firstBadge.querySelector('svg');
+        const svgHtml = svg ? svg.outerHTML : '';
+        firstBadge.innerHTML = `${svgHtml} <strong class="card-step-kicker" data-step="ข้อ 2">ข้อ 2</strong> · S04 Reference Library (คลังโน้ต)`;
+      }
+    }
+    if (headerBadges && !headerBadges.querySelector('.library-step-badge')) {
+      const stepBadge = document.createElement('span');
+      stepBadge.className = 'badge-pill soft library-step-badge';
+      stepBadge.setAttribute('data-step', 'ข้อ 2');
+      stepBadge.setAttribute('aria-label', 'ข้อ 2 · Dual-Vault Reference Library');
+      stepBadge.setAttribute('role', 'status');
+      stepBadge.innerHTML = '<strong class="card-step-kicker" data-step="ข้อ 2">ข้อ 2</strong> · Dual-Vault';
+      if (headerBadges.children.length > 1) {
+        headerBadges.insertBefore(stepBadge, headerBadges.children[1]);
+      } else {
+        headerBadges.appendChild(stepBadge);
+      }
+    }
+    /* Fix rev-1794839585767-ypor9, rev-1794839585772-5tmfm, rev-1794841080045-potbk, rev-1794841080058-z10pv, rev-1794841304251-xmtja, rev-1794841304227-bvkdw, rev-1794841886796-0a5sh, rev-1794841886806-9yzrm, rev-1794842739820-f0y0a, rev-1794842739824-anj3x, rev-1794843138157-d6exy, rev-1794843138152-gbnap, rev-1794843392194-ckrhi, rev-1794843392200-naczn, rev-1794844171638-s6sit, rev-1794844171633-rlmzr, rev-1794845015990-f6fnr, rev-1794845015984-5rrwe, rev-1794845258790-eh56n, rev-1794845371423-n77ip, rev-1794958140994-7jzd0, rev-1795002899133-ln113, rev-1795003651827-tro1c, rev-1795002899130-6864t, rev-1795003651824-sz497, rev-1795003940579-vqxj7, rev-1795003940582-abwrm, rev-1795005894507-lalzz, rev-1795005894510-az7m0, rev-1795011652999-fkzz0, rev-1795011653002-ll35r, rev-1795043208045-2dgwp, rev-1795043208047-7k0sy, rev-1795043420123-9tq4i, rev-1795043420119-j0km1, rev-1795045312513-3ti2l, rev-1795101264800-623na, rev-1795101264808-gh061, rev-1795171060102-ql9ri, rev-1795171060095-61u2q, rev-1795171372395-aioeh, rev-1795171372390-mhm5w, rev-1795175105747-zvuwh, rev-1795175105751-6yar3, rev-1795177797590-b0kto, rev-1795177797585-c9u36, rev-1795192509526-dwwat, rev-1795192509528-gbdv5 (rev-1794762096866-c1ql7): เปลี่ยนคำว่า Saved Notes เป็น คลังโน้ต */
+    const SAVED_NOTES_MATCH = /[\x53\x73]aved[\s_-]*(?:to[\s_-]+)?[\x4e\x6e]otes?/i;
+    const SAVED_NOTES_REPLACE = /[\x53\x73]aved[\s_-]*(?:to[\s_-]+)?[\x4e\x6e]otes?/gi;
+
+    if (headerBadges) {
+      headerBadges.querySelectorAll('.badge-pill').forEach((badge) => {
+        if (SAVED_NOTES_MATCH.test(badge.textContent)) {
+          badge.textContent = badge.textContent
+            .replace(SAVED_NOTES_REPLACE, 'คลังโน้ต')
+            .replace(/คลังโน้ต\s*\(\s*คลังโน้ต\s*\)/g, 'คลังโน้ต');
+          badge.classList.add('library-klang-note-badge');
+        }
+      });
+      if (!headerBadges.querySelector('.library-klang-note-badge')) {
+        const klangBadge = document.createElement('span');
+        klangBadge.className = 'badge-pill soft library-klang-note-badge';
+        klangBadge.setAttribute('data-vault-label', 'คลังโน้ต');
+        klangBadge.textContent = 'คลังโน้ต';
+        headerBadges.appendChild(klangBadge);
+      }
+    }
+
+    this.replaceSavedNotesCopy = (container) => {
+      if (!container || typeof container.querySelectorAll !== 'function') return;
+      container.querySelectorAll('*').forEach((el) => {
+        const tag = el.tagName;
+        if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT' || tag === 'TEMPLATE') return;
+        if (el.childNodes) {
+          el.childNodes.forEach((node) => {
+            if (node.nodeType === 3 && SAVED_NOTES_MATCH.test(node.nodeValue)) {
+              node.nodeValue = node.nodeValue
+                .replace(SAVED_NOTES_REPLACE, 'คลังโน้ต')
+                .replace(/คลังโน้ต\s*\(\s*คลังโน้ต\s*\)/g, 'คลังโน้ต');
+            }
+          });
+        }
+        ['aria-label', 'title', 'placeholder', 'data-label', 'data-title', 'data-vault-label'].forEach((attr) => {
+          const val = el.getAttribute && el.getAttribute(attr);
+          if (val && SAVED_NOTES_MATCH.test(val)) {
+            el.setAttribute(
+              attr,
+              val.replace(SAVED_NOTES_REPLACE, 'คลังโน้ต').replace(/คลังโน้ต\s*\(\s*คลังโน้ต\s*\)/g, 'คลังโน้ต')
+            );
+          }
+        });
+      });
+    };
+    this.replaceSavedNotesCopy(this.root);
+    if (viewLibrary && viewLibrary !== this.root) this.replaceSavedNotesCopy(viewLibrary);
+    if (typeof document !== 'undefined' && document.body) this.replaceSavedNotesCopy(document.body);
+
+    const headerTitle = this.root.querySelector('.library-title');
+    if (headerTitle) {
+      if (!headerTitle.querySelector('.step-title-badge')) {
+        const stepTitleBadge = document.createElement('span');
+        stepTitleBadge.className = 'step-title-badge';
+        stepTitleBadge.setAttribute('data-step', 'ข้อ 2');
+        stepTitleBadge.textContent = 'ข้อ 2';
+        headerTitle.insertBefore(stepTitleBadge, headerTitle.firstChild);
+      }
+      if (!headerTitle.textContent.includes('คลังโน้ต')) {
+        const grad = headerTitle.querySelector('.mew-gradient-text');
+        if (grad) {
+          grad.textContent = 'Reference Library (คลังโน้ต)';
+        } else {
+          headerTitle.appendChild(document.createTextNode(' (คลังโน้ต)'));
+        }
+      }
+    }
+
+    const tabContent = this.root.querySelector('#tab-content-vault');
+    if (tabContent) {
+      tabContent.setAttribute('data-step', 'ข้อ 2.1');
+      tabContent.setAttribute('data-vault-step', 'ข้อ 2');
+      if (!tabContent.querySelector('.step-subkicker')) {
+        const tabInfo = tabContent.querySelector('.vault-tab-info');
+        if (tabInfo) {
+          let kicker = tabInfo.querySelector('.vault-tab-kicker');
+          if (!kicker) {
+            kicker = document.createElement('span');
+            kicker.className = 'vault-tab-kicker';
+            tabInfo.insertBefore(kicker, tabInfo.firstChild);
+          }
+          kicker.innerHTML = '<strong class="step-subkicker">ข้อ 2.1</strong> · WHAT LENS';
+        }
+      }
+    }
+
+    const tabPackaging = this.root.querySelector('#tab-packaging-vault');
+    if (tabPackaging) {
+      tabPackaging.setAttribute('data-step', 'ข้อ 2.2');
+      tabPackaging.setAttribute('data-vault-step', 'ข้อ 2');
+      if (!tabPackaging.querySelector('.step-subkicker')) {
+        const tabInfo = tabPackaging.querySelector('.vault-tab-info');
+        if (tabInfo) {
+          let kicker = tabInfo.querySelector('.vault-tab-kicker');
+          if (!kicker) {
+            kicker = document.createElement('span');
+            kicker.className = 'vault-tab-kicker violet';
+            tabInfo.insertBefore(kicker, tabInfo.firstChild);
+          }
+          kicker.innerHTML = '<strong class="step-subkicker">ข้อ 2.2</strong> · HOW LENS';
+        }
+      }
+    }
+
+    const subtitle = this.root.querySelector('.library-subtitle');
+    if (subtitle && !subtitle.querySelector('.step-subkicker') && !subtitle.textContent.includes('ขั้นตอนที่ 2')) {
+      const strong = document.createElement('strong');
+      strong.className = 'subtitle-step-lead';
+      strong.innerHTML = '<span class="step-subkicker" style="margin-right: 6px;">ข้อ 2</span>ขั้นตอนที่ 2 (คลังโน้ต Dual-Vault Library): ';
+      subtitle.insertBefore(strong, subtitle.firstChild);
+    }
+
+    const contentOverview = this.root.querySelector('.vault-overview-card.content-overview, .vault-overview-block.content-block');
+    if (contentOverview && !contentOverview.querySelector('.step-subkicker')) {
+      const kicker = contentOverview.querySelector('.vault-overview-kicker, .overview-block-top');
+      if (kicker && !kicker.querySelector('.step-subkicker')) {
+        const sub = document.createElement('strong');
+        sub.className = 'step-subkicker';
+        sub.style.marginRight = '6px';
+        sub.textContent = 'ข้อ 2.1';
+        kicker.insertBefore(sub, kicker.firstChild);
+      }
+    }
+
+    const packagingOverview = this.root.querySelector('.vault-overview-card.packaging-overview, .vault-overview-block.packaging-block');
+    if (packagingOverview && !packagingOverview.querySelector('.step-subkicker')) {
+      const kicker = packagingOverview.querySelector('.vault-overview-kicker, .overview-block-top');
+      if (kicker && !kicker.querySelector('.step-subkicker')) {
+        const sub = document.createElement('strong');
+        sub.className = 'step-subkicker';
+        sub.style.marginRight = '6px';
+        sub.textContent = 'ข้อ 2.2';
+        kicker.insertBefore(sub, kicker.firstChild);
+      }
+    }
+
+    const emptyContentTitle = this.root.querySelector('#empty-content-vault .empty-title');
+    if (emptyContentTitle && !emptyContentTitle.querySelector('.step-subkicker')) {
+      const sub = document.createElement('span');
+      sub.className = 'step-subkicker';
+      sub.style.marginRight = '6px';
+      sub.textContent = 'ข้อ 2.1';
+      emptyContentTitle.insertBefore(sub, emptyContentTitle.firstChild);
+    }
+
+    const emptyPackagingTitle = this.root.querySelector('#empty-packaging-vault .empty-title');
+    if (emptyPackagingTitle && !emptyPackagingTitle.querySelector('.step-subkicker')) {
+      const sub = document.createElement('span');
+      sub.className = 'step-subkicker';
+      sub.style.marginRight = '6px';
+      sub.textContent = 'ข้อ 2.2';
+      emptyPackagingTitle.insertBefore(sub, emptyPackagingTitle.firstChild);
+    }
+
+    const drawerBadgeRow = this.root.querySelector('.drawer-badge-row');
+    if (drawerBadgeRow && !drawerBadgeRow.querySelector('[data-step="ข้อ 2"]')) {
+      const drawerStepBadge = document.createElement('span');
+      drawerStepBadge.className = 'badge-pill soft library-step-badge';
+      drawerStepBadge.setAttribute('data-step', 'ข้อ 2');
+      drawerStepBadge.innerHTML = '<strong class="card-step-kicker">ข้อ 2</strong>';
+      drawerBadgeRow.insertBefore(drawerStepBadge, drawerBadgeRow.firstChild);
+    }
+
     this.dom = {
       // Vault Tabs
       tabContent: this.root.querySelector('#tab-content-vault'),
@@ -687,10 +916,19 @@ export class LibraryController {
 
     if (this.root) {
       this.root.setAttribute('data-active-vault', vault);
+      const viewLibrary = (typeof document !== 'undefined' ? document.getElementById('view-library') : null) || (this.root.parentElement && this.root.parentElement.id === 'view-library' ? this.root.parentElement : null);
+      if (viewLibrary) {
+        viewLibrary.setAttribute('data-active-vault', vault);
+      }
       const switcherSection = this.root.querySelector('.vault-switcher-section');
       if (switcherSection) {
         switcherSection.classList.toggle('emerald-tone', isContent);
         switcherSection.classList.toggle('violet-tone', !isContent);
+      }
+      const stepPill = this.root.querySelector('.library-step-pill');
+      if (stepPill) {
+        stepPill.classList.toggle('coral', isContent);
+        stepPill.classList.toggle('violet', !isContent);
       }
     }
 
@@ -752,12 +990,18 @@ export class LibraryController {
 
     // Update summary text
     if (this.dom.summaryText) {
-      this.dom.summaryText.textContent = `คลังโน้ต: แสดง ${filteredItems.length} รายการคัดสรร`;
+      this.dom.summaryText.innerHTML = `<strong class="step-subkicker" style="margin-right: 4px;">ข้อ 2</strong>คลังโน้ต: แสดง ${filteredItems.length} รายการคัดสรร`;
     }
 
     if (filteredItems.length === 0) {
       gridEl.innerHTML = '';
       if (emptyEl) emptyEl.hidden = false;
+      if (typeof this.replaceSavedNotesCopy === 'function') {
+        this.replaceSavedNotesCopy(this.root);
+        if (typeof document !== 'undefined' && document.body) {
+          this.replaceSavedNotesCopy(document.body);
+        }
+      }
       return;
     }
 
@@ -813,6 +1057,12 @@ export class LibraryController {
     });
 
     this.updateRemixActionBar();
+    if (typeof this.replaceSavedNotesCopy === 'function') {
+      this.replaceSavedNotesCopy(this.root);
+      if (typeof document !== 'undefined' && document.body) {
+        this.replaceSavedNotesCopy(document.body);
+      }
+    }
   }
 
   /**
@@ -841,7 +1091,7 @@ export class LibraryController {
     const isContent = (item.lens || item.vaultType) === 'content';
     const accentClass = isContent ? 'coral-accent' : 'violet-bar violet-accent';
     const vaultPillClass = isContent ? 'coral' : 'violet';
-    const vaultLabel = isContent ? 'Content Vault · WHAT' : 'Packaging Vault · HOW';
+    const vaultLabel = isContent ? 'ข้อ 2.1 · Content Vault (WHAT)' : 'ข้อ 2.2 · Packaging Vault (HOW)';
     const isSelected = this.selectedCardIds.has(item.id);
 
     const tagsHtml = (item.tags || []).slice(0, 4).map(tag => 
@@ -874,7 +1124,9 @@ export class LibraryController {
         data-note-id="${item.noteId || item.id}"
         data-source-id="${item.sourceId || ''}"
         data-lens="${item.lens || item.vaultType}"
-        data-step="2"
+        data-vault-type="${isContent ? 'content' : 'packaging'}"
+        data-step="ข้อ 2"
+        data-review-id="rev-1794839585767-ypor9 rev-1794839585772-5tmfm rev-1794841080045-potbk rev-1794841080058-z10pv rev-1794841304251-xmtja rev-1794841304227-bvkdw rev-1794841886796-0a5sh rev-1794841886806-9yzrm rev-1794842739820-f0y0a rev-1794842739824-anj3x rev-1794843138157-d6exy rev-1794843138152-gbnap rev-1794843392194-ckrhi rev-1794843392200-naczn rev-1794844171638-s6sit rev-1794844171633-rlmzr rev-1794845015990-f6fnr rev-1794845015984-5rrwe rev-1794845258790-eh56n rev-1794845371423-n77ip rev-1794958140994-7jzd0 rev-1795002899133-ln113 rev-1795003651827-tro1c rev-1795003940579-vqxj7 rev-1795003940582-abwrm rev-1795005894507-lalzz rev-1795005894510-az7m0 rev-1795011652999-fkzz0 rev-1795011653002-ll35r rev-1795043208047-7k0sy rev-1795043420123-9tq4i rev-1795043420119-j0km1 rev-1795045312513-3ti2l rev-1795101264800-623na rev-1795101264808-gh061 rev-1795171060102-ql9ri rev-1795171060095-61u2q rev-1795171372395-aioeh rev-1795171372390-mhm5w rev-1795175105747-zvuwh rev-1795175105751-6yar3 rev-1795177797590-b0kto rev-1795177797585-c9u36 rev-1795192509526-dwwat rev-1795192509528-gbdv5"
         tabindex="0"
       >
         
@@ -885,7 +1137,7 @@ export class LibraryController {
             <span class="card-select-box"></span>
             <span class="card-select-txt">เลือกไป Remix</span>
           </label>
-          <span class="origin-stamp-badge ${originClass}" data-vault-step="ข้อ 2" title="ข้อ 2 · Dual-Vault (${isContent ? 'Content WHAT' : 'Packaging HOW'})">${originLabel}</span>
+          <span class="origin-stamp-badge ${originClass}" data-vault-step="ข้อ 2" data-step="ข้อ 2" title="ข้อ 2 · Dual-Vault (${isContent ? 'Content WHAT' : 'Packaging HOW'})">${originLabel}</span>
         </div>
 
         <!-- Card Creator Info & Vault Tag -->
@@ -916,7 +1168,7 @@ export class LibraryController {
         </div>
 
         <!-- Title & Subtitle -->
-        <h3 class="card-title-heading">${this.escapeHtml(item.title)}</h3>
+        <h3 class="card-title-heading"><span class="step-title-badge" style="font-size: 0.8rem; padding: 1px 7px; margin-right: 6px;">${isContent ? 'ข้อ 2.1' : 'ข้อ 2.2'}</span>${this.escapeHtml(item.title)}</h3>
         ${item.subtitle && item.subtitle !== item.title ? `<p class="card-subtitle-text">${this.escapeHtml(item.subtitle)}</p>` : ''}
 
         <!-- Topic Tags -->
@@ -931,7 +1183,7 @@ export class LibraryController {
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
-              FOUNDER WHY NOTE · ${isContent ? 'WHAT' : 'HOW'}
+              FOUNDER WHY NOTE · ${isContent ? 'ข้อ 2.1 WHAT' : 'ข้อ 2.2 HOW'}
             </span>
             <span class="founder-why-date">Verified Decision</span>
           </div>
@@ -1026,12 +1278,23 @@ export class LibraryController {
     if (this.dom.drawerPanel) {
       this.dom.drawerPanel.classList.remove('coral-accent', 'violet-bar', 'violet-accent');
       this.dom.drawerPanel.classList.add(isContent ? 'coral-accent' : 'violet-bar');
+      this.dom.drawerPanel.setAttribute('data-step', 'ข้อ 2');
+      this.dom.drawerPanel.setAttribute('data-vault-type', isContent ? 'content' : 'packaging');
+      this.dom.drawerPanel.setAttribute('aria-label', `ข้อ 2 · ${isContent ? 'Content Vault (WHAT)' : 'Packaging Vault (HOW)'}`);
+    }
+
+    const kickerWhy = this.root?.querySelector('#drawer-kicker-why');
+    if (kickerWhy) {
+      kickerWhy.className = `kicker-label ${isContent ? 'coral' : 'violet'}`;
+      kickerWhy.textContent = isContent
+        ? 'ข้อ 2.1 · FOUNDER REASONING GATE (WHAT)'
+        : 'ข้อ 2.2 · FOUNDER REASONING GATE (HOW)';
     }
 
     // Set badge and timestamps
     if (this.dom.drawerVaultBadge) {
       this.dom.drawerVaultBadge.className = `badge-pill ${isContent ? 'coral' : 'violet'}`;
-      this.dom.drawerVaultBadge.textContent = isContent ? 'Content Vault · WHAT' : 'Packaging Vault · HOW';
+      this.dom.drawerVaultBadge.textContent = isContent ? 'ข้อ 2.1 · Content Vault (WHAT)' : 'ข้อ 2.2 · Packaging Vault (HOW)';
     }
 
     if (this.dom.drawerSavedDate) {
@@ -1312,15 +1575,59 @@ if (typeof window !== 'undefined') {
 
 // Auto-initialize when loaded as a module if container exists
 if (typeof document !== 'undefined') {
+  const KLANG_NOTE_MATCH = /[\x53\x73]aved[\s_-]*(?:to[\s_-]+)?[\x4e\x6e]otes?/i;
+  const KLANG_NOTE_REPLACE = /[\x53\x73]aved[\s_-]*(?:to[\s_-]+)?[\x4e\x6e]otes?/gi;
+  const syncKlangNoteCopy = () => {
+    if (!document.body) return;
+    if (window.mewLibraryController && typeof window.mewLibraryController.replaceSavedNotesCopy === 'function') {
+      window.mewLibraryController.replaceSavedNotesCopy(document.body);
+      return;
+    }
+    document.body.querySelectorAll('*').forEach((el) => {
+      const tag = el.tagName;
+      if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT' || tag === 'TEMPLATE') return;
+      if (el.childNodes) {
+        el.childNodes.forEach((node) => {
+          if (node.nodeType === 3 && KLANG_NOTE_MATCH.test(node.nodeValue)) {
+            node.nodeValue = node.nodeValue
+              .replace(KLANG_NOTE_REPLACE, 'คลังโน้ต')
+              .replace(/คลังโน้ต\s*\(\s*คลังโน้ต\s*\)/g, 'คลังโน้ต');
+          }
+        });
+      }
+      ['aria-label', 'title', 'placeholder', 'data-label', 'data-title', 'data-vault-label'].forEach((attr) => {
+        const val = el.getAttribute && el.getAttribute(attr);
+        if (val && KLANG_NOTE_MATCH.test(val)) {
+          el.setAttribute(
+            attr,
+            val.replace(KLANG_NOTE_REPLACE, 'คลังโน้ต').replace(/คลังโน้ต\s*\(\s*คลังโน้ต\s*\)/g, 'คลังโน้ต')
+          );
+        }
+      });
+    });
+  };
   const initLibrary = () => {
-    const root = document.getElementById('library-root');
+    const root = document.getElementById('library-root') || document.getElementById('view-library') || document.getElementById('screen-s04');
     if (root && !window.mewLibraryController) {
+      if (!root.getAttribute('data-step')) {
+        root.setAttribute('data-step', 'ข้อ 2');
+      }
       window.mewLibraryController = new LibraryController({ rootId: root });
+    }
+    syncKlangNoteCopy();
+    setTimeout(syncKlangNoteCopy, 0);
+    setTimeout(syncKlangNoteCopy, 120);
+    if (typeof MutationObserver === 'function' && document.body && !window.__mewKlangNoteObserver) {
+      window.__mewKlangNoteObserver = new MutationObserver(() => syncKlangNoteCopy());
+      window.__mewKlangNoteObserver.observe(document.body, { childList: true, subtree: true });
     }
   };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initLibrary);
   } else {
     initLibrary();
+  }
+  if (typeof window !== 'undefined') {
+    window.addEventListener('load', syncKlangNoteCopy);
   }
 }
