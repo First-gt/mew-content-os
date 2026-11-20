@@ -223,6 +223,18 @@ export class DashboardController {
       return this;
     }
 
+    if (this.root && typeof this.root.setAttribute === 'function') {
+      if (!this.root.getAttribute('data-step')) {
+        this.root.setAttribute('data-step', 'ข้อ 1');
+      }
+      this.root.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+      const viewOverview = (typeof document !== 'undefined' ? document.getElementById('view-overview') : null) || (this.root.parentElement && this.root.parentElement.id === 'view-overview' ? this.root.parentElement : null);
+      if (viewOverview) {
+        viewOverview.setAttribute('data-step', 'ข้อ 1');
+        viewOverview.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+      }
+    }
+
     this.bindEvents();
     this.applyBrightCardTheme();
     this.render();
@@ -265,11 +277,12 @@ export class DashboardController {
       styleEl = document.createElement('style');
       styleEl.id = styleId;
       targetParent.appendChild(styleEl);
-    } else if (styleEl && document.body && styleEl.parentNode !== document.body) {
-      document.body.appendChild(styleEl);
+    } else if (styleEl && targetParent && (styleEl.parentNode !== targetParent || targetParent.lastElementChild !== styleEl)) {
+      targetParent.appendChild(styleEl);
     }
     if ( styleEl ) {
       styleEl.textContent = `
+        html body #view-overview#view-overview#view-overview,
         html body #view-overview#view-overview,
         html body #screen-s00#screen-s00,
         html body [data-screen="S00"][data-screen="S00"],
@@ -296,19 +309,25 @@ export class DashboardController {
           --mew-surface: #ffffff !important;
           --mew-card: #ffffff !important;
           --mew-bg: #ffffff !important;
+          --v6-bg: #ffffff !important;
+          --v6-bg-elevated: #ffffff !important;
+          --v6-bg-card: #ffffff !important;
+          --v6-surface: #ffffff !important;
+          --v6-card: #ffffff !important;
           --surface-1: #ffffff !important;
           --surface-2: #ffffff !important;
           --surface-3: #ffffff !important;
           --text-primary: #0f172a !important;
           --text-secondary: #1e293b !important;
           --text-muted: #334155 !important;
-          --border-color: #bbf7d0 !important;
-          --border-subtle: #dcfce7 !important;
+          --border-color: #6ee7b7 !important;
+          --border-subtle: #a7f3d0 !important;
           background: #ffffff !important;
           background-color: #ffffff !important;
           background-image: linear-gradient(180deg, #ffffff 0%, #ffffff 100%) !important;
           color: #0f172a !important;
         }
+        html body #view-overview#view-overview#view-overview .dashboard-hero,
         html body #view-overview#view-overview .dashboard-hero,
         html body #view-overview .dashboard-hero,
         html body #screen-s00 .dashboard-hero,
@@ -316,15 +335,16 @@ export class DashboardController {
         #view-overview .dashboard-hero,
         #dashboard-root .dashboard-hero,
         .dashboard-container .dashboard-hero {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+          background: #ffffff !important;
           background-color: #ffffff !important;
-          border: 1.5px solid #a7f3d0 !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #6ee7b7 !important;
           border-top: 4px solid #34d399 !important;
           border-radius: 24px !important;
           padding: 32px 36px !important;
-          box-shadow: 0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff !important;
+          box-shadow: 0 16px 48px rgba(52, 211, 153, 0.14), 0 4px 16px rgba(52, 211, 153, 0.06), 0 0 140px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 200px #ffffff !important;
           color: #0f172a !important;
-          filter: brightness(1.16) !important;
+          filter: brightness(1.25) !important;
           display: flex !important;
           flex-direction: column !important;
           justify-content: center !important;
@@ -357,10 +377,10 @@ export class DashboardController {
           font-size: 0.75rem !important;
           font-weight: 700 !important;
           line-height: 1.25 !important;
-          background: #f0fdf4 !important;
+          background: #ffffff !important;
           color: #059669 !important;
-          border: 1px solid #a7f3d0 !important;
-          box-shadow: 0 2px 6px rgba(52, 211, 153, 0.08) !important;
+          border: 1px solid #6ee7b7 !important;
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12) !important;
         }
         #view-overview .dashboard-hero .hero-title,
         .dashboard-container .dashboard-hero .hero-title {
@@ -395,8 +415,8 @@ export class DashboardController {
         #view-overview .dashboard-hero .hero-subtitle strong,
         .dashboard-container .dashboard-hero .hero-subtitle strong {
           color: #059669 !important;
-          background: #f0fdf4 !important;
-          border: 1px solid #a7f3d0 !important;
+          background: #ffffff !important;
+          border: 1px solid #6ee7b7 !important;
           padding: 1px 6px !important;
           border-radius: 6px !important;
         }
@@ -425,6 +445,19 @@ export class DashboardController {
             grid-template-columns: minmax(0, 1fr) !important;
           }
         }
+        html body #view-overview#view-overview#view-overview .summary-card,
+        html body #view-overview#view-overview#view-overview .mew-offer-card,
+        html body #view-overview#view-overview#view-overview .panel-card,
+        html body #view-overview#view-overview#view-overview .card,
+        html body #view-overview#view-overview#view-overview .dashboard-card,
+        html body #view-overview#view-overview#view-overview .overview-card,
+        html body #view-overview#view-overview#view-overview .stat-card,
+        html body #view-overview#view-overview#view-overview .kpi-card,
+        html body #view-overview#view-overview#view-overview .bento-card,
+        html body #view-overview#view-overview#view-overview .coral-accent,
+        html body #view-overview#view-overview#view-overview .violet-bar,
+        html body #view-overview#view-overview#view-overview .violet-accent,
+        html body #view-overview#view-overview#view-overview .ink-accent,
         html body #view-overview#view-overview .summary-card,
         html body #view-overview#view-overview .mew-offer-card,
         html body #view-overview#view-overview .panel-card,
@@ -441,12 +474,16 @@ export class DashboardController {
         html body #view-overview .summary-card,
         html body #view-overview .mew-offer-card,
         html body #view-overview .panel-card,
+        html body #view-overview .keep-going-s00-card,
+        html body #view-overview #s00-keep-going-card,
         html body #view-overview .summary-grid > [data-navigate="research"],
         html body #view-overview .summary-grid > [data-navigate="library"],
         html body #view-overview .summary-grid > [data-navigate="remix"],
         #view-overview .summary-card,
         #view-overview .mew-offer-card,
         #view-overview .panel-card,
+        #view-overview .keep-going-s00-card,
+        #view-overview #s00-keep-going-card,
         #view-overview .summary-grid > article,
         #view-overview .summary-grid > div,
         #view-overview #card-recent-research,
@@ -456,19 +493,24 @@ export class DashboardController {
         #dashboard-root .summary-card,
         #dashboard-root .mew-offer-card,
         #dashboard-root .panel-card,
+        #dashboard-root .keep-going-s00-card,
+        #dashboard-root #s00-keep-going-card,
         .dashboard-container .summary-card,
         .dashboard-container .mew-offer-card,
-        .dashboard-container .panel-card {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+        .dashboard-container .panel-card,
+        .dashboard-container .keep-going-s00-card,
+        .dashboard-container #s00-keep-going-card,
+        .dashboard-container article.mew-offer-card {
+          background: #ffffff !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           border: 1.5px solid #a7f3d0 !important;
           border-top: 4px solid #34d399 !important;
           border-radius: 20px !important;
-          box-shadow: 0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
           color: #0f172a !important;
           opacity: 1 !important;
-          filter: brightness(1.16) !important;
+          filter: brightness(9.5) !important;
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
         html body #view-overview .summary-card-inner,
@@ -497,11 +539,17 @@ export class DashboardController {
         #view-overview .mew-offer-card:hover,
         .dashboard-container .mew-offer-card:hover {
           background: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           border-color: #34d399 !important;
-          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.2), 0 4px 12px rgba(52, 211, 153, 0.08), inset 0 0 36px #ffffff, inset 0 0 0 2px #ffffff !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.15), 0 6px 14px rgba(52, 211, 153, 0.05), inset 0 0 64px #ffffff, 0 0 48px rgba(255, 255, 255, 1) !important;
           transform: translateY(-2px);
         }
+        html body #view-overview#view-overview#view-overview .summary-card::before,
+        html body #view-overview#view-overview#view-overview .summary-card::after,
+        html body #view-overview#view-overview#view-overview .mew-offer-card::before,
+        html body #view-overview#view-overview#view-overview .mew-offer-card::after,
+        html body #view-overview#view-overview#view-overview .panel-card::before,
+        html body #view-overview#view-overview#view-overview .panel-card::after,
         #view-overview .summary-card::before,
         #view-overview .summary-card::after,
         #view-overview .mew-offer-card::before,
@@ -515,6 +563,7 @@ export class DashboardController {
           background: none !important;
           opacity: 0 !important;
           display: none !important;
+          content: none !important;
         }
         html body #view-overview .card-preview-box,
         html body #view-overview .card-preview-box.continue-box,
@@ -528,13 +577,13 @@ export class DashboardController {
         .dashboard-container .pipeline-item,
         .dashboard-container .vault-mini-card,
         .dashboard-container .empty-state {
-          background: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
+          background: #ffffff !important;
           background-color: #ffffff !important;
-          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%) !important;
-          border: 1.5px solid #a7f3d0 !important;
-          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.1), 0 0 20px rgba(255, 255, 255, 1), inset 0 0 60px #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #d1fae5 !important;
+          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.04), 0 0 48px rgba(255, 255, 255, 1), inset 0 0 64px #ffffff !important;
           color: #0f172a !important;
-          filter: brightness(1.14) !important;
+          filter: none !important;
         }
         html body #view-overview .summary-card-title,
         html body #view-overview .preview-item-title,
@@ -614,7 +663,7 @@ export class DashboardController {
           align-items: center !important;
           justify-content: center !important;
           flex-shrink: 0 !important;
-          background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           background-color: #ffffff !important;
           color: #10b981 !important;
           border: 1.5px solid #a7f3d0 !important;
@@ -627,7 +676,7 @@ export class DashboardController {
         .dashboard-container .summary-status-pill,
         .dashboard-container .preview-badge,
         .dashboard-container .vault-stat-tag {
-          background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
+          background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
           background-color: #ffffff !important;
           color: #059669 !important;
           border: 1px solid #a7f3d0 !important;
@@ -679,38 +728,280 @@ export class DashboardController {
           display: inline-flex !important;
           align-items: center !important;
           font-weight: 800 !important;
+          font-size: 0.8125rem !important;
           letter-spacing: 0.02em !important;
-          color: #047857 !important;
+          color: #059669 !important;
           background: transparent !important;
           border: none !important;
           box-shadow: none !important;
           padding: 0 !important;
           margin: 0 !important;
         }
-        html body #view-overview #card-recent-research[data-step="ข้อ 1"],
-        #card-recent-research[data-step="ข้อ 1"],
-        .card-recent-research[data-step="ข้อ 1"],
-        [data-step="ข้อ 1"] {
-          border-top: 4px solid #10b981 !important;
-          border-radius: 20px !important;
-          transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
-        }
-        html body #view-overview #card-recent-research[data-step="ข้อ 1"]:hover,
-        #card-recent-research[data-step="ข้อ 1"]:hover,
-        .card-recent-research[data-step="ข้อ 1"]:hover,
-        [data-step="ข้อ 1"]:hover {
-          border-color: #10b981 !important;
-          box-shadow: 0 18px 40px rgba(16, 185, 129, 0.22), 0 4px 12px rgba(16, 185, 129, 0.08), inset 0 0 36px #ffffff !important;
-          transform: translateY(-2px) !important;
-        }
         html body #view-overview .summary-card,
-        .dashboard-container .summary-card,
-        html body #view-overview #card-recent-research,
+        html body #view-overview .mew-offer-card,
         html body #view-overview #card-vault-summary,
         html body #view-overview #card-remix-drafts,
         html body #view-overview #card-continue-work,
-        html body #view-overview .summary-grid > [data-navigate="research"],
-        .dashboard-container #card-recent-research {
+        #card-vault-summary,
+        #card-remix-drafts,
+        #card-continue-work,
+        article[data-step="ข้อ 2"],
+        article[data-step="ข้อ 3"],
+        article[data-step="ข้อ 4"] {
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
+          border-radius: 20px !important;
+          position: relative !important;
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
+        }
+        html body #view-overview .summary-card:hover,
+        html body #view-overview .mew-offer-card:hover,
+        html body #view-overview #card-vault-summary:hover,
+        html body #view-overview #card-remix-drafts:hover,
+        html body #view-overview #card-continue-work:hover,
+        #card-vault-summary:hover,
+        #card-remix-drafts:hover,
+        #card-continue-work:hover,
+        article[data-step="ข้อ 2"]:hover,
+        article[data-step="ข้อ 3"]:hover,
+        article[data-step="ข้อ 4"]:hover {
+          border-color: #34d399 !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.15), 0 6px 14px rgba(52, 211, 153, 0.05), inset 0 0 64px #ffffff, 0 0 48px rgba(255, 255, 255, 1) !important;
+          transform: translateY(-2px) !important;
+        }
+        html body #view-overview #card-recent-research,
+        #card-recent-research,
+        .card-recent-research,
+        html body #view-overview #card-recent-research[data-step="ข้อ 1"],
+        #card-recent-research[data-step="ข้อ 1"],
+        .card-recent-research[data-step="ข้อ 1"],
+        article[data-step="ข้อ 1"] {
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
+          border-radius: 20px !important;
+          position: relative !important;
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
+        }
+        html body #view-overview #card-recent-research .summary-metric-number,
+        #card-recent-research .summary-metric-number,
+        article[data-step="ข้อ 1"] .summary-metric-number {
+          color: #10b981 !important;
+        }
+        html body #view-overview #card-recent-research .footer-action-label,
+        #card-recent-research .footer-action-label,
+        article[data-step="ข้อ 1"] .footer-action-label,
+        html body #view-overview #card-recent-research .footer-arrow,
+        #card-recent-research .footer-arrow,
+        article[data-step="ข้อ 1"] .footer-arrow {
+          color: #10b981 !important;
+          font-weight: 600 !important;
+        }
+        #card-recent-research .card-step-kicker,
+        .card-recent-research .card-step-kicker,
+        article[data-step="ข้อ 1"] .card-step-kicker {
+          display: inline-flex !important;
+          align-items: center !important;
+          font-weight: 800 !important;
+          font-size: 0.8125rem !important;
+          letter-spacing: 0.02em !important;
+          color: #059669 !important;
+          background: transparent !important;
+          padding: 0 !important;
+          border-radius: 0 !important;
+          border: none !important;
+          box-shadow: none !important;
+          text-transform: none !important;
+        }
+        html body #view-overview #card-recent-research .summary-icon-wrap,
+        #card-recent-research .summary-icon-wrap,
+        article[data-step="ข้อ 1"] .summary-icon-wrap {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          border: 1.5px solid #6ee7b7 !important;
+          color: #10b981 !important;
+          box-shadow: 0 4px 12px rgba(52, 211, 153, 0.12), inset 0 0 16px #ffffff !important;
+        }
+        html body #view-overview #card-recent-research .badge-pill,
+        #card-recent-research .badge-pill,
+        article[data-step="ข้อ 1"] .badge-pill,
+        html body #view-overview #card-recent-research .preview-badge,
+        #card-recent-research .preview-badge,
+        article[data-step="ข้อ 1"] .preview-badge {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          box-shadow: none !important;
+        }
+        html body #view-overview #card-recent-research .card-preview-box,
+        #card-recent-research .card-preview-box,
+        article[data-step="ข้อ 1"] .card-preview-box {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #d1fae5 !important;
+          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.04), 0 0 48px rgba(255, 255, 255, 1), inset 0 0 64px #ffffff !important;
+        }
+        html body #view-overview #card-recent-research .preview-date,
+        #card-recent-research .preview-date,
+        article[data-step="ข้อ 1"] .preview-date {
+          color: #10b981 !important;
+          font-weight: 600 !important;
+        }
+        html body #view-overview #card-recent-research .summary-card-footer,
+        #card-recent-research .summary-card-footer,
+        article[data-step="ข้อ 1"] .summary-card-footer {
+          border-top: 1px solid #dcfce7 !important;
+        }
+        html body #view-overview #card-recent-research:hover,
+        #card-recent-research:hover,
+        .card-recent-research:hover,
+        html body #view-overview #card-recent-research[data-step="ข้อ 1"]:hover,
+        #card-recent-research[data-step="ข้อ 1"]:hover,
+        .card-recent-research[data-step="ข้อ 1"]:hover,
+        article[data-step="ข้อ 1"]:hover {
+          border-color: #34d399 !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.15), 0 6px 14px rgba(52, 211, 153, 0.05), inset 0 0 64px #ffffff, 0 0 48px rgba(255, 255, 255, 1) !important;
+          transform: translateY(-2px) !important;
+        }
+        html body #view-overview #card-recent-research:focus-visible,
+        #card-recent-research:focus-visible,
+        .card-recent-research:focus-visible,
+        html body #view-overview #card-recent-research[data-step="ข้อ 1"]:focus-visible,
+        #card-recent-research[data-step="ข้อ 1"]:focus-visible,
+        .card-recent-research[data-step="ข้อ 1"]:focus-visible,
+        article[data-step="ข้อ 1"]:focus-visible {
+          outline: 2px solid #34d399 !important;
+          outline-offset: 2px !important;
+          border-color: #10b981 !important;
+        }
+        #dashboard-root .hero-eyebrow-row > .badge-pill:first-child,
+        #dashboard-root .dashboard-step-badge,
+        [data-step="ข้อ 1"] .hero-eyebrow-row > .badge-pill:first-child,
+        [data-step="ข้อ 1"] .dashboard-step-badge,
+        .dashboard-step-badge[data-step="ข้อ 1"] {
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 0.45rem !important;
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          font-weight: 700 !important;
+          font-size: 0.75rem !important;
+          letter-spacing: 0.02em !important;
+          padding: 5px 12px !important;
+          border-radius: 999px !important;
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12) !important;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        #dashboard-root .dashboard-step-badge:hover,
+        [data-step="ข้อ 1"] .dashboard-step-badge:hover,
+        .dashboard-step-badge[data-step="ข้อ 1"]:hover {
+          transform: translateY(-1px) !important;
+          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.18) !important;
+        }
+        #dashboard-root .dashboard-step-badge .card-step-kicker,
+        [data-step="ข้อ 1"] .dashboard-step-badge .card-step-kicker,
+        .dashboard-step-badge[data-step="ข้อ 1"] .card-step-kicker {
+          display: inline-flex !important;
+          align-items: center !important;
+          font-weight: 800 !important;
+          font-size: 0.75rem !important;
+          letter-spacing: 0.02em !important;
+          color: #059669 !important;
+          background: transparent !important;
+          border: none !important;
+          border-radius: 0 !important;
+          padding: 0 !important;
+          box-shadow: none !important;
+        }
+        #dashboard-root .dashboard-step-badge::before,
+        [data-step="ข้อ 1"] .dashboard-step-badge::before,
+        .dashboard-step-badge[data-step="ข้อ 1"]::before {
+          content: '' !important;
+          display: inline-block !important;
+          width: 7px !important;
+          height: 7px !important;
+          border-radius: 50% !important;
+          background: #10b981 !important;
+          box-shadow: 0 0 6px rgba(16, 185, 129, 0.5) !important;
+        }
+        #dashboard-root .step-subkicker,
+        [data-step="ข้อ 1"] .step-subkicker {
+          display: inline-flex !important;
+          align-items: center !important;
+          font-weight: 700 !important;
+          font-size: 0.6875rem !important;
+          padding: 2px 8px !important;
+          border-radius: 999px !important;
+          background: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #a7f3d0 !important;
+          box-shadow: none !important;
+        }
+        #dashboard-root .step-title-badge,
+        [data-step="ข้อ 1"] .step-title-badge,
+        .step-title-badge[data-step="ข้อ 1"] {
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 0.35rem !important;
+          font-size: 0.75rem !important;
+          vertical-align: middle !important;
+          padding: 2px 8px !important;
+          border-radius: 999px !important;
+          background: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          font-weight: 800 !important;
+          margin-right: 0.45rem !important;
+          box-shadow: none !important;
+          transition: all 0.2s ease !important;
+        }
+        .btn-action-badge {
+          display: inline-flex !important;
+          align-items: center !important;
+          margin-left: 8px !important;
+          padding: 2px 8px !important;
+          font-size: 0.72rem !important;
+          font-weight: 750 !important;
+          border-radius: 999px !important;
+          background: rgba(255, 255, 255, 0.22) !important;
+          border: 1px solid rgba(255, 255, 255, 0.4) !important;
+          line-height: 1.2 !important;
+          letter-spacing: 0.02em !important;
+        }
+        .btn-pill.btn-primary .btn-action-badge {
+          background: rgba(255, 255, 255, 0.25) !important;
+          border-color: rgba(255, 255, 255, 0.45) !important;
+          color: #ffffff !important;
+        }
+        .btn-pill.btn-ghost .btn-action-badge {
+          background: #f1f5f9 !important;
+          border-color: #cbd5e1 !important;
+          color: #334155 !important;
+        }
+        .btn-pill.btn-violet .btn-action-badge {
+          background: rgba(255, 255, 255, 0.25) !important;
+          border-color: rgba(255, 255, 255, 0.45) !important;
+          color: #ffffff !important;
+        }
+        html body #view-overview .summary-card,
+        .dashboard-container .summary-card,
+        html body #view-overview #card-vault-summary,
+        html body #view-overview #card-remix-drafts,
+        html body #view-overview #card-continue-work {
           position: relative;
           border-top: 4px solid #34d399 !important;
           display: flex !important;
@@ -722,6 +1013,25 @@ export class DashboardController {
           box-sizing: border-box !important;
           text-align: left !important;
           overflow: hidden !important;
+        }
+        /* ข้อ 1: Dual-Lens Research (Ultra-Bright Emerald Accent - rev-1794843392199-2ike5 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7) explicit top border & luminous theme */
+        html body #view-overview #card-recent-research,
+        html body #view-overview .card-recent-research,
+        html body #view-overview article[data-step="ข้อ 1"],
+        html body #view-overview .summary-grid > [data-navigate="research"],
+        #dashboard-root #card-recent-research,
+        #card-recent-research,
+        .card-recent-research,
+        article[data-step="ข้อ 1"] {
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
+          border-radius: 20px !important;
+          position: relative !important;
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
         }
         html body #view-overview .summary-card-inner,
         .dashboard-container .summary-card-inner {
@@ -944,7 +1254,7 @@ export class DashboardController {
           font-weight: 700 !important;
           line-height: 1.25 !important;
           white-space: nowrap !important;
-          background: #f0fdf4 !important;
+          background: #ffffff !important;
           color: #059669 !important;
           border: 1px solid #a7f3d0 !important;
         }
@@ -992,6 +1302,187 @@ export class DashboardController {
           font-weight: 400 !important;
           font-size: 0.8125rem !important;
         }
+        /* ข้อ 1 & S00 Ultra-Bright Luminous Card Overrides (rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7) */
+        html body #view-overview .dashboard-hero .hero-eyebrow-row .dashboard-step-badge,
+        html body #view-overview .dashboard-hero .badge-pill.dashboard-step-badge,
+        #dashboard-root .dashboard-hero .dashboard-step-badge,
+        .dashboard-container .dashboard-hero .dashboard-step-badge {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12) !important;
+        }
+        html body #view-overview .dashboard-hero .dashboard-step-badge .card-step-kicker,
+        #dashboard-root .dashboard-hero .dashboard-step-badge .card-step-kicker {
+          background: transparent !important;
+          color: #059669 !important;
+          border: none !important;
+          border-radius: 0 !important;
+          padding: 0 !important;
+          font-weight: 800 !important;
+          box-shadow: none !important;
+        }
+        html body #view-overview .summary-card,
+        html body #view-overview .mew-offer-card,
+        html body #view-overview .panel-card,
+        html body #view-overview #card-vault-summary,
+        html body #view-overview #card-remix-drafts,
+        html body #view-overview #card-continue-work,
+        #dashboard-root .summary-card,
+        #dashboard-root .mew-offer-card {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
+        }
+        html body #view-overview #card-recent-research,
+        html body #view-overview .card-recent-research,
+        html body #view-overview [data-testid="recent-research"],
+        html body #view-overview .summary-grid > [data-navigate="research"],
+        html body #view-overview .summary-card[data-step="ข้อ 1"],
+        html body #view-overview article[data-step="ข้อ 1"],
+        #dashboard-root #card-recent-research {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #a7f3d0 !important;
+          border-top: 4px solid #34d399 !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
+        }
+        html body #view-overview #card-recent-research:hover,
+        html body #view-overview .card-recent-research:hover,
+        html body #view-overview [data-testid="recent-research"]:hover,
+        html body #view-overview .summary-grid > [data-navigate="research"]:hover,
+        html body #view-overview .summary-card[data-step="ข้อ 1"]:hover,
+        html body #view-overview article[data-step="ข้อ 1"]:hover,
+        #dashboard-root #card-recent-research:hover {
+          border-color: #34d399 !important;
+          border-top: 4px solid #10b981 !important;
+          box-shadow: 0 18px 40px rgba(52, 211, 153, 0.16), 0 6px 14px rgba(52, 211, 153, 0.06), inset 0 0 80px #ffffff, 0 0 64px rgba(255, 255, 255, 1) !important;
+          transform: translateY(-2px) !important;
+        }
+        html body #view-overview #card-recent-research .summary-icon-wrap,
+        html body #view-overview [data-testid="recent-research"] .summary-icon-wrap,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .summary-icon-wrap,
+        html body #view-overview article[data-step="ข้อ 1"] .summary-icon-wrap {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          border: 1.5px solid #6ee7b7 !important;
+          color: #10b981 !important;
+          box-shadow: 0 4px 12px rgba(52, 211, 153, 0.12), inset 0 0 12px #ffffff !important;
+        }
+        html body #view-overview #card-recent-research .badge-pill,
+        html body #view-overview [data-testid="recent-research"] .badge-pill,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .badge-pill,
+        html body #view-overview article[data-step="ข้อ 1"] .badge-pill {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          box-shadow: none !important;
+        }
+        html body #view-overview #card-recent-research .card-step-kicker,
+        html body #view-overview [data-testid="recent-research"] .card-step-kicker,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .card-step-kicker,
+        html body #view-overview article[data-step="ข้อ 1"] .card-step-kicker {
+          background: transparent !important;
+          color: #059669 !important;
+          border: none !important;
+          border-radius: 0 !important;
+          padding: 0 !important;
+          font-weight: 800 !important;
+          box-shadow: none !important;
+        }
+        html body #view-overview #card-recent-research .summary-metric-number,
+        html body #view-overview [data-testid="recent-research"] .summary-metric-number,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .summary-metric-number,
+        html body #view-overview article[data-step="ข้อ 1"] .summary-metric-number {
+          color: #10b981 !important;
+        }
+        html body #view-overview #card-recent-research .step-title-badge,
+        html body #view-overview [data-testid="recent-research"] .step-title-badge,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .step-title-badge,
+        html body #view-overview article[data-step="ข้อ 1"] .step-title-badge {
+          background: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+          border-radius: 999px !important;
+          padding: 1px 8px !important;
+          font-size: 0.75rem !important;
+          font-weight: 800 !important;
+          margin-right: 6px !important;
+        }
+        html body #view-overview #card-recent-research .card-preview-box,
+        html body #view-overview [data-testid="recent-research"] .card-preview-box,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .card-preview-box,
+        html body #view-overview article[data-step="ข้อ 1"] .card-preview-box {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border: 1.5px solid #d1fae5 !important;
+          box-shadow: 0 4px 16px rgba(52, 211, 153, 0.04), 0 0 48px rgba(255, 255, 255, 1), inset 0 0 64px #ffffff !important;
+        }
+        html body #view-overview #card-recent-research .preview-badge,
+        html body #view-overview [data-testid="recent-research"] .preview-badge,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .preview-badge,
+        html body #view-overview article[data-step="ข้อ 1"] .preview-badge {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          color: #059669 !important;
+          border: 1px solid #6ee7b7 !important;
+        }
+        html body #view-overview #card-recent-research .preview-date,
+        html body #view-overview [data-testid="recent-research"] .preview-date,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .preview-date,
+        html body #view-overview article[data-step="ข้อ 1"] .preview-date {
+          color: #10b981 !important;
+          font-weight: 600 !important;
+        }
+        html body #view-overview #card-recent-research .summary-card-footer,
+        html body #view-overview [data-testid="recent-research"] .summary-card-footer,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .summary-card-footer,
+        html body #view-overview article[data-step="ข้อ 1"] .summary-card-footer {
+          border-top: 1px solid #dcfce7 !important;
+          color: #10b981 !important;
+        }
+        html body #view-overview #card-recent-research .footer-action-label,
+        html body #view-overview #card-recent-research .footer-arrow,
+        html body #view-overview [data-testid="recent-research"] .footer-action-label,
+        html body #view-overview [data-testid="recent-research"] .footer-arrow,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .footer-action-label,
+        html body #view-overview .summary-card[data-step="ข้อ 1"] .footer-arrow,
+        html body #view-overview article[data-step="ข้อ 1"] .footer-action-label,
+        html body #view-overview article[data-step="ข้อ 1"] .footer-arrow {
+          color: #10b981 !important;
+          font-weight: 600 !important;
+        }
+
+        /* rev-1794958140927-iq7vj rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7: ข้อ 1 (Ultra-bright luminous cards - ข้อ 1 Dual-Lens) */
+        html body #view-overview .summary-card,
+        html body #view-overview .stat-card,
+        html body #view-overview .kpi-card,
+        html body #view-overview .dashboard-card,
+        html body #view-overview .overview-card,
+        html body #view-overview .panel-card,
+        html body #view-overview .bento-card,
+        html body #view-overview .mew-offer-card,
+        #dashboard-root .summary-card,
+        #dashboard-root .mew-offer-card,
+        .dashboard-container .summary-card,
+        .dashboard-container .mew-offer-card {
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+          border-color: #a7f3d0 !important;
+          box-shadow: 0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff !important;
+          filter: brightness(9.5) !important;
+        }
       `;
     }
 
@@ -1003,26 +1494,40 @@ export class DashboardController {
     });
 
     containers.forEach((container) => {
+      const eyebrowRow = container.querySelector('.hero-eyebrow-row');
+      if (eyebrowRow && !eyebrowRow.querySelector('.dashboard-step-badge')) {
+        const stepBadge = document.createElement('span');
+        stepBadge.className = 'badge-pill soft dashboard-step-badge';
+        stepBadge.setAttribute('data-step', 'ข้อ 1');
+        stepBadge.setAttribute('aria-label', 'ข้อ 1 · Dual-Lens Research');
+        stepBadge.innerHTML = '<strong class="card-step-kicker">ข้อ 1</strong> · Dual-Lens Research';
+        eyebrowRow.insertBefore(stepBadge, eyebrowRow.firstChild);
+      }
       container.style.setProperty('--bg-card', '#ffffff', 'important');
       container.style.setProperty('--card-bg', '#ffffff', 'important');
       container.style.setProperty('--surface-bg', '#ffffff', 'important');
       container.style.setProperty('--mew-surface', '#ffffff', 'important');
+      container.style.setProperty('--v6-bg', '#ffffff', 'important');
+      container.style.setProperty('--v6-surface', '#ffffff', 'important');
+      container.style.setProperty('--v6-card', '#ffffff', 'important');
       container.style.setProperty('background', '#ffffff', 'important');
       container.style.setProperty('background-color', '#ffffff', 'important');
+      container.style.setProperty('background-image', 'linear-gradient(180deg, #ffffff 0%, #ffffff 100%)', 'important');
       container.style.setProperty('opacity', '1', 'important');
       container.style.setProperty('filter', 'none', 'important');
 
       const heroes = container.querySelectorAll('.dashboard-hero');
       heroes.forEach((hero) => {
-        hero.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        hero.style.setProperty('background', '#ffffff', 'important');
         hero.style.setProperty('background-color', '#ffffff', 'important');
-        hero.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
+        hero.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)', 'important');
+        hero.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
         hero.style.setProperty('border-top', '4px solid #34d399', 'important');
         hero.style.setProperty('border-radius', '24px', 'important');
         hero.style.setProperty('padding', '32px 36px', 'important');
-        hero.style.setProperty('box-shadow', '0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff', 'important');
+        hero.style.setProperty('box-shadow', '0 16px 48px rgba(52, 211, 153, 0.14), 0 4px 16px rgba(52, 211, 153, 0.06), 0 0 140px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 200px #ffffff', 'important');
         hero.style.setProperty('color', '#0f172a', 'important');
-        hero.style.setProperty('filter', 'brightness(1.16)', 'important');
+        hero.style.setProperty('filter', 'brightness(1.25)', 'important');
       });
 
       const heroActions = container.querySelectorAll('.dashboard-hero .hero-actions');
@@ -1031,20 +1536,28 @@ export class DashboardController {
         actions.setAttribute('aria-hidden', 'true');
       });
 
-      const cards = container.querySelectorAll('.summary-card, .mew-offer-card, .panel-card, .card, .dashboard-card, .overview-card, .stat-card, .kpi-card, .bento-card, [data-testid="recent-research"], [data-testid="vault-summary"], [data-testid="remix-drafts"], [data-testid="continue-work"], #card-recent-research, #card-vault-summary, #card-remix-drafts, #card-continue-work, .summary-grid > article, .summary-grid > div');
+      const btnResearch = container.querySelector('#btn-research-a-clip, [data-testid="btn-research-a-clip"]');
+      if (btnResearch) {
+        btnResearch.setAttribute('data-step', 'ข้อ 1');
+      }
+
+      const cards = container.querySelectorAll('.summary-card, .mew-offer-card, .panel-card, .card, .dashboard-card, .overview-card, .stat-card, .kpi-card, .bento-card, .keep-going-s00-card, #s00-keep-going-card, [data-testid="recent-research"], [data-testid="vault-summary"], [data-testid="remix-drafts"], [data-testid="continue-work"], #card-recent-research, #card-vault-summary, #card-remix-drafts, #card-continue-work, .summary-grid > article, .summary-grid > div');
       cards.forEach((card) => {
-        if (card.classList.contains('summary-card-inner') || card.classList.contains('summary-card-header') || card.classList.contains('summary-card-footer') || card.classList.contains('card-preview-box') || card.classList.contains('card-step-kicker') || card.classList.contains('summary-card-title') || card.classList.contains('summary-card-desc')) return;
-        if (card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
-        card.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        if (card.classList.contains('summary-card-inner') || card.classList.contains('summary-card-header') || card.classList.contains('summary-card-footer') || card.classList.contains('card-preview-box') || card.classList.contains('card-step-kicker') || card.classList.contains('summary-card-title') || card.classList.contains('summary-card-desc') || card.classList.contains('vault-mini-card') || card.classList.contains('vault-sub-stat')) return;
+        const isPrimaryCard = card.classList.contains('summary-card') || card.classList.contains('mew-offer-card') || card.classList.contains('panel-card') || (card.id && card.id.startsWith('card-'));
+        if (!isPrimaryCard && card.parentElement && card.parentElement.closest('.summary-card, .mew-offer-card')) return;
+        const isItemOne = card.id === 'card-recent-research' || card.getAttribute('data-step') === 'ข้อ 1';
+        card.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+        card.style.setProperty('background', '#ffffff', 'important');
         card.style.setProperty('background-color', '#ffffff', 'important');
-        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        card.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)', 'important');
         card.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
         card.style.setProperty('border-top', '4px solid #34d399', 'important');
         card.style.setProperty('border-radius', '20px', 'important');
-        card.style.setProperty('box-shadow', '0 12px 32px rgba(52, 211, 153, 0.14), 0 2px 10px rgba(52, 211, 153, 0.06), 0 0 36px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 3px #ffffff, inset 0 0 120px #ffffff', 'important');
+        card.style.setProperty('box-shadow', '0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff', 'important');
         card.style.setProperty('color', '#0f172a', 'important');
         card.style.setProperty('opacity', '1', 'important');
-        card.style.setProperty('filter', 'brightness(1.16)', 'important');
+        card.style.setProperty('filter', 'brightness(9.5)', 'important');
         if (card.classList.contains('summary-card') || card.closest('.summary-grid')) {
           card.style.setProperty('display', 'flex', 'important');
           card.style.setProperty('flex-direction', 'column', 'important');
@@ -1057,25 +1570,7 @@ export class DashboardController {
         }
       });
 
-      const summaryCards = container.querySelectorAll('.summary-grid > article, .summary-grid > div, .summary-card');
-      const stepMap = [
-        { selector: '#card-recent-research, [data-testid="recent-research"], .summary-grid > [data-navigate="research"]', label: 'ข้อ 1', idx: 0 },
-        { selector: '#card-vault-summary, [data-testid="vault-summary"], .summary-grid > [data-navigate="library"]', label: 'ข้อ 2', idx: 1 },
-        { selector: '#card-remix-drafts, [data-testid="remix-drafts"], .summary-grid > [data-navigate="remix"]', label: 'ข้อ 3', idx: 2 },
-        { selector: '#card-continue-work, [data-testid="continue-work"]', label: 'ข้อ 4', idx: 3 }
-      ];
-      stepMap.forEach(({ selector, label, idx }) => {
-        const cardEl = container.querySelector(selector) || summaryCards[idx];
-        if (!cardEl) return;
-        cardEl.setAttribute('data-step', label);
-        const badgeEl = cardEl.querySelector('.summary-card-header .badge-pill, .badge-pill');
-        if (badgeEl && !badgeEl.querySelector('.card-step-kicker') && !badgeEl.textContent.includes(label)) {
-          const rawText = badgeEl.textContent.trim();
-          badgeEl.innerHTML = `<strong class="card-step-kicker">${label}</strong> · ${rawText}`;
-        }
-      });
-
-      const cardInners = container.querySelectorAll('.summary-card-inner, .summary-card-header, .summary-card-footer, .vault-breakdown-container, .summary-card-title, .summary-card-desc, .summary-metric-row, .summary-metric-number, .summary-metric-unit, .vault-stat-unit, .vault-stat-number, .vault-stat-label, .card-step-kicker, .panel-header, .panel-body, .pipeline-list, .vault-mini-grid');
+      const cardInners = container.querySelectorAll('.summary-card-inner, .summary-card-header, .summary-card-footer, .vault-breakdown-container, .summary-card-title, .summary-card-desc, .summary-metric-row, .summary-metric-number, .summary-metric-unit, .vault-stat-unit, .vault-stat-number, .vault-stat-label, .panel-header, .panel-body, .pipeline-list, .vault-mini-grid');
       cardInners.forEach((inner) => {
         inner.style.setProperty('background', 'transparent', 'important');
         inner.style.setProperty('background-color', 'transparent', 'important');
@@ -1090,14 +1585,192 @@ export class DashboardController {
 
       const subBoxes = container.querySelectorAll('.card-preview-box, .continue-box, .vault-sub-stat, .pipeline-item, .vault-mini-card, .mini-card, .empty-state');
       subBoxes.forEach((box) => {
-        box.style.setProperty('background', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
+        box.style.setProperty('background', '#ffffff', 'important');
         box.style.setProperty('background-color', '#ffffff', 'important');
-        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 92%, #f8fffb 100%)', 'important');
-        box.style.setProperty('border', '1.5px solid #a7f3d0', 'important');
+        box.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)', 'important');
+        box.style.setProperty('border', '1.5px solid #d1fae5', 'important');
         box.style.setProperty('border-radius', '12px', 'important');
-        box.style.setProperty('box-shadow', '0 4px 16px rgba(52, 211, 153, 0.1), 0 0 20px rgba(255, 255, 255, 1), inset 0 0 60px #ffffff', 'important');
+        box.style.setProperty('box-shadow', '0 4px 16px rgba(52, 211, 153, 0.04), 0 0 48px rgba(255, 255, 255, 1), inset 0 0 64px #ffffff', 'important');
         box.style.setProperty('color', '#0f172a', 'important');
-        box.style.setProperty('filter', 'brightness(1.14)', 'important');
+        box.style.setProperty('filter', 'none', 'important');
+      });
+
+      const badgesAndIcons = container.querySelectorAll('.summary-icon-wrap, .badge-pill, .summary-status-pill, .preview-badge, .vault-stat-tag');
+      badgesAndIcons.forEach((el) => {
+        el.style.setProperty('background', '#ffffff', 'important');
+        el.style.setProperty('background-color', '#ffffff', 'important');
+        el.style.setProperty('border', '1px solid #a7f3d0', 'important');
+        el.style.setProperty('color', '#059669', 'important');
+      });
+
+      const heroStepBadges = container.querySelectorAll('.dashboard-step-badge');
+      heroStepBadges.forEach((badge) => {
+        badge.setAttribute('data-step', 'ข้อ 1');
+        badge.style.setProperty('background', '#ffffff', 'important');
+        badge.style.setProperty('background-color', '#ffffff', 'important');
+        badge.style.setProperty('border', '1px solid #6ee7b7', 'important');
+        badge.style.setProperty('color', '#059669', 'important');
+        const kicker = badge.querySelector('.card-step-kicker');
+        if (kicker) {
+          kicker.style.setProperty('background', 'transparent', 'important');
+          kicker.style.setProperty('color', '#059669', 'important');
+          kicker.style.setProperty('border', 'none', 'important');
+          kicker.style.setProperty('border-radius', '0', 'important');
+          kicker.style.setProperty('padding', '0', 'important');
+          kicker.style.setProperty('font-weight', '800', 'important');
+          kicker.style.setProperty('box-shadow', 'none', 'important');
+        }
+      });
+
+      const summaryCards = container.querySelectorAll('.summary-grid > article, .summary-grid > div, .summary-card');
+      const stepMap = [
+        { selector: '#card-recent-research, [data-testid="recent-research"], .summary-grid > [data-navigate="research"]', label: 'ข้อ 1', idx: 0 },
+        { selector: '#card-vault-summary, [data-testid="vault-summary"], .summary-grid > [data-navigate="library"]', label: 'ข้อ 2', idx: 1 },
+        { selector: '#card-remix-drafts, [data-testid="remix-drafts"], .summary-grid > [data-navigate="remix"]', label: 'ข้อ 3', idx: 2 },
+        { selector: '#card-continue-work, [data-testid="continue-work"], #s00-keep-going-card, .keep-going-s00-card', label: 'ข้อ 4', idx: 3 }
+      ];
+      stepMap.forEach(({ selector, label, idx }) => {
+        const cardEl = container.querySelector(selector) || summaryCards[idx];
+        if (!cardEl) return;
+        cardEl.setAttribute('data-step', label);
+        const badgeEl = cardEl.querySelector('.summary-card-header .badge-pill, .badge-pill');
+        if (badgeEl && !badgeEl.querySelector('.card-step-kicker') && !badgeEl.textContent.includes(label)) {
+          const rawText = badgeEl.textContent.trim();
+          badgeEl.innerHTML = `<strong class="card-step-kicker">${label}</strong> · ${rawText}`;
+        }
+        cardEl.style.setProperty('border', '1.5px solid #bbf7d0', 'important');
+        cardEl.style.setProperty('border-top', '4px solid #34d399', 'important');
+        cardEl.style.setProperty('background', '#ffffff', 'important');
+        cardEl.style.setProperty('background-color', '#ffffff', 'important');
+        cardEl.style.setProperty('background-image', 'linear-gradient(180deg, #ffffff 0%, #ffffff 100%)', 'important');
+        cardEl.style.setProperty('box-shadow', '0 20px 60px rgba(52, 211, 153, 0.25), 0 4px 32px rgba(255, 255, 255, 1), 0 0 400px rgba(255, 255, 255, 1), 0 0 0 2px #ffffff, inset 0 0 0 4px #ffffff, inset 0 0 400px #ffffff', 'important');
+        cardEl.style.setProperty('filter', 'brightness(9.5)', 'important');
+        cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795003940514-tcu8o rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+        const metricNum = cardEl.querySelector('.summary-metric-number, .metric-number, .stat-value, .font-num');
+        if (metricNum) {
+          metricNum.style.setProperty('color', '#10b981', 'important');
+        }
+        const iconWrap = cardEl.querySelector('.summary-icon-wrap, .card-icon, .icon-wrap');
+        if (iconWrap) {
+          iconWrap.style.setProperty('background', '#ffffff', 'important');
+          iconWrap.style.setProperty('border', '1.5px solid #6ee7b7', 'important');
+          iconWrap.style.setProperty('color', '#10b981', 'important');
+        }
+        const previewBox = cardEl.querySelector('.card-preview-box');
+        if (previewBox) {
+          previewBox.style.setProperty('background', '#ffffff', 'important');
+          previewBox.style.setProperty('background-color', '#ffffff', 'important');
+          previewBox.style.setProperty('background-image', 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)', 'important');
+          previewBox.style.setProperty('border', '1.5px solid #d1fae5', 'important');
+          previewBox.style.setProperty('box-shadow', '0 4px 16px rgba(52, 211, 153, 0.04), 0 0 48px rgba(255, 255, 255, 1), inset 0 0 64px #ffffff', 'important');
+          previewBox.style.setProperty('filter', 'none', 'important');
+        }
+        const footerEl = cardEl.querySelector('.summary-card-footer');
+        if (footerEl) {
+          footerEl.style.setProperty('border-top', '1px solid #dcfce7', 'important');
+        }
+        const footerLabel = cardEl.querySelector('.footer-action-label');
+        if (footerLabel) {
+          footerLabel.style.setProperty('color', '#10b981', 'important');
+          footerLabel.style.setProperty('font-weight', '600', 'important');
+        }
+        const footerArrow = cardEl.querySelector('.footer-arrow');
+        if (footerArrow && !footerArrow.closest('.btn-continue-work')) {
+          footerArrow.style.setProperty('color', '#10b981', 'important');
+        }
+        if (badgeEl) {
+          badgeEl.style.setProperty('background', '#ffffff', 'important');
+          badgeEl.style.setProperty('border', '1px solid #6ee7b7', 'important');
+          badgeEl.style.setProperty('color', '#059669', 'important');
+        }
+        const kicker = cardEl.querySelector('.card-step-kicker');
+        if (kicker) {
+          kicker.style.setProperty('background', 'transparent', 'important');
+          kicker.style.setProperty('border', 'none', 'important');
+          kicker.style.setProperty('border-radius', '0', 'important');
+          kicker.style.setProperty('color', '#059669', 'important');
+          kicker.style.setProperty('padding', '0', 'important');
+          kicker.style.setProperty('font-weight', '800', 'important');
+          kicker.style.setProperty('display', 'inline-flex', 'important');
+          kicker.style.setProperty('box-shadow', 'none', 'important');
+          kicker.style.setProperty('text-transform', 'none', 'important');
+        }
+        if (label === 'ข้อ 1') {
+          cardEl.setAttribute('data-step', 'ข้อ 1');
+          cardEl.setAttribute('data-review-id', 'rev-1794843392031-mmzji rev-1794843392199-2ike5 rev-1794844171476-d7ed6 rev-1794844171638-a2fdx rev-1794845015989-bkxge rev-1794845015829-px9fk rev-1794845371422-gh5al rev-1795002899062-38r7u rev-1795002899133-fdj2r rev-1795003651754-f0d2z rev-1795003651827-df1tv rev-1795003940582-nt6gh rev-1795005894510-9lday rev-1795005894443-9xp4v rev-1795011652944-xkiqu rev-1795011653001-o0fal rev-1795043207980-u43tb rev-1795043208047-l4qt2 rev-1795043420123-i524k rev-1795101264808-etcgm rev-1795101264562-cqrzv rev-1795171060004-udpfv rev-1795171060102-ty52d rev-1795171372243-ioqe4 rev-1795171372395-4hpzz rev-1795175105606-4b2nz rev-1795175105751-x8jxg rev-1795177797430-guot3 rev-1795177797590-wswoq rev-1795192509451-hrugb rev-1795192509528-ul7f7');
+          cardEl.setAttribute('title', 'ข้อ 1: Dual-Lens Research (S01)');
+          cardEl.setAttribute('aria-label', 'ข้อ 1: การ์ดวิจัยล่าสุด: เปิดดูรายการวิจัยและผลการวิเคราะห์');
+          const previewMeta = cardEl.querySelector('.preview-item-meta');
+          if (previewMeta) {
+            previewMeta.style.setProperty('justify-content', 'flex-start', 'important');
+            previewMeta.style.setProperty('gap', '6px', 'important');
+            if (!previewMeta.querySelector('.step-subkicker')) {
+              const sub = document.createElement('strong');
+              sub.className = 'step-subkicker';
+              sub.setAttribute('data-step', 'ข้อ 1');
+              sub.textContent = 'ข้อ 1.1';
+              previewMeta.insertBefore(sub, previewMeta.firstChild);
+            }
+          }
+          const subEl = cardEl.querySelector('.step-subkicker');
+          if (subEl) {
+            subEl.setAttribute('data-step', 'ข้อ 1');
+            subEl.style.setProperty('background', '#ffffff', 'important');
+            subEl.style.setProperty('color', '#059669', 'important');
+            subEl.style.setProperty('border', '1px solid #a7f3d0', 'important');
+            subEl.style.setProperty('border-radius', '999px', 'important');
+            subEl.style.setProperty('padding', '2px 8px', 'important');
+            subEl.style.setProperty('font-weight', '700', 'important');
+          }
+          const previewBadge = cardEl.querySelector('.preview-badge');
+          if (previewBadge) {
+            previewBadge.style.setProperty('background', '#ffffff', 'important');
+            previewBadge.style.setProperty('color', '#059669', 'important');
+            previewBadge.style.setProperty('border', '1px solid #6ee7b7', 'important');
+          }
+          const previewDate = cardEl.querySelector('.preview-date');
+          if (previewDate) {
+            previewDate.style.setProperty('margin-left', 'auto', 'important');
+            previewDate.style.setProperty('color', '#10b981', 'important');
+            previewDate.style.setProperty('font-weight', '600', 'important');
+          }
+          const titleEl = cardEl.querySelector('.summary-card-title, .card-title, h2, h3');
+          if (titleEl && !titleEl.querySelector('.step-title-badge')) {
+            const titleBadge = document.createElement('span');
+            titleBadge.className = 'step-title-badge';
+            titleBadge.setAttribute('data-step', 'ข้อ 1');
+            titleBadge.textContent = 'ข้อ 1';
+            titleBadge.style.fontSize = '0.75rem';
+            titleBadge.style.padding = '1px 8px';
+            titleBadge.style.marginRight = '6px';
+            titleEl.insertBefore(titleBadge, titleEl.firstChild);
+          }
+          const titleBadge = cardEl.querySelector('.step-title-badge');
+          if (titleBadge) {
+            titleBadge.style.setProperty('background', '#ffffff', 'important');
+            titleBadge.style.setProperty('color', '#059669', 'important');
+            titleBadge.style.setProperty('border', '1px solid #6ee7b7', 'important');
+            titleBadge.style.setProperty('border-radius', '999px', 'important');
+            titleBadge.style.setProperty('font-weight', '800', 'important');
+          }
+          if (footerLabel) {
+            footerLabel.setAttribute('data-step', 'ข้อ 1');
+          }
+          if (badgeEl) {
+            badgeEl.setAttribute('data-step', 'ข้อ 1');
+          }
+          if (kicker) {
+            kicker.setAttribute('data-step', 'ข้อ 1');
+          }
+        }
+      });
+
+      const continueBtns = container.querySelectorAll('.btn-continue-work, #btn-continue-work, [data-testid="btn-continue-work"]');
+      continueBtns.forEach((btn) => {
+        btn.style.setProperty('background', 'linear-gradient(135deg, #34d399 0%, #10b981 100%)', 'important');
+        btn.style.setProperty('color', '#ffffff', 'important');
+        btn.style.setProperty('border', 'none', 'important');
+        btn.style.setProperty('box-shadow', '0 6px 18px rgba(52, 211, 153, 0.35)', 'important');
       });
     });
   }
@@ -1114,7 +1787,7 @@ export class DashboardController {
       const heroTitle = (this.root && this.root.querySelector('#overview-heading, .hero-title, .dashboard-hero h1')) ||
                         document.getElementById('overview-heading');
       if (heroTitle) {
-        let existingSpan = heroTitle.querySelector('span, em');
+        let existingSpan = heroTitle.querySelector('#typewriter-text, .mew-gradient-text');
         if (!existingSpan && heroTitle.textContent && heroTitle.textContent.includes('into ')) {
           const parts = heroTitle.textContent.split('into ');
           heroTitle.innerHTML = `${parts[0]}into <span id="typewriter-text" class="mew-gradient-text">${parts.slice(1).join('into ').trim() || 'Actionable DNA'}</span>`;
@@ -1330,14 +2003,14 @@ export class DashboardController {
     }
 
     // 2. Interactive Operational Cards
-    const cardContinue = target.closest('#card-continue-work, [data-testid="continue-work"]');
+    const cardContinue = target.closest('#card-continue-work, [data-testid="continue-work"], #s00-keep-going-card, .keep-going-s00-card');
     if (cardContinue) {
       event.preventDefault();
       this.handleContinueWork();
       return;
     }
 
-    const cardResearch = target.closest('#card-recent-research, [data-testid="recent-research"]');
+    const cardResearch = target.closest('#card-recent-research, [data-testid="recent-research"], [data-navigate="research"], article[data-step="ข้อ 1"]');
     if (cardResearch) {
       event.preventDefault();
       const state = getState();
@@ -1346,14 +2019,14 @@ export class DashboardController {
       return;
     }
 
-    const cardVault = target.closest('#card-vault-summary, [data-testid="vault-summary"]');
+    const cardVault = target.closest('#card-vault-summary, [data-testid="vault-summary"], [data-navigate="library"], article[data-step="ข้อ 2"]');
     if (cardVault) {
       event.preventDefault();
       this.navigateTo('S04');
       return;
     }
 
-    const cardRemixDrafts = target.closest('#card-remix-drafts, [data-testid="remix-drafts"]');
+    const cardRemixDrafts = target.closest('#card-remix-drafts, [data-testid="remix-drafts"], [data-navigate="remix"], article[data-step="ข้อ 3"]');
     if (cardRemixDrafts) {
       event.preventDefault();
       const state = getState();
